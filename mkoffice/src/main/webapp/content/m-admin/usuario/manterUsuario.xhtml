@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+	</ui:define>
+	
+	<ui:define name="jsImports">
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>  
+		    <p:menuitem value="TelaInicial" action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false"/>
+		    <p:menuitem value="Painel de Configuração" />  
+		    <p:menuitem value="Usuario"  />  
+		    <p:menuitem value="Manter Usuarios"  />  
+		</p:breadCrumb>  
+	</ui:define>
+	
+	<ui:param name="titulo" value="Manter Usuarios" />
+
+<ui:define name="body_content">
+	<div class="container">
+	<h:form id="formGlobal" prependId="false" style="margin: 0 !important" styleClass="row">
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
+					<i class="icon-table"></i> Usuarios Cadastrados
+				</a>
+			</div>
+			<div id="d-table" class="widget-body collapse in" >
+	              	<div class="widget-inner">
+	                  	<section class="group">                         
+			              	<div class="dataTables_wrapper">
+								<p:dataTable id="tableUsuarios" 
+									value="#{usuarioBean.usuarios}" 
+									var="result" 
+									style="margin-top:20px;"
+									styleClass="display"
+									selection="#{usuarioBean.usuarioSelecionado}" selectionMode="single"
+									rows="10" rowKey="#{result}" 
+									emptyMessage="">
+					
+							<p:ajax event="rowSelect" update=":formGlobal:btnDetalhar" />
+							<p:ajax event="rowUnselect" update=":formGlobal:btnDetalhar" />
+		
+							<f:facet name="header">  
+					           Usuarios Cadastrados
+					        </f:facet>
+					        
+							<p:column headerText="NOME" width="50%" sortBy="#{result.username}">
+								<h:outputText value="#{result.dadosPessoa.nome}" style="text-align: left;" />
+							</p:column>
+							<p:column headerText="E-MAIL" width="30%" style="text-align: center;" sortBy="#{result.permissao.descPermissao}">
+								<h:outputText value="#{result.dadosPessoa.email}" style="text-align: center;" />
+							</p:column>
+							<p:column headerText="PERFIL" width="10%" style="text-align: center;" sortBy="#{result.permissao.descPermissao}">
+								<h:outputText value="#{result.permissao.descPermissao}" style="text-align: center;" />
+							</p:column>
+											
+								</p:dataTable>
+							</div>
+					</section>
+				</div>
+			</div>
+		</div>
+					
+		<h:panelGroup>
+			<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
+					style="	margin-top:5px;">
+					<p:outputLabel value="Total de usuarios cadastrados:" />
+					<p:outputLabel value="#{usuarioBean.usuarios.size()}" styleClass="input-5left HtmlOutputTextResposta" />
+			</h:panelGrid>
+		</h:panelGroup>
+		
+		<hr class="lin" />
+			
+		<div class="buttonFooter" >
+			<h:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
+				style="float:left;" styleClass="btn btn-zen-5 btn-toolbar" action="/index" />
+			
+			<h:commandButton id="btnDetalhar" value="#{msgs.btn_detalhar}"
+				action="#{usuarioBean.navegarDetalharUsuario()}"
+				styleClass="btn btn-zen-1 btn-toolbar" 
+				disabled="#{empty usuarioBean.usuarioSelecionado}"  style="margin-left:5px;" />
+			
+			
+		</div>
+			
+	</h:form>
+	</div>
+</ui:define>
+
+</ui:composition>

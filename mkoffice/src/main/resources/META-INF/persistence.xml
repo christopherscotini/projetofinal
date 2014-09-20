@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+	
+	<persistence-unit name="mkofficePU" transaction-type="JTA" >
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<jta-data-source>java:jboss/datasources/mkofficeFinalDS</jta-data-source>
+		
+		<class>br.com.mkoffice.model.TipoAgendaEntity</class>
+		<class>br.com.mkoffice.model.AgendaEntity</class>
+		<class>br.com.mkoffice.model.ClienteEntity</class>
+		<class>br.com.mkoffice.model.ConsultoraEntity</class>
+		<class>br.com.mkoffice.model.ParcelasEntity</class>
+
+		<class>br.com.mkoffice.model.EnderecoEntity</class>
+		<class>br.com.mkoffice.model.PessoaEntity</class>
+
+		<class>br.com.mkoffice.model.SecaoEntity</class>
+		<class>br.com.mkoffice.model.CategoriaEntity</class>
+		<class>br.com.mkoffice.model.CatalogoEntity</class>
+		
+		<class>br.com.mkoffice.model.EstoqueEntity</class>
+		
+		<class>br.com.mkoffice.model.HistoricoPedidosEntity</class>
+		<class>br.com.mkoffice.model.PedidoEntity</class>
+		
+		<class>br.com.mkoffice.model.HistoricoVendasEntity</class>
+		<class>br.com.mkoffice.model.VendaEntity</class>
+		
+
+		<class>br.com.mkoffice.model.UserEntity</class>
+		<class>br.com.mkoffice.model.PermissaoEntity</class>
+		<class>br.com.mkoffice.model.FormaPagamentoEntity</class>
+		<class>br.com.mkoffice.model.SituacaoEntity</class>
+		<class>br.com.mkoffice.model.DefaultConfigurationEntity</class>
+		
+		<properties>
+			<property name="hibernate.hbm2ddl.auto" value="validate" /> <!-- Cria uma tabela caso a mesma nao exista no banco de dados --> 
+		    <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+		   	<property name="hibernate.generate_statistics" value="false" />
+			<property name="hibernate.max_fetch_depth" value="3" />
+            <property name="hibernate.current_session_context_class" value="thread" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.autocommit" value="false" />
+		</properties>
+	</persistence-unit>
+
+</persistence>
