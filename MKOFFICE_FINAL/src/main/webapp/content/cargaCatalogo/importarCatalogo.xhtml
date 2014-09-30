@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet"
+			href="#{facesContext.externalContext.requestContextPath}/css/menu/pedidos/pedido-ui.css" />
+	</ui:define>
+
+	<ui:define name="jsImports">
+		<script type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/javascript/menu_estoque/validate_pedido.js" />
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>
+			<p:menuitem value="TelaInicial"
+				action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false" />
+			<p:menuitem value="Importar Pedido"
+				action="#{cargaCatalogoBean.iniciarTela()}" ajax="false" />
+			<p:menuitem value="Importar Catalogo" />
+		</p:breadCrumb>
+	</ui:define>
+	<ui:param name="titulo" value="Importar Catalogo" />
+
+	<ui:define name="body_content">
+
+
+		<h:panelGrid cellpadding="0" cellspacing="0" columns="1"
+			styleClass="CorpoPagina" border="0">
+
+			<p:fieldset legend="UPLOAD DO CATALOGO"
+				style="margin-top:10px;margin-bottom:25px;">
+				<h:panelGroup id="group-upload-pedido">
+					<h:panelGrid cellpadding="0" cellspacing="0" columns="1" border="0"
+						styleClass="centralizar-conteudo"
+						style="margin-top:10px;margin-bottom:25px;">
+						<p:fileUpload id="upload" style="width:100%; text-align: center;"
+							fileUploadListener="#{cargaCatalogoBean.handleFileUpload}"
+							mode="advanced" auto="true"
+							invalidFileMessage="Formato invalido, importe somente arquivos .XLS"
+							dragDropSupport="true" update="@form"
+							oncomplete="loadMasksJQuery();"
+							required="true" requiredMessage="Selecione o arquivo."
+							sizeLimit="100000000" fileLimit="3" cancelLabel="Cancelar"
+							label="Selecionar Planilha.." uploadLabel="Importar"
+							allowTypes="/(\.|\/)(xls)$/" />
+					</h:panelGrid>
+				</h:panelGroup>
+			</p:fieldset>
+
+			<h:panelGroup>
+				<h:panelGrid columns="1">
+					<h:outputLabel for="txtCatDialog" value="Categoria:"
+							styleClass="" />
+					<p:selectOneListbox id="txtCatDialog" converter="genericEntityConverter" required="true" requiredMessage="Selecione a CATEGORIA dos produtos para importação."
+						value="#{cargaCatalogoBean.categoriaSelecionada}" style="width:350px;height:300px">
+						<f:selectItems value="#{cargaCatalogoBean.comboCategorias}" var="c"
+							itemLabel="#{c.codSecao.descSecao.subSequence(0,1)}#{c.codSecao.descSecao.subSequence(c.codSecao.descSecao.length()-1,c.codSecao.descSecao.length())} - #{c.descCategoria}"
+							itemValue="#{c}" />
+					</p:selectOneListbox>
+				</h:panelGrid>
+			</h:panelGroup>
+
+			<h:panelGroup id="tabela-selecao-produtos">
+				<h:panelGrid cellpadding="0" cellspacing="1"
+					styleClass="centralizar-conteudo" style="margin-top:20px;">
+					<p:fieldset legend="Produtos Inclusos no arquivo" >
+						<p:dataTable id="tableCatalogo"
+							value="#{cargaCatalogoBean.listaProdutosInclusos}"
+							var="result" rowKey="#{result}" rows="10" editable="true"
+							editMode="cell" styleClass="dataTable" paginator="true"
+							paginatorPosition="bottom" emptyMessage="Dados não encontrados">
+
+
+							<p:column headerText="CÓDIGO MK" style="text-align: center;"
+								width="10%" sortBy="#{result.codProduto}">
+								<h:outputLabel value="#{result.codProduto}"
+									style="text-align: center;" />
+							</p:column>
+							<p:column headerText="PRODUTO" width="80%"
+								sortBy="#{result.descProduto}">
+								<h:outputLabel value="#{result.descProduto}"
+									style="text-align: left;" />
+							</p:column>
+							<p:column headerText="PREÇO" width="80%" >
+								<h:outputLabel value="R$" style="text-align: left;" />
+								<h:outputLabel value="#{result.preco}" style="text-align: left;" >
+									<f:converter converterId="decimalConverter" />
+								</h:outputLabel>
+							</p:column>
+							<p:column headerText="PONTOS/UND" width="80%" >
+								<h:outputLabel value="#{result.pontosPorUnidade}"
+									style="text-align: left;" />
+								
+							</p:column>
+						</p:dataTable>
+
+						<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0"
+							columns="2" style="	margin-top:5px;">
+							<p:outputLabel value="Nº de produtos:" />
+							<p:outputLabel value="#{cargaCatalogoBean.listaProdutosInclusos.size()}"
+								styleClass="input-5left HtmlOutputTextResposta" />
+						</h:panelGrid>
+
+					</p:fieldset>
+
+					<hr class="lin"></hr>
+
+					<h:panelGroup>
+						<div class="buttonFooter">
+							<p:commandButton id="btnVoltar" value="Voltar" ajax="false"
+								style="float:left;" action="/index" immediate="true" />
+							<p:commandButton id="btn-avancar" value="Carregar Banco"
+								ajax="false"
+								action="#{cargaCatalogoBean.carregarBanco()}"
+								disabled="#{empty cargaCatalogoBean.listaProdutosInclusos}" />
+							<div style="height: 10px; width: 10px;"></div>
+						</div>
+					</h:panelGroup>
+
+				</h:panelGrid>
+			</h:panelGroup>
+			<!-- FIM GROUP id=tabela-selecao-produtos -->
+		</h:panelGrid>
+	</ui:define>
+
+</ui:composition>

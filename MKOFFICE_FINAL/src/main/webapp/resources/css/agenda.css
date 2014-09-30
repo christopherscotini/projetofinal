@@ -1,0 +1,24 @@
+@CHARSET "ISO-8859-1";
+
+.conteudo-agenda{
+	padding:20px !important;
+	height:350px !important; 
+}
+
+.acomp-primeira-fase .fc-event-skin{
+    background: #CC66FF !important;
+}
+.acomp-segunda-fase .fc-event-skin{
+   	background: #A352CC !important;
+}
+.acomp-terceira-fase .fc-event-skin{
+	background: #753B93 !important;
+}
+.agenda-pessoal .fc-event-skin{
+	background: #FFFF99 !important;
+	color:#000000 !important;
+}
+.agenda-profissional .fc-event-skin{
+	background: #006600 !important;
+}
+

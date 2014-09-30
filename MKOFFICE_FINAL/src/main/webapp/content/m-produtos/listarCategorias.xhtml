@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+	</ui:define>
+	
+	<ui:define name="jsImports">
+		<script type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/javascript/cadastro/valid-form-categoria.js"></script>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>  
+		    <p:menuitem value="TelaInicial" action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false"/>
+		    <p:menuitem value="Categorias" />  
+		    <p:menuitem value="Lista de Categorias"  />  
+		</p:breadCrumb>  
+	</ui:define>
+	<ui:param name="titulo" value="Lista de Categorias" />
+
+	<ui:define name="body_content">
+		<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
+			<p:fieldset legend="BUSCA" toggleable="true" collapsed="true">
+				<h:panelGroup id="tabela-filtro-categoria" >
+					<h:panelGrid cellpadding="1" cellspacing="0" columns="4" border="0">
+						<p:outputLabel value="Descrição da categoria:" for="txtCat" styleClass="HtmlOutputLabelResposta" />
+						<p:inputText id="txtCat" value="#{categoriaBean.descCategoriaFiltro}" size="30" maxlength="45" styleClass="input-5left"/>
+						
+						<p:outputLabel value="Seção:" for="txtSecao" styleClass="HtmlOutputLabelResposta" />
+						<p:selectOneMenu id="txtSecao" value="#{categoriaBean.codSecaoFiltro}" style="margin-left:5px;width:120px;" styleClass="input-5left" >
+							<f:selectItem itemLabel=".:SELECIONE:." itemValue="0"/>
+							<f:selectItem itemLabel="Seção 1" itemValue="1"/>
+							<f:selectItem itemLabel="Seção 2" itemValue="2"/>
+						</p:selectOneMenu>
+					</h:panelGrid>
+				</h:panelGroup>
+				
+				<h:panelGroup >
+					<div class="buttonFilter">
+						<p:commandButton value="#{msgs.btn_limpar}" action="#{categoriaBean.limparCamposFiltro()}" ajax="true" style="margin-left:5px;" update="tabela-filtro-categoria" />
+						<p:commandButton value="#{msgs.btn_pesquisar}" action="#{categoriaBean.pesquisarFiltro()}" ajax="false" style="margin-left:5px;" />
+					</div>
+				</h:panelGroup>
+			</p:fieldset>
+			<hr class="lin" />
+			
+			<h:panelGroup id="tabela-listagem-categorias" >
+				<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="centralizar-conteudo" >
+					<p:dataTable id="tableCategorias" 
+							style="margin-top:20px;"
+							var="result" 
+							rows="10" 
+							rowKey="#{result}" 
+							selectionMode="single"
+							selection="#{categoriaBean.categoriaSelecionada}"
+							value="#{categoriaBean.listaCategorias}" 
+							paginator="true"
+							paginatorPosition="bottom" 
+							emptyMessage="">
+
+						<p:ajax event="rowSelect" update=":formGlobal:btnAlterar :formGlobal:btnLimpar" />
+						<p:ajax event="rowUnselect" update=":formGlobal:btnAlterar :formGlobal:btnLimpar" />
+	
+						<f:facet name="header">  
+				           Categorias Cadastradas
+				        </f:facet>
+				        
+						<p:column headerText="CATEGORIA" width="70%" sortBy="#{result.descCategoria}">
+							<h:outputText value="#{result.descCategoria}"
+								style="text-align: left;" />
+						</p:column>
+						<p:column headerText="SEÇÃO" width="30%" sortBy="#{result.codSecao.descSecao}">
+							<h:outputText value="#{result.codSecao.descSecao}"
+								style="text-align: left;" />
+						</p:column>
+						
+					</p:dataTable>
+					
+					<h:panelGroup>
+						<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
+								style="	margin-top:5px;">
+								<p:outputLabel value="Total de categorias cadastradas:" />
+								<p:outputLabel value="#{categoriaBean.listaCategorias.size()}" styleClass="input-5left HtmlOutputTextResposta" />
+						</h:panelGrid>
+					</h:panelGroup>
+						
+				</h:panelGrid>
+			</h:panelGroup>
+		
+			<hr class="lin" />
+			
+			<h:panelGroup id="group-botoes-footer">
+				<div class="buttonFooter" >
+					<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
+						style="float:left;" action="/index" ajax="false" />
+					<p:commandButton id="btnLimpar" value="Limpar categoria selecionada"
+						action="#{categoriaBean.limparSelecaoTabela()}" ajax="true" disabled="#{empty categoriaBean.categoriaSelecionada}"
+						style="margin-left:5px;" update="tabela-listagem-categorias group-botoes-footer" />
+					
+					<p:commandButton id="btnAlterar" value="#{msgs.btn_alterar}"
+						action="#{categoriaBean.prepareEdit()}" ajax="true" 
+						disabled="#{empty categoriaBean.categoriaSelecionada}" 
+						style="margin-left:5px;"
+					 	update=":formDialog:infosCategoria"
+						oncomplete="dialogCategoria.show();loadMasksJQuery();" />
+					
+					<p:commandButton id="btnCadastrar" value="#{msgs.btn_cadastrar}"
+						action="#{categoriaBean.prepareInsert()}" ajax="true"
+						style="margin-left:5px;"
+					 	update=":formDialog:infosCategoria"
+						oncomplete="dialogCategoria.show();loadMasksJQuery();" />
+				</div>
+				<div style="height: 10px;width: 10px;"></div>
+			</h:panelGroup>
+		
+		</h:panelGrid>
+	</ui:define>
+	
+	
+	<ui:define name="dialog">
+		<p:dialog header="#{categoriaBean.tituloTelaIncAltCategoria}"
+			widgetVar="dialogCategoria" resizable="false" modal="true"
+			showEffect="slide" width="500" height="180px;">
+			<h:panelGrid id="infosCategoria" columns="2"
+				style="margin-bottom:10px">
+
+				<p:outputLabel value="Descrição da Categoria:" for="txtCat" styleClass="HtmlOutputLabelResposta" />
+				<p:inputText id="txtCat" value="#{categoriaBean.categoria.descCategoria}" size="50" styleClass="input-5left" required="true" requiredMessage="O campo DESCRIÇÃO DA CATEGORIA é necessário." >
+					<f:validateLength minimum="3" for="txtNome"/>
+				</p:inputText>
+				<p:outputLabel for="cboSecao" value="Seção" styleClass="HtmlOutputLabelResposta"/>
+				<p:selectOneMenu id="cboSecao" value="#{categoriaBean.categoria.codSecao.codSecao}" style="margin-left:5px;" required="true" requiredMessage="O campo COD. SEÇÃO é necessário.">
+					<f:selectItem itemLabel="Seção 1" itemValue="1"/>
+					<f:selectItem itemLabel="Seção 2" itemValue="2"/>
+				</p:selectOneMenu>
+					
+				<p:commandButton id="btnCancelar" value="Cancelar"
+						style="float:right;" oncomplete="dialogCategoria.hide();" />
+				<p:commandButton
+					update=":formGlobal:tabela-listagem-categorias :formGlobal:lblTotalReg"
+					onclick="return validarFormCategoria(document.forms[2])"
+					oncomplete="dialogCategoria.hide();"
+					actionListener="#{categoriaBean.executeSave()}"
+					value="Atualizar Categoria" />
+			</h:panelGrid>
+		</p:dialog>
+	</ui:define>
+
+
+	</ui:composition>

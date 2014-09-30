@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="ccsImports">
+	</ui:define>
+	
+	<ui:define name="jsImports">
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/menu_venda/validate_venda.js"></script>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>  
+		    <p:menuitem value="TelaInicial" action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false"/>  
+		    <p:menuitem value="Consultar Vendas" action="#{historicoVendaBean.iniciarTela()}" ajax="false" />  
+		    <p:menuitem value="Historico de Vendas" action="#{historicoVendaBean.voltarTelaHistoricoVendas()}" ajax="false"/>  
+		    <p:menuitem value="Detalhamento da Venda" ajax="false"/>  
+		</p:breadCrumb>  
+	</ui:define>
+	<ui:param name="titulo" value="Detalhamento da Venda"></ui:param>
+
+	<ui:define name="body_content">
+		<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
+			<h:panelGroup id="tabela-dados-cliente">
+				<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="INFORMAÇÕES DO CLIENTE" />
+				<hr class="lin"/>
+				<h:panelGrid cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;">
+					<p:outputLabel value="Nome:" for="txtNome" styleClass="HtmlOutputLabelResposta"/>
+					<p:outputLabel id="txtNome" value="#{historicoVendaBean.clienteVo.nome}" styleClass="input-5left HtmlOutputTextResposta"  />
+					<h:panelGroup>	</h:panelGroup>
+					<h:panelGroup>	</h:panelGroup>
+					<h:panelGroup>	</h:panelGroup>
+					<h:panelGroup>	</h:panelGroup>
+	
+					<p:outputLabel value="Endereço:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
+					<p:outputLabel id="txtAddress" value="#{historicoVendaBean.clienteVo.endereco.logradouro}" styleClass="input-5left HtmlOutputTextResposta" />
+					<p:outputLabel value="N°:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
+					<p:outputLabel id="txtNum" value="#{historicoVendaBean.clienteVo.endereco.numero}" styleClass="input-5left HtmlOutputTextResposta"  />
+					<p:outputLabel value="Bairro:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
+					<p:outputLabel id="txtBairro" value="#{historicoVendaBean.clienteVo.endereco.bairro}" styleClass="input-5left HtmlOutputTextResposta"  />
+		
+					<p:outputLabel value="Cidade:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
+					<p:outputLabel id="txtCity" value="#{historicoVendaBean.clienteVo.endereco.cidade}" styleClass="input-5left HtmlOutputTextResposta"  />
+					<p:outputLabel value="Estado:" for="txtState" styleClass="HtmlOutputLabelResposta"/>
+					<p:outputLabel id="txtState" value="#{historicoVendaBean.clienteVo.endereco.estado}" styleClass="input-5left HtmlOutputTextResposta"  />
+					<p:outputLabel value="CEP:" for="cep" styleClass="HtmlOutputLabelResposta" />
+					<p:outputLabel id="cep" value="#{historicoVendaBean.clienteVo.endereco.cep}" styleClass="input-5left HtmlOutputTextResposta"  />
+				
+					<p:outputLabel value="Email:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
+					<p:outputLabel id="txtEmail" value="#{historicoVendaBean.clienteVo.email}" styleClass="input-5left HtmlOutputTextResposta" />
+					<p:outputLabel value="Telefone:" for="txtTelefone" styleClass="HtmlOutputLabelResposta" style="margin-left: 10px;"/>
+					<p:outputLabel id="txtTelefone" value="#{historicoVendaBean.clienteVo.numTelefoneString}" styleClass="input-5left HtmlOutputTextResposta" />
+					<p:outputLabel value="Celular:" for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" style="margin-left: 10px;"/>
+					<p:outputLabel id="txtTelefoneCel" value="#{historicoVendaBean.clienteVo.numCelularString}" styleClass="input-5left HtmlOutputTextResposta" />
+										
+				</h:panelGrid>
+			</h:panelGroup>	
+			
+			<h:panelGroup id="tabela-dados-venda" >
+				<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="INFORMAÇÕES DA VENDA" style="margin-top:10px;"/>
+				<hr class="lin"/>
+					<h:panelGrid cellpadding="0" cellspacing="1" columns="2" style="margin-top:5px;margin-bottom:25px;" border="0">
+						<p:outputLabel value="Cód. Venda:" for="txtCodVenda" styleClass="HtmlOutputLabelResposta"/>
+						<p:outputLabel id="txtCodVenda" value="#{historicoVendaBean.vendaVo.codVenda}" styleClass="input-5left HtmlOutputTextResposta" />
+						<p:outputLabel value="Data da Venda:" for="txtDataVenda" styleClass="HtmlOutputLabelResposta"/>
+						<p:outputLabel id="txtDataVenda" value="#{historicoVendaBean.vendaVo.dataVendaFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
+						
+						<p:outputLabel value="Total de Pontos Vendidos:" styleClass="HtmlOutputLabelResposta"/>
+						<p:outputLabel value="#{historicoVendaBean.vendaVo.qtdeTotalPontosVendidos} pts" styleClass="input-5left HtmlOutputTextResposta" />
+						
+						<p:outputLabel value="Valor Total da Venda:" styleClass="HtmlOutputLabelResposta"/>
+						<h:panelGroup>
+							<p:outputLabel value="R$" styleClass="input-5left HtmlOutputTextResposta" />
+							<h:outputLabel value="#{historicoVendaBean.vendaVo.valorVenda}" styleClass="input-5left HtmlOutputTextResposta" >
+								<f:converter converterId="decimalConverter" />
+							</h:outputLabel>
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:panelGroup>
+				
+				<h:panelGroup id="tabela-dados-pagamento" >
+					<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="INFORMAÇÕES DO PAGAMENTO" style="margin-top:5px;"/>
+					<hr class="lin"/>
+					
+					<h:panelGrid columns="2" cellpadding="0" cellspacing="0" style="margin-top:5px;">
+						<p:outputLabel value="Forma de Pagamento:" for="txtFormaPagamento" styleClass="HtmlOutputLabelResposta" />
+						<p:outputLabel id="txtFormaPagamento" value="#{historicoVendaBean.vendaVo.formaDePagamento.descFormaPgto}" styleClass="input-5left HtmlOutputTextResposta" />
+					</h:panelGrid>
+					
+					<p:dataTable id="tableParcelas" style="width:42%"
+							value="#{historicoVendaBean.vendaVo.parcelas}" var="p"
+							rowKey="#{p}" rows="10"
+							styleClass="dataTable"
+							emptyMessage="Não há parcelas" >
+		
+							<f:facet name="header">  
+					            Situação das parcelas
+					        </f:facet>
+					        
+							<p:column headerText="SITUAÇÃO">
+					        	<h:outputLabel value="#{p.descricao} - #{p.codSituacaoParcela.descSituacao}" />
+					        </p:column>
+							<p:column  style="text-align: center;" headerText="VALOR DA PARCELA" >
+					        	<h:outputLabel value="R$"
+									style="text-align: center;" />
+					        	<h:outputLabel value="#{p.valorParcela}"
+									style="text-align: center;">
+									<f:converter converterId="decimalConverter" />
+								</h:outputLabel>
+					        </p:column>
+							<p:column  style="text-align: center;" headerText="DATA DE VENCIMENTO" >
+					        	<h:outputLabel value="#{p.dtVencimento}" style="text-align: center;">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputLabel>
+					        </p:column>
+							<p:column  style="text-align: center;" headerText="DATA DO PAGAMENTO" >
+					        	<h:outputLabel value="#{p.dtPagamento}" style="text-align: center;">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputLabel>
+					        </p:column>
+							<p:column  style="text-align: center;" headerText="STATUS" width="500px">
+								<p:commandLink 
+									 disabled="#{p.desabilitaPagamentoParcela}"
+									 value="#{p.codSituacaoParcela.descSituacao}" 
+									 actionListener="#{historicoVendaBean.onclickBtnPagamentoParcela(p)}"
+									 update=":formDialog:infoPagamento"
+									 oncomplete="dialogPagamento.show();loadMasksJQuery();" /> 
+					        </p:column>
+					</p:dataTable>
+				</h:panelGroup>
+				
+				<hr class="lin"/>
+				
+				<p:dataTable id="tableCatalogo"
+							value="#{historicoVendaBean.vendaVo.listaProdutos}" var="result"
+							rowKey="#{result}" rows="10"
+							styleClass="dataTable"
+							paginator="true" paginatorPosition="bottom"
+							emptyMessage="Não há produtos no pedido">
+		
+							<f:facet name="header">  
+					            Produtos vendidos  
+					        </f:facet>
+		
+							<p:column headerText="CÓDIGO MK" style="text-align: center;"
+									width="10%" sortBy="#{result.produto.codProduto}">
+									<h:outputLabel value="#{result.produto.codProduto}"
+										style="text-align: center;" />
+								</p:column>
+								<p:column headerText="PRODUTO" width="80%" sortBy="#{result.produto.descProduto}">
+									<h:outputLabel value="#{result.produto.descProduto}"
+										style="text-align: left;" />
+								</p:column>
+								<p:column headerText="VALOR UNITÁRIO" style="text-align: center;" width="5%" 
+									sortBy="#{result.produto.preco}">
+									<h:outputLabel value="R$" style="text-align: right;" />
+									<h:outputLabel value="#{result.produto.preco}" style="text-align: right;" >
+										<f:converter converterId="decimalConverter" />
+									</h:outputLabel>
+								</p:column>
+								<p:column headerText="QTDE" style="text-align: center;" width="10%" sortBy="#{result.qtdeProdutoCarrinho}" >
+									<h:outputLabel value="#{result.qtdeProdutoCarrinho}" style="text-align: center;" />
+								</p:column>
+								<p:column headerText="VALOR TOTAL" style="text-align: right;" width="10%" >
+									<h:outputLabel value="R$" style="text-align: right;" />
+									<h:outputLabel value="#{result.valorTotalProdutoCarrinho}" style="text-align: right;" >
+										<f:converter converterId="decimalConverter" />
+									</h:outputLabel>
+								</p:column>
+		
+						</p:dataTable>
+						
+						<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
+							style="	margin-top:5px;">
+							<p:outputLabel value="Total de Produtos Comprados:" />
+							<p:outputLabel value="#{historicoVendaBean.numeroTotalProdutosVendidos}" styleClass="input-5left HtmlOutputTextResposta" />
+						</h:panelGrid>
+				
+			<hr class="lin"/>
+	
+			<div class="buttonFooter">
+				<h:panelGroup>
+					<p:commandButton id="btnVoltar" value="Voltar" ajax="false"
+						action="#{historicoVendaBean.voltarTelaHistoricoVendas()}"  />
+					<div style="height: 10px;width: 10px;"></div>	
+				</h:panelGroup>
+			</div>
+		</h:panelGrid>
+	</ui:define>
+	
+	<ui:define name="dialog">
+	
+		<p:dialog header="Pagar Parcela"
+			widgetVar="dialogPagamento" resizable="false" modal="true"
+			showEffect="slide" width="700px" height="180px;">
+			<h:panelGrid id="infoPagamento" columns="2"	style="margin-bottom:10px">
+
+				<p:outputLabel value="Descrição da parcela:" for="txtParcela" styleClass="HtmlOutputLabelResposta" />
+				<p:outputLabel id="txtParcela" value="#{historicoVendaBean.parcelaSelecionadaPagamento.descricao} - #{historicoVendaBean.parcelaSelecionadaPagamento.codSituacaoParcela.descSituacao}" 
+						styleClass="input-5left HtmlOutputTextResposta" />
+
+				<p:outputLabel value="Valor da parcela:" styleClass="HtmlOutputLabelResposta" />
+				<h:panelGroup>
+					<p:outputLabel value="R$" styleClass="input-5left HtmlOutputTextResposta" />
+					<h:outputLabel value="#{historicoVendaBean.parcelaSelecionadaPagamento.valorParcela}" styleClass="input-5left HtmlOutputTextResposta" >
+						<f:converter converterId="decimalConverter" />
+					</h:outputLabel>
+				</h:panelGroup>
+
+				<p:outputLabel value="Data de vencimento da parcela:" styleClass="HtmlOutputLabelResposta" />
+				<h:outputLabel value="#{historicoVendaBean.parcelaSelecionadaPagamento.dtVencimento}" styleClass="input-5left HtmlOutputTextResposta" >
+					<f:convertDateTime pattern="dd/MM/yyyy"/> 
+				</h:outputLabel>
+
+				<p:outputLabel value="Data de pagamento da parcela:" styleClass="HtmlOutputLabelResposta" />
+				<p:calendar id="calendarDataPagamento" value="#{historicoVendaBean.parcelaSelecionadaPagamento.dtPagamento}" size="15" 
+					styleClass="input-5left" alt="date" pattern="dd/MM/yyyy" />
+					
+				<p:commandButton id="btnCancelar" value="Cancelar"
+						style="float:right;" oncomplete="dialogPagamento.hide();" />
+				<p:commandButton
+					update=":formGlobal:tabela-dados-pagamento" 
+					onclick="return validaDataPagamento(document.forms[2])"
+					oncomplete="dialogPagamento.hide();"
+					actionListener="#{historicoVendaBean.efetuarPagamentoParcela()}"
+					value="Efetuar Pagamento" />
+			</h:panelGrid>
+		</p:dialog>
+		
+	</ui:define>
+	
+</ui:composition>
+	

@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html;CHARSET=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/estilos.css" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/defaultPrimefaces.css" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/bootstrap.css" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/style.css" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/font-awesome.css" />
+	<ui:insert name="cssImports" />
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/jquery.meio.mask.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/utils.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/primefaces-locale.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/menu.js"></script>
+	<link rel="shortcut icon" type="image/jpg" href="#{request.contextPath}/resources/images/logo.jpg" />
+	<ui:insert name="jsImports" />
+	<title>MK Office</title>
+</h:head>
+
+<h:body onload="loadMasksJQuery();">
+<f:loadBundle basename="br.com.mkoffice.view.bundle.Messages" var="msgs" />
+	   <script type="text/javascript">
+     	function rendered(value){
+	     	var element = document.getElementById('menuAdmin');// Get element by client ID.
+			if(value == true){
+		     	element.style.display = 'inline'; // Show it. // or 'block' if it's a HTML block element
+			}else{
+	     		element.style.display = 'none';// Hide it.
+			}
+         }
+     </script>
+	 <header class="navbar navbar-fixed-top">
+     	<div class="navbar-inner">
+			<ui:include src="../content/menu.xhtml"/> 			
+		</div>
+	</header>					 
+	
+		<div id="body_content" >
+			<h:form id="formGlobal" enctype="#{formMultipart}">
+				
+				<p:dialog modal="true"  widgetVar="statusDialog" draggable="false" resizable="false" closable="false">  
+				    <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
+				</p:dialog>  
+				
+				<p:growl id="messagesGlobal" globalOnly="true" escape="false" />
+				
+				
+				<div class="container">
+					<div class="row">
+						<div id="beadcrumBar">
+							<ui:insert name="breadcrumb" />
+						</div>
+						<ui:insert name="body_content" />
+					</div>
+				</div>
+			</h:form>
+			<footer>
+				Copyright © 2014 -
+				<a href="#" data-original-title="">Gamaset - Soluções em TI</a>
+			</footer>
+		</div>
+		
+		<h:form id="formDialog" enctype="#{formMultipart}">
+			<p:growl id="messagesDialog" globalOnly="true" escape="false" />
+			<ui:insert name="dialog" />
+		</h:form>
+		<h:form id="formDialog2" enctype="#{formMultipart}">
+			<p:growl id="messagesDialog2" globalOnly="true" escape="false" />
+			<ui:insert name="dialog2" />
+		</h:form>			
+	
+</h:body>
+</html>

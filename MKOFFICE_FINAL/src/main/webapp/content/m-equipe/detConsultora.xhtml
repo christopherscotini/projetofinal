@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="cssImports">
+	</ui:define>
+	
+	<ui:define name="jsImports">
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>  
+		    <p:menuitem value="TelaInicial" action="#{consultoraBean.scheduleBean.telaInicial()}" ajax="false"/> 
+		    <p:menuitem value="Consultar Equipe" action="#{consultoraBean.voltarInclusao()}" ajax="false" />  
+		    <p:menuitem value="Detalhamento do Cliente" />  
+		</p:breadCrumb>  
+	</ui:define>
+<ui:param name="titulo" value="Detalhamento da Consultora" />
+
+<ui:define name="body_content">
+
+<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
+
+	<h:panelGroup id="tabela-filtro-cliente" >
+		<h:panelGrid cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;" >
+				<p:outputLabel value="Nome:" for="txtNome" styleClass="HtmlOutputLabelResposta"/>
+				<p:outputLabel id="txtNome" value="#{consultoraBean.consultora.dadosPessoa.nome}" styleClass="input-5left HtmlOutputTextResposta"  />
+				<p:outputLabel for="txtSexo" value="Sexo:" styleClass="HtmlOutputLabelResposta"/>
+				<p:outputLabel id="txtSexo" value="#{consultoraBean.consultora.dadosPessoa.sexo}" styleClass="input-5left HtmlOutputTextResposta" />
+				<p:outputLabel value="Data de Nascimento:" for="calendarDtNasc" styleClass="HtmlOutputLabelResposta"/>
+				<p:outputLabel id="calendarDtNasc" value="#{consultoraBean.consultora.dataNascimentoFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
+
+				<p:outputLabel value="Endereço:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
+				<p:outputLabel id="txtAddress" value="#{consultoraBean.consultora.dadosPessoa.endereco.logradouro}" styleClass="input-5left HtmlOutputTextResposta" />
+				<p:outputLabel value="N°:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
+				<p:outputLabel id="txtNum" value="#{consultoraBean.consultora.dadosPessoa.endereco.numero}" styleClass="input-5left HtmlOutputTextResposta"  />
+				<p:outputLabel value="Bairro:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
+				<p:outputLabel id="txtBairro" value="#{consultoraBean.consultora.dadosPessoa.endereco.bairro}" styleClass="input-5left HtmlOutputTextResposta"  />
+
+				<p:outputLabel value="Complemento:" for="txtComplemento" styleClass="HtmlOutputLabelResposta" rendered="#{not empty consultoraBean.consultora.dadosPessoa.endereco.complemento}"/>
+				<p:outputLabel id="txtComplemento" value="#{consultoraBean.consultora.dadosPessoa.endereco.complemento}" styleClass="input-5left HtmlOutputTextResposta" rendered="#{not empty consultoraBean.consultora.dadosPessoa.endereco.complemento}" />
+				<h:panelGroup rendered="#{not empty consultoraBean.consultora.dadosPessoa.endereco.complemento}"> </h:panelGroup>					
+				<h:panelGroup rendered="#{not empty consultoraBean.consultora.dadosPessoa.endereco.complemento}"> </h:panelGroup>					
+				<h:panelGroup rendered="#{not empty consultoraBean.consultora.dadosPessoa.endereco.complemento}"> </h:panelGroup>					
+				<h:panelGroup rendered="#{not empty consultoraBean.consultora.dadosPessoa.endereco.complemento}"> </h:panelGroup>					
+	
+				<p:outputLabel value="Cidade:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
+				<p:outputLabel id="txtCity" value="#{consultoraBean.consultora.dadosPessoa.endereco.cidade}" styleClass="input-5left HtmlOutputTextResposta"  />
+				<p:outputLabel value="Estado:" for="txtState" styleClass="HtmlOutputLabelResposta"/>
+				<p:outputLabel id="txtState" value="#{consultoraBean.consultora.dadosPessoa.endereco.estado}" styleClass="input-5left HtmlOutputTextResposta"  />
+				<p:outputLabel value="CEP:" for="cep" styleClass="HtmlOutputLabelResposta" />
+				<p:outputLabel id="cep" value="#{consultoraBean.consultora.dadosPessoa.endereco.cep}" styleClass="input-5left HtmlOutputTextResposta"  />
+			
+				<p:outputLabel value="Email:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
+				<p:outputLabel id="txtEmail" value="#{consultoraBean.consultora.dadosPessoa.email}" styleClass="input-5left HtmlOutputTextResposta" />
+				<p:outputLabel value="Telefone:" for="txtTelefone" styleClass="HtmlOutputLabelResposta"/>
+				<p:outputLabel id="txtTelefone" value="#{consultoraBean.consultora.numTelefoneString}" styleClass="input-5left HtmlOutputTextResposta" />
+				<p:outputLabel value="Celular:" for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
+				<p:outputLabel id="txtTelefoneCel" value="#{consultoraBean.consultora.numCelularString}" styleClass="input-5left HtmlOutputTextResposta" />
+			
+				<p:outputLabel value="Status:" for="txtStatus" styleClass="HtmlOutputLabelResposta" />
+				<p:outputLabel id="txtStatus" value="#{consultoraBean.consultora.status.toString()}" styleClass="input-5left HtmlOutputTextResposta" />
+				<h:panelGroup> </h:panelGroup>					
+				<h:panelGroup> </h:panelGroup>					
+				<h:panelGroup> </h:panelGroup>					
+				<h:panelGroup> </h:panelGroup>					
+
+				<p:outputLabel value="Data de Início" for="dtInicio" styleClass="HtmlOutputLabelResposta" />
+				<p:outputLabel id="dtInicio" value="#{consultoraBean.consultora.dataInicioFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
+				<p:outputLabel value="Data de Inativação" for="dtDesativacao" styleClass="HtmlOutputLabelResposta" rendered="#{not empty consultoraBean.consultora.dataDesativacaoFormatado}" />
+				<p:outputLabel id="dtDesativacao" value="#{consultoraBean.consultora.dataDesativacaoFormatado}" rendered="#{not empty consultoraBean.consultora.dataDesativacaoFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
+
+			</h:panelGrid>
+	</h:panelGroup>
+	
+	<h:panelGroup>
+		<p:outputLabel value="Informações Adicionais:" for="txtAdicionais" />
+	</h:panelGroup>
+
+	<h:panelGroup>
+		<p:inputTextarea id="txtAdicionais" value="#{consultoraBean.consultora.infAdicional}"  cols="163" rows="10" autoResize="true" style="margin-top:5px;" disabled="true"/>
+	</h:panelGroup>
+
+	<hr class="lin"/>
+	
+	<h:panelGroup>
+		<div class="buttonFooter">
+			<p:commandButton id="btnVoltar" value="Voltar" ajax="false" action="#{consultoraBean.voltarInclusao()}" style="float: left;" />
+		</div>
+	</h:panelGroup>
+
+</h:panelGrid>
+</ui:define>
+
+</ui:composition>

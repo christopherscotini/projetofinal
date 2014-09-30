@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet"
+			href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+	</ui:define>
+
+	<ui:define name="jsImports">
+		<script type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/javascript/cadastro/valid-form-produto.js"></script>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['catalogoprodutos.breadcumb.produtos']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['catalogoprodutos.breadcumb.produtos.catalogoprodutos']}</li>
+		</ul>
+	</ui:define>
+
+	<ui:define name="body_content">
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
+				<i class="icon-table"></i> #{msgs['catalogoprodutos.titulotabela.catalogoprodutos']}</a>
+			</div>
+			<div id="si" class="widget-body collapse in">
+				<div class="widget-inner">
+					<p:dataTable id="tableCatalogo"
+						value="#{catalogoBean.listaProduto}" 
+						var="result" 
+						rows="10" rowKey="#{result}" widgetVar="tableCatalogoVar"
+						style="margin-top:10px;"
+						filteredValue="#{catalogoBean.filteredProdutos}"
+						styleClass="tableCatalogo" 
+						paginator="true" paginatorPosition="bottom"
+						emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}">
+	
+						<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" style="text-align: center;"
+							width="5%" sortBy="#{result.codProduto}"
+							filterBy="#{result.codProduto}" filterMatchMode="contains">
+							<h:outputText value="#{result.codProduto}"
+								style="text-align: center;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.produto']}"
+							sortBy="#{result.descProduto}"
+							style="max-width: 300px; min-width: 250px; overflow: hidden"
+							filterBy="#{result.descProduto}" filterMatchMode="contains" filterStyle="width:250px;">
+							<h:outputText value="#{result.descProduto}"
+								style="text-align: left;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.secaocategoria']}"
+							sortBy="#{result.codCategoria.descCategoria}"
+							style="max-width: 250px; min-width: 250px; overflow: hidden"
+							filterBy="#{result.codCategoria.descCategoria}" filterMatchMode="contains">
+							<h:outputText value="#{result.codCategoria.codSecao.descSecao} - #{result.codCategoria.descCategoria}" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.preco']}" style="text-align: center;"
+							width="5%" sortBy="#{result.preco}"
+							filterBy="#{result.preco}" filterMatchMode="contains">
+							<h:outputText value="R$" style="text-align: center;" />
+							<h:outputText value="#{result.preco}"
+								style="text-align: center;">
+								<f:converter converterId="decimalConverter" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.pontosund']}" style="text-align: center;"
+							width="5%" sortBy="#{result.pontosPorUnidade}"
+							filterBy="#{result.pontosPorUnidade}" filterMatchMode="contains">
+							<h:outputText value="#{result.pontosPorUnidade} pts"
+								style="text-align: center;" />
+						</p:column>
+	
+						<p:column headerText="#{msgs['generico.tabelacoluna.disponibilidade']}" style="text-align: center;"
+							sortBy="#{result.disponivel}">
+							<h:outputText value="#{result.disponivelDesc}" style="text-align: center;max-width: 40px; min-width: 40px;" />
+						</p:column>
+	
+						<p:column headerText="#{msgs['generico.tabelacoluna.quantidade']}" style="text-align: center;"
+							sortBy="#{result.quantidadeEmEstoque}" >
+							<h:outputText rendered="#{result.disponivel}"
+								value="#{result.quantidadeEmEstoque}"
+								style="text-align: center;max-width: 40px; min-width: 40px;" />
+							<h:outputText rendered="#{!result.disponivel}" value="-"
+								style="text-align: center;max-width: 40px; min-width: 40px;" />
+						</p:column>
+	
+					</p:dataTable>
+				</div>
+			</div>
+		</div>
+
+		<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2" style=" margin-top:5px;">
+			<p:outputLabel value="#{msgs['catalogoprodutos.lbl.numerodeprodutoscatalogados']}:" />
+			<p:outputLabel value="#{catalogoBean.listaProduto.size()}" styleClass="input-5left HtmlOutputTextResposta" />
+		</h:panelGrid>
+
+		<hr class="lin" />
+
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
+					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
+					action="/index" ajax="false" />
+				<p:commandButton id="btnAdd"
+					value="#{msgs.btn_cadastrar}"
+					action="#{catalogoBean.addProdutoDialog}" ajax="true"
+					style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+					update=":formDialog:infosCatalogo"
+					rendered="#{loginBean.controladorAcesso.permissaoAdministrador}"
+					oncomplete="dialogCatalogo.show();loadMasksJQuery();" />
+			</div>
+			<div style="height: 10px; width: 10px;"></div>
+		</h:panelGroup>
+			
+	</ui:define>
+
+	<ui:define name="dialog">
+		<p:dialog header="#{catalogoBean.tituloDialog}"
+			widgetVar="dialogCatalogo" resizable="false" modal="true"
+			showEffect="slide" width="500" height="180px;">
+			<h:panelGrid id="infosCatalogo" columns="2"
+				style="margin-bottom:10px">
+
+				<h:outputLabel for="txtCodDialog" value="#{msgs['catalogoprodutos.lbl.codigoproduto']}:"
+					styleClass="HtmlOutputLabelResposta" />
+				<p:inputText id="txtCodDialog"
+					value="#{catalogoBean.produtoDto.codProduto}"
+					onkeypress="return onlyNum(event)"
+					styleClass="HtmlOutputTextResposta" />
+
+				<h:outputLabel for="txtProduto" value="#{msgs['catalogoprodutos.lbl.produto']}:"
+					styleClass="HtmlOutputLabelResposta" />
+				<p:inputText id="txtProduto"
+					value="#{catalogoBean.produtoDto.descProduto}"
+					maxlength="50" />
+
+				<h:outputLabel for="txtCatDialog" value="#{msgs['catalogoprodutos.lbl.categoria']}:"
+					styleClass="HtmlOutputLabelResposta" />
+				<p:selectOneMenu id="txtCatDialog"
+					value="#{catalogoBean.produtoDto.codCategoria.id}" style="width:250px;">
+					<f:selectItems value="#{catalogoBean.comboCategoria}" var="c"
+						itemLabel="#{c.codSecao.descSecao.subSequence(0,1)}#{c.codSecao.descSecao.subSequence(c.codSecao.descSecao.length()-1,c.codSecao.descSecao.length())} - #{c.descCategoria}"
+						itemValue="#{c.codCategoria}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel for="txtPrecoDialog" value="#{msgs['catalogoprodutos.lbl.preco']}:"
+					styleClass="HtmlOutputLabelResposta" />
+				<p:inputText id="txtPrecoDialog"
+					value="#{catalogoBean.produtoDto.preco}" maxlength="10"
+					alt="decimalBr8">
+					<f:converter converterId="decimalConverter" />
+				</p:inputText>
+
+				<h:outputLabel for="txtPontosDialog" value="#{msgs['catalogoprodutos.lbl.pontosund']}:"
+					styleClass="HtmlOutputLabelResposta" />
+				<p:inputText id="txtPontosDialog"
+					value="#{catalogoBean.produtoDto.pontosPorUnidade}"
+					onkeypress="return onlyNum(event)" maxlength="6" />
+
+				<p:commandButton id="btnCancelar" value="#{msgs.btn_cancelar}"
+						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar"
+						oncomplete="dialogCatalogo.hide();" />
+				<p:commandButton
+					update=":formGlobal:tableCatalogo :formGlobal:lblTotalReg"
+					onclick="return validarFormProdutoCatalogo(document.forms[2])"
+					oncomplete="dialogCatalogo.hide();"
+					styleClass="btn btn-zen-2 btn-toolbar"
+					actionListener="#{catalogoBean.executeSaveProdutoDialog()}"
+					value="#{msgs.btn_salvar}" />
+
+			</h:panelGrid>
+		</p:dialog>
+	</ui:define>
+	
+</ui:composition>

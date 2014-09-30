@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet"
+			href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+	</ui:define>
+
+	<ui:define name="jsImports">
+		<script type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/javascript/cadastro/valid-form-produto.js"></script>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>
+			<p:menuitem value="TelaInicial"
+				action="#{estoqueBean.scheduleBean.telaInicial()}" ajax="false" />>  
+		    <p:menuitem value="Produtos" />
+			<p:menuitem value="Estoque" />
+			<p:menuitem value="Consultar Estoque" action="#{estoqueBean.voltarConsultarEstoque()}" ajax="false" />
+			<p:menuitem value="Selecionar produtos para o estoque" />
+		</p:breadCrumb>
+	</ui:define>
+	<ui:param name="titulo" value="Selecionar produtos para o estoque"></ui:param>
+
+	<ui:define name="body_content">
+		<h:panelGrid cellpadding="0" cellspacing="0" columns="1"
+			styleClass="CorpoPagina" border="0">
+
+			<h:panelGroup id="tabela-selecao-produtos">
+				<h:panelGrid columns="1">
+					<h:outputLabel for="txtTipoFluxoDialogEstoque"
+						value="Tipo de Fluxo:" styleClass="" style="" />
+					<p:selectOneMenu id="txtTipoFluxoDialogEstoque" required="true" requiredMessage="O campo TIPO DE FLUXO é necessário."
+						value="#{estoqueBean.tipoFluxoEstoqueAdicionar}" style="width:300px;" converter="genericEntityConverter">
+						<f:selectItems value="#{estoqueBean.cboTipoFluxoEstoque}" var="c" itemLabel="#{c.descFluxoEstoque}" itemValue="#{c}" />
+							<p:ajax listener="#{estoqueBean.filtrarListaPeloTipoDeFluxo()}" update="table-produtos-catalogo botoes-footer lblTotalReg" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				
+				<h:panelGrid id="table-produtos-catalogo" cellpadding="0"
+					cellspacing="0" columns="1" styleClass="centralizar-conteudo"
+					border="0">
+					
+				
+					<p:dataTable id="tableCatalogo"
+						value="#{estoqueBean.listaProdutoCatalogo}" var="result" 
+						rowKey="#{result}" rows="10"
+						styleClass="dataTable"
+						filteredValue="#{estoqueBean.filteredProducts}"
+						paginator="true" paginatorPosition="bottom"
+						emptyMessage="Dados não encontrados">>
+
+						<p:column headerText="CÓDIGO MK" style="text-align: center;" width="5%" 
+								filterBy="#{result.produto.codProduto}" filterMatchMode="contains"
+								sortBy="#{result.produto.codProduto}">
+								<h:outputText value="#{result.produto.codProduto}" style="text-align: center;" />
+							</p:column>
+						<p:column headerText="PRODUTO" width="40%" style="max-width: 400px; min-width: 250px; overflow: hidden"
+							filterBy="#{result.produto.descProduto}" filterMatchMode="contains" filterStyle="width:350px;"
+							sortBy="#{result.produto.descProduto}">
+							<h:outputText value="#{result.produto.descProduto}"
+								style="text-align: left;" />
+						</p:column>
+						<p:column headerText="PONTOS/UND" style="text-align: center;" width="10%" 
+							filterBy="#{result.produto.pontosPorUnidade}" filterMatchMode="contains"
+							sortBy="#{result.produto.pontosPorUnidade}">
+							<h:outputText value="#{result.produto.pontosPorUnidade} pts"
+								style="text-align: center;" />
+						</p:column>
+						
+						<p:column headerText="VALOR UNITÁRIO" style="text-align: center;" width="5%" 
+							filterBy="#{result.produto.preco}" filterMatchMode="contains"
+							sortBy="#{result.produto.preco}">
+							<h:outputText value="R$" style="text-align: right;" />
+							<h:outputText value="#{result.produto.preco}" style="text-align: right;" >
+								<f:converter converterId="decimalConverter" />
+							</h:outputText>
+						</p:column>
+	
+						<p:column headerText="CARRINHO" style="text-align: center;" width="5%"
+							sortBy="#{result.qtdeProdutoCarrinho}" >
+							<h:outputText value="#{result.qtdeProdutoCarrinho}  " />
+						</p:column>
+						<p:column headerText="ATUALIZAR CARRINHO" style="text-align: center;" width="5%" >
+							<p:commandLink actionListener="#{estoqueBean.selectAddProdutoPedido(result)}" update=":formGlobal:infosCarrinho" oncomplete="dialogCarrinho.show()">
+								<p:graphicImage value="/images/cart-icons/icon-1.png" width="22px" height="20px"/>
+							</p:commandLink>
+						</p:column>
+						
+						<p:column headerText="VALOR TOTAL" style="text-align: right;" width="10%"
+							sortBy="#{result.valorTotalProdutoCarrinho}" >
+							<h:outputText value="R$" style="text-align: right;" />
+							<h:outputText value="#{result.valorTotalProdutoCarrinho}" style="text-align: right;" >
+								<f:converter converterId="decimalConverter" />
+							</h:outputText>
+						</p:column>
+						
+						<f:facet name="footer">
+			                <h:outputText value="Total de produtos no carrinho: " /> 
+				            <h:outputText value="#{estoqueBean.totalProdutosMovimentacao}" />  
+			             	<h:outputText style="margin-left:20px;" value="Valor total a pagar: " />  
+						</f:facet>  
+	
+					</p:dataTable>
+					
+					<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
+						style="	margin-top:5px;">
+						<p:outputLabel value="Total de produtos em catalogo:" />
+						<p:outputLabel value="#{estoqueBean.listaProdutoCatalogo.size()}" styleClass="input-5left HtmlOutputTextResposta"/>
+					</h:panelGrid>
+
+			<hr class="lin" />
+
+			<h:panelGroup id="botoes-footer">
+				<div class="buttonFooter">
+					<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
+						style="float:left;" action="#{estoqueBean.voltarConsultarEstoque()}" ajax="false" />
+					<p:commandButton id="btnLimpar" value="Limpar Produtos Selecionados" ajax="true" update="table-produtos-catalogo botoes-footer"
+							actionListener="#{estoqueBean.limparProdutosSelecionados()}" 
+							disabled="#{empty estoqueBean.listaProdutoCatalogoSelecionados}"/>
+					<p:commandButton id="btn-avancar"
+						value="Avançar" disabled="#{empty estoqueBean.listaProdutoCatalogoSelecionados}" 
+						action="#{estoqueBean.selecionarQuantidadeProdutosEstoque()}" ajax="false"
+						style="margin-left:5px;"
+						/>
+				</div>
+				<div style="height: 10px; width: 10px;"></div>
+			</h:panelGroup>
+		</h:panelGrid>
+	</ui:define>
+
+</ui:composition>

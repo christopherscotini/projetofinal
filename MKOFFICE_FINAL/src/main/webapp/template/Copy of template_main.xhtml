@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html;CHARSET=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/estilos.css" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/defaultPrimefaces.css" />
+	<ui:insert name="cssImports" />
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/jquery.meio.mask.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/utils.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/primefaces-locale.js"></script>
+	<link rel="shortcut icon" type="image/jpg" href="#{request.contextPath}/resources/images/logo.jpg" />
+	<ui:insert name="jsImports" />
+	<title>MK Office</title>
+</h:head>
+
+<h:body onload="loadMasksJQuery();">
+<f:loadBundle basename="br.com.mkoffice.view.bundle.Messages" var="msgs" />
+	<div id="header">
+		<h:panelGroup rendered="#{!empty loginBean.usuario.dadosPessoa.nome}">
+			<div id="user_title" align="right">
+				<h:outputLabel value="#{loginBean.usuario.dadosPessoa.nome}" />
+			</div>
+		</h:panelGroup>
+	</div>
+
+	
+	<div id="main_body" align="left" >
+<!-- 		<table border="0" style="border-color: #F9F9F9;"> -->
+<!-- 			<tr> -->
+<!-- 				<td > -->
+					<div id="menu_leftside_bar" >
+						<ui:include src="../content/menu2xhtml"/> 								 
+					</div>
+<!-- 				</td> -->
+<!-- 				<td width="100%"> -->
+					<div id="body_content" >
+						<h:form id="formGlobal" enctype="#{formMultipart}">
+							<div id="beadcrumBar">
+								<ui:insert name="breadcrumb" />
+							</div>
+							<div id="main_title" align="center">
+								<h1 class="portal_titulo"> <h:outputText value="#{titulo}" /> </h1>
+							</div>
+							
+							<p:growl id="messagesGlobal" globalOnly="true" escape="false" />
+							
+							<p:dialog modal="true"  widgetVar="statusDialog" draggable="false" resizable="false" closable="false">  
+							    <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
+							</p:dialog>  
+							
+							<ui:insert name="body_content" />
+						</h:form>
+					</div>
+			
+						<h:form id="formDialog" enctype="#{formMultipart}">
+							<p:growl id="messagesDialog" globalOnly="true" escape="false" />
+							<ui:insert name="dialog" />
+						</h:form>
+						<h:form id="formDialog2" enctype="#{formMultipart}">
+							<p:growl id="messagesDialog2" globalOnly="true" escape="false" />
+							<ui:insert name="dialog2" />
+						</h:form>			
+<!-- 				</td> -->
+<!-- 			</tr> -->
+<!-- 		</table> -->
+	</div>
+	
+</h:body>
+</html>

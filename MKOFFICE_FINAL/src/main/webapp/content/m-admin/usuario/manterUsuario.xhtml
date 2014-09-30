@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+	</ui:define>
+	
+	<ui:define name="jsImports">
+		<script type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/javascript/menu_admin/manter-usuario.js"></script>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['manterusuario.breadcumb.administrador']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['manterusuario.breadcumb.administrador.manterusuario']}</li>
+		</ul>
+	</ui:define>
+	
+	<ui:define name="body_content">
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
+				<i class="icon-table"></i> #{msgs['manterusuario.titulotabela.usuarioscadastrados']}</a>
+			</div>
+			<div id="si" class="widget-body collapse in">
+				<div class="widget-inner">
+					<p:dataTable id="tableUsuarios" 
+							style="margin-top:20px;"
+							var="result" 
+							rows="10" 
+							rowKey="#{result}" 
+							selectionMode="single"
+							selection="#{usuarioBean.usuarioSelecionado}"
+							value="#{usuarioBean.usuarios}" 
+							filteredValue="#{usuarioBean.filteredUsuarios}"
+							paginator="true"
+							paginatorPosition="bottom" 
+							emptyMessage="">
+		
+						<p:ajax event="rowSelect" update=":formGlobal:btnDetalhar" />
+						<p:ajax event="rowUnselect" update=":formGlobal:btnDetalhar" />
+		
+						<p:column headerText="#{msgs['generico.tabelacoluna.nome']}" width="50%" 
+								filterBy="#{result.dadosPessoa.nome}" filterMatchMode="contains" filterStyle="width:350px;"
+								sortBy="#{result.dadosPessoa.nome}" >
+							<h:outputText value="#{result.dadosPessoa.nome}" style="text-align: left;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.email']}" width="30%" style="text-align: center;" 
+								filterBy="#{result.dadosPessoa.email}" filterMatchMode="contains" filterStyle="width:350px;"
+								sortBy="#{result.dadosPessoa.email}" >
+							<h:outputText value="#{result.dadosPessoa.email}" style="text-align: center;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.perfil']}" width="10%" style="text-align: center;" 
+								filterBy="#{result.permissao.descPermissao}" filterMatchMode="contains"
+								sortBy="#{result.permissao.descPermissao}" >
+							<h:outputText value="#{result.permissao.descPermissao}" style="text-align: center;" />
+						</p:column>
+						
+					</p:dataTable>
+				</div>
+			</div>
+		</div>
+		
+		<h:panelGroup>
+			<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
+					style="	margin-top:5px;">
+					<p:outputLabel value="#{msgs['manterusuario.lbl.totalusuarioscadastrados']}:" />
+					<p:outputLabel value="#{usuarioBean.usuarios.size()}" styleClass="input-5left HtmlOutputTextResposta" />
+			</h:panelGrid>
+		</h:panelGroup>
+		
+		<hr class="lin" />
+			
+		<h:panelGroup id="group-botoes-footer">
+			<div class="buttonFooter" >
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
+					style="float:left;"
+					styleClass="btn btn-zen-5 btn-toolbar"
+					action="/index" ajax="false" />
+				
+<!-- 					<p:commandButton id="btnAlterar" value="#{msgs.btn_alterar}" -->
+<!-- 						action="#{usuarioBean.navegarAlterarUsuario()}" ajax="true"  -->
+<!-- 						disabled="#{empty usuarioBean.usuarioSelecionado}"  -->
+<!-- 						style="margin-left:5px;" -->
+<!-- 					 	update=":formDialog:infosUsuario" -->
+<!-- 						oncomplete="dialogUsuario.show();loadMasksJQuery();" /> -->
+				
+				<p:commandButton id="btnDetalhar" value="#{msgs.btn_detalhar}"
+					action="#{usuarioBean.navegarDetalharUsuario()}" ajax="false"
+					style="margin-left:5px;"
+					styleClass="btn btn-zen-2 btn-toolbar"
+					disabled="#{empty usuarioBean.usuarioSelecionado}" />
+			</div>
+			<div style="height: 10px;width: 10px;"></div>
+		</h:panelGroup>
+		
+	</ui:define>
+
+	</ui:composition>

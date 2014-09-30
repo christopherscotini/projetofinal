@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+	</ui:define>
+	
+	<ui:define name="jsImports">
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>  
+		    <p:menuitem value="TelaInicial" action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false"/> 
+		    <p:menuitem value="Categorias" />  
+		    <p:menuitem value="Lista de Categorias" action="#" ajax="false" />  
+		    <p:menuitem value="#{categoriaBean.tituloTelaIncAltCategoria}" action="#" ajax="false" />  
+		</p:breadCrumb>  
+	</ui:define>
+	<ui:param name="titulo" value="#{categoriaBean.tituloTelaIncAltCategoria}" />
+
+	<ui:define name="body_content">
+
+		<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
+			<h:panelGroup id="tabela-dados-cliente" >
+				<h:panelGrid cellpadding="0" cellspacing="1" columns="2" style="margin-top:5px;margin-bottom:25px;">
+					<p:outputLabel value="Descrição da Categoria:" for="txtCat" styleClass="HtmlOutputLabelResposta" />
+					<p:inputText id="txtCat" value="#{categoriaBean.categoria.descCategoria}" size="50" styleClass="input-5left" required="true" requiredMessage="O campo DESCRIÇÃO DA CATEGORIA é necessário." >
+						<f:validateLength minimum="3" for="txtNome"/>
+					</p:inputText>
+					<p:outputLabel for="cboSecao" value="Seção" styleClass="HtmlOutputLabelResposta"/>
+					<p:selectOneMenu id="cboSecao" value="#{categoriaBean.categoria.codSecao.codSecao}" style="margin-left:5px;" required="true" requiredMessage="O campo COD. SEÇÃO é necessário.">
+						<f:selectItem itemLabel="Seção 1" itemValue="1"/>
+						<f:selectItem itemLabel="Seção 2" itemValue="2"/>
+					</p:selectOneMenu>
+				</h:panelGrid>
+			</h:panelGroup>
+	
+			<hr class="lin"/>
+			
+			<h:panelGroup>
+				<div class="buttonFooter">
+					<p:commandButton id="btnVoltar" value="Voltar" ajax="false" action="#{categoriaBean.voltarInclusao()}" style="float:left" immediate="true" />
+					<p:commandButton id="btnLimpar" value="Limpar" ajax="false"  action="#{categoriaBean.limparFormulario()}"  immediate="true" style="margin-left:5px;"/>
+					<p:commandButton id="btnSalvar" value="Salvar" ajax="false" action="#{categoriaBean.executeSave()}" style="margin-left:5px;" />
+				</div>
+			</h:panelGroup>
+			
+		</h:panelGrid>
+		
+	</ui:define>
+
+</ui:composition>

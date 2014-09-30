@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+	</ui:define>
+	
+	<ui:define name="jsImports">
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/menu_estoque/validate_pedido.js" />
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>  
+		    <p:menuitem value="TelaInicial" action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false"/>  
+		    <p:menuitem value="Efetuar Pedido" />  
+		    <p:menuitem value="Incluir Produtos no Pedido"  />  
+		</p:breadCrumb>  
+	</ui:define>
+	<ui:param name="titulo" value="Incluir Produtos no Pedido" />
+
+	<ui:define name="body_content">
+		<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
+			<h:panelGroup id="tabela-selecao-produtos">
+					<h:panelGrid id="table-produtos-catalogo" cellpadding="0" cellspacing="0" columns="1" styleClass="centralizar-conteudo" border="0">
+						<p:dataTable id="tableCatalogo" 
+							value="#{efetuarPedidoBean.listaProdutosEmCatalogo}" var="result"
+							rowKey="#{result}" rows="10"
+							editable="true" editMode="cell"
+							selection="#{efetuarPedidoBean.listaProdutosInclusosPedido}"
+							filteredValue="#{efetuarPedidoBean.filteredProducts}"
+							styleClass="dataTable"
+							paginator="true" paginatorPosition="bottom"
+							emptyMessage="Dados não encontrados">
+		
+							<f:facet name="header">  
+					            Catalogo de produtos
+					        </f:facet>
+		
+							<p:column headerText="CÓDIGO MK" style="text-align: center;" width="5%" 
+								filterBy="#{result.produto.codProduto}" filterMatchMode="contains"
+								sortBy="#{result.produto.codProduto}">
+								<h:outputText value="#{result.produto.codProduto}" style="text-align: center;" />
+							</p:column>
+							<p:column headerText="PRODUTO" width="40%" style="max-width: 400px; min-width: 250px; overflow: hidden"
+								filterBy="#{result.produto.descProduto}" filterMatchMode="contains" filterStyle="width:350px;"
+								sortBy="#{result.produto.descProduto}">
+								<h:outputText value="#{result.produto.descProduto}"
+									style="text-align: left;" />
+							</p:column>
+							<p:column headerText="PONTOS/UND" style="text-align: center;" width="10%" 
+								filterBy="#{result.produto.pontosPorUnidade}" filterMatchMode="contains"
+								sortBy="#{result.produto.pontosPorUnidade}">
+								<h:outputText value="#{result.produto.pontosPorUnidade} pts"
+									style="text-align: center;" />
+							</p:column>
+							
+							<p:column headerText="VALOR UNITÁRIO" style="text-align: center;" width="5%" 
+								filterBy="#{result.produto.preco}" filterMatchMode="contains"
+								sortBy="#{result.produto.preco}">
+								<h:outputText value="R$" style="text-align: right;" />
+								<h:outputText value="#{result.produto.preco}" style="text-align: right;" >
+									<f:converter converterId="decimalConverter" />
+								</h:outputText>
+							</p:column>
+		
+							<p:column headerText="CARRINHO" style="text-align: center;" width="5%"
+								sortBy="#{result.qtdeProdutoCarrinho}" >
+								<h:outputText value="#{result.qtdeProdutoCarrinho}  " />
+							</p:column>
+							<p:column headerText="ATUALIZAR CARRINHO" style="text-align: center;" width="5%" >
+								<p:commandLink actionListener="#{efetuarPedidoBean.selectAddProdutoPedido(result)}" update=":formGlobal:infosCarrinho" oncomplete="dialogCarrinho.show()">
+									<p:graphicImage value="/images/cart-icons/icon-1.png" width="22px" height="20px"/>
+								</p:commandLink>
+							</p:column>
+							
+							<p:column headerText="VALOR TOTAL" style="text-align: right;" width="10%"
+								sortBy="#{result.valorTotalProdutoCarrinho}" >
+								<h:outputText value="R$" style="text-align: right;" />
+								<h:outputText value="#{result.valorTotalProdutoCarrinho}" style="text-align: right;" >
+									<f:converter converterId="decimalConverter" />
+								</h:outputText>
+							</p:column>
+							
+							<f:facet name="footer">
+				                <h:outputText value="Total de produtos no carrinho: " /> 
+					            <h:outputText value="#{efetuarPedidoBean.totalProdutosPedido}" />  
+				             	<h:outputText style="margin-left:20px;" value="Valor total a pagar: " />  
+				                <h:panelGroup>
+									<h:outputText value="R$" styleClass="input-5left HtmlOutputTextResposta"/>
+					                <h:outputText value="#{efetuarPedidoBean.totalAPagar}" >
+					                	<f:converter converterId="decimalConverter" />
+					                </h:outputText>  
+				                </h:panelGroup>
+							</f:facet>  
+		
+						</p:dataTable>
+						
+						<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
+							style="	margin-top:5px;">
+							<p:outputLabel value="Total de produtos em catalogo:" />
+							<p:outputLabel value="#{efetuarPedidoBean.listaProdutosEmCatalogo.size()}" styleClass="input-5left HtmlOutputTextResposta"/>
+						</h:panelGrid>
+						
+					<hr class="lin" />
+					
+					<h:panelGroup>
+						<div class="buttonFooter">
+							<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false"
+								action="/index" styleClass="botao-voltar" />
+							<p:commandButton id="btnLimpar" value="Limpar carrinho de produtos" 
+											 ajax="true" 
+											 update="table-produtos-catalogo :formGlobal:btn-avancar"
+											 actionListener="#{efetuarPedidoBean.limparProdutosSelecionados()}" />
+							<p:commandButton id="btn-avancar" 
+											 value="#{msgs.btn_avancar}" 
+											 disabled="#{!efetuarPedidoBean.habilitaBtnAvancarSelecProdutoPedido()}"
+											 ajax="false" style="margin-left:5px;"
+											 action="#{efetuarPedidoBean.navegarRevisarPedido()}" />
+							<div style="height: 10px;width: 10px;"></div>	
+						</div>
+					</h:panelGroup>
+					
+				</h:panelGrid>
+			</h:panelGroup><!-- FIM GROUP id=tabela-selecao-produtos -->
+		
+		</h:panelGrid>
+		
+		<p:dialog header="CARRINHO"
+			widgetVar="dialogCarrinho" resizable="false" modal="true"
+			showEffect="slide" width="500" height="180px;" closable="false">
+			<h:panelGrid id="infosCarrinho" columns="2"
+				style="margin-bottom:10px">
+
+				<p:outputLabel value="Produto:" for="txtProdutoDesc" styleClass="HtmlOutputLabelResposta" />
+				<p:outputLabel value="#{efetuarPedidoBean.produtoSelecionadoAddCart.produto.descProduto}" id="txtProdutoDesc" styleClass="HtmlOutputLabelResposta" />
+				
+				<p:outputLabel value="Quantidade:" for="txtQuantidade" styleClass="HtmlOutputLabelResposta" />
+				<p:spinner id="txtQuantidade" maxlength="3" size="4" min="0" value="#{efetuarPedidoBean.produtoSelecionadoAddCart.qtdeProdutoCarrinho}" 
+						onkeypress="return bloquearDigitacaoCampoQtdeProduto(event)" />
+				
+				<h:panelGroup></h:panelGroup>
+				<p:commandButton
+					update=":formGlobal:table-produtos-catalogo :formGlobal:btn-avancar"
+					oncomplete="dialogCarrinho.hide();"
+					actionListener="#{efetuarPedidoBean.addProdutoPedido()}"
+					value="Atualizar carrinho" />
+			</h:panelGrid>
+		</p:dialog>
+		
+	</ui:define>
+	
+
+</ui:composition>

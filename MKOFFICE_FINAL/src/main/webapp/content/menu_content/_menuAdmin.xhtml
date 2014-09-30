@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pass="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:loadBundle basename="br.com.mkoffice.view.bundle.Messages" var="msgs" />
+	
+	<ui:fragment rendered="#{loginBean.controladorAcesso.permissaoAdministrador}">
+		<li id="menuAdmin" class="dropdown"><a href="/index.xhtml" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-cog"></i><br />
+			#{msgs['menu.lbl.admin']}<b class="caret"></b></a>
+			
+			<ul class="dropdown-menu submenu">
+				<li><h:commandLink action="#{usuarioBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.usuarios.manterusuarios']}" /> </li>
+				<li><h:commandLink action="#{permissaoBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.usuarios.manterpermissoes']}" /> </li>
+				<li><h:commandLink action="#{fluxoEstoqueBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.estoque.manterfluxoestoque']}" /> </li>
+				<li><h:commandLink action="#{formaPagamentoBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.pagamento.formapagamento']}" /> </li>
+				<li><h:commandLink action="#{cargaCatalogoBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.produto.catalogo']}" /> </li>
+				<li><h:commandLink action="#{categoriaBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.produto.categoria']}" /> </li>
+			</ul>
+			
+		</li>
+	</ui:fragment>
+	
+
+
+</ui:composition>

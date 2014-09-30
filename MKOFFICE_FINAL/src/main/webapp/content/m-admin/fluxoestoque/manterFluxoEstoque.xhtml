@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+	</ui:define>
+	
+	<ui:define name="jsImports">
+		<script type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/javascript/menu_admin/manter-fluxo-estoque.js"></script>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['manterfluxoestoque.breadcumb.administrador']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['manterfluxoestoque.breadcumb.administrador.manterfluxoestoque']}</li>
+		</ul>
+	</ui:define>
+	
+	<ui:define name="body_content">
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
+				<i class="icon-table"></i> #{msgs['manterfluxoestoque.titulotabela.fluxoestoquecadastradas']}</a>
+			</div>
+			<div id="si" class="widget-body collapse in">
+				<div class="widget-inner">
+					<p:dataTable id="tableFluxoEstoque" 
+							style="margin-top:20px;"
+							var="result" 
+							rows="10" 
+							rowKey="#{result}" 
+							selectionMode="single"
+							selection="#{fluxoEstoqueBean.fluxoSelecionada}"
+							filteredValue="#{fluxoEstoqueBean.filteredValue}"
+							value="#{fluxoEstoqueBean.fluxos}" 
+							paginator="true"
+							paginatorPosition="bottom" 
+							emptyMessage="">
+
+						<p:ajax event="rowSelect" update=":formGlobal:btnAlterar :formGlobal:btnLimpar" />
+						<p:ajax event="rowUnselect" update=":formGlobal:btnAlterar :formGlobal:btnLimpar" />
+				        
+						<p:column headerText="#{msgs['generico.tabelacoluna.fluxoestoque']}" width="30%" style="text-align: center;" 
+								  filterBy="#{result.descFluxoEstoque}" filterMatchMode="contains" filterStyle="width:350px;"
+								  sortBy="#{result.descFluxoEstoque}">
+							<h:outputText value="#{result.descFluxoEstoque}" style="text-align: center;" />
+						</p:column>
+						
+					</p:dataTable>
+				</div>
+			</div>
+		</div>
+					
+		<h:panelGroup>
+			<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
+					style="	margin-top:5px;">
+					<p:outputLabel value="#{msgs['manterfluxoestoque.lbl.totalfluxoestoquecadastrados']}:" />
+					<p:outputLabel value="#{fluxoEstoqueBean.fluxos.size()}" styleClass="input-5left HtmlOutputTextResposta" />
+			</h:panelGrid>
+		</h:panelGroup>
+						
+		
+		<hr class="lin" />
+			
+		<h:panelGroup id="group-botoes-footer">
+			<div class="buttonFooter" >
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
+					style="float:left;" action="/index" ajax="false" />
+				<p:commandButton id="btnLimpar" value="#{msgs.btn_desmarcarselecionado}"
+					action="#{fluxoEstoqueBean.limparSelecaoTabela()}" ajax="true" disabled="#{empty fluxoEstoqueBean.fluxoSelecionada}"
+					style="margin-left:5px;" update="tableFluxoEstoque group-botoes-footer" />
+				
+				<p:commandButton id="btnAlterar" value="#{msgs.btn_alterar}"
+					action="#{fluxoEstoqueBean.navegarAlterarFluxo()}" ajax="true" 
+					disabled="#{empty fluxoEstoqueBean.fluxoSelecionada}" 
+					style="margin-left:5px;"
+				 	update=":formDialog:infosPermissao"
+					oncomplete="dialogFluxoEstoque.show();loadMasksJQuery();" />
+				
+				<p:commandButton id="btnCadastrar" value="#{msgs.btn_cadastrar}"
+					action="#{fluxoEstoqueBean.navegarIncluirFluxo()}" ajax="true"
+					style="margin-left:5px;"
+				 	update=":formDialog:infosPermissao"
+					oncomplete="dialogFluxoEstoque.show();loadMasksJQuery();" />
+			</div>
+			<div style="height: 10px;width: 10px;"></div>
+		</h:panelGroup>
+		
+	</ui:define>
+	
+	
+	<ui:define name="dialog">
+		<p:dialog header="#{fluxoEstoqueBean.tituloTelaIncAltFluxo}"
+			widgetVar="dialogFluxoEstoque" resizable="false" modal="true"
+			showEffect="slide" width="500" height="180px;">
+			<h:panelGrid id="infosPermissao" columns="2"
+				style="margin-bottom:10px">
+
+				<p:outputLabel value="#{msgs['manterfluxoestoque.lbl.fluxo']}:" for="txtFluxoEstoque" styleClass="HtmlOutputLabelResposta" />
+				<p:inputText id="txtFluxoEstoque" value="#{fluxoEstoqueBean.fluxo.descFluxoEstoque}" size="50" styleClass="input-5left" required="true" requiredMessage="O campo PERMISSÃO é necessário." >
+					<f:validateLength minimum="3" for="txtFluxoEstoque"/>
+				</p:inputText>
+
+				<p:selectBooleanCheckbox id="chkFluxoSaida" value="#{fluxoEstoqueBean.fluxo.fluxoSaida}" styleClass="" style="float: right"  />
+				<p:outputLabel value="#{msgs['manterfluxoestoque.lbl.fluxosaida']}?" for="chkFluxoSaida" styleClass="input-5left" />
+
+				<p:commandButton id="btnCancelar" value="#{msgs.btn_cancelar}"
+						style="float:right;" 
+						styleClass="btn btn-zen-5 btn-toolbar" 
+						oncomplete="dialogFluxoEstoque.hide();" />
+						
+				<p:commandButton
+					update=":formGlobal:tableFluxoEstoque :formGlobal:lblTotalReg"
+					onclick="return validateForm(document.forms[2])"
+					styleClass="btn btn-zen-2 btn-toolbar"
+					oncomplete="dialogFluxoEstoque.hide();"
+					actionListener="#{fluxoEstoqueBean.executeSave()}"
+					value="#{msgs.btn_salvar}" />
+			</h:panelGrid>
+		</p:dialog>
+	</ui:define>
+
+
+	</ui:composition>

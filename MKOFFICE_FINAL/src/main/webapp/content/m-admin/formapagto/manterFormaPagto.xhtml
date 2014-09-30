@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+	</ui:define>
+	
+	<ui:define name="jsImports">
+		<script type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/javascript/menu_admin/manter-forma-pagto.js"></script>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['manterformapagto.breadcumb.administrador']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['manterformapagto.breadcumb.administrador.manterfluxopagto']}</li>
+		</ul>
+	</ui:define>
+	
+	<ui:define name="body_content">
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
+				<i class="icon-table"></i> #{msgs['manterusuario.titulotabela.usuarioscadastrados']}</a>
+			</div>
+			<div id="si" class="widget-body collapse in">
+				<div class="widget-inner">
+					<p:dataTable id="tableFormaPagto" 
+							style="margin-top:20px;"
+							var="result" 
+							rows="10" 
+							rowKey="#{result}" 
+							selectionMode="single"
+							selection="#{formaPagamentoBean.formaPagtoSelecionada}"
+							filteredValue="#{formaPagamentoBean.filteredValue}"
+							value="#{formaPagamentoBean.formaPagtos}" 
+							paginator="true"
+							paginatorPosition="bottom" 
+							emptyMessage="">
+
+						<p:ajax event="rowSelect" update=":formGlobal:btnAlterar :formGlobal:btnLimpar" />
+						<p:ajax event="rowUnselect" update=":formGlobal:btnAlterar :formGlobal:btnLimpar" />
+	
+						<p:column headerText="FORMA DE PAGAMENTO" width="30%" style="text-align: center;" 
+								  filterBy="#{result.descFormaPgto}" filterMatchMode="contains" filterStyle="width:350px;"
+								  sortBy="#{result.descFormaPgto}">
+							<h:outputText value="#{result.descFormaPgto}"
+								style="text-align: center;" />
+						</p:column>
+						
+					</p:dataTable>
+				</div>
+			</div>
+		</div>
+					
+		<h:panelGroup>
+			<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
+					style="	margin-top:5px;">
+					<p:outputLabel value="#{msgs['manterformapagto.lbl.formaspagtocadastrados']}:" />
+					<p:outputLabel value="#{formaPagamentoBean.formaPagtos.size()}" styleClass="input-5left HtmlOutputTextResposta" />
+			</h:panelGrid>
+		</h:panelGroup>
+						
+		
+		<hr class="lin" />
+			
+		<h:panelGroup id="group-botoes-footer">
+			<div class="buttonFooter" >
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
+					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
+					action="/index" ajax="false" />
+				<p:commandButton id="btnLimpar" value="Limpar usuario selecionado"
+					action="#{formaPagamentoBean.limparSelecaoTabela()}" 
+					ajax="true" disabled="#{empty formaPagamentoBean.formaPagtoSelecionada}"
+					style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+					update="tableFormaPagto group-botoes-footer" />
+				
+				<p:commandButton id="btnAlterar" value="#{msgs.btn_alterar}"
+					action="#{formaPagamentoBean.navegarAlterarFluxo()}" ajax="true" 
+					disabled="#{empty formaPagamentoBean.formaPagtoSelecionada}" 
+					style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+				 	update=":formDialog:infosFormaPagto"
+					oncomplete="dialogFormapagto.show();loadMasksJQuery();" />
+				
+				<p:commandButton id="btnCadastrar" value="#{msgs.btn_cadastrar}"
+					action="#{formaPagamentoBean.navegarIncluirFluxo()}" ajax="true"
+					style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+				 	update=":formDialog:infosFormaPagto"
+					oncomplete="dialogFormapagto.show();loadMasksJQuery();" />
+			</div>
+			<div style="height: 10px;width: 10px;"></div>
+		</h:panelGroup>
+		
+	</ui:define>
+	
+	
+	<ui:define name="dialog">
+		<p:dialog header="#{formaPagamentoBean.tituloTelaIncAltFormaPagto}"
+			widgetVar="dialogFormapagto" resizable="false" modal="true"
+			showEffect="slide" width="500" height="180px;">
+			<h:panelGrid id="infosFormaPagto" columns="2"
+				style="margin-bottom:10px">
+
+				<p:outputLabel value="Forma de Pagamento?" for="txtFormaPagto" styleClass="HtmlOutputLabelResposta" />
+				<p:inputText id="txtFormaPagto" value="#{formaPagamentoBean.formaPagto.descFormaPgto}" size="50" styleClass="input-5left" required="true" requiredMessage="O campo PERMISSÃO é necessário." >
+					<f:validateLength minimum="3" for="txtFormaPagto"/>
+				</p:inputText>
+
+				<p:outputLabel value="Possui Parcela?" for="chkPossuiParcela" styleClass="input-5left" />
+				<p:selectBooleanCheckbox id="chkPossuiParcela" value="#{formaPagamentoBean.formaPagto.possuiParcelas}" styleClass="" style="float: left;margin-left:5px;"  >
+					<p:ajax update="infosFormaPagto" />
+				</p:selectBooleanCheckbox>
+
+				<p:outputLabel id="lblTxtNumParcelas" value="N° de parcelas:" for="txtNumParcelas" styleClass="HtmlOutputLabelResposta" rendered="#{formaPagamentoBean.formaPagto.possuiParcelas}"/>
+				<p:spinner id="txtNumParcelas" maxlength="3" size="4" min="1"
+					rendered="#{formaPagamentoBean.formaPagto.possuiParcelas}"
+					value="#{formaPagamentoBean.formaPagto.numeroParcelas}" 
+					onkeypress="return bloquearDigitacaoCampoQtdeProduto(event)" 
+					validatorMessage="A Quantidade deve ser Maior que ZERO." >
+				</p:spinner>
+
+				<p:commandButton id="btnCancelar" value="Cancelar"
+						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar"
+						oncomplete="dialogFormapagto.hide();" />
+				<p:commandButton
+					update=":formGlobal:tableFormaPagto :formGlobal:lblTotalReg"
+					onclick="return validateForm(document.forms[2])"
+					styleClass="btn btn-zen-2 btn-toolbar"
+					oncomplete="dialogFormapagto.hide();"
+					actionListener="#{formaPagamentoBean.executeSave()}"
+					value="Manter Forma de pagamento" />
+			</h:panelGrid>
+		</p:dialog>
+	</ui:define>
+
+
+	</ui:composition>

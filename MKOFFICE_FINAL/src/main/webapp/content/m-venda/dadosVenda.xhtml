@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/menu/pedidos/pedido-ui.css" />
+	</ui:define>
+	
+	<ui:define name="jsImports">
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/menu_estoque/validate_pedido.js" />
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>  
+		    <p:menuitem value="TelaInicial" action="#{efetuarVendaBean.scheduleBean.telaInicial()}" ajax="false"/>  
+		    <p:menuitem value="Venda" action="#{efetuarVendaBean.scheduleBean.telaInicial()}" ajax="false" />  
+		    <p:menuitem value="Efetuar Venda" action="#{efetuarVendaBean.iniciarTela()}" ajax="false" />  
+		    <p:menuitem value="Selecionar cliente" action="#{efetuarVendaBean.voltarParaSelecionarClientes}" ajax="false"/>  
+		    <p:menuitem value="Selecionar Produtos" action="#{efetuarVendaBean.voltarParaSelecionarProdutos()}" />  
+		    <p:menuitem value="Dados da venda"  />  
+		</p:breadCrumb>  
+	</ui:define>
+	<ui:param name="titulo" value="Dados da venda" />
+
+	<ui:define name="body_content">
+		<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
+				
+
+			<h:panelGroup id="group-revisao-venda">
+				<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="DADOS DO PEDIDO" />
+				<hr class="lin"></hr>
+				<h:panelGrid cellpadding="0" cellspacing="0" columns="2" border="0" style="margin-top:10px;">
+					
+					<p:outputLabel value="Data da venda:" for="txtDataVenda" styleClass="HtmlOutputLabelResposta"/>
+					<p:calendar id="txtDataVenda"	value="#{efetuarVendaBean.venda.dataVenda}" size="13"  pattern="dd/MM/yyyy" alt="date" required="true" requiredMessage="Data da venda obrigatória." />
+					
+					<p:outputLabel value="Total de Pontos:" for="txtTotPontos" styleClass="HtmlOutputLabelResposta"/>
+					<p:outputLabel value="#{efetuarVendaBean.venda.qtdeTotalPontosVendidos} pts" id="txtTotPontos" styleClass="input-5left HtmlOutputTextResposta" />
+
+					<p:outputLabel value="Valor total da venda:" for="txtValorVenda" styleClass="HtmlOutputLabelResposta"/>
+					<h:panelGroup>
+						<p:outputLabel value="R$" for="txtValorVenda" styleClass="input-5left HtmlOutputTextResposta"/>
+						<h:outputLabel id="txtValorVenda" value="#{efetuarVendaBean.venda.valorVenda}" styleClass="input-5left HtmlOutputTextResposta">
+							<f:converter converterId="decimalConverter" />
+						</h:outputLabel>
+					</h:panelGroup>
+
+					<p:outputLabel value="Desconto de:" for="txtValorTotalDesc"
+						styleClass="HtmlOutputLabelResposta" />
+					<p:inputText value="#{efetuarVendaBean.venda.valorDescontoVenda}"
+						id="txtValorTotalDesc" alt="decimalBr8" size="13" maxlength="8">
+						<f:converter converterId="decimalConverter" />
+						<p:ajax event="blur" listener="#{efetuarVendaBean.onBlurValorDesconto()}" update="group-valor-final group-valor-lucro" />
+					</p:inputText>
+
+					<p:outputLabel value="Valor total a cobrar:" for="txtValorTotalPedido" styleClass="HtmlOutputLabelResposta"/>
+					<h:panelGroup id="group-valor-final">
+						<p:outputLabel value="R$" for="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta"/>
+						<h:outputLabel value="#{efetuarVendaBean.totalAPagar}" id="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta">
+							<f:converter converterId="decimalConverter" />
+						</h:outputLabel>
+					</h:panelGroup>
+
+					<p:outputLabel value="Lucro estimado:" for="txtValorLucroEst"
+						styleClass="HtmlOutputLabelResposta" />
+					<h:panelGroup id="group-valor-lucro">
+						<p:outputLabel value="R$" for="txtValorLucroEst" styleClass="input-5left HtmlOutputTextResposta"/>
+						<h:outputLabel id="txtValorLucroEst" value="#{efetuarVendaBean.totalLucro}" styleClass="input-5left HtmlOutputTextResposta">
+							<f:converter converterId="decimalConverter" />
+						</h:outputLabel>
+					</h:panelGroup>
+
+				</h:panelGrid>
+			</h:panelGroup>
+			
+		
+			<h:panelGroup id="tabela-selecao-produtos">
+					<h:panelGrid cellpadding="0" cellspacing="1" styleClass="centralizar-conteudo" style="margin-top:20px;">
+						<p:fieldset legend="Produtos Inclusos no Pedido" toggleable="true" collapsed="true" styleClass="field-produtos-inclusos-venda">	
+							<p:dataTable id="tableCatalogo"
+									value="#{efetuarVendaBean.listaProdutosSelecionadosParaVenda}" var="result"
+									rowKey="#{result}" 
+									rows="10"
+									styleClass="dataTable"
+									paginator="true" paginatorPosition="bottom"
+									emptyMessage="Dados não encontrados">
+			
+									<p:column headerText="CÓDIGO MK" style="text-align: center;"
+										width="10%" sortBy="#{result.codCatalogo.codProduto}">
+										<h:outputLabel value="#{result.codCatalogo.codProduto}"
+											style="text-align: center;" />
+									</p:column>
+									<p:column headerText="PRODUTO" width="80%" sortBy="#{result.codCatalogo.descProduto}">
+										<h:outputLabel value="#{result.codCatalogo.descProduto}"
+											style="text-align: left;" />
+									</p:column>
+									<p:column headerText="VALOR UNITÁRIO" style="text-align: center;" width="5%" 
+										sortBy="#{result.codCatalogo.preco}">
+										<h:outputLabel value="R$" style="text-align: right;" />
+										<h:outputLabel value="#{result.codCatalogo.preco}" style="text-align: right;" >
+											<f:converter converterId="decimalConverter" />
+										</h:outputLabel>
+									</p:column>
+									<p:column headerText="QTDE" style="text-align: center;" width="10%" sortBy="#{result.qtdeMovimentadoProduto}" >
+										<h:outputLabel value="#{result.qtdeMovimentadoProduto}" style="text-align: center;" />
+									</p:column>
+									<p:column headerText="VALOR TOTAL" style="text-align: right;" width="10%" >
+										<h:outputLabel value="R$" style="text-align: right;" />
+										<h:outputLabel value="#{result.valorTotalMovimentadoProduto}" style="text-align: right;" >
+											<f:converter converterId="decimalConverter" />
+										</h:outputLabel>
+									</p:column>
+							</p:dataTable>
+							
+							<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="4" style="margin-top:5px;">
+								<p:outputLabel value="Nº de produtos:" />
+								<p:outputLabel value="#{efetuarVendaBean.lblNumeroProdutosPedido}"
+									styleClass="input-5left HtmlOutputTextResposta" />
+
+								<p:outputLabel value="Nº de Itens" style="margin-left:10px;" />
+								<p:outputLabel value="#{efetuarVendaBean.lblNumeroItensPedido}"
+									styleClass="input-5left HtmlOutputTextResposta" />
+									
+							</h:panelGrid>
+							
+						</p:fieldset>
+						
+						<hr class="lin"></hr>
+					
+						<h:panelGroup>
+							<div class="buttonFooter">
+								<p:commandButton id="btnVoltar" value="Voltar" ajax="false" style="float:left;"
+									action="#{efetuarVendaBean.voltarParaSelecionarProdutos()}" immediate="true"  />
+								<p:commandButton id="btn-avancar" 
+												 value="#{msgs.btn_avancar}" 
+												 ajax="false" 
+												 action="#{efetuarVendaBean.navegarFinalizarPagamento()}"
+												 disabled="#{empty efetuarVendaBean.listaProdutosSelecionadosParaVenda}" />
+								<div style="height: 10px;width: 10px;"></div>	
+							</div>
+						</h:panelGroup>
+					
+					</h:panelGrid>
+			</h:panelGroup><!-- FIM GROUP id=tabela-selecao-produtos -->
+		
+		</h:panelGrid>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,215 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+	</ui:define>
+	
+	<ui:define name="jsImports">
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/cadastro/valid-form-produto.js"></script>
+	</ui:define>
+	
+	<ui:define name="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['listarestoque.breadcumb.estoque']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['listarestoque.breadcumb.estoque.listarestoque']}</li>
+		</ul>
+	</ui:define>
+	
+	<ui:define name="body_content">
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
+				<i class="icon-table"></i> #{msgs['listarestoque.titulotabela.listarestoque']}</a>
+			</div>
+			<div id="si" class="widget-body collapse in">
+				<div class="widget-inner">
+					<p:dataTable id="tableListaEstoque" value="#{estoqueBean.listaProdutoEstoque}"
+						var="result" rows="10" rowKey="#{result}"
+						widgetVar="tableListaEstoqueVar" style="margin-top:10px;"
+						styleClass="tableListaEstoque" editable="true" editMode="cell"
+						paginator="true" paginatorPosition="bottom"
+						filteredValue="#{estoqueBean.filteredProducts}"
+						emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}">
+				
+						<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" style="text-align: center;" width="10%" 
+							filterBy="#{result.codCatalogo.codProduto}" filterMatchMode="contains"
+							sortBy="#{result.codCatalogo.codProduto}">
+							<h:outputText value="#{result.codCatalogo.codProduto}" style="text-align: center;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="40%" style="max-width: 500px; min-width: 250px;"
+							filterBy="#{result.codCatalogo.descProduto}" filterMatchMode="contains" filterStyle="width:350px;"
+							sortBy="#{result.codCatalogo.descProduto}">
+							<h:outputText value="#{result.codCatalogo.descProduto}" style="text-align: left;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.pontosestoque']}" style="text-align: center;" width="10%" 
+							filterBy="#{result.qtdeTotalPontosMovimentadoProduto}" filterMatchMode="contains"
+							sortBy="#{result.qtdeTotalPontosMovimentadoProduto}">
+							<h:outputText value="#{result.qtdeTotalPontosMovimentadoProduto} pts" style="text-align: center;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.qtdeestoque']}" style="text-align: center;" width="5%"
+							filterBy="#{result.qtdeEmEstoque}" filterMatchMode="contains"
+							sortBy="#{result.qtdeEmEstoque}">
+							<h:outputText rendered="#{result.disponivel}"
+								value="#{result.qtdeEmEstoque}" style="text-align: center;" />
+							<h:outputText rendered="#{!result.disponivel}" value="-"
+								style="text-align: center;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.valorestoque']}" style="text-align: center;" width="10%"
+							filterBy="#{result.valorTotalMovimentadoProduto}" filterMatchMode="contains"
+							sortBy="#{result.valorTotalMovimentadoProduto}"> 
+							<h:outputText value="R$" style="text-align: center;" />
+							<h:outputText value="#{result.valorTotalMovimentadoProduto}" style="text-align: center;">
+								<f:converter converterId="decimalConverter" />
+							</h:outputText>
+						</p:column>
+						
+						<p:column headerText="" style="text-align: center;" width="5%">
+							<p:commandButton value="#{msgs['listarestoque.lbl.btn_atualizarestoque']}"
+								action="#{estoqueBean.addOrRemoveProductFromStock()}"
+								style="text-align: center;" update=":formDialog2:infosEstoque"
+								oncomplete="dialogEstoque.show()">
+								<f:setPropertyActionListener 
+									target="#{estoqueBean.idProdutoDisponibilidade}"
+									value="#{result.codCatalogo.codCatalogo}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</div>
+			</div>
+		</div>
+
+		<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="8"
+			style="	margin-top:5px;" border="0">
+			<p:outputLabel value="#{msgs['listarestoque.lbl.numtotalprodutosestoque']}:" />
+			<p:outputLabel value="#{estoqueBean.estoqueMetricasDTO.somaTodosProdutosEmEstoque}" styleClass="input-5left HtmlOutputTextResposta" />
+			<p:outputLabel value="#{msgs['listarestoque.lbl.totalpontosestoque']}:" for="tot-pontos-estoque" style="margin-left:10px;"/>
+			<h:outputText id="tot-pontos-estoque" rendered="#{not empty estoqueBean.estoqueMetricasDTO.somaToTalPontosEmEstoque}" value="#{estoqueBean.estoqueMetricasDTO.somaToTalPontosEmEstoque} pts" styleClass="input-5left HtmlOutputTextResposta" />
+			<h:panelGroup>
+				<p:outputLabel value="#{msgs['listarestoque.lbl.valortotalestoque']}:" for="tot-pagar" style="margin-left:10px;"/>
+				<p:outputLabel value="R$" for="tot-pagar" styleClass="input-5left HtmlOutputTextResposta" rendered="#{not empty estoqueBean.estoqueMetricasDTO.valorToTalRevendaProdutosEmEstoque}"/>
+			</h:panelGroup>
+			<h:outputText id="tot-pagar" value="#{estoqueBean.estoqueMetricasDTO.valorToTalRevendaProdutosEmEstoque}" styleClass="input-5left HtmlOutputTextResposta" >
+				<f:converter converterId="decimalConverter" />
+			</h:outputText>
+		</h:panelGrid>
+	
+		<hr class="lin" />
+				
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
+					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
+					action="/index" ajax="false" />
+<!-- 						<p:commandButton rendered="true" id="btnAvancar" value="Movimentar produtos em estoque" -->
+<!-- 							action="#{estoqueBean.selecionarProdutosParaEstoque()}" ajax="false" /> -->
+			</div>
+			<div style="height: 10px;width: 10px;"></div>
+		</h:panelGroup>
+	</ui:define>
+	
+	
+	<ui:define name="dialog2">
+		<p:dialog header="#{msgs['listarestoque.titulodialog.atualizarestoque']}"
+			widgetVar="dialogEstoque" resizable="false" modal="true"
+			showEffect="slide" width="500" height="180px;">
+			<h:panelGrid id="infosEstoque" columns="2" style="margin-bottom:10px">
+
+				<h:outputLabel for="txtCodProdEstoqueDialog" value="#{msgs['listarestoque.lbl.codigoproduto']}:"
+					styleClass="HtmlOutputLabelResposta" style="" />
+				<p:outputLabel id="txtCodProdEstoqueDialog"
+					value="#{estoqueBean.produtoEstoqueDto.codCatalogo.codProduto}"
+					styleClass="input-5left HtmlOutputTextResposta" />
+
+				<h:outputLabel for="txtProdutoEstoque" value="#{msgs['listarestoque.lbl.produto']}:"
+					styleClass="HtmlOutputLabelResposta" />
+				<p:outputLabel id="txtProdutoEstoque"
+					value="#{estoqueBean.produtoEstoqueDto.codCatalogo.descProduto}"
+					styleClass="input-5left HtmlOutputTextResposta" />
+
+				<h:outputLabel for="txtCatDialogEstoque" value="#{msgs['listarestoque.lbl.categoria']}:"
+					styleClass="HtmlOutputLabelResposta" />
+				<p:outputLabel id="txtCatDialogEstoque"
+					value="#{estoqueBean.produtoEstoqueDto.codCatalogo.codCategoria.descCategoria}"
+					styleClass="input-5left HtmlOutputTextResposta" />
+
+				<h:outputLabel for="txtPrecoDialogEstoque" value="#{msgs['listarestoque.lbl.preco']}:"
+					styleClass="HtmlOutputLabelResposta" />
+				<h:outputLabel id="txtPrecoDialogEstoque"
+					value="#{estoqueBean.produtoEstoqueDto.codCatalogo.preco}"
+					styleClass="input-5left HtmlOutputTextResposta">
+					<f:converter converterId="decimalConverter" />
+				</h:outputLabel>
+
+				<h:outputLabel for="txtPontosDialogEstoque" value="#{msgs['listarestoque.lbl.pontosund']}:"
+					styleClass="HtmlOutputLabelResposta" />
+				<p:outputLabel id="txtPontosDialogEstoque"
+					value="#{estoqueBean.produtoEstoqueDto.codCatalogo.pontosPorUnidade}"
+					styleClass="input-5left HtmlOutputTextResposta" />
+
+				<h:outputLabel for="txtTipoFluxoDialogEstoque"
+					value="#{msgs['listarestoque.lbl.tipofluxo']}:" styleClass="HtmlOutputLabelResposta" />
+				<p:selectOneMenu id="txtTipoFluxoDialogEstoque" required="true" converter="genericEntityConverter"
+				 requiredMessage="#{msgs['listarestoque.mensagem.required.tipofluxoobrigatoria']}."
+					value="#{estoqueBean.produtoEstoqueDto.tipoFluxoEstoque}">
+					<f:selectItems value="#{estoqueBean.cboTipoFluxoEstoque}" var="c"
+						itemLabel="#{c.descFluxoEstoque}" itemValue="#{c}" />
+						<p:ajax event="change" update="infosEstoque" listener="#{estoqueBean.verificaTipoFLuxo()}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="#{msgs['listarestoque.lbl.percentualdesconto']}:" rendered="#{estoqueBean.habilitaEntradaProduto}"
+						for="txtPercDesconto" styleClass="HtmlOutputLabelResposta" />
+					<p:selectOneMenu
+						value="#{estoqueBean.produtoEstoqueDto.percDesconto}"
+						id="txtPercDesconto" rendered="#{estoqueBean.habilitaEntradaProduto}"
+						styleClass="input-5left HtmlOutputTextResposta">
+						<f:selectItems value="#{estoqueBean.cboPercentDesconto}"
+							var="_percent" itemLabel="#{_percent.descricao}"
+							itemValue="#{_percent}" />
+					</p:selectOneMenu>
+
+				<h:outputLabel id="lblQtdeEstoque" for="txtQtdeTotalDialogEstoque" rendered="#{estoqueBean.habilitaEntradaProduto}"
+					value="#{msgs['listarestoque.lbl.entradaestoque']}:" styleClass="HtmlOutputLabelResposta" />
+				<p:spinner id="txtQtdeTotalDialogEstoque" rendered="#{estoqueBean.habilitaEntradaProduto}"
+					value="#{estoqueBean.produtoEstoqueDto.qtdeMovimentadoProduto}" min="0"
+					max="999" requiredMessage="#{msgs['listarestoque.mensagem.required.quantidadeobrigatoria']}."
+					required="true" size="5" maxlength="3"
+					onkeypress="return onlyNum(event)"
+					styleClass="input-5left HtmlOutputTextResposta spinner-input" />
+
+				<h:outputLabel id="lblQtdeSaidaEstoque" for="txtQtdeTotalDialogEstoque" rendered="#{estoqueBean.habilitaSaidaProduto}"
+					value="#{msgs['listarestoque.lbl.saidaestoque']}:" styleClass="HtmlOutputLabelResposta" />
+				<h:selectOneMenu value="#{estoqueBean.produtoEstoqueDto.qtdeMovimentadoProduto}" style="width:40px;" rendered="#{estoqueBean.habilitaSaidaProduto}" >
+					<f:selectItems value="#{estoqueBean.produtoEstoqueDto.quantidadeDisponivelEstoque}" var="_qtde" itemLabel="#{_qtde.label}" itemValue="#{_qtde.value}" />
+				</h:selectOneMenu>
+
+
+				<p:commandButton id="btnCancelar" value="#{msgs.btn_cancelar}"
+						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar"
+						oncomplete="dialogEstoque.hide();" />
+				<p:commandButton
+					update=":formGlobal:tableListaEstoque :formGlobal:lblTotalReg"
+					oncomplete="dialogEstoque.hide();"
+					styleClass="btn btn-zen-2 btn-toolbar"
+					actionListener="#{estoqueBean.atualizarEstoque()}"
+					onclick="return validarFormAtualizarEstoque(document.forms[3])"
+					value="#{msgs.btn_salvar}" />
+
+			</h:panelGrid>
+		</p:dialog>
+	</ui:define>
+	
+	
+
+</ui:composition>

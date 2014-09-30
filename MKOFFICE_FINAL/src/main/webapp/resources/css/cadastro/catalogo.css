@@ -1,0 +1,16 @@
+.tableCatalogo {
+	width: 100%;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+
+div .ui-cell-editor-input input {
+	border-radius: 0 0 0 0;
+}
+div ..ui-inputfield input {
+	padding: 3px;
+}
+
+div .ui-widget-content{
+	color: #D9D6C4;
+}

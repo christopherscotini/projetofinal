@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="cssImports">
+	</ui:define>
+	
+	<ui:define name="jsImports">
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>  
+		    <p:menuitem value="TelaInicial" action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false"/> 
+		    <p:menuitem value="Consultar Clientes" action="#{clienteBean.voltarInclusao()}" ajax="false" />  
+		    <p:menuitem value="Detalhamento do Cliente" />  
+		</p:breadCrumb>  
+	</ui:define>
+<ui:param name="titulo" value="Detalhamento do Cliente" />
+
+<ui:define name="body_content">
+
+<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
+
+	<h:panelGroup id="tabela-filtro-cliente" >
+		<h:panelGrid cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;" >
+				<p:outputLabel value="Nome:" for="txtNome" styleClass="HtmlOutputLabelResposta"/>
+				<p:outputLabel id="txtNome" value="#{clienteBean.vo.nome}" styleClass="input-5left HtmlOutputTextResposta"  />
+				<p:outputLabel for="txtSexo" value="Sexo:" style="float:right;"/>
+				<p:outputLabel id="txtSexo" value="#{clienteBean.vo.sexo}" styleClass="input-5left HtmlOutputTextResposta" />
+				<p:outputLabel value="Data de Nascimento:" for="calendarDtNasc" rendered="#{not empty clienteBean.vo.dataNascimentoFormatado}" />
+				<p:outputLabel id="calendarDtNasc" value="#{clienteBean.vo.dataNascimentoFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
+				<h:panelGroup rendered="#{empty clienteBean.vo.dataNascimentoFormatado}"></h:panelGroup> 
+			
+				<p:outputLabel value="Endereço:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
+				<p:outputLabel id="txtAddress" value="#{clienteBean.vo.endereco.logradouro}" styleClass="input-5left HtmlOutputTextResposta" />
+				<p:outputLabel value="N°:" for="txtNum" style="float:right;"/> 
+				<p:outputLabel id="txtNum" value="#{clienteBean.vo.endereco.numero}" styleClass="input-5left HtmlOutputTextResposta"  />
+				<p:outputLabel value="Bairro:" for="txtBairro" style="float:right;"/>
+				<p:outputLabel id="txtBairro" value="#{clienteBean.vo.endereco.bairro}" styleClass="input-5left HtmlOutputTextResposta"  />
+				
+				<p:outputLabel value="Complemento:" for="txtComplemento" styleClass="HtmlOutputLabelResposta" rendered="#{not empty clienteBean.vo.endereco.complemento}"/>
+				<p:outputLabel id="txtComplemento" value="#{clienteBean.vo.endereco.complemento}" size="50" rendered="#{not empty clienteBean.vo.endereco.complemento}" styleClass="input-5left HtmlOutputTextResposta"/>
+				<h:panelGroup rendered="#{not empty clienteBean.vo.endereco.complemento}"></h:panelGroup> 
+				<h:panelGroup rendered="#{not empty clienteBean.vo.endereco.complemento}"></h:panelGroup>
+				<h:panelGroup rendered="#{not empty clienteBean.vo.endereco.complemento}"></h:panelGroup>
+				<h:panelGroup rendered="#{not empty clienteBean.vo.endereco.complemento}"></h:panelGroup>
+			
+				<p:outputLabel value="Cidade:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
+				<p:outputLabel id="txtCity" value="#{clienteBean.vo.endereco.cidade}" styleClass="input-5left HtmlOutputTextResposta"  />
+				<p:outputLabel value="Estado:" for="txtState" style="float:right;"/>
+				<p:outputLabel id="txtState" value="#{clienteBean.vo.endereco.estado}" styleClass="input-5left HtmlOutputTextResposta"  />
+				<p:outputLabel value="CEP:" for="cep" style="float:right;" />
+				<p:outputLabel id="cep" value="#{clienteBean.vo.endereco.cep}" styleClass="input-5left HtmlOutputTextResposta"  />
+			
+				<p:outputLabel value="Email:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
+				<p:outputLabel id="txtEmail" value="#{clienteBean.vo.email}" styleClass="input-5left HtmlOutputTextResposta" />
+				<p:outputLabel value="Telefone:" for="txtTelefone"/>
+				<p:outputLabel id="txtTelefone" value="#{clienteBean.vo.numTelefoneString}" styleClass="input-5left HtmlOutputTextResposta" />
+				<p:outputLabel value="Celular:" for="txtTelefoneCel" style="float:right;" />
+				<p:outputLabel id="txtTelefoneCel" value="#{clienteBean.vo.numCelularString}" styleClass="input-5left HtmlOutputTextResposta" />
+				
+				<h:panelGroup rendered="#{not empty clienteBean.vo.dataPrimeiraVenda}">
+					<p:outputLabel value="Data da Primeira Venda:" for="calendarDtFirstSale" />
+				</h:panelGroup>
+				<h:panelGroup rendered="#{not empty clienteBean.vo.dataPrimeiraVenda}">
+					<p:outputLabel id="calendarDtFirstSale" value="#{clienteBean.vo.dataPrimeiraVendaFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
+				</h:panelGroup>
+				<h:panelGroup rendered="#{not empty clienteBean.vo.dataUltimaVenda}">
+					<p:outputLabel value="Data da Primeira Venda:" for="calendarDtFirstSale" />
+				</h:panelGroup>
+				<h:panelGroup rendered="#{not empty clienteBean.vo.dataUltimaVenda}"> 
+					<p:outputLabel id="calendarDtLastSale" value="#{clienteBean.vo.dataUltimaVendaFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
+				</h:panelGroup>
+									
+			</h:panelGrid>
+	</h:panelGroup>
+	
+	<h:panelGroup rendered="#{not empty clienteBean.vo.infAdicional}">
+		<p:outputLabel value="Informações Adicionais:" for="txtAdicionais" />
+	</h:panelGroup>
+
+	<h:panelGroup rendered="#{not empty clienteBean.vo.infAdicional}">
+		<p:inputTextarea id="txtAdicionais" value="#{clienteBean.vo.infAdicional}"  cols="163" rows="10" autoResize="true" style="margin-top:5px;" disabled="true"/>
+	</h:panelGroup>
+
+	
+	<h:panelGroup rendered="#{not empty clienteBean.clienteSelecionado.listaVendas}">
+		<hr class="lin" />
+		<br />
+		<p:fieldset legend="Histórico de compras" toggleable="true" collapsed="true">
+			<h:panelGroup id="tabela-listagem-vendas" >
+				<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="centralizar-conteudo" >
+					<p:dataTable id="tableListVendas" 
+							style="margin-top:20px;"
+							var="result" rows="10" rowKey="#{result}" 
+							selectionMode="single"
+							selection="#{clienteBean.vendaSelecionada}"
+							value="#{clienteBean.clienteSelecionado.listaVendas}" 
+							paginator="true" paginatorPosition="bottom" 
+							emptyMessage="Dados não encontrados."
+							sortBy="#{result.dataVenda}" sortOrder="descending">
+	
+						<p:ajax event="rowSelect" update="btnDetalhar" />
+						<p:ajax event="rowUnselect" update="btnDetalhar" />
+						
+						<p:column headerText="DATA DA VENDA"
+							style="text-align: center;" width="10%">
+							<h:outputLabel value="#{result.dataVenda}"
+								style="text-align: center;">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputLabel>
+						</p:column>
+						<p:column headerText="QTDE DE PRODUTOS VENDIDOS"
+								  width="10%" style="text-align: center;">
+							<h:outputLabel value="#{result.listaDeProdutos.size()} Produtos"
+								style="text-align: center;" rendered="#{result.listaDeProdutos.size() > 1}" />
+							<h:outputLabel value="#{result.listaDeProdutos.size()} Produto"
+								style="text-align: center;" rendered="#{result.listaDeProdutos.size() == 1}" />
+						</p:column>
+						<p:column headerText="FORMA DE PAGAMENTO" width="10%" style="text-align: center;" sortBy="#{result.formaPagamento.descFormaPgto}">
+							<h:outputLabel value="#{result.formaPagamento.descFormaPgto}" style="text-align: center;" />
+						</p:column>
+						<p:column headerText="SITUAÇÃO DE PAGAMENTO" width="10%" style="text-align: center;" sortBy="#{result.descSituacaoPagamento}">
+							<h:outputLabel value="#{result.descSituacaoPagamento}" style="text-align: center;" />
+						</p:column>
+						<p:column headerText="VALOR DA VENDA"
+								  width="10%" style="text-align: center;">
+							<h:outputLabel value="R$" style="text-align: center;" />
+							<h:outputLabel value="#{result.valorVenda}" style="text-align: center;">
+								<f:converter converterId="decimalConverter" />
+							</h:outputLabel>
+						</p:column>
+						
+						<f:facet name="footer">
+							<p:commandButton value="Limpar compra selecionada" update=":formGlobal:tabela-listagem-vendas" actionListener="#{clienteBean.limparCompraClienteSelecionada()}" />
+							<p:commandButton id="btnDetalhar"
+											value="#{msgs.btn_detalhar}" 
+											ajax="false" 
+											action="#{clienteBean.navegarHistoricoCompraCliente()}"
+											disabled="#{empty clienteBean.vendaSelecionada}" 
+											rendered="#{not empty clienteBean.clienteSelecionado.listaVendas}"/>
+						</f:facet>
+						
+					</p:dataTable>
+					
+				</h:panelGrid>
+			</h:panelGroup><!-- FIM DO GROUP |id=tabela-selecao-cliente| -->
+					
+		</p:fieldset>	
+					
+	</h:panelGroup>
+
+	<hr class="lin"/>
+	
+	<h:panelGroup>
+		<div class="buttonFooter">
+			<p:commandButton id="btnVoltar" value="Voltar" ajax="false" action="#{clienteBean.voltarInclusao}" style="float: left;" />
+		</div>
+	</h:panelGroup>
+
+</h:panelGrid>
+</ui:define>
+
+</ui:composition>

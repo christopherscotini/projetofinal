@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="movimentacao-estoque-report" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e90ab27d-72df-4eb7-8685-ca112f65c762">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#C3CFD9">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#E6F3FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="report-dataset" uuid="77861a8d-50fe-46d3-a34c-dff4aecd6c4b">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="dataMovimento" class="java.util.Date">
+			<fieldDescription><![CDATA[dataMovimento]]></fieldDescription>
+		</field>
+		<field name="produto" class="java.lang.String">
+			<fieldDescription><![CDATA[produto]]></fieldDescription>
+		</field>
+		<field name="quantidadeMovimentado" class="java.lang.Integer">
+			<fieldDescription><![CDATA[quantidadeMovimentado]]></fieldDescription>
+		</field>
+		<field name="tipoMovimento" class="java.lang.String">
+			<fieldDescription><![CDATA[tipoMovimento]]></fieldDescription>
+		</field>
+		<field name="tipoMovimentoDescricao" class="java.lang.String">
+			<fieldDescription><![CDATA[tipoMovimentoDescricao]]></fieldDescription>
+		</field>
+		<field name="valorMovimentado" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[valorMovimentado]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="tipoFluxoFiltro" class="java.lang.String"/>
+	<parameter name="dtInicio" class="java.lang.String"/>
+	<parameter name="dtFim" class="java.lang.String"/>
+	<parameter name="dataGeracao" class="java.lang.String"/>
+	<parameter name="logo" class="java.awt.Image" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="dtFim" class="java.lang.String">
+		<fieldDescription><![CDATA[dtFim]]></fieldDescription>
+	</field>
+	<field name="dtInicio" class="java.lang.String">
+		<fieldDescription><![CDATA[dtInicio]]></fieldDescription>
+	</field>
+	<field name="listaProdutosFiltrados" class="java.util.List">
+		<fieldDescription><![CDATA[listaProdutosFiltrados]]></fieldDescription>
+	</field>
+	<field name="qtdeTotalMovimentado" class="java.lang.Integer">
+		<fieldDescription><![CDATA[qtdeTotalMovimentado]]></fieldDescription>
+	</field>
+	<field name="tipoFluxoFiltro" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoFluxoFiltro]]></fieldDescription>
+	</field>
+	<field name="valorTotalMovimentado" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[valorTotalMovimentado]]></fieldDescription>
+	</field>
+	<variable name="produto_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="661198e6-e1af-4f02-866e-81ef592c20db" x="0" y="43" width="555" height="29"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório - Movimentação de estoque]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3abeb77f-6b9f-4dbb-8446-15bad18871e1" x="440" y="0" width="52" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Data geração:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="93e304bf-ed3b-4664-b893-e0bdde16c987" x="492" y="0" width="63" height="10"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataGeracao}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="6bf22602-4904-4b73-acae-000f05d594cd" x="9" y="8" width="106" height="64"/>
+				<imageExpression><![CDATA["C:\\Users\\Christopher Scotini\\git\\mkoffice-dev\\mkoffice-beta-v2.2\\WebContent\\images\\logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement uuid="bc8c798c-d93a-4e88-b419-b401bf0b3acd" x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tipoFluxoFiltro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fe0bed99-fb5d-4f4c-aff3-cebb1cac4b4e" x="215" y="15" width="52" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dtInicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1cd11030-94f4-43a7-bba5-449bd9f6ea4d" x="292" y="15" width="50" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dtFim}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9958dfc1-1990-4695-a057-e7752b4b8b73" x="267" y="15" width="25" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[à]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="169" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="bf22610c-d4db-488d-be51-ffc749aa9732" key="table 4" style="table 4" x="0" y="21" width="555" height="80"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="report-dataset" uuid="1ffd76c5-6260-455b-a749-522976bd6229">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{listaProdutosFiltrados})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="205" uuid="6618140e-9158-493f-b8ae-0228f2da7c0f">
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="dcbb7386-168e-472c-a78f-3bb7ac9028ae" x="0" y="0" width="205" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Produto]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 4_CH" height="5" rowSpan="1"/>
+						<jr:detailCell style="table 4_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement uuid="1a206eb4-4daf-4982-ad59-93714c58b46c" x="0" y="0" width="205" height="30"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{produto}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="99" uuid="19fcbf52-0225-42a2-b5dd-f2eda9207ca8">
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="d1687e94-287a-4e38-ac6f-462be22e3c7a" x="0" y="0" width="99" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Tipo de movimento]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 4_CH" height="5" rowSpan="1"/>
+						<jr:detailCell style="table 4_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement uuid="a65cb075-75ce-41c3-90d0-31c852f4080f" x="0" y="0" width="99" height="30"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{tipoMovimento}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="f3db51ef-7023-46d2-b32d-2af006e2d2cb">
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="518f4b68-0e08-487b-af06-8e0c53382b1b" x="0" y="0" width="90" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Data de movimentação]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 4_CH" height="5" rowSpan="1"/>
+						<jr:detailCell style="table 4_TD" height="30" rowSpan="1">
+							<textField pattern="dd/MM/yyyy">
+								<reportElement uuid="82dac26e-d249-48ca-b271-ad1058ad342a" x="0" y="0" width="90" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{dataMovimento}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="bd4684fd-d1a2-409d-8a09-e721a9d5d1f1">
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="8ba4fa32-8138-43b5-82a7-7eabd392772d" x="0" y="0" width="60" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Qtde]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 4_CH" height="5" rowSpan="1"/>
+						<jr:detailCell style="table 4_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement uuid="9fdb2789-857c-413c-974c-37899dd7fdb5" x="0" y="0" width="60" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{quantidadeMovimentado}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="8707dda8-1ef0-420f-b153-a8f51bcd035f">
+						<jr:columnHeader style="table 4_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement uuid="261fa09b-937d-46ea-9847-50247dae553b" x="0" y="0" width="100" height="30"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="SansSerif" size="10" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Valor movimentado]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 4_CH" height="5" rowSpan="1"/>
+						<jr:detailCell style="table 4_TD" height="30" rowSpan="1">
+							<textField pattern="¤ #,##0.00">
+								<reportElement uuid="6b3e0ba0-a870-4b72-849e-44fffcc453ca" x="0" y="0" width="100" height="30"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{valorMovimentado}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="64" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement uuid="b2e2b935-d187-476e-9772-8259af462c18" x="242" y="44" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="413f532c-e03d-4dad-8e37-70cd82b8d1b6" x="292" y="2" width="162" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Quantidade Total Movimentado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a75d8fb9-95f5-4003-b3f9-2f7ea7389adc" x="292" y="21" width="162" height="20"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Valor Total Movimentado:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="7a9d033c-e888-4f24-8a31-b869ed59fcef" x="454" y="21" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{valorTotalMovimentado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="839f5b73-87ae-4f9c-ab10-5e17ef834b19" x="454" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{qtdeTotalMovimentado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="633a4a42-58c3-46ee-b6b9-b2db77e2b916" x="440" y="34" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="2249793e-4d87-469c-92b1-7601d1b3f2be" x="520" y="34" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

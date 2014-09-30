@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="ccsImports">
+	</ui:define>
+	
+	<ui:define name="jsImports">
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/menu_venda/validate_venda.js"></script>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>  
+		    <p:menuitem value="TelaInicial" action="#{efetuarVendaBean.scheduleBean.telaInicial()}" ajax="false"/>  
+		    <p:menuitem value="Venda" action="#{efetuarVendaBean.scheduleBean.telaInicial()}" ajax="false" /> 
+		    <p:menuitem value="Efetuar Venda" action="#{efetuarVendaBean.iniciarTela()}" ajax="false" />  
+		    <p:menuitem value="Selecionar Cliente" action="#{efetuarVendaBean.voltarParaSelecionarClientes}" ajax="false"/>  
+		    <p:menuitem value="Selecionar Produtos" action="#{efetuarVendaBean.voltarParaDadosDaVenda()}" ajax="false"/>  
+		    <p:menuitem value="Finalizar Venda" />  
+		</p:breadCrumb>  
+	</ui:define>
+	<ui:param name="titulo" value="Finalizar Venda" />
+
+	<ui:define name="body_content">
+		
+		<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
+			
+				<h:panelGroup id="group-dados-cliente">
+					<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="INFORMAÇÕES DO CLIENTE" />
+					<hr class="lin"/>
+					<h:panelGrid cellpadding="0" cellspacing="1" columns="6" border="0" styleClass="" style="margin-top:5px;">
+						<p:outputLabel value="Nome:" for="txtNome" styleClass="HtmlOutputLabelResposta" />
+						<p:outputLabel id="txtNome" value="#{efetuarVendaBean.clienteVo.nome}" styleClass="input-5left HtmlOutputTextResposta"  />
+						<h:panelGroup></h:panelGroup>
+						<h:panelGroup></h:panelGroup>
+						<h:panelGroup></h:panelGroup>
+						<h:panelGroup></h:panelGroup>
+						
+						<p:outputLabel value="Endereço:" for="txtAddress" styleClass="HtmlOutputLabelResposta" />
+						<p:outputLabel id="txtAddress" value="#{efetuarVendaBean.clienteVo.endereco.logradouro}" styleClass="input-5left HtmlOutputTextResposta" />
+						<p:outputLabel value="N°:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
+						<p:outputLabel id="txtNum" value="#{efetuarVendaBean.clienteVo.endereco.numero}" styleClass="input-5left HtmlOutputTextResposta"  />
+						<p:outputLabel value="Bairro:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
+						<p:outputLabel id="txtBairro" value="#{efetuarVendaBean.clienteVo.endereco.bairro}" styleClass="input-5left HtmlOutputTextResposta"  />
+			
+						<p:outputLabel value="Cidade:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
+						<p:outputLabel id="txtCity" value="#{efetuarVendaBean.clienteVo.endereco.cidade}" styleClass="input-5left HtmlOutputTextResposta"  />
+						<p:outputLabel value="Estado:" for="txtState" styleClass="HtmlOutputLabelResposta"/>
+						<p:outputLabel id="txtState" value="#{efetuarVendaBean.clienteVo.endereco.estado}" styleClass="input-5left HtmlOutputTextResposta"  />
+						<p:outputLabel value="CEP:" for="cep" styleClass="HtmlOutputLabelResposta" />
+						<p:outputLabel id="cep" value="#{efetuarVendaBean.clienteVo.endereco.cep}" styleClass="input-5left HtmlOutputTextResposta"  />
+						
+						<p:outputLabel value="Email:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
+						<p:outputLabel id="txtEmail" value="#{efetuarVendaBean.clienteVo.email}" styleClass="input-5left HtmlOutputTextResposta" />
+						<p:outputLabel value="Telefone:" for="txtTelefone" style="margin-left:20px;" styleClass="HtmlOutputLabelResposta"/>
+						<p:outputLabel id="txtTelefone" value="#{efetuarVendaBean.clienteVo.numTelefoneString}" styleClass="input-5left HtmlOutputTextResposta" />
+						<p:outputLabel value="Celular:" for="txtTelefoneCel" style="margin-left:20px;" styleClass="HtmlOutputLabelResposta" />
+						<p:outputLabel id="txtTelefoneCel" value="#{efetuarVendaBean.clienteVo.numCelularString}" styleClass="input-5left HtmlOutputTextResposta" />
+					
+						<p:outputLabel value="Data da Primeira Venda:" for="calendarDtFirstSale" styleClass="HtmlOutputLabelResposta" rendered="#{not empty efetuarVendaBean.clienteVo.dataPrimeiraVenda}"/>
+						<p:outputLabel id="calendarDtFirstSale" value="#{efetuarVendaBean.clienteVo.dataPrimeiraVendaFormatado}" styleClass="input-5left HtmlOutputTextResposta" rendered="#{not empty efetuarVendaBean.clienteVo.dataPrimeiraVenda}"/>
+						<p:outputLabel value="Data da Ultima Venda:" for="calendarDtFirstSale" styleClass="HtmlOutputLabelResposta" rendered="#{not empty efetuarVendaBean.clienteVo.dataUltimaVenda}" />
+						<p:outputLabel id="calendarDtLastSale" value="#{efetuarVendaBean.clienteVo.dataUltimaVendaFormatado}" styleClass="input-5left HtmlOutputTextResposta" rendered="#{not empty efetuarVendaBean.clienteVo.dataUltimaVenda}"/>
+						<h:panelGroup></h:panelGroup>
+						<h:panelGroup></h:panelGroup>
+						<h:panelGroup></h:panelGroup>
+						<h:panelGroup></h:panelGroup>
+						
+					</h:panelGrid>
+						
+					<h:panelGrid cellpadding="0" cellspacing="1" columns="2" border="0" styleClass="" style="margin-bottom:25px;" >
+						<p:selectBooleanCheckbox value="#{efetuarVendaBean.venda.acompanhamento222}" style="float:right;"/>
+						<p:outputLabel value="Deseja fazer o acompanhamento 2 + 2 + 2 ?" style="margin-left:5px;"/>
+					</h:panelGrid>
+				</h:panelGroup>	<!-- FIM GROUP id=group-dados-cliente -->
+				
+				<h:panelGroup id="group-detalhes">
+					<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="INFORMAÇÕES DA VENDA" />
+					<hr class="lin"/>
+					<h:panelGrid cellpadding="0" cellspacing="1"  styleClass="centralizar-conteudo" style="margin-top:5px;margin-bottom:25px;">
+						
+						<h:panelGrid columns="4" cellpadding="0" cellspacing="0">
+							<p:outputLabel value="Valor total da venda:" for="txtValorVenda" styleClass="HtmlOutputLabelResposta"/>
+							<h:panelGroup>
+								<p:outputLabel value="R$" for="txtValorVenda" styleClass="input-5left HtmlOutputTextResposta"/>
+								<h:outputLabel id="txtValorVenda" value="#{efetuarVendaBean.venda.valorVenda}" styleClass="input-5left HtmlOutputTextResposta">
+									<f:converter converterId="decimalConverter" />
+								</h:outputLabel>
+							</h:panelGroup>
+							
+							<p:outputLabel value="Desconto de:" for="txtValorTotalDesc" style="margin-left:20px;" styleClass="HtmlOutputLabelResposta" />
+							<h:panelGroup >
+								<p:outputLabel value="R$" for="txtValorTotalDesc" styleClass="input-5left HtmlOutputTextResposta"/>
+								<h:outputLabel value="#{efetuarVendaBean.venda.valorDescontoVenda}" id="txtValorTotalDesc" styleClass="input-5left HtmlOutputTextResposta">
+									<f:converter converterId="decimalConverter" />
+								</h:outputLabel>
+							</h:panelGroup>
+							
+							<p:outputLabel value="Valor total a cobrar:" for="txtValorTotalPedido" styleClass="HtmlOutputLabelResposta" />
+							<h:panelGroup >
+								<p:outputLabel value="R$" for="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta"/>
+								<h:outputLabel value="#{efetuarVendaBean.totalAPagar}" id="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta">
+									<f:converter converterId="decimalConverter" />
+								</h:outputLabel>
+							</h:panelGroup>
+							
+							<p:outputLabel value="Lucro estimado:" for="txtValorLucroEst" style="margin-left:20px;" styleClass="HtmlOutputLabelResposta" />
+							<h:panelGroup >
+								<p:outputLabel value="R$" for="txtValorLucroEst" styleClass="input-5left HtmlOutputTextResposta"/>
+								<h:outputLabel value="#{efetuarVendaBean.venda.valorLucroVenda}" id="txtValorLucroEst" styleClass="input-5left HtmlOutputTextResposta">
+									<f:converter converterId="decimalConverter" />
+								</h:outputLabel>
+							</h:panelGroup>
+						</h:panelGrid>
+						
+						<p:dataTable id="tableCatalogo"
+							value="#{efetuarVendaBean.venda.listaDeProdutos}" var="result"
+							rowKey="#{result}" 
+							rows="10"
+							styleClass="dataTable"
+							paginator="true" paginatorPosition="bottom"
+							emptyMessage="Dados não encontrados">
+	
+							<f:facet name="header">  
+					            Produtos inclusos no carrinho
+					        </f:facet>
+					        
+							<p:column headerText="PRODUTO" width="30%">
+								<h:outputLabel value="#{result.produto.descProduto}"
+									style="text-align: left;" />
+							</p:column>
+							<p:column headerText="TOTAL DE PONTOS VENDIDOS" style="text-align: center;" width="10%">
+								<h:outputLabel value="#{result.somaPontosProdutoCarrinho} pts" style="text-align: center;" />
+							</p:column>
+							<p:column headerText="VALOR UNITÁRIO" style="text-align: center;"
+								width="10%" 	>
+								<h:outputLabel value="R$" style="text-align: center;" />
+								<h:outputLabel value="#{result.produto.preco}"
+									style="text-align: center;">
+									<f:converter converterId="decimalConverter" />
+								</h:outputLabel>
+							</p:column>
+	
+							<p:column headerText="QTDE" style="text-align: center;" width="5%" >
+								<h:outputLabel value="#{result.qtdeProdutoCarrinho}" style="text-align: center;" />
+							</p:column>
+
+							<p:column headerText="VALOR TOTAL" style="text-align: right;" width="10%" >
+								<h:outputLabel value="R$" style="text-align: right;" />
+								<h:outputLabel value="#{result.valorTotalProdutoCarrinho}" style="text-align: right;">
+									<f:converter converterId="decimalConverter" />
+								</h:outputLabel>
+							</p:column>
+							
+							<f:facet name="footer">
+				                <h:outputText value="Total de produtos no carrinho: " /> 
+					            <h:outputText value="#{efetuarVendaBean.totalProdutosVenda}" />  
+				             	<h:outputText style="margin-left:20px;" value="Valor Total a pagar: " />  
+				                <h:panelGroup>
+									<h:outputText value="R$" styleClass="input-5left HtmlOutputTextResposta"/>
+					                <h:outputText value="#{efetuarVendaBean.venda.valorVenda}" >
+					                	<f:converter converterId="decimalConverter" />
+					                </h:outputText>
+					            </h:panelGroup>  
+							</f:facet> 
+								
+						</p:dataTable>
+					</h:panelGrid>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+					<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="INFORMAÇÕES DO PAGAMENTO" />
+					<hr class="lin"/>
+					<p:fieldset legend="Forma de pagamento" style="margin-top:10px;">
+						<h:panelGrid columns="2" style="margin: 0 auto;">
+							<h:panelGroup >
+								<h:panelGrid columns="1" >
+									<p:outputLabel value="Forma de Pagamento:" />
+									<p:selectOneMenu id="cboFormaPgto" value="#{efetuarVendaBean.venda.formaPagamento}" styleClass="input-5left" converter="genericEntityConverter" >
+										<f:selectItems value="#{efetuarVendaBean.cboFormaPagamento}" var="_fp" itemLabel="#{_fp.descFormaPgto}" itemValue="#{_fp}" />
+										<p:ajax update="lblParcelamento" listener="#{efetuarVendaBean.onChangeFormaPagamento()}"/>
+									</p:selectOneMenu>
+									<h:panelGroup>
+										<div style="height: 48px;width: 170px;"></div>
+									</h:panelGroup>
+								</h:panelGrid>
+							</h:panelGroup>
+							<h:panelGroup id="lblParcelamento" >
+								<p:outputLabel value="Parcelamento:" />
+								<p:selectOneListbox id="listPArcelamento" value="#{efetuarVendaBean.numParcelasPagamento}" styleClass="input-5left" style="width: 200px;height: 80px;" required="true" requiredMessage="Selecione a parcela desejada." >  
+						            <f:selectItems value="#{efetuarVendaBean.listaParcelamentoSelectItem}" var="parc" itemLabel="#{parc.label}" itemValue="#{parc.value}" />  
+						        </p:selectOneListbox>								
+							</h:panelGroup>
+							<p:outputLabel value="Data vencimento da parcela:" styleClass="HtmlOutputLabelResposta" />
+							<p:calendar id="txtDataVctoPrimeiraParcela" value="#{efetuarVendaBean.dtVctoPrimeiraParcela}" size="13"  pattern="dd/MM/yyyy" alt="date" />
+						</h:panelGrid>
+					</p:fieldset>
+				</h:panelGroup>
+				
+				<h:panelGroup id="painel-contas-footer" styleClass="painel-contas-footer">
+					<p:outputLabel value="Total:R$" for="tot-pagar" styleClass="painel-contas-footer"/>
+					<h:outputLabel id="tot-pagar" value="#{efetuarVendaBean.totalAPagar}" styleClass="input-5left painel-contas-footer" >
+						<f:converter converterId="decimalConverter" />
+					</h:outputLabel>
+				</h:panelGroup>
+				
+				<hr class="lin" />
+				
+				<h:panelGroup>
+					<div class="buttonFooter">
+						<p:commandButton id="btnVoltar" value="Voltar" immediate="true" ajax="false" styleClass="botao-voltar"
+							action="#{efetuarVendaBean.voltarParaDadosDaVenda()}"  />
+						<p:commandButton id="btnConcluirVenda" 
+										 value="Concluir Venda"
+										 ajax="false" 
+										 action="#{efetuarVendaBean.navegarConcluirVenda()}" 
+										 onclick="return validarConcluirVenda(document.forms[1])" />
+					</div>
+					<div style="height: 10px;width: 10px;"></div>			    
+				</h:panelGroup>
+				
+		</h:panelGrid>
+		
+		
+	</ui:define>
+
+</ui:composition>

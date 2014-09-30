@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pass="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="formMenu" style="margin: 0" onload="alert();" >
+    <f:loadBundle basename="br.com.mkoffice.view.bundle.Messages" var="msgs" />
+     
+	    <div class="container">
+	        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	        </a>
+	        <h:commandLink action="#{scheduleController.telaInicial()}" styleClass="brand">MK<span>OFFICE</span></h:commandLink>
+	        <nav class="nav-collapse collapse">
+	            <ul class="nav">
+	                <ui:include src="/content/menu_content/_menuAdmin.xhtml" />
+	                <ui:include src="/content/menu_content/_menuCliente.xhtml" />
+	                <ui:include src="/content/menu_content/_menuProduto.xhtml" />
+	                <ui:include src="/content/menu_content/_menuEstoque.xhtml" />
+	                <ui:include src="/content/menu_content/_menuPedido.xhtml" />
+	                <ui:include src="/content/menu_content/_menuVenda.xhtml" />
+	                <ui:include src="/content/menu_content/_menuRelatorio.xhtml" />
+	            </ul>
+	        </nav><!--/.nav-collapse -->
+	
+	        <section class="admin">
+	            <div class="info-menu">
+	                <img alt="" src="#{facesContext.externalContext.requestContextPath}/resources/images/avatar.jpg" class="img-polaroid">Teste, #{loginBean.usuario.dadosPessoa.nome}</img>
+	                <div class="btn-toolbar">
+	                	<div class="btn-group">
+	                		<a class="btn btn-sm dropdown-toggle" data-toggle="dropdown" type="button">
+								<i class="icon-cog"></i> #{msgs['menu.lbl.configuracoes']} <i class="caret"></i>
+							</a>
+	                	</div>
+	                    <div class="btn-group">
+	                        <h:commandLink action="#{loginBean.doLogout()}" class="btn btn-inverse"><i class='icon-off'></i> #{msgs.btn_sair}</h:commandLink>
+	                    </div>
+	                </div>
+	            </div>
+	        </section> <!--/.Admin -->
+	
+	    </div><!--/.container -->
+
+	</h:form>
+
+
+</ui:composition>

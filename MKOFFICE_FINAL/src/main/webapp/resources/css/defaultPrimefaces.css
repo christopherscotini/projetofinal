@@ -1,0 +1,45 @@
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a img {
+	border: none;
+}
+
+.ui-widget {
+    font-size: 11px !important;
+}
+
+.ui-datatable-footer {
+	text-align: right !important;
+}
+
+.ui-button-text {
+    padding: 3px !important;
+}
+.ui-selectonemenu .ui-selectonemenu-trigger {
+    padding: 0 !important;
+}
+.ui-widget-header{border: 0px;}
+
+
+div.fileupload-buttonbar button.ui-button {
+	width: 15%; 
+}
+div.fileupload-buttonbar label.ui-button {
+	width: 15%;
+}
+
+/* deixando transparente o background do header/footer das tabelas */
+.ui-widget-header{
+	background: transparent !important;
+}
+
+/* ajudando a largura do submenu */
+.ui-menu .ui-menu-parent .ui-menu-child {
+    width: 15.5em !important;
+}

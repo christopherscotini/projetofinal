@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+	</ui:define>
+	
+	<ui:define name="jsImports">
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>  
+		    <p:menuitem value="TelaInicial" action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false"/>  
+		    <p:menuitem value="Consultar Clientes" />  
+		</p:breadCrumb>  
+	</ui:define>
+
+	<ui:param name="titulo" value="Consultar Clientes"></ui:param>
+
+	<ui:define name="body_content">
+
+		<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
+			<p:fieldset legend="BUSCA" toggleable="true" collapsed="true">
+				<h:panelGroup id="tabela-filtro-cliente" >
+					<h:panelGrid cellpadding="1" cellspacing="0" columns="4" border="0" >
+						<p:outputLabel value="Nome:" for="txtNome" styleClass="HtmlOutputLabelResposta" />
+						<p:inputText id="txtNome" value="#{clienteBean.nomeFiltro}" size="50" maxlength="45" styleClass="input-5left"/>
+						
+						<p:outputLabel value="E-MAIL:" for="txtEmail" styleClass="HtmlOutputLabelResposta" />
+						<p:inputText id="txtEmail" value="#{clienteBean.emailFiltro}" size="50" maxlength="45" styleClass="input-5left"/>
+						
+						<p:outputLabel value="Celular:" for="txtCelular" styleClass="HtmlOutputLabelResposta" />
+						<p:inputText id="txtCelular" value="#{clienteBean.celularFiltro}" alt="cell9" styleClass="input-5left"/>
+						
+						<h:panelGroup > </h:panelGroup>
+		
+					</h:panelGrid>
+				</h:panelGroup>
+				<h:panelGroup >
+					<div class="buttonFilter">
+						<p:commandButton value="#{msgs.btn_limpar}" action="#{clienteBean.limparCamposFiltro()}" ajax="true"  update="tabela-filtro-cliente" />
+						<p:commandButton value="#{msgs.btn_pesquisar}" action="#{clienteBean.pesquisarFiltro()}" ajax="true" update="messagesGlobal tabela-listagem-vendas" style="margin-left:5px;" />
+					</div>
+				</h:panelGroup>
+			</p:fieldset>
+			
+			<hr class="lin" />
+			
+			<h:panelGroup id="tabela-listagem-vendas" >
+				<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="centralizar-conteudo" >
+					<p:dataTable id="tableConClientes" 
+							style="margin-top:20px;"
+							var="result" 
+							rows="10" 
+							rowKey="#{result}" 
+							selectionMode="single"
+							selection="#{clienteBean.clienteSelecionado}"
+							value="#{clienteBean.listaClientes}" 
+							paginator="true"
+							paginatorPosition="bottom" 
+							emptyMessage="">
+
+						<p:ajax event="rowSelect"
+							update=":formGlobal:btnAlterar :formGlobal:btnDetalhar" />
+						<p:ajax event="rowUnselect"
+							update=":formGlobal:btnAlterar :formGlobal:btnDetalhar" />
+	
+						<f:facet name="header">  
+				           Clientes Cadastradas
+				        </f:facet>
+				        
+						<p:column headerText="NOME" width="35%" sortBy="#{result.dadosPessoa.nome}">
+							<h:outputLabel value="#{result.dadosPessoa.nome}"
+								style="text-align: left;" />
+						</p:column>
+						<p:column headerText="E-MAIL" width="35%" sortBy="#{result.dadosPessoa.email}">
+							<h:outputLabel value="#{result.dadosPessoa.email}"
+								style="text-align: left;" />
+						</p:column>
+						<p:column headerText="CELULAR" style="text-align: center;"
+							width="10%" sortBy="#{result.numCelularString}">
+							<h:outputLabel value="#{result.numCelularString}"
+								style="text-align: center;" />
+						</p:column>
+						<p:column headerText="DATA DA PRIMEIRA VENDA" sortBy="#{result.dataPrimeiraVenda}"
+							style="text-align: center;" width="10%">
+							<h:outputLabel value="#{result.dataPrimeiraVenda}"
+								style="text-align: center;">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputLabel>
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
+			</h:panelGroup>
+			
+			<hr class="lin" />
+			
+			<h:panelGroup >
+				<div class="buttonFooter" >
+					<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
+						style="float:left;" action="/index" ajax="false" />
+					<p:commandButton id="btnLimpar" value="#{msgs.btn_limpar}"
+						action="#{clienteBean.limparCamposFiltro()}" ajax="false"
+						style="margin-left:5px;" />
+					<p:commandButton id="btnDetalhar" value="#{msgs.btn_detalhar}"
+						action="#{clienteBean.detalharCliente()}" ajax="false" disabled="#{empty clienteBean.clienteSelecionado}" style="margin-left:5px;" />
+					<p:commandButton id="btnAlterar" value="#{msgs.btn_alterar}"
+						action="#{clienteBean.prepareEdit()}" ajax="false" disabled="#{empty clienteBean.clienteSelecionado}" style="margin-left:5px;" />
+					<p:commandButton id="btnCadastrar" value="#{msgs.btn_cadastrar}"
+						action="#{clienteBean.prepareInsert()}" ajax="false"
+						style="margin-left:5px;" />
+				</div>
+				<div style="height: 10px;width: 10px;"></div>
+			</h:panelGroup>
+			
+		</h:panelGrid>
+
+	</ui:define>
+</ui:composition>
