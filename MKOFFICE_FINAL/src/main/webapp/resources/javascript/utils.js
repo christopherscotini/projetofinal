@@ -63,7 +63,7 @@ function verificarRadioListaSelecionadoExcluir(rdoName) {
 	if (objRadio != null) {
 		for (var i = 0; i < objRadio.length; i++) {
 			if (objRadio[i].checked) {
-				confirm('Confirma Exclusão?');
+				confirm('Confirma Exclusï¿½o?');
 				return true;
 			}
 		}
@@ -72,14 +72,14 @@ function verificarRadioListaSelecionadoExcluir(rdoName) {
 		return false;
 	}
 
-	return confirm('Confirma Exclusão?');
+	return confirm('Confirma Exclusï¿½o?');
 }
 
 function valida_cnpj(campo){
 	var cnpj = campo.value;
 	
 	if(cnpj != ""){
-		//Limpa pontos e Traços da string
+		//Limpa pontos e Traï¿½os da string
 		cnpj = cnpj.replace(/\./g, "");
 		cnpj = cnpj.replace(/\-/g, "");
 		cnpj = cnpj.replace(/\_/g, "");
@@ -133,13 +133,13 @@ function valida_cnpj(campo){
 		}
 		 
 		if (result == false) {
-			alert("CNPJ inválido!");
+			alert("CNPJ invï¿½lido!");
 			campo.focus();
 		}
 	}
 }
 
-//Função para mascarar campo de telefone quando for > 8 adicona o (11)9XXXX-XXXX
+//Funï¿½ï¿½o para mascarar campo de telefone quando for > 8 adicona o (11)9XXXX-XXXX
 
 function mask9Phone(form){
 	var elemento = document.getElementById(form.name + ":txtCelular");
@@ -171,12 +171,12 @@ function validaData(campo) {
 					&& (!isNaN(mes) && (mes > 0) && (mes < 13))
 					&& (!isNaN(ano) && (ano.length == 4) && (ano >= 1900));
 			if (!resultado) {
-				alert("Data inválida.");
+				alert("Data invï¿½lida.");
 				campo.focus();
 				return false;
 			}
 		} else {
-			alert("Data inválida.");
+			alert("Data invï¿½lida.");
 			campo.focus();
 			return false;
 		}
@@ -185,7 +185,7 @@ function validaData(campo) {
 }
 
 function compara_datas(form){   
-    //Verifica se a data inicial é maior que a data final   
+    //Verifica se a data inicial ï¿½ maior que a data final   
     
 	var controle = 0;
     var data_inicial = document.getElementById(form.name +":calendarDataInicial_input").value;
@@ -241,7 +241,7 @@ function compara_datas(form){
     }
 
 	if(controle > 0){
-		alert('Data Final é maior que a Data Inicial');
+		alert('Data Final ï¿½ maior que a Data Inicial');
 		return false;
 	}
 	else{
@@ -273,3 +273,172 @@ function bloquearDigitacaoCampoQtdeProduto(event){
 	
 }
 
+
+/*** BOOTSTRAP ***/
+/* =============================================================
+ * bootstrap-collapse.js v2.2.2
+ * http://twitter.github.com/bootstrap/javascript.html#collapse
+ * =============================================================
+ * Copyright 2012 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ============================================================ */
+
+
+!function ($) {
+
+  "use strict"; // jshint ;_;
+
+
+ /* COLLAPSE PUBLIC CLASS DEFINITION
+  * ================================ */
+
+  var Collapse = function (element, options) {
+    this.$element = $(element)
+    this.options = $.extend({}, $.fn.collapse.defaults, options)
+
+    if (this.options.parent) {
+      this.$parent = $(this.options.parent)
+    }
+
+    this.options.toggle && this.toggle()
+  }
+
+  Collapse.prototype = {
+
+    constructor: Collapse
+
+  , dimension: function () {
+      var hasWidth = this.$element.hasClass('width')
+      return hasWidth ? 'width' : 'height'
+    }
+
+  , show: function () {
+      var dimension
+        , scroll
+        , actives
+        , hasData
+
+      if (this.transitioning) return
+
+      dimension = this.dimension()
+      scroll = $.camelCase(['scroll', dimension].join('-'))
+      actives = this.$parent && this.$parent.find('> .accordion-group > .in')
+
+      if (actives && actives.length) {
+        hasData = actives.data('collapse')
+        if (hasData && hasData.transitioning) return
+        actives.collapse('hide')
+        hasData || actives.data('collapse', null)
+      }
+
+      this.$element[dimension](0)
+      this.transition('addClass', $.Event('show'), 'shown')
+      $.support.transition && this.$element[dimension](this.$element[0][scroll])
+    }
+
+  , hide: function () {
+      var dimension
+      if (this.transitioning) return
+      dimension = this.dimension()
+      this.reset(this.$element[dimension]())
+      this.transition('removeClass', $.Event('hide'), 'hidden')
+      this.$element[dimension](0)
+    }
+
+  , reset: function (size) {
+      var dimension = this.dimension()
+
+      this.$element
+        .removeClass('collapse')
+        [dimension](size || 'auto')
+        [0].offsetWidth
+
+      this.$element[size !== null ? 'addClass' : 'removeClass']('collapse')
+
+      return this
+    }
+
+  , transition: function (method, startEvent, completeEvent) {
+      var that = this
+        , complete = function () {
+            if (startEvent.type == 'show') that.reset()
+            that.transitioning = 0
+            that.$element.trigger(completeEvent)
+          }
+
+      this.$element.trigger(startEvent)
+
+      if (startEvent.isDefaultPrevented()) return
+
+      this.transitioning = 1
+
+      this.$element[method]('in')
+
+      $.support.transition && this.$element.hasClass('collapse') ?
+        this.$element.one($.support.transition.end, complete) :
+        complete()
+    }
+
+  , toggle: function () {
+      this[this.$element.hasClass('in') ? 'hide' : 'show']()
+    }
+
+  }
+
+
+ /* COLLAPSE PLUGIN DEFINITION
+  * ========================== */
+
+  var old = $.fn.collapse
+
+  $.fn.collapse = function (option) {
+    return this.each(function () {
+      var $this = $(this)
+        , data = $this.data('collapse')
+        , options = typeof option == 'object' && option
+      if (!data) $this.data('collapse', (data = new Collapse(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  $.fn.collapse.defaults = {
+    toggle: true
+  }
+
+  $.fn.collapse.Constructor = Collapse
+
+
+ /* COLLAPSE NO CONFLICT
+  * ==================== */
+
+  $.fn.collapse.noConflict = function () {
+    $.fn.collapse = old
+    return this
+  }
+
+
+ /* COLLAPSE DATA-API
+  * ================= */
+
+  $(document).on('click.collapse.data-api', '[data-toggle=collapse]', function (e) {
+    var $this = $(this), href
+      , target = $this.attr('data-target')
+        || e.preventDefault()
+        || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '') //strip for ie7
+      , option = $(target).data('collapse') ? 'toggle' : $this.data()
+    $this[$(target).hasClass('in') ? 'addClass' : 'removeClass']('collapsed')
+    $(target).collapse(option)
+  })
+
+}(window.jQuery);

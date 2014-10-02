@@ -26,16 +26,7 @@
 
 <h:body onload="loadMasksJQuery();">
 <f:loadBundle basename="br.com.mkoffice.view.bundle.Messages" var="msgs" />
-	   <script type="text/javascript">
-     	function rendered(value){
-	     	var element = document.getElementById('menuAdmin');// Get element by client ID.
-			if(value == true){
-		     	element.style.display = 'inline'; // Show it. // or 'block' if it's a HTML block element
-			}else{
-	     		element.style.display = 'none';// Hide it.
-			}
-         }
-     </script>
+
 	 <header class="navbar navbar-fixed-top">
      	<div class="navbar-inner">
 			<ui:include src="../content/menu.xhtml"/> 			

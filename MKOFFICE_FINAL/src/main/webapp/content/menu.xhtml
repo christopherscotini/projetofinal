@@ -33,11 +33,6 @@
 	            <div class="info-menu">
 	                <img alt="" src="#{facesContext.externalContext.requestContextPath}/resources/images/avatar.jpg" class="img-polaroid">Teste, #{loginBean.usuario.dadosPessoa.nome}</img>
 	                <div class="btn-toolbar">
-	                	<div class="btn-group">
-	                		<a class="btn btn-sm dropdown-toggle" data-toggle="dropdown" type="button">
-								<i class="icon-cog"></i> #{msgs['menu.lbl.configuracoes']} <i class="caret"></i>
-							</a>
-	                	</div>
 	                    <div class="btn-group">
 	                        <h:commandLink action="#{loginBean.doLogout()}" class="btn btn-inverse"><i class='icon-off'></i> #{msgs.btn_sair}</h:commandLink>
 	                    </div>

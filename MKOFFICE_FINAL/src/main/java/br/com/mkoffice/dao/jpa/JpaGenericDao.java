@@ -6,13 +6,14 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.criteria.CriteriaQuery;
 
 import br.com.mkoffice.dao.Dao;
 
 public class JpaGenericDao<T, ID extends Serializable> implements Dao<T, ID> {
 
-	@PersistenceContext(name="mkofficePU")
+	@PersistenceContext(name="mkofficePU", type=PersistenceContextType.TRANSACTION)
 	private EntityManager entityManager = null;
 
 	public T insert(T entity) {

@@ -32,6 +32,7 @@ import br.com.mkoffice.model.admin.SituacaoEntity;
 import br.com.mkoffice.model.constants.PercentDescontoEnum;
 import br.com.mkoffice.model.constants.StatusConsultoraEnum;
 import br.com.mkoffice.security.LoginBean;
+import br.com.mkoffice.view.constants.EstadoEnum;
 import br.com.mkoffice.view.constants.GenderEnum;
 
 public abstract class AbstractModelBean {
@@ -133,36 +134,9 @@ public abstract class AbstractModelBean {
 				Arrays.asList(StatusConsultoraEnum.values()));
 	}
 
-	public List<SelectItem> getComboUf() {
-		List<SelectItem> retorno = new ArrayList<SelectItem>();
-		retorno.add(new SelectItem("AC"));
-		retorno.add(new SelectItem("AL"));
-		retorno.add(new SelectItem("AM"));
-		retorno.add(new SelectItem("AP"));
-		retorno.add(new SelectItem("BA"));
-		retorno.add(new SelectItem("CE"));
-		retorno.add(new SelectItem("DF"));
-		retorno.add(new SelectItem("ES"));
-		retorno.add(new SelectItem("GO"));
-		retorno.add(new SelectItem("MA"));
-		retorno.add(new SelectItem("MG"));
-		retorno.add(new SelectItem("MS"));
-		retorno.add(new SelectItem("MT"));
-		retorno.add(new SelectItem("PA"));
-		retorno.add(new SelectItem("PB"));
-		retorno.add(new SelectItem("PE"));
-		retorno.add(new SelectItem("PI"));
-		retorno.add(new SelectItem("PR"));
-		retorno.add(new SelectItem("RJ"));
-		retorno.add(new SelectItem("RN"));
-		retorno.add(new SelectItem("RO"));
-		retorno.add(new SelectItem("RR"));
-		retorno.add(new SelectItem("RS"));
-		retorno.add(new SelectItem("SC"));
-		retorno.add(new SelectItem("SE"));
-		retorno.add(new SelectItem("SP"));
-		retorno.add(new SelectItem("TO"));
-		return retorno;
+	public List<EstadoEnum> getComboUf() {
+		return new ArrayList<EstadoEnum>(
+				Arrays.asList(EstadoEnum.values()));
 	}
 
 	public LoginBean getLoginBean() {

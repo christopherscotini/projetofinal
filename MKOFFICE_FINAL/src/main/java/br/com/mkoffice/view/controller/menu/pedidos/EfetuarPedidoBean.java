@@ -156,7 +156,12 @@ public class EfetuarPedidoBean extends AbstractModelBean implements Serializable
 	
 	public String navegarConcluirPedido(){
 		try{
-			pedidoBO.existePedido(pedidoDTO);
+			if(validarFormDadosPedido()){
+				pedidoBO.existePedido(pedidoDTO);
+			}else{
+				FacesUtils.addErrorMessage("Insira o número do pedido");
+				return "";
+			}
 		}catch (BusinessException b) {
 			FacesUtils.addErrorMessage(b.getMessage());
 			return "";
@@ -171,12 +176,21 @@ public class EfetuarPedidoBean extends AbstractModelBean implements Serializable
 		return TELA_CONCLUIR_PEDIDO;
 	}
 	
+	private boolean validarFormDadosPedido() {
+		if(pedidoDTO.getCodPedido() == null){
+			return false;
+		}else if(pedidoDTO.getCodPedido().equals(0L)){
+			return false;
+		}
+		return true;
+	}
+
 	public String executePedido(){
 		
 		pedidoDTO.setParcelas(prepararParcelas());
 		
 		try{
-			FacesUtils.addInfoMessage("Pedido NÂ° "+pedidoBO.efetuarPedido(pedidoDTO).getCodPedido()+" foi realizado com sucesso.");
+			FacesUtils.addInfoMessage("Pedido N° "+pedidoBO.efetuarPedido(pedidoDTO).getCodPedido()+" foi realizado com sucesso.");
 		}catch(BusinessException b){
 			FacesUtils.addErrorMessage(b.getMessage());
 		}
@@ -205,7 +219,7 @@ public class EfetuarPedidoBean extends AbstractModelBean implements Serializable
 		
 		for (int i = 0; i < pedidoDTO.getFormaDePagamento().getNumeroParcelas(); i++) {//personalizar a qtde de parcelas
 			
-			String lblAVista = "R$ "+DecimalUtils.format(BigDecimal.valueOf((preco/(i+1))))+" ï¿½ vista";
+			String lblAVista = "R$ "+DecimalUtils.format(BigDecimal.valueOf((preco/(i+1))))+" à vista";
 			String lbl = (i+1)+"X sem juros R$ "+DecimalUtils.format(BigDecimal.valueOf((preco/(i+1))));
 			
 			ParcelasEntity parcela = new ParcelasEntity(null, i== 0 ? lblAVista : lbl, (i+1), BigDecimal.valueOf((preco/(i+1))), null, null, i==0?BigDecimal.valueOf((preco/(i+1))):null);

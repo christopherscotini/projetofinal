@@ -4,7 +4,6 @@
 
 label.HtmlOutputTextResposta{
 	font-size: 14px;
-	font-family: 'Verdana';
 	font-weight: bold;
 	margin-left: 5px;
 	color:#000000;
@@ -12,11 +11,11 @@ label.HtmlOutputTextResposta{
 label.HtmlOutputLabelResposta{
 	float: right;
 	margin-left: 5px;
+	font-weight: bold;
 }
 
 label.HtmlOutputTextLabelSubtitle{
 	font-size: 18px;
-	font-family: 'Verdana';
 	font-weight: bold;
 	margin-left: 5px;
 	color:#000000;
@@ -68,6 +67,8 @@ input[type="checkbox"] {
 
 label.label-5left{margin-left:5px;}
 input.input-5left{margin-left:5px;}
+span.input-5left{margin-left:5px;}
+select.input-5left{margin-left:5px;}
 
 span.painel-contas-footer{
 	float: right ;
