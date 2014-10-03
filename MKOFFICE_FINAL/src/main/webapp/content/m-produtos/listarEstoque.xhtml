@@ -95,14 +95,14 @@
 			<p:outputLabel value="#{msgs['listarestoque.lbl.numtotalprodutosestoque']}:" />
 			<p:outputLabel value="#{estoqueBean.estoqueMetricasDTO.somaTodosProdutosEmEstoque}" styleClass="input-5left HtmlOutputTextResposta" />
 			<p:outputLabel value="#{msgs['listarestoque.lbl.totalpontosestoque']}:" for="tot-pontos-estoque" style="margin-left:10px;"/>
-			<h:outputText id="tot-pontos-estoque" rendered="#{not empty estoqueBean.estoqueMetricasDTO.somaToTalPontosEmEstoque}" value="#{estoqueBean.estoqueMetricasDTO.somaToTalPontosEmEstoque} pts" styleClass="input-5left HtmlOutputTextResposta" />
-			<h:panelGroup>
-				<p:outputLabel value="#{msgs['listarestoque.lbl.valortotalestoque']}:" for="tot-pagar" style="margin-left:10px;"/>
+			<p:outputLabel id="tot-pontos-estoque" rendered="#{not empty estoqueBean.estoqueMetricasDTO.somaToTalPontosEmEstoque}" value="#{estoqueBean.estoqueMetricasDTO.somaToTalPontosEmEstoque} pts" styleClass="input-5left HtmlOutputTextResposta" />
+			<p:outputLabel value="#{msgs['listarestoque.lbl.valortotalestoque']}:" for="tot-pagar" style="margin-left:10px;"/>
+			<h:panelGrid columns="2">
 				<p:outputLabel value="R$" for="tot-pagar" styleClass="input-5left HtmlOutputTextResposta" rendered="#{not empty estoqueBean.estoqueMetricasDTO.valorToTalRevendaProdutosEmEstoque}"/>
-			</h:panelGroup>
-			<h:outputText id="tot-pagar" value="#{estoqueBean.estoqueMetricasDTO.valorToTalRevendaProdutosEmEstoque}" styleClass="input-5left HtmlOutputTextResposta" >
-				<f:converter converterId="decimalConverter" />
-			</h:outputText>
+				<p:outputLabel id="tot-pagar" value="#{estoqueBean.estoqueMetricasDTO.valorToTalRevendaProdutosEmEstoque}" styleClass="input-5left HtmlOutputTextResposta" >
+					<f:converter converterId="decimalConverter" />
+				</p:outputLabel>
+			</h:panelGrid>
 		</h:panelGrid>
 	
 		<hr class="lin" />
