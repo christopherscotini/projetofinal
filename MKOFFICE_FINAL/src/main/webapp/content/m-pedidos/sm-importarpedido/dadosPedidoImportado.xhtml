@@ -29,150 +29,156 @@
 	<ui:param name="titulo" value="Dados do pedido" />
 
 	<ui:define name="body_content">
-		<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
-				
-
-			<h:panelGroup id="group-revisao-pedido">
-				<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="DADOS DO PEDIDO" />
-				<hr class="lin"></hr>
-				<h:panelGrid cellpadding="0" cellspacing="0" columns="2" border="0" style="margin-top:10px;">
-					<p:outputLabel value="Núm. do pedido:" for="txtCodPedido" styleClass="HtmlOutputLabelResposta"/>
-					<p:inputText id="txtCodPedido" value="#{importarPedidoBean.pedidoDTO.codPedido}"  onkeypress="return onlyNum(event)" required="true" requiredMessage="Insira o número do pedido" styleClass="HtmlOutputTextResposta" size="13" maxlength="10" />
-					
-					<p:outputLabel value="Data do pedido:" for="txtDataPedido" styleClass="HtmlOutputLabelResposta"/>
-					<p:calendar id="txtDataPedido"	value="#{importarPedidoBean.pedidoDTO.dtPedido}" size="13"  pattern="dd/MM/yyyy" alt="date" />
-					
-					<p:outputLabel value="Valor do pedido:" for="txtPrecoVarejo" styleClass="HtmlOutputLabelResposta"/>
-					<h:panelGroup>
-						<p:outputLabel value="R$" for="txtPrecoVarejo" styleClass="input-5left HtmlOutputTextResposta"/>
-						<h:outputLabel id="txtPrecoVarejo" value="#{importarPedidoBean.pedidoDTO.valorTotalEmProdutos}" styleClass="input-5left HtmlOutputTextResposta">
-							<f:converter converterId="decimalConverter" />
-						</h:outputLabel>
-					</h:panelGroup>
-
-					<p:outputLabel value="Percentual de desconto:" for="txtPercDesconto" styleClass="HtmlOutputLabelResposta"/>
-					<p:selectOneMenu value="#{importarPedidoBean.pedidoDTO.porcDesconto}" style="width:104px;" id="txtPercDesconto" styleClass="input-5left HtmlOutputTextResposta">
-						<f:selectItems value="#{importarPedidoBean.cboPercentDesconto}" var="_percent" itemLabel="#{_percent.descricao}" itemValue="#{_percent.codigo}"/>
-						<p:ajax event="change" listener="#{importarPedidoBean.onChangePercDesconto()}" update="group-valor-atacado group-valor-lucro group-valor-final"/>
-					</p:selectOneMenu>
-					
-					<p:outputLabel value="Valor do pedido com desconto:" for="txtPrecoDesconto" styleClass="HtmlOutputLabelResposta"/>
-					<h:panelGroup id="group-valor-atacado">
-						<p:outputLabel value="R$" for="txtPrecoVarejo" styleClass="input-5left HtmlOutputTextResposta"/>
-						<h:outputLabel value="#{importarPedidoBean.pedidoDTO.valorTotalAtacado}" id="txtPrecoDesconto" styleClass="input-5left HtmlOutputTextResposta">
-							<f:converter converterId="decimalConverter" />
-						</h:outputLabel>
-					</h:panelGroup>
-										
-					<p:outputLabel value="Total de pontos:" for="txtTotPontos" styleClass="HtmlOutputLabelResposta"/>
-					<p:outputLabel value="#{importarPedidoBean.pedidoDTO.pontosTotalPedido} pts" id="txtTotPontos" styleClass="input-5left HtmlOutputTextResposta" />
-					
-					<p:outputLabel value="Valor do bonus utilizado:" for="txtValorBonus" styleClass="HtmlOutputLabelResposta" />
-					<p:inputText value="#{importarPedidoBean.pedidoDTO.valorBonusUtilizado}"
-						id="txtValorBonus" alt="decimalBr8" size="13" maxlength="8">
-						<f:converter converterId="decimalConverter" />
-						<p:ajax event="blur"
-							listener="#{importarPedidoBean.onBlurValorFreteAndBonusUtilizado()}"
-							update="group-valor-final" />
-					</p:inputText>
-
-					<p:outputLabel value="Valor do frete:" for="txtValorFrete" styleClass="HtmlOutputLabelResposta"/>
-					<p:inputText value="#{importarPedidoBean.pedidoDTO.valorFrete}" id="txtValorFrete"  alt="decimalBr8" size="13" maxlength="6">
-						<f:converter converterId="decimalConverter" />
-						<p:ajax event="blur" listener="#{importarPedidoBean.onBlurValorFreteAndBonusUtilizado()}" update="group-valor-final group-valor-lucro"/>
-					</p:inputText>
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
+				<i class="icon-table"></i> #{msgs['dadospedido.lbl.legend.dadospedido']}</a>
+			</div>
+			<div id="formdiv" class="widget-body collapse in">
+				<div class="widget-inner">
+					<h:panelGrid cellpadding="0" cellspacing="0" columns="2" border="0" style="margin-top:10px;">
+						<p:outputLabel value="#{msgs['dadospedido.lbl.numeropedido']}:" for="txtCodPedido" styleClass="HtmlOutputLabelResposta"/>
+						<p:inputText id="txtCodPedido" value="#{importarPedidoBean.pedidoDTO.codPedido}"  
+							onkeypress="return onlyNum(event)" 
+							styleClass="HtmlOutputTextResposta input-5left" 
+							size="13" maxlength="10" />
 						
-					<p:outputLabel value="Valor total a pagar:" for="txtValorTotalPedido" styleClass="HtmlOutputLabelResposta"/>
-					<h:panelGroup id="group-valor-final">
-						<p:outputLabel value="R$" for="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta"/>
-						<h:outputLabel value="#{importarPedidoBean.pedidoDTO.valorFinalTotalPago}" id="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta">
-							<f:converter converterId="decimalConverter" />
-						</h:outputLabel>
-					</h:panelGroup>
-
-					<p:outputLabel value="Lucro estimado:" for="txtValorLucroEstimado" styleClass="HtmlOutputLabelResposta"/>
-					<h:panelGroup id="group-valor-lucro">
-						<p:outputLabel value="R$" for="txtValorLucroEstimado" styleClass="input-5left HtmlOutputTextResposta"/>
-						<h:outputLabel value="#{importarPedidoBean.pedidoDTO.lucroTotal}" id="txtValorLucroEstimado" styleClass="input-5left HtmlOutputTextResposta">
-							<f:converter converterId="decimalConverter" />
-						</h:outputLabel>
-					</h:panelGroup>
-
-				</h:panelGrid>
-			</h:panelGroup>
-			
+						<p:outputLabel value="#{msgs['dadospedido.lbl.datapedido']}:" for="txtDataPedido" styleClass="HtmlOutputLabelResposta"/>
+						<p:calendar id="txtDataPedido"	value="#{importarPedidoBean.pedidoDTO.dtPedido}" size="13"  pattern="dd/MM/yyyy" alt="date" styleClass="input-5left"/>
+						
+						<p:outputLabel value="#{msgs['dadospedido.lbl.valorpedido']}:" for="txtPrecoVarejo" styleClass="HtmlOutputLabelResposta"/>
+						<h:panelGrid columns="2">
+							<p:outputLabel value="R$" for="txtPrecoVarejo" styleClass="input-5left HtmlOutputTextResposta"/>
+							<h:outputLabel id="txtPrecoVarejo" value="#{importarPedidoBean.pedidoDTO.valorTotalEmProdutos}" styleClass="input-5left HtmlOutputTextResposta">
+								<f:converter converterId="decimalConverter" />
+							</h:outputLabel>
+						</h:panelGrid>
 		
-			<h:panelGroup id="tabela-selecao-produtos">
-					<h:panelGrid cellpadding="0" cellspacing="1" styleClass="centralizar-conteudo" style="margin-top:20px;">
-						<p:fieldset legend="Produtos Inclusos no Pedido" toggleable="true" collapsed="true" styleClass="field-produtos-inclusos-pedido">	
-							<p:dataTable id="tableCatalogo"
-									value="#{importarPedidoBean.listaProdutosInclusosPedido}" var="result"
-									rowKey="#{result}" 
-									rows="10"
-									styleClass="dataTable"
-									paginator="true" paginatorPosition="bottom"
-									emptyMessage="Dados não encontrados">
-			
-									<p:column headerText="CÓDIGO MK" style="text-align: center;"
-										width="10%" sortBy="#{result.produto.codProduto}">
-										<h:outputText value="#{result.produto.codProduto}"
-											style="text-align: center;" />
-									</p:column>
-									<p:column headerText="PRODUTO" width="80%" sortBy="#{result.produto.descProduto}">
-										<h:outputText value="#{result.produto.descProduto}"
-											style="text-align: left;" />
-									</p:column>
-									<p:column headerText="VALOR UNITÁRIO" style="text-align: center;" width="5%" 
-										sortBy="#{result.produto.preco}">
-										<h:outputText value="R$" style="text-align: right;" />
-										<h:outputText value="#{result.produto.preco}" style="text-align: right;" >
-											<f:converter converterId="decimalConverter" />
-										</h:outputText>
-									</p:column>
-									<p:column headerText="QTDE" style="text-align: center;" width="10%" sortBy="#{result.qtdeProdutoCarrinho}" >
-										<h:outputText value="#{result.qtdeProdutoCarrinho}" style="text-align: center;" />
-									</p:column>
-									<p:column headerText="VALOR TOTAL" style="text-align: right;" width="10%" >
-										<h:outputText value="R$" style="text-align: right;" />
-										<h:outputText value="#{result.valorTotalProdutoCarrinho}" style="text-align: right;" >
-											<f:converter converterId="decimalConverter" />
-										</h:outputText>
-									</p:column>
-							</p:dataTable>
-							
-							<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="4" style="margin-top:5px;">
-								<p:outputLabel value="Nº de produtos:" />
-								<p:outputLabel value="#{importarPedidoBean.lblNumeroProdutosPedido}"
-									styleClass="input-5left HtmlOutputTextResposta" />
-
-								<p:outputLabel value="Nº de Itens" style="margin-left:10px;" />
-								<p:outputLabel value="#{importarPedidoBean.lblNumeroItensPedido}"
-									styleClass="input-5left HtmlOutputTextResposta" />
-									
-							</h:panelGrid>
-							
-						</p:fieldset>
+						<p:outputLabel value="#{msgs['dadospedido.lbl.percentualdesconto']}:" for="txtPercDesconto" styleClass="HtmlOutputLabelResposta"/>
+						<h:selectOneMenu value="#{importarPedidoBean.pedidoDTO.porcDesconto}" style="width:104px;" id="txtPercDesconto" styleClass="input-5left HtmlOutputTextResposta">
+							<f:selectItems value="#{importarPedidoBean.cboPercentDesconto}" var="_percent" itemLabel="#{_percent.descricao}" itemValue="#{_percent.codigo}"/>
+							<p:ajax event="change" listener="#{importarPedidoBean.onChangePercDesconto()}" update="group-valor-atacado group-valor-lucro group-valor-final"/>
+						</h:selectOneMenu>
 						
-						<hr class="lin"></hr>
-					
-						<h:panelGroup>
-							<div class="buttonFooter">
-								<p:commandButton id="btnVoltar" value="Voltar" ajax="false" style="float:left;"
-									action="#{importarPedidoBean.navegarVoltarDadosPedidoImportado()}" immediate="true"  />
-								<p:commandButton id="btn-avancar" 
-												 value="#{msgs.btn_avancar}" 
-												 ajax="false" 
-												 action="#{importarPedidoBean.navegarConcluirPedidoImportado()}"
-												 onclick="return alertaRevisarPedido(document.forms[1])"
-												 disabled="#{empty importarPedidoBean.listaProdutosInclusosPedido}" />
-								<div style="height: 10px;width: 10px;"></div>	
-							</div>
-						</h:panelGroup>
-					
+						<p:outputLabel value="#{msgs['dadospedido.lbl.valorpedidodesconto']}:" for="txtPrecoDesconto" styleClass="HtmlOutputLabelResposta"/>
+						<h:panelGrid columns="2" id="group-valor-atacado" > 
+							<p:outputLabel value="R$" for="txtPrecoVarejo" styleClass="input-5left HtmlOutputTextResposta"/>
+							<h:outputLabel value="#{importarPedidoBean.pedidoDTO.valorTotalAtacado}" id="txtPrecoDesconto" styleClass="input-5left HtmlOutputTextResposta">
+								<f:converter converterId="decimalConverter" />
+							</h:outputLabel>
+						</h:panelGrid>
+											
+						<p:outputLabel value="#{msgs['dadospedido.lbl.totalpontos']}:" for="txtTotPontos" styleClass="HtmlOutputLabelResposta"/>
+						<p:outputLabel value="#{importarPedidoBean.pedidoDTO.pontosTotalPedido} pts" id="txtTotPontos" styleClass="input-5left HtmlOutputTextResposta" />
+						
+						<p:outputLabel value="#{msgs['dadospedido.lbl.valorbonusutilizado']}:" for="txtValorBonus" styleClass="HtmlOutputLabelResposta" />
+						<p:inputText value="#{importarPedidoBean.pedidoDTO.valorBonusUtilizado}" id="txtValorBonus" styleClass="input-5left" alt="decimalBr8" size="13" maxlength="8">
+							<f:converter converterId="decimalConverter" />
+							<p:ajax event="blur"
+								listener="#{importarPedidoBean.onBlurValorFreteAndBonusUtilizado()}"
+								update="group-valor-final" />
+						</p:inputText>
+		
+						<p:outputLabel value="#{msgs['dadospedido.lbl.valorfrete']}:" for="txtValorFrete" styleClass="HtmlOutputLabelResposta"/>
+						<p:inputText value="#{importarPedidoBean.pedidoDTO.valorFrete}" id="txtValorFrete" styleClass="input-5left" alt="decimalBr8" size="13" maxlength="6">
+							<f:converter converterId="decimalConverter" />
+							<p:ajax event="blur" listener="#{importarPedidoBean.onBlurValorFreteAndBonusUtilizado()}" update="group-valor-final group-valor-lucro"/>
+						</p:inputText>
+							
+						<p:outputLabel value="#{msgs['dadospedido.lbl.valortotalpagar']}:" for="txtValorTotalPedido" styleClass="HtmlOutputLabelResposta"/>
+						<h:panelGrid id="group-valor-final" columns="2" >
+							<p:outputLabel value="R$" for="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta"/>
+							<h:outputLabel value="#{importarPedidoBean.pedidoDTO.valorFinalTotalPago}" id="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta">
+								<f:converter converterId="decimalConverter" />
+							</h:outputLabel>
+						</h:panelGrid>
+		
+						<p:outputLabel value="#{msgs['dadospedido.lbl.lucroestimado']}:" for="txtValorLucroEstimado" styleClass="HtmlOutputLabelResposta"/>
+						<h:panelGrid id="group-valor-lucro" columns="2" >
+							<p:outputLabel value="R$" for="txtValorLucroEstimado" styleClass="input-5left HtmlOutputTextResposta"/>
+							<h:outputLabel value="#{importarPedidoBean.pedidoDTO.lucroTotal}" id="txtValorLucroEstimado" styleClass="input-5left HtmlOutputTextResposta">
+								<f:converter converterId="decimalConverter" />
+							</h:outputLabel>
+						</h:panelGrid>
 					</h:panelGrid>
-			</h:panelGroup><!-- FIM GROUP id=tabela-selecao-produtos -->
+				</div>
+			</div>
+		</div>
+			
 		
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
+				<i class="icon-table"></i> #{msgs['dadospedido.lbl.legend.produtosinclusospedido']}</a>
+			</div>
+			<div id="formdiv" class="widget-body collapse in">
+				<div class="widget-inner">	
+					<p:dataTable id="tableCatalogo"
+							value="#{importarPedidoBean.listaProdutosInclusosPedido}" var="result"
+							rowKey="#{result}" 
+							rows="10"
+							styleClass="dataTable"
+							paginator="true" paginatorPosition="bottom"
+							emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}">
+	
+							<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" style="text-align: center;"
+								width="10%" sortBy="#{result.produto.codProduto}">
+								<h:outputText value="#{result.produto.codProduto}"
+									style="text-align: center;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="80%" sortBy="#{result.produto.descProduto}">
+								<h:outputText value="#{result.produto.descProduto}"
+									style="text-align: left;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.valorunitario']}" style="text-align: center;" width="5%" 
+								sortBy="#{result.produto.preco}">
+								<h:outputText value="R$" style="text-align: right;" />
+								<h:outputText value="#{result.produto.preco}" style="text-align: right;" >
+									<f:converter converterId="decimalConverter" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.quantidade']}" style="text-align: center;" width="10%" sortBy="#{result.qtdeProdutoCarrinho}" >
+								<h:outputText value="#{result.qtdeProdutoCarrinho}" style="text-align: center;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: right;" width="10%" >
+								<h:outputText value="R$" style="text-align: right;" />
+								<h:outputText value="#{result.valorTotalProdutoCarrinho}" style="text-align: right;" >
+									<f:converter converterId="decimalConverter" />
+								</h:outputText>
+							</p:column>
+					</p:dataTable>
+				</div>
+			</div>
+		</div>
+						
+		<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="4" style="margin-top:5px;">
+			<p:outputLabel value="#{msgs['dadospedido.lbl.numeroprodutos']}:" />
+			<p:outputLabel value="#{importarPedidoBean.lblNumeroProdutosPedido}"
+				styleClass="input-5left HtmlOutputTextResposta" />
+
+			<p:outputLabel value="#{msgs['dadospedido.lbl.numeroitens']}" style="margin-left:10px;" />
+			<p:outputLabel value="#{importarPedidoBean.lblNumeroItensPedido}"
+				styleClass="input-5left HtmlOutputTextResposta" />
+				
 		</h:panelGrid>
+					
+		<hr class="lin"></hr>
+	
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" 
+					style="float:left;" styleClass="btn btn-zen-2 btn-toolbar"
+					action="#{importarPedidoBean.navegarVoltarDadosPedidoImportado()}" immediate="true"  />
+				<p:commandButton id="btn-avancar" 
+								 value="#{msgs.btn_avancar}" 
+								 ajax="false" styleClass="btn btn-zen-5 btn-toolbar"
+								 action="#{importarPedidoBean.navegarConcluirPedidoImportado()}"
+								 onclick="return alertaRevisarPedido(document.forms[1])"
+								 disabled="#{empty importarPedidoBean.listaProdutosInclusosPedido}" />
+				<div style="height: 10px;width: 10px;"></div>	
+			</div>
+		</h:panelGroup>
+				
 	</ui:define>
 
 </ui:composition>

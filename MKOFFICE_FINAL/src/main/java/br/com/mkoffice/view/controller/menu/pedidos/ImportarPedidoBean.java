@@ -36,6 +36,8 @@ import br.com.mkoffice.utils.DecimalUtils;
 import br.com.mkoffice.utils.MkmtsUtil;
 import br.com.mkoffice.view.constants.SituacaoPagamentoEnum;
 import br.com.mkoffice.view.controller.AbstractModelBean;
+import br.com.mkoffice.view.controller.importadorpedido.DadosPedido;
+import br.com.mkoffice.view.controller.importadorpedido.LeitorImportarPedido;
 import br.com.mkoffice.view.utils.FacesUtils;
 
 @ManagedBean
@@ -56,6 +58,7 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 	private UploadedFile fileUpload;
 	private List<CategoriaDTO> listaCategorias;
 	private List<CatalogoDTO> listaProdutosEmCatalogo;
+	private DadosPedido pedidoImportado;
 	private List<ItemMovimentadoCarrinhoDTO> listaProdutosInclusosPedido;
 
 	private Integer totalPontosVendidos;
@@ -79,22 +82,12 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 	
 	public void handleFileUpload(FileUploadEvent event) {
 		try {
-			listaProdutosInclusosPedido = FacesUtils.doUpload(event);
+			pedidoImportado = LeitorImportarPedido.getInstance().read(event.getFile().getContents(), event.getFile().getFileName());
+			System.out.println("NUMERO PEDIDO: "+pedidoImportado.getNumeroPedido());
+			listaProdutosInclusosPedido = pedidoImportado.getProdutos();
 			habilitaPainelRevisaoPedido = true;
-			FacesUtils
-					.addInfoMessage("Arquivo " + event.getFile().getFileName()
-							+ " carregado com sucesso.\nVerifique se a lista de produtos esta completa.");
+			FacesUtils.addInfoMessage("Arquivo " + event.getFile().getFileName()+ " carregado com sucesso.\nVerifique se a lista de produtos esta completa.");
 			faltouCategoria = false;
-
-		} catch (FileNotFoundException e) {
-			FacesUtils.addErrorMessage(e.getMessage());
-			e.printStackTrace();
-		} catch (IOException e) {
-			FacesUtils.addErrorMessage(e.getMessage());
-			e.printStackTrace();
-		} catch (BiffException e) {
-			FacesUtils.addErrorMessage(e.getMessage());
-			e.printStackTrace();
 		}catch(FormatException f){
 			FacesUtils.addInfoMessage(f.getMessage());
 		}
@@ -179,7 +172,12 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 	
 	public String navegarConcluirPedidoImportado(){
 		try {
-			pedidoBO.existePedido(pedidoDTO);
+			if(validarFormDadosPedido()){
+				pedidoBO.existePedido(pedidoDTO);
+			}else{
+				FacesUtils.addErrorMessage("Insira o número do pedido");
+				return "";
+			}
 		} catch (BusinessException b) {
 			FacesUtils.addErrorMessage(b.getMessage());
 			return "";
@@ -194,6 +192,15 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 		return TELA_CONCLUIR_PEDIDO;
 	}
 	
+	private boolean validarFormDadosPedido() {
+		if(pedidoDTO.getCodPedido() == null){
+			return false;
+		}else if(pedidoDTO.getCodPedido().equals(0L)){
+			return false;
+		}
+		return true;
+	}
+
 	public String executePedido() {
 
 		pedidoDTO.setParcelas(prepararParcelas());
@@ -224,12 +231,8 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 	}
 
 	public void onBlurValorFreteAndBonusUtilizado() {
-		pedidoDTO.setValorFinalTotalPago(CalculadoraUtils
-				.calcularValorFinalTotalPago(pedidoDTO.getValorFinalTotalPago(),
-						pedidoDTO.getValorFrete(),
-						pedidoDTO.getValorBonusUtilizado()));
-		pedidoDTO.setLucroTotal(CalculadoraUtils.calcularLucroTotalPedido(
-				pedidoDTO.getValorFinalTotalPago(), pedidoDTO.getValorTotalEmProdutos()));
+		pedidoDTO.setValorFinalTotalPago(CalculadoraUtils.calcularValorFinalTotalPago(pedidoDTO.getValorTotalAtacado(),pedidoDTO.getValorFrete(),pedidoDTO.getValorBonusUtilizado()));
+		pedidoDTO.setLucroTotal(CalculadoraUtils.calcularLucroTotalPedido(pedidoDTO.getValorFinalTotalPago(), pedidoDTO.getValorTotalEmProdutos()));
 	}
 
 	private CategoriaDTO catAnterior;
@@ -327,7 +330,7 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 			faltouCategoria = false;
 			return TELA_ADD_CAT_PRODS_PEDIDO;
 		} else {
-			return TELA_IMPORTAR_PEDIDO;
+			return TELA_DADOS_PEDIDO;
 		}
 	}
 
@@ -454,6 +457,14 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 
 	public void setDtVctoPrimeiraParcela(Date dtVctoPrimeiraParcela) {
 		this.dtVctoPrimeiraParcela = dtVctoPrimeiraParcela;
+	}
+
+	public DadosPedido getPedidoImportado() {
+		return pedidoImportado;
+	}
+
+	public void setPedidoImportado(DadosPedido pedidoImportado) {
+		this.pedidoImportado = pedidoImportado;
 	}
 
 }
