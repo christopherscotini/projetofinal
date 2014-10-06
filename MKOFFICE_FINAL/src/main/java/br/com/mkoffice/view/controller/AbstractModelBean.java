@@ -3,10 +3,11 @@ package br.com.mkoffice.view.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
 import br.com.mkoffice.business.bo.AgendaBO;
@@ -95,7 +96,17 @@ public abstract class AbstractModelBean {
 	@Inject
 	protected VendaBO vendaBO = null;
 	
-	
+	public static String getMsgs(String messageId) {    
+	        FacesContext facesContext = FacesContext.getCurrentInstance();    
+	        String msg = "";    
+	        Locale locale = facesContext.getViewRoot().getLocale();    
+	        ResourceBundle bundle = ResourceBundle.getBundle("br.com.mkoffice.view.bundle.Messages", locale);    
+	        try {    
+	            msg = bundle.getString(messageId);    
+	        } catch (Exception e) {    
+	        }    
+	        return msg;    
+	    }  
 
 	public abstract String iniciarTela();
 

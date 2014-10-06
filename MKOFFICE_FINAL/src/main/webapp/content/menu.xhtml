@@ -31,7 +31,7 @@
 	
 	        <section class="admin">
 	            <div class="info-menu">
-	                <img alt="" src="#{facesContext.externalContext.requestContextPath}/resources/images/avatar.jpg" class="img-polaroid">#{msgs['menu.lbl.mensagemboasvindas']}, #{loginBean.usuario.dadosPessoa.nome}</img>
+	                <img alt="" src="#{facesContext.externalContext.requestContextPath}/#{loginBean.usuario.urlAvatar}" class="img-polaroid">#{msgs['menu.lbl.mensagemboasvindas']}, #{loginBean.usuario.dadosPessoa.sexo}</img>
 	                <div class="btn-toolbar">
 	                    <div class="btn-group">
 	                        <h:commandLink action="#{loginBean.doLogout()}" class="btn btn-inverse"><i class='icon-off'></i> #{msgs.btn_sair}</h:commandLink>

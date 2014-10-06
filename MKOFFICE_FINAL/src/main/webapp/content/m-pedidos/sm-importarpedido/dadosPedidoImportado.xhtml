@@ -14,16 +14,21 @@
 	</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:breadCrumb>
-			<p:menuitem value="TelaInicial"
-				action="#{importarPedidoBean.scheduleBean.telaInicial()}" ajax="false" />
-			<p:menuitem value="Importar Pedido"
-				action="#{importarPedidoBean.iniciarTela()}" ajax="false" />
-			<p:menuitem value="Importar Pedido" />
-			<p:menuitem value="Adicionar categoria ao Produtos do Pedido"
-				rendered="#{importarPedidoBean.faltouCategoria}" />
-		    <p:menuitem value="Dados do pedido"  />  
-		</p:breadCrumb>
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#{importarPedidoBean.iniciarTela()}" value="#{msgs['dadospedido.breadcumb.pedido']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['dadospedido.breadcumb.pedido.cadastrarpedido']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['dadospedido.breadcumb.pedido.cadastrarpedido.dadospedido']}</li>
+		</ul>
 	</ui:define>
 	
 	<ui:param name="titulo" value="Dados do pedido" />

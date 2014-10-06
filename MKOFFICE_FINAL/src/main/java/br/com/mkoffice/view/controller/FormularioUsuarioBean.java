@@ -49,13 +49,13 @@ public class FormularioUsuarioBean extends AbstractModelBean{
 			UserEntity usuarioCadastro = extrairUsuario(vo);
 			try{
 				if(!StringUtil.isNotBlank(password)){
-					FacesUtils.addErrorMessage("Senha: Campo obrigat�rio!");
+					FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.senhaobrigatorio"));
 					return "";
 				}else{
 					if(password.equals(vo.getUsuario().getPasswordConfirm())){
 						usuarioCadastro.setPassword(password.trim());
 					}else{
-						FacesUtils.addErrorMessage("As senhas n�o conferem.");
+						FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.senhasnaoconferem"));
 						return "";
 					}
 				}

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='ISO-8859-1' ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
 <html xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -6,133 +6,169 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<meta http-equiv="Content-Type" content="text/html;CHARSET=ISO-8859-1" />
-	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/estilos.css" />
-	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/defaultPrimefaces.css" />
-	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/jquery-1.3.2.js"></script>
-	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/jquery.meio.mask.js"></script>
-	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/utils.js"></script>
-	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/primefaces-locale.js"></script>
-	<link rel="shortcut icon" type="image/jpg" href="#{request.contextPath}/images/logo.jpg" />
+	<meta http-equiv="Content-Type" content="text/html;CHARSET=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/estilos.css" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/defaultPrimefaces.css" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/bootstrap.css" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/style.css" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/font-awesome.css" />
+	<ui:insert name="cssImports" />
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/jquery-1.3.2.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/jquery.meio.mask.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/utils.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/primefaces-locale.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/menu.js"></script>
+	<link rel="shortcut icon" type="image/jpg" href="#{request.contextPath}/resources/images/logo.jpg" />
+	<ui:insert name="jsImports" />
 	<title>MK Office</title>
 </h:head>
 
 <h:body onload="loadMasksJQuery();">
-
-	<div id="header">
-	</div>
+<f:loadBundle basename="br.com.mkoffice.view.bundle.Messages" var="msgs" />
+	 <header class="navbar navbar-fixed-top">
+     	<div class="navbar-inner">
+			<div class="container">
+	        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	        </a>
+	        <a href="#" class="brand">MK<span>OFFICE</span></a>
+	    	</div><!--/.container -->		
+		</div>
+	</header>	
 	
 	<div id="main_title" align="center">
 		<h1 class="portal_titulo"> <h:outputText value="Criar Conta" /> </h1>
 	</div>
 	
-	<div id="main_body" align="left" >
-		<div id="body_content" >
-			<h:form >
+	<div id="body_content" >
+			<h:form id="formGlobal" enctype="#{formMultipart}">
+				
+				<p:dialog modal="true"  widgetVar="statusDialog" draggable="false" resizable="false" closable="false">  
+				    <p:graphicImage value="/resources/images/ajaxloadingbar.gif" />  
+				</p:dialog>  
+				
 				<p:growl id="messagesGlobal" globalOnly="true" escape="false" />
-		
-					<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
-						<h:panelGroup id="tabela-dados-cliente" >
-							<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="INFORMAÇÕES PESSOAIS" />
-							<hr class="lin"/>
-							<h:panelGrid cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;">
-								<p:outputLabel value="Nome:" for="txtNome" styleClass="HtmlOutputLabelResposta" />
-								<p:inputText id="txtNome" value="#{formularioUsuarioBean.vo.nome}" size="50" styleClass="input-5left" />
-								<p:outputLabel for="cboSexo" value="Sexo:" styleClass="HtmlOutputLabelResposta"/>
-								<p:selectOneMenu id="cboSexo" value="#{formularioUsuarioBean.vo.sexo}" style="margin-left:5px;" >
-									<f:selectItem itemLabel=".:Selecione:."/>
-									<f:selectItems value="#{formularioUsuarioBean.comboSexualidade}" var="_gender" itemLabel="#{_gender.label}" itemValue="#{_gender.label}" />
-								</p:selectOneMenu>
-								<p:outputLabel value="Data de Nascimento:" for="calendarDtNasc" styleClass="HtmlOutputLabelResposta"/>
-								<p:calendar id="calendarDtNasc" value="#{formularioUsuarioBean.vo.dataNascimento}" size="10" pattern="dd/MM/yyyy" alt="date" style="margin-left:5px;" />
-								
-								<p:outputLabel value="CPF:" for="txtCPF" styleClass="HtmlOutputLabelResposta"/>
-								<p:inputText id="txtCPF" value="#{formularioUsuarioBean.vo.cpfString}" size="15" alt="cpf" styleClass="input-5left" />
-								<p:outputLabel value="Email:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
-								<p:inputText id="txtEmail" value="#{formularioUsuarioBean.vo.email}" size="45" styleClass="input-5left" />
-								<h:panelGroup></h:panelGroup>
-								<h:panelGroup></h:panelGroup>
-
-								<p:outputLabel value="Telefone:" for="txtTelefone" styleClass="HtmlOutputLabelResposta"/>
-								<p:inputText id="txtTelefone" value="#{formularioUsuarioBean.vo.numTelefoneString}" size="15" styleClass="input-5left" alt="phone"/>
-								<p:outputLabel value="Celular:" for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
-								<p:inputText id="txtTelefoneCel" value="#{formularioUsuarioBean.vo.numCelularString}" size="15" styleClass="input-5left" alt="cell9"  />
-								<h:panelGroup></h:panelGroup> 
-								<h:panelGroup></h:panelGroup>
-
-								<p:outputLabel value="CEP:" for="cep" styleClass="HtmlOutputLabelResposta" />
-								<h:panelGroup>
-									<p:inputText id="cep" value="#{formularioUsuarioBean.vo.endereco.cep}" size="10" styleClass="input-5left" alt="cep" />
-									<p:commandLink  value="Preencher" style="margin-left:5px;" ajax="false" actionListener="#{formularioUsuarioBean.buscarEnderecoViaWebService()}"/>
-								</h:panelGroup>										
-								<p:outputLabel value="Endereço:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
-								<p:inputText id="txtAddress" value="#{formularioUsuarioBean.vo.endereco.logradouro}" size="50" styleClass="input-5left" />
-								<p:outputLabel value="Estado:" for="txtState" styleClass="HtmlOutputLabelResposta"/>
-								<p:selectOneMenu id="txtState" value="#{formularioUsuarioBean.vo.endereco.estado}" size="5" styleClass="" style="margin-left:5px;" >
-									<f:selectItems value="#{formularioUsuarioBean.comboUf}" var="_uf" itemLabel="#{_uf.label}" itemValue="#{_uf.label}"/>
-								</p:selectOneMenu>
-			
-								<p:outputLabel value="N°:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
-								<p:inputText id="txtNum" value="#{formularioUsuarioBean.vo.endereco.numero}" size="5" maxlength="7" onkeypress="return onlyNum(event)" styleClass="input-5left" />
-								<p:outputLabel value="Cidade:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
-								<p:inputText id="txtCity" value="#{formularioUsuarioBean.vo.endereco.cidade}" size="30" styleClass="input-5left" />
-					
-								<p:outputLabel value="Bairro:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
-								<p:inputText id="txtBairro" value="#{formularioUsuarioBean.vo.endereco.bairro}" size="20" styleClass="input-5left" />
-								<p:outputLabel value="Complemento:" for="txtComplemento" styleClass="HtmlOutputLabelResposta"/>
-								<p:inputText id="txtComplemento" value="#{formularioUsuarioBean.vo.endereco.complemento}" size="50" styleClass="input-5left"/>
-								
-							
-							</h:panelGrid>
-						</h:panelGroup>
-			
-			
-						<h:panelGroup>
-							<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="LOGIN" />
-							<hr class="lin"/>		
-							<h:panelGrid id="infosUsuario" columns="2" style="margin-bottom:10px">
-								<p:outputLabel value="Usuario:" for="txtUsuario" styleClass="HtmlOutputLabelResposta" />
-								<p:inputText id="txtUsuario" value="#{formularioUsuarioBean.vo.usuario.username}" size="50" 
-										styleClass="input-5left" />
 				
-								<p:outputLabel value="Senha:" for="txtPassword" styleClass="HtmlOutputLabelResposta" />
-								<p:password id="txtPassword" value="#{formularioUsuarioBean.password}" 
-											styleClass="input-5left" 
-											size="50" 
-											maxlength="20"
-											goodLabel="SENHA MÉDIA" 
-											weakLabel="SENHA FRACA" 
-											strongLabel="SENHA FORTE"
-											feedback="true" />
-								
-								<p:outputLabel value="Confirmar Senha:" for="txtPasswordConf" styleClass="HtmlOutputLabelResposta" />
-								<p:password id="txtPasswordConf" value="#{formularioUsuarioBean.vo.usuario.passwordConfirm}" 
-											 styleClass="input-5left" 
-											 size="50"
-											 maxlength="20" 
-											 goodLabel="SENHA MÉDIA" 
-											 weakLabel="SENHA FRACA" 
-											 strongLabel="SENHA FORTE"
-											 feedback="true" />
-<!-- 											 requiredMessage="O campo CONFIRMAR SENHA é necessário." > -->
-							</h:panelGrid>
-						</h:panelGroup>		
-					
-						<hr class="lin"/>
-					
-						<h:panelGroup>
-							<div class="buttonFooter">
-								<p:commandButton id="btnVoltar" value="Voltar" ajax="false" action="/login.xhtml" style="float:left" immediate="true" />
-								<p:commandButton id="btnLimpar" value="Limpar" ajax="false"  action="#{formularioUsuarioBean.limparCamposFiltro()}"  immediate="true" style="margin-left:5px;"/>
-								<p:commandButton id="btnSalvar" value="Salvar" ajax="false" action="#{formularioUsuarioBean.executeSave()}" style="margin-left:5px;"  />
+				
+				<div class="container">
+					<div class="row">
+						<div id="beadcrumBar">
+							<ui:insert name="breadcrumb" />
+						</div>
+	
+					<div class="widget">
+						<div class="widget-heading">
+							<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
+							<i class="icon-table"></i> #{msgs['formularionovosusuarios.lbl.legend.informacoescliente']}</a>
+						</div>
+						<div id="formdiv" class="widget-body collapse in">
+							<div class="widget-inner">	
+								<h:panelGrid cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;">
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.nome']}:" for="txtNome" styleClass="HtmlOutputLabelResposta" />
+									<p:inputText id="txtNome" value="#{formularioUsuarioBean.vo.nome}" size="50" styleClass="input-5left" />
+									<p:outputLabel for="cboSexo" value="#{msgs['formularionovosusuarios.lbl.sexo']}:" styleClass="HtmlOutputLabelResposta"/>
+									<p:selectOneMenu id="cboSexo" value="#{formularioUsuarioBean.vo.sexo}" style="margin-left:5px;" >
+										<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}"/>
+										<f:selectItems value="#{formularioUsuarioBean.comboSexualidade}" var="_gender" itemLabel="#{_gender.label}" itemValue="#{_gender.label}" />
+									</p:selectOneMenu>
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.datanascimento']}:" for="calendarDtNasc" styleClass="HtmlOutputLabelResposta"/>
+									<p:calendar id="calendarDtNasc" value="#{formularioUsuarioBean.vo.dataNascimento}" size="10" pattern="dd/MM/yyyy" alt="date" style="margin-left:5px;" />
+									
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.cpf']}:" for="txtCPF" styleClass="HtmlOutputLabelResposta"/>
+									<p:inputText id="txtCPF" value="#{formularioUsuarioBean.vo.cpfString}" size="15" alt="cpf" styleClass="input-5left" />
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.email']}:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
+									<p:inputText id="txtEmail" value="#{formularioUsuarioBean.vo.email}" size="45" styleClass="input-5left" />
+									<h:panelGroup></h:panelGroup>
+									<h:panelGroup></h:panelGroup>
+				
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.telefone']}:" for="txtTelefone" styleClass="HtmlOutputLabelResposta"/>
+									<p:inputText id="txtTelefone" value="#{formularioUsuarioBean.vo.numTelefoneString}" size="15" styleClass="input-5left" alt="phone"/>
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.celular']}:" for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
+									<p:inputText id="txtTelefoneCel" value="#{formularioUsuarioBean.vo.numCelularString}" size="15" styleClass="input-5left" alt="cell9"  />
+									<h:panelGroup></h:panelGroup> 
+									<h:panelGroup></h:panelGroup>
+				
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.cep']}:" for="cep" styleClass="HtmlOutputLabelResposta" />
+									<h:panelGroup>
+										<p:inputText id="cep" value="#{formularioUsuarioBean.vo.endereco.cep}" size="10" styleClass="input-5left" alt="cep" />
+										<p:commandLink  value="Preencher" style="margin-left:5px;" ajax="false" actionListener="#{formularioUsuarioBean.buscarEnderecoViaWebService()}"/>
+									</h:panelGroup>										
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.endereco']}:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
+									<p:inputText id="txtAddress" value="#{formularioUsuarioBean.vo.endereco.logradouro}" size="50" styleClass="input-5left" />
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.estado']}:" for="txtState" styleClass="HtmlOutputLabelResposta"/>
+									<p:selectOneMenu id="txtState" value="#{formularioUsuarioBean.vo.endereco.estado}" size="5" styleClass="" style="margin-left:5px;" >
+										<f:selectItems value="#{formularioUsuarioBean.comboUf}" var="_uf" itemLabel="#{_uf.label}" itemValue="#{_uf.label}"/>
+									</p:selectOneMenu>
+				
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.numerocasa']}:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
+									<p:inputText id="txtNum" value="#{formularioUsuarioBean.vo.endereco.numero}" size="5" maxlength="7" onkeypress="return onlyNum(event)" styleClass="input-5left" />
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.cidade']}:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
+									<p:inputText id="txtCity" value="#{formularioUsuarioBean.vo.endereco.cidade}" size="30" styleClass="input-5left" />
+						
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.bairro']}:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
+									<p:inputText id="txtBairro" value="#{formularioUsuarioBean.vo.endereco.bairro}" size="20" styleClass="input-5left" />
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.complemento']}:" for="txtComplemento" styleClass="HtmlOutputLabelResposta"/>
+									<p:inputText id="txtComplemento" value="#{formularioUsuarioBean.vo.endereco.complemento}" size="50" styleClass="input-5left"/>
+								</h:panelGrid>
 							</div>
-						</h:panelGroup>
-					</h:panelGrid>
-				
-				
-				
-			</h:form>
-		</div>
+						</div>
+					</div>
+			
+					<div class="widget">
+						<div class="widget-heading">
+							<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
+							<i class="icon-table"></i> #{msgs['formularionovosusuarios.lbl.legend.informacoeslogin']}</a>
+						</div>
+						<div id="formdiv" class="widget-body collapse in">
+							<div class="widget-inner">	
+								<h:panelGrid id="infosUsuario" columns="2" style="margin-bottom:10px">
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.usuario']}:" for="txtUsuario" styleClass="HtmlOutputLabelResposta" />
+									<p:inputText id="txtUsuario" value="#{formularioUsuarioBean.vo.usuario.username}" size="50" 
+											styleClass="input-5left" />
+					
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.senha']}:" for="txtPassword" styleClass="HtmlOutputLabelResposta" />
+									<p:password id="txtPassword" value="#{formularioUsuarioBean.password}" 
+												styleClass="input-5left" 
+												size="50" 
+												maxlength="20"
+												goodLabel="#{msgs['formularionovosusuarios.lbl.senhamedia']}" 
+												weakLabel="#{msgs['formularionovosusuarios.lbl.senhafraca']}" 
+												strongLabel="#{msgs['formularionovosusuarios.lbl.senhaforte']}"
+												feedback="true" />
+									
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.confirmarsenha']}:" for="txtPasswordConf" styleClass="HtmlOutputLabelResposta" />
+									<p:password id="txtPasswordConf" value="#{formularioUsuarioBean.vo.usuario.passwordConfirm}" 
+												 styleClass="input-5left" 
+												 size="50"
+												 maxlength="20" 
+												 goodLabel="#{msgs['formularionovosusuarios.lbl.senhamedia']}" 
+												 weakLabel="#{msgs['formularionovosusuarios.lbl.senhafraca']}" 
+												 strongLabel="#{msgs['formularionovosusuarios.lbl.senhaforte']}"
+												 feedback="true" />
+		
+								</h:panelGrid>
+							</div>
+						</div>
+					</div>
+					
+					<hr class="lin"/>
+		
+					<h:panelGroup>
+						<div class="buttonFooter">
+							<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" action="/login.xhtml" style="float:left" styleClass="btn btn-zen-5 btn-toolbar" immediate="true" />
+							<p:commandButton id="btnLimpar" value="#{msgs.btn_limpar}" ajax="false"  action="#{formularioUsuarioBean.limparCamposFiltro()}" styleClass="btn btn-zen-2 btn-toolbar" immediate="true" style="margin-left:5px;"/>
+							<p:commandButton id="btnSalvar" value="#{msgs.btn_salvar}" ajax="false" action="#{formularioUsuarioBean.executeSave()}" styleClass="btn btn-zen-2 btn-toolbar" style="margin-left:5px;"  />
+						</div>
+					</h:panelGroup>
+				</div>
+			</div>
+		</h:form>
+		<footer>
+			#{msgs['generico.copyright']} -
+			<a href="#" data-original-title="">#{msgs['generico.copyright.empresa']}</a>
+		</footer>
 	</div>
 </h:body>
 

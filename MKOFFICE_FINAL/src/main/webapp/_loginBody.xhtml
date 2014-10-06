@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pass="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:loadBundle basename="br.com.mkoffice.view.bundle.Messages" var="msgs" />
+
+	
+	<div id="login" class='container'>
+        <div class='row'>
+            <div class='span4 offset4'>
+                <a href="javascript:"><h3 class='brand'>HeroStrap <span>Admin</span></h3></a>
+                <form class="form-horizontal form well" id="loginform" method='post' action='index.html'>
+                    <fieldset>
+                        <legend>Login</legend>
+                        <div class="control-group">
+                            <label class="control-label" for="input01">Email</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on">@</span>
+                                    <input type="text" class="input-large" id="user_email1" placeholder="Email" name="user_email1" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="input01">Password</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class='icon-lock'></i></span>
+                                    <input type="password" class="input-large" placeholder="Password"  id="pwd1" name="pwd" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="input01"></label>
+                            <div class="controls">
+                            <button type="submit" class="btn btn-success pull-right" rel="tooltip" title="first tooltip"><i class='icon-unlock'></i> Login</button>
+                            <a href='javascript:' class='btn info pull-left switcher'>Create an Account</a>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+               </div>
+              </div>
+             </div>
+
+</ui:composition>

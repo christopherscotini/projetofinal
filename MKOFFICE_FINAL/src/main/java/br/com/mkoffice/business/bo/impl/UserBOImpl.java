@@ -106,11 +106,11 @@ public class UserBOImpl implements UserBO{
 		}
 		
 		if(!StringUtil.isNotBlank(entidade.getDadosPessoa().getEndereco().getLogradouro())){
-			throw new ValidationFormRequiredException("ENDEREï¿½O");
+			throw new ValidationFormRequiredException("ENDEREÇO");
 		}
 		
 		if(!StringUtil.isNotBlank(entidade.getDadosPessoa().getEndereco().getNumero())){
-			throw new ValidationFormRequiredException("Nï¿½MERO");
+			throw new ValidationFormRequiredException("NÚMERO");
 		}
 		
 		if(!StringUtil.isNotBlank(entidade.getDadosPessoa().getEndereco().getBairro())){
@@ -143,7 +143,7 @@ public class UserBOImpl implements UserBO{
 		}
 
 		if(!(StringUtil.isNotBlank(entidade.getUsername()))){
-			throw new ValidationFormRequiredException("USUï¿½RIO");
+			throw new ValidationFormRequiredException("USUÁRIO");
 		}
 
 	}
@@ -172,11 +172,11 @@ public class UserBOImpl implements UserBO{
 		}
 		
 		if(!StringUtil.isNotBlank(entidade.getDadosPessoa().getEndereco().getLogradouro())){
-			throw new ValidationFormRequiredException("ENDEREï¿½O");
+			throw new ValidationFormRequiredException("ENDEREÇO");
 		}
 		
 		if(!StringUtil.isNotBlank(entidade.getDadosPessoa().getEndereco().getNumero())){
-			throw new ValidationFormRequiredException("Nï¿½MERO");
+			throw new ValidationFormRequiredException("NÚMERO");
 		}
 		
 		if(!StringUtil.isNotBlank(entidade.getDadosPessoa().getEndereco().getBairro())){
@@ -209,7 +209,7 @@ public class UserBOImpl implements UserBO{
 		}
 
 		if(!(StringUtil.isNotBlank(entidade.getUsername()))){
-			throw new ValidationFormRequiredException("USUï¿½RIO");
+			throw new ValidationFormRequiredException("USUÁRIO");
 		}
 
 		if(!(StringUtil.isNotBlank(entidade.getPassword()))){

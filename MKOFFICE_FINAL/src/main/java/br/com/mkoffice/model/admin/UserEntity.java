@@ -35,6 +35,9 @@ public class UserEntity implements Serializable{
 	@Column(name = "NU_CPF", nullable = false)
 	private Long cpf;
 
+	@Column(name = "DS_AVATAR", nullable = false)
+	private String urlAvatar;
+
 	@Transient
 	private String passwordConfirm;
 
@@ -112,6 +115,14 @@ public class UserEntity implements Serializable{
 
 	public void setCpf(Long cpf) {
 		this.cpf = cpf;
+	}
+
+	public String getUrlAvatar() {
+		return urlAvatar;
+	}
+
+	public void setUrlAvatar(String urlAvatar) {
+		this.urlAvatar = urlAvatar;
 	}
 
 }
