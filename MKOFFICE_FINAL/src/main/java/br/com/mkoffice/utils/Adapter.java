@@ -304,6 +304,7 @@ public class Adapter {
 				, dto.getFormaPagamento()
 				, dto.getValorDescontoVenda());//lista de parcelas
 		
+		entity.setValorLucroVenda(dto.getValorLucroVenda());
 		entity.setVendaProdutosList(ItemMovimentadoToHistoricoVenda(dto.getListaDeProdutos(), entity));
 		entity.setUsuario(dto.getUsuario());
 		

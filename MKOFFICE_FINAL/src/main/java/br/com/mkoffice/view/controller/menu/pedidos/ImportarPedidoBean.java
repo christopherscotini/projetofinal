@@ -59,7 +59,6 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 	private List<CategoriaDTO> listaCategorias;
 	private List<CatalogoDTO> listaProdutosEmCatalogo;
 	private DadosPedido pedidoImportado;
-	private List<ItemMovimentadoCarrinhoDTO> listaProdutosInclusosPedido;
 
 	private Integer totalPontosVendidos;
 	private BigDecimal totalAPagar;
@@ -84,7 +83,6 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 		try {
 			pedidoImportado = LeitorImportarPedido.getInstance().read(event.getFile().getContents(), event.getFile().getFileName());
 			System.out.println("NUMERO PEDIDO: "+pedidoImportado.getNumeroPedido());
-			listaProdutosInclusosPedido = pedidoImportado.getProdutos();
 			habilitaPainelRevisaoPedido = true;
 			FacesUtils.addInfoMessage("Arquivo " + event.getFile().getFileName()+ " carregado com sucesso.\nVerifique se a lista de produtos esta completa.");
 			faltouCategoria = false;
@@ -99,8 +97,9 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 											// catalogo e passar como parametro
 											// quando for persistir o PEDIDO
 		pedidoDTO = new PedidoDTO();
+		pedidoDTO.setCodPedido(pedidoImportado.getNumeroPedido());
 		pedidoDTO.setUsuario(getLoginBean().getUsuario());
-		pedidoDTO.setListaProdutosComprados(listaProdutosInclusosPedido);
+		pedidoDTO.setListaProdutosComprados(pedidoImportado.getProdutos());
 		pedidoDTO.setArrayIDsProdutos(new ArrayList<String>());
 		for (int i = 0; i < pedidoDTO.getListaProdutosComprados().size(); i++) {
 			pedidoDTO.getArrayIDsProdutos().add(pedidoDTO.getListaProdutosComprados().get(i).getProduto().getCodProduto().toString());
@@ -155,15 +154,15 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 		pedidoDTO.setValorFrete(BigDecimal.ZERO);
 		pedidoDTO.setValorBonusUtilizado(BigDecimal.ZERO);
 		pedidoDTO.setPontosTotalPedido(CalculadoraUtils.somarTotalPontosPedidoVenda(pedidoDTO.getListaProdutosComprados()));
-		pedidoDTO.setValorTotalEmProdutos(CalculadoraUtils.valorTotalProdutosPedido(listaProdutosInclusosPedido));
+		pedidoDTO.setValorTotalEmProdutos(CalculadoraUtils.valorTotalProdutosPedido(pedidoImportado.getProdutos()));
 		pedidoDTO.setPorcDesconto(CalculadoraUtils.calcularPorcentagemDescontoPedido(pedidoDTO.getValorTotalEmProdutos()));
 		pedidoDTO.setValorTotalAtacado(CalculadoraUtils.calcularValorTotalAtacado(pedidoDTO.getValorTotalEmProdutos(),pedidoDTO.getPorcDesconto()));
 		pedidoDTO.setValorFinalTotalPago(CalculadoraUtils.calcularValorFinalTotalPago(pedidoDTO.getValorTotalAtacado(),pedidoDTO.getValorFrete(), pedidoDTO.getValorBonusUtilizado()));
 		pedidoDTO.setLucroTotal(CalculadoraUtils.calcularLucroTotalPedido(pedidoDTO.getValorTotalAtacado(), pedidoDTO.getValorTotalEmProdutos()));
-		lblNumeroProdutosPedido = getListaProdutosInclusosPedido().size();
+		lblNumeroProdutosPedido = pedidoImportado.getProdutos().size();
 		lblNumeroItensPedido = 0;
-		for (int i = 0; i < getListaProdutosInclusosPedido().size(); i++) {
-			lblNumeroItensPedido+= getListaProdutosInclusosPedido().get(i).getQtdeProdutoCarrinho();
+		for (int i = 0; i < pedidoImportado.getProdutos().size(); i++) {
+			lblNumeroItensPedido+= pedidoImportado.getProdutos().get(i).getQtdeProdutoCarrinho();
 		}
 		
 		
@@ -239,16 +238,16 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 	public void onEditCell(Integer index, Long codCat) {
 		try {
 			if (codCat == catAnterior.getCodCategoria()) {
-				listaProdutosInclusosPedido.get(index).getProduto()
+				pedidoImportado.getProdutos().get(index).getProduto()
 						.setCodCategoria(Adapter.dtoToEntity(catAnterior));
 			} else {
 				catAnterior = categoriaBO.buscarPeloCodigo(codCat);
-				listaProdutosInclusosPedido.get(index).getProduto()
+				pedidoImportado.getProdutos().get(index).getProduto()
 						.setCodCategoria(Adapter.dtoToEntity(catAnterior));
 			}
 		} catch (Exception e) {
 			catAnterior = categoriaBO.buscarPeloCodigo(codCat);
-			listaProdutosInclusosPedido.get(index).getProduto()
+			pedidoImportado.getProdutos().get(index).getProduto()
 					.setCodCategoria(Adapter.dtoToEntity(catAnterior));
 		}
 	}
@@ -309,14 +308,15 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 	// a��es limpar algo da pagina
 	@Override
 	public void limparCamposFiltro() {
+		pedidoImportado = new DadosPedido();
+		pedidoImportado.setProdutos(new ArrayList<ItemMovimentadoCarrinhoDTO>());
 		pedidoDTO = new PedidoDTO();
 		setHabilitaPainelRevisaoPedido(false);
-		listaProdutosInclusosPedido = null;
 		faltouCategoria = false;
 	}
 	
 	public void limparProdutosSelecionados() {
-		listaProdutosInclusosPedido = null;
+		pedidoImportado.setProdutos(null);
 	}
 	
 	// a��es retorno de pagina
@@ -342,15 +342,6 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 	public void setListaProdutosEmCatalogo(
 			List<CatalogoDTO> listaProdutosEmCatalogo) {
 		this.listaProdutosEmCatalogo = listaProdutosEmCatalogo;
-	}
-
-	public List<ItemMovimentadoCarrinhoDTO> getListaProdutosInclusosPedido() {
-		return listaProdutosInclusosPedido;
-	}
-
-	public void setListaProdutosInclusosPedido(
-			List<ItemMovimentadoCarrinhoDTO> listaProdutosInclusosPedido) {
-		this.listaProdutosInclusosPedido = listaProdutosInclusosPedido;
 	}
 
 	public Integer getTotalPontosVendidos() {

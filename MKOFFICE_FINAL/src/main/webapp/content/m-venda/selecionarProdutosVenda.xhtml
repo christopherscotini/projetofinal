@@ -13,147 +13,151 @@
 	</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:breadCrumb>  
-		    <p:menuitem value="TelaInicial" action="#{efetuarVendaBean.scheduleBean.telaInicial()}" ajax="false"/>  
-		    <p:menuitem value="Venda" action="#{efetuarVendaBean.scheduleBean.telaInicial()}" ajax="false" />   
-		    <p:menuitem value="Efetuar Venda" action="#{efetuarVendaBean.iniciarTela()}" ajax="false" />  
-		    <p:menuitem value="Selecionar Cliente" action="#{efetuarVendaBean.voltarParaSelecionarClientes}" ajax="false"/>  
-		    <p:menuitem value="Selecionar Produtos" />  
-		</p:breadCrumb>  
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#{efetuarVendaBean.iniciarTela()}" value="#{msgs['selecionarclientevenda.breadcumb.venda']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#{efetuarVendaBean.voltarParaSelecionarClientes}" value="#{msgs['selecionarclientevenda.breadcumb.venda.listarcliente']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['selecionarclientevenda.breadcumb.venda.cadastrarvenda.selecionarprodutos']}</li>
+		</ul>
 	</ui:define>
-	<ui:param name="titulo" value="Selecionar Produtos" />
 
 	<ui:define name="body_content">
-		<div style="margin-top: 5px;"></div>
-
-			<h:panelGrid cellpadding="0" cellspacing="0" columns="1" style="margin: 0 auto;" border="0" width="100%">
-				
-				<h:panelGroup >
-					<h:panelGrid cellpadding="0" cellspacing="0" columns="2"  border="0">
-						<p:outputLabel value="Nome da Cliente:" for="txtNome" />
-						<p:outputLabel id="txtNome" value="#{efetuarVendaBean.clienteSelecionado.dadosPessoa.nome}" styleClass="input-5left HtmlOutputTextResposta"  />
-					</h:panelGrid>
-				</h:panelGroup>
-				
-				<hr class="lin" style="margin-bottom:10px;" />
-				
-				<h:panelGroup id="tabela-selecao-produtos">
-					<h:panelGrid id="table-produtos-listados" cellpadding="0" cellspacing="0" columns="1" styleClass="centralizar-conteudo" border="0">
-						
-						<p:dataTable id="tableCatalogo"
-							value="#{efetuarVendaBean.listaProdutosDisponiveis}" var="result"
-							rowKey="#{result}" rows="10"
-							selection="#{efetuarVendaBean.listaProdutosSelecionadosParaVenda}"
-							styleClass="dataTable"
-							filteredValue="#{efetuarVendaBean.filteredProdutcsSale}"
-							paginator="true" paginatorPosition="bottom"
-							emptyMessage="Não há produtos em estoque">
-		
-							<f:facet name="header">  
-					            Produtos em Estoque  
-					        </f:facet>
-		
-							<p:column headerText="CÓDIGO MK" style="text-align: center;" width="5%" 
-									filterBy="#{result.codCatalogo.codProduto}" filterMatchMode="contains"
-									sortBy="#{result.codCatalogo.codProduto}">
-									<h:outputLabel value="#{result.codCatalogo.codProduto}"
-										style="text-align: center;" />
-								</p:column>
-								<p:column headerText="PRODUTO" width="40%" style="max-width: 500px; min-width: 250px;"
-									filterBy="#{result.codCatalogo.descProduto}" filterMatchMode="contains" filterStyle="width:350px;"
-									sortBy="#{result.codCatalogo.descProduto}">
-									<h:outputLabel value="#{result.codCatalogo.descProduto}"
-										style="text-align: left;" />
-								</p:column>
-								<p:column headerText="PONTOS/UND" style="text-align: center;" width="10%" 
-									filterBy="#{result.codCatalogo.pontosPorUnidade}" filterMatchMode="contains"
-									sortBy="#{result.codCatalogo.pontosPorUnidade}">
-									<h:outputLabel value="#{result.codCatalogo.pontosPorUnidade} pts"
-										style="text-align: center;" />
-								</p:column>
-								
-								<p:column headerText="VALOR UNITÁRIO" style="text-align: center;" width="5%" 
-									filterBy="#{result.codCatalogo.preco}" filterMatchMode="contains"
-									sortBy="#{result.codCatalogo.preco}">
-									<h:outputLabel value="R$" style="text-align: right;" />
-									<h:outputLabel value="#{result.codCatalogo.preco}" style="text-align: right;" >
-										<f:converter converterId="decimalConverter" />
-									</h:outputLabel>
-								</p:column>
-			
-								<p:column headerText="CARRINHO" style="text-align: center;" width="5%" 
-									sortBy="#{result.qtdeMovimentadoProduto}">
-									<h:outputText value="#{result.qtdeMovimentadoProduto}  " />
-								</p:column>
-								
-								<p:column headerText="ATUALIZAR CARRINHO" style="text-align: center;" width="5%" >
-									<p:commandLink actionListener="#{efetuarVendaBean.selectAddProdutoVenda(result)}" update=":formGlobal:infosCarrinho" oncomplete="dialogCarrinho.show()">
-										<p:graphicImage value="/images/cart-icons/icon-1.png" width="22px" height="20px"/>
-									</p:commandLink>
-								</p:column>
-								
-								<p:column headerText="VALOR TOTAL" style="text-align: right;" width="10%" 
-									sortBy="#{result.valorTotalMovimentadoProduto}">
-									<h:outputLabel value="R$" style="text-align: right;" />
-									<h:outputLabel value="#{result.valorTotalMovimentadoProduto}" style="text-align: right;" >
-										<f:converter converterId="decimalConverter" />
-									</h:outputLabel>
-								</p:column>
-								
-								<f:facet name="footer">
-					                <h:outputText value="Total de produtos no carrinho: " /> 
-						            <h:outputText value="#{efetuarVendaBean.totalProdutosVenda}" />  
-					             	<h:outputText style="margin-left:20px;" value="Valor total a pagar: " />  
-					                <h:panelGroup>
-										<h:outputText value="R$" styleClass="input-5left HtmlOutputTextResposta"/>
-						                <h:outputText value="#{efetuarVendaBean.venda.valorVenda}" >
-						                	<f:converter converterId="decimalConverter" />
-						                </h:outputText>
-						            </h:panelGroup>  
-								</f:facet> 
-		
-						</p:dataTable>
-						
-						<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
-							style="	margin-top:5px;">
-							<p:outputLabel value="Total de produtos disponiveis:" />
-							<p:outputLabel value="#{efetuarVendaBean.listaProdutosDisponiveis.size()}" styleClass="input-5left HtmlOutputTextResposta" />
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
+				<i class="icon-table"></i> #{msgs['selecionarclientevenda.titulotabela.produtosestoque']}</a>
+			</div>
+			<div id="formdiv" class="widget-body collapse in">
+				<div class="widget-inner">
+					<h:panelGroup >
+						<h:panelGrid cellpadding="0" cellspacing="0" columns="2"  border="0">
+							<p:outputLabel value="#{msgs['selecionarclientevenda.lbl.nomecliente']}:" for="txtNome" />
+							<p:outputLabel id="txtNome" value="#{efetuarVendaBean.clienteSelecionado.dadosPessoa.nome}" styleClass="input-5left HtmlOutputTextResposta"  />
 						</h:panelGrid>
-					<hr class="lin" />
-					
-					<h:panelGroup>
-						<div class="buttonFooter">
-							<p:commandButton id="btnVoltar" value="Voltar" ajax="false" styleClass="botao-voltar"
-								action="#{efetuarVendaBean.voltarParaSelecionarClientes()}"  />
-							<p:commandButton id="btnLimpar" value="Limpar carrinho de produtos" 
-											 ajax="true" update="table-produtos-listados infosCarrinho"
-											 actionListener="#{efetuarVendaBean.limparProdutosSelecionados()}" />
-							<p:commandButton id="btn-vender" 
-											 value="#{msgs.btn_avancar}" 
-											 ajax="false" 
-											 action="#{efetuarVendaBean.navegarDadosVenda}"
-											 styleClass="botoes-avanco-pagina" 
-											 disabled="#{!efetuarVendaBean.habilitaBtnAvancarSelecProdutoVenda()}" />
-							<div style="height: 10px;width: 10px;"></div>	
-						</div>
 					</h:panelGroup>
-					
-				</h:panelGrid>
-			</h:panelGroup><!-- FIM GROUP id=tabela-selecao-produtos -->
+				
+					<hr class="lin" style="margin-bottom:10px;" />
+				
+						
+					<p:dataTable id="tableCatalogo"
+						value="#{efetuarVendaBean.listaProdutosDisponiveis}" var="result"
+						rowKey="#{result}" rows="10"
+						selection="#{efetuarVendaBean.listaProdutosSelecionadosParaVenda}"
+						styleClass="dataTable"
+						filteredValue="#{efetuarVendaBean.filteredProdutcsSale}"
+						paginator="true" paginatorPosition="bottom"
+						emptyMessage="Não há produtos em estoque">
 	
-			
+						<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" style="text-align: center;" width="5%" 
+								filterBy="#{result.codCatalogo.codProduto}" filterMatchMode="contains"
+								sortBy="#{result.codCatalogo.codProduto}">
+								<h:outputText value="#{result.codCatalogo.codProduto}"
+									style="text-align: center;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="40%" style="max-width: 500px; min-width: 250px;"
+								filterBy="#{result.codCatalogo.descProduto}" filterMatchMode="contains" filterStyle="width:350px;"
+								sortBy="#{result.codCatalogo.descProduto}">
+								<h:outputText value="#{result.codCatalogo.descProduto}"
+									style="text-align: left;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.pontosund']}" style="text-align: center;" width="10%" 
+								filterBy="#{result.codCatalogo.pontosPorUnidade}" filterMatchMode="contains"
+								sortBy="#{result.codCatalogo.pontosPorUnidade}">
+								<h:outputText value="#{result.codCatalogo.pontosPorUnidade} pts"
+									style="text-align: center;" />
+							</p:column>
+							
+							<p:column headerText="#{msgs['generico.tabelacoluna.valorunitario']}" style="text-align: center;" width="5%" 
+								filterBy="#{result.codCatalogo.preco}" filterMatchMode="contains"
+								sortBy="#{result.codCatalogo.preco}">
+								<h:outputText value="R$" style="text-align: right;" />
+								<h:outputText value="#{result.codCatalogo.preco}" style="text-align: right;" >
+									<f:converter converterId="decimalConverter" />
+								</h:outputText>
+							</p:column>
+		
+							<p:column headerText="#{msgs['generico.tabelacoluna.quantidade']}" style="text-align: center;" width="5%" 
+								sortBy="#{result.qtdeMovimentadoProduto}">
+								<h:outputText value="#{result.qtdeMovimentadoProduto}  " />
+							</p:column>
+							
+							<p:column headerText="#{msgs['generico.tabelacoluna.carrinho']}" style="text-align: center;" width="5%" >
+								<p:commandLink actionListener="#{efetuarVendaBean.selectAddProdutoVenda(result)}" update=":formGlobal:infosCarrinho" oncomplete="dialogCarrinho.show()">
+									<p:graphicImage value="/resources/images/cart-icons/icon-1.png" width="22px" height="20px"/>
+								</p:commandLink>
+							</p:column>
+							
+							<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: right;" width="10%" 
+								sortBy="#{result.valorTotalMovimentadoProduto}">
+								<h:outputText value="R$" style="text-align: right;" />
+								<h:outputText value="#{result.valorTotalMovimentadoProduto}" style="text-align: right;" >
+									<f:converter converterId="decimalConverter" />
+								</h:outputText>
+							</p:column>
+							
+							<f:facet name="footer">
+				                <h:outputText value="#{msgs['selecionarclientevenda.lbl.totalprodutoscarrinho']}:" /> 
+					            <h:outputText value="#{efetuarVendaBean.totalProdutosVenda}" />  
+				             	<h:outputText style="margin-left:20px;" value="#{msgs['selecionarclientevenda.lbl.valortotalpagar']}: " />  
+				                <h:panelGroup>
+									<h:outputText value="R$" styleClass="input-5left HtmlOutputTextResposta"/>
+					                <h:outputText value="#{efetuarVendaBean.venda.valorVenda}" >
+					                	<f:converter converterId="decimalConverter" />
+					                </h:outputText>
+					            </h:panelGroup>  
+							</f:facet> 
+	
+					</p:dataTable>
+				</div>
+			</div>
+		</div>
+						
+		<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
+			style="	margin-top:5px;">
+			<p:outputLabel value="#{msgs['selecionarclientevenda.lbl.totalprodutosdisponiveis']}:" />
+			<p:outputLabel value="#{efetuarVendaBean.listaProdutosDisponiveis.size()}" styleClass="input-5left HtmlOutputTextResposta" />
 		</h:panelGrid>
+		
+		<hr class="lin" />
+				
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" styleClass="btn btn-zen-5 btn-toolbar botao-voltar"
+					action="#{efetuarVendaBean.voltarParaSelecionarClientes()}"  />
+				<p:commandButton id="btnLimpar" value="#{msgs.selecionarclientevenda.lbl.btn_limparcarrinho}" 
+								 ajax="true" update="tableCatalogo infosCarrinho"
+								 styleClass="btn btn-zen-2 btn-toolbar"
+								 actionListener="#{efetuarVendaBean.limparProdutosSelecionados()}" />
+				<p:commandButton id="btn-vender" 
+								 value="#{msgs.btn_avancar}" 
+								 ajax="false" 
+								 action="#{efetuarVendaBean.navegarDadosVenda}"
+								 styleClass="btn btn-zen-2 btn-toolbar botoes-avanco-pagina" 
+								 disabled="#{!efetuarVendaBean.habilitaBtnAvancarSelecProdutoVenda()}" />
+				<div style="height: 10px;width: 10px;"></div>	
+			</div>
+		</h:panelGroup>
+					
 	
-		<p:dialog header="CARRINHO"
+		<p:dialog header="#{msgs['selecionarclientevenda.lbl.legend.carrinho']}"
 			widgetVar="dialogCarrinho" resizable="false" modal="true"
 			showEffect="slide" width="500" height="180px;" closable="false">
 			<h:panelGrid id="infosCarrinho" columns="2"
 				style="margin-bottom:10px">
 
-				<p:outputLabel value="Produto:" for="txtProdutoDesc" styleClass="HtmlOutputLabelResposta" />
+				<p:outputLabel value="#{msgs['selecionarclientevenda.lbl.produto']}:" for="txtProdutoDesc" styleClass="HtmlOutputLabelResposta" />
 				<p:outputLabel value="#{efetuarVendaBean.produtoSelecionadoAddCarrinho.codCatalogo.descProduto}" id="txtProdutoDesc" styleClass="HtmlOutputLabelResposta" />
 				
-				<p:outputLabel value="Quantidade:" for="txtQuantidade" styleClass="HtmlOutputLabelResposta" />
+				<p:outputLabel value="#{msgs['selecionarclientevenda.lbl.quantidade']}:" for="txtQuantidade" styleClass="HtmlOutputLabelResposta" />
 				<h:selectOneMenu id="txtQuantidade" value="#{efetuarVendaBean.produtoSelecionadoAddCarrinho.qtdeMovimentadoProduto}" style="width:40px;" converter="javax.faces.Integer">
 					<f:selectItems value="#{efetuarVendaBean.produtoSelecionadoAddCarrinho.quantidadeDisponivelEstoque}" var="_qtde" itemLabel="#{_qtde.label}" itemValue="#{_qtde.value}" />
 				</h:selectOneMenu>
@@ -162,10 +166,11 @@
 
 				<h:panelGroup></h:panelGroup>
 				<p:commandButton
-					update=":formGlobal:table-produtos-listados :formGlobal:btn-vender"
+					update=":formGlobal:tableCatalogo :formGlobal:btn-vender"
 					oncomplete="dialogCarrinho.hide();"
+					styleClass="btn btn-zen-2 btn-toolbar" 
 					actionListener="#{efetuarVendaBean.addProdutoVenda()}"
-					value="Atualizar carrinho" />
+					value="#{msgs['selecionarclientevenda.btn_lbl.atualizarcarrinho']}" />
 			</h:panelGrid>
 		</p:dialog>	
 	

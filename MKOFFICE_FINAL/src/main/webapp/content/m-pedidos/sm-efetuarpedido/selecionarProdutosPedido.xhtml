@@ -43,7 +43,7 @@
 						filteredValue="#{efetuarPedidoBean.filteredProducts}"
 						styleClass="dataTable"
 						paginator="true" paginatorPosition="bottom"
-						emptyMessage="Dados não encontrados">
+						emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}">
 	
 						<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" style="text-align: center;" width="5%" 
 							filterBy="#{result.produto.codProduto}" filterMatchMode="contains"
