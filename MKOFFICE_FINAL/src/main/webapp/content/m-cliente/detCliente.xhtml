@@ -39,53 +39,53 @@
 			<div id="si" class="widget-body collapse in">
 				<div class="widget-inner">
 					<h:panelGrid cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;" >
-							<p:outputLabel value="#{msgs['detcliente.lbl.nome']}:" for="txtNome" styleClass="HtmlOutputLabelResposta"/>
-							<p:outputLabel id="txtNome" value="#{clienteBean.vo.nome}" styleClass="input-5left HtmlOutputTextResposta"  />
-							<p:outputLabel for="txtSexo" value="#{msgs['detcliente.lbl.sexo']}:" style="float:right;"/>
-							<p:outputLabel id="txtSexo" value="#{clienteBean.vo.sexo}" styleClass="input-5left HtmlOutputTextResposta" />
-							<p:outputLabel value="#{msgs['detcliente.lbl.datanascimento']}:" for="calendarDtNasc" rendered="#{not empty clienteBean.vo.dataNascimentoFormatado}" />
-							<p:outputLabel id="calendarDtNasc" value="#{clienteBean.vo.dataNascimentoFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
+							<h:outputLabel value="#{msgs['detcliente.lbl.nome']}:" for="txtNome" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel id="txtNome" value="#{clienteBean.vo.nome}" styleClass="input-5left HtmlOutputTextResposta"  />
+							<h:outputLabel for="txtSexo" value="#{msgs['detcliente.lbl.sexo']}:" style="float:right;" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel id="txtSexo" value="#{clienteBean.vo.sexo}" styleClass="input-5left HtmlOutputTextResposta" />
+							<h:outputLabel value="#{msgs['detcliente.lbl.datanascimento']}:" for="calendarDtNasc" styleClass="HtmlOutputLabelResposta" rendered="#{not empty clienteBean.vo.dataNascimentoFormatado}" />
+							<h:outputLabel id="calendarDtNasc" value="#{clienteBean.vo.dataNascimentoFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
 							<h:panelGroup rendered="#{empty clienteBean.vo.dataNascimentoFormatado}"></h:panelGroup> 
 						
-							<p:outputLabel value="#{msgs['detcliente.lbl.endereco']}:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
-							<p:outputLabel id="txtAddress" value="#{clienteBean.vo.endereco.logradouro}" styleClass="input-5left HtmlOutputTextResposta" />
-							<p:outputLabel value="#{msgs['detcliente.lbl.numerocasa']}:" for="txtNum" style="float:right;"/> 
-							<p:outputLabel id="txtNum" value="#{clienteBean.vo.endereco.numero}" styleClass="input-5left HtmlOutputTextResposta"  />
-							<p:outputLabel value="#{msgs['detcliente.lbl.bairro']}:" for="txtBairro" style="float:right;"/>
-							<p:outputLabel id="txtBairro" value="#{clienteBean.vo.endereco.bairro}" styleClass="input-5left HtmlOutputTextResposta"  />
+							<h:outputLabel value="#{msgs['detcliente.lbl.endereco']}:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel id="txtAddress" value="#{clienteBean.vo.endereco.logradouro}" styleClass="input-5left HtmlOutputTextResposta" />
+							<h:outputLabel value="#{msgs['detcliente.lbl.numerocasa']}:" for="txtNum" style="float:right;" styleClass="HtmlOutputLabelResposta"/> 
+							<h:outputLabel id="txtNum" value="#{clienteBean.vo.endereco.numero}" styleClass="input-5left HtmlOutputTextResposta"  />
+							<h:outputLabel value="#{msgs['detcliente.lbl.bairro']}:" for="txtBairro" style="float:right;" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel id="txtBairro" value="#{clienteBean.vo.endereco.bairro}" styleClass="input-5left HtmlOutputTextResposta"  />
 							
-							<p:outputLabel value="#{msgs['detcliente.lbl.complemento']}:" for="txtComplemento" styleClass="HtmlOutputLabelResposta" rendered="#{not empty clienteBean.vo.endereco.complemento}"/>
-							<p:outputLabel id="txtComplemento" value="#{clienteBean.vo.endereco.complemento}" size="50" rendered="#{not empty clienteBean.vo.endereco.complemento}" styleClass="input-5left HtmlOutputTextResposta"/>
+							<h:outputLabel value="#{msgs['detcliente.lbl.complemento']}:" for="txtComplemento" styleClass="HtmlOutputLabelResposta" rendered="#{not empty clienteBean.vo.endereco.complemento}"/>
+							<h:outputLabel id="txtComplemento" value="#{clienteBean.vo.endereco.complemento}" size="50" rendered="#{not empty clienteBean.vo.endereco.complemento}" styleClass="input-5left HtmlOutputTextResposta"/>
 							<h:panelGroup rendered="#{not empty clienteBean.vo.endereco.complemento}"></h:panelGroup> 
 							<h:panelGroup rendered="#{not empty clienteBean.vo.endereco.complemento}"></h:panelGroup>
 							<h:panelGroup rendered="#{not empty clienteBean.vo.endereco.complemento}"></h:panelGroup>
 							<h:panelGroup rendered="#{not empty clienteBean.vo.endereco.complemento}"></h:panelGroup>
 						
-							<p:outputLabel value="#{msgs['detcliente.lbl.cidade']}:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
-							<p:outputLabel id="txtCity" value="#{clienteBean.vo.endereco.cidade}" styleClass="input-5left HtmlOutputTextResposta"  />
-							<p:outputLabel value="#{msgs['detcliente.lbl.estado']}:" for="txtState" style="float:right;"/>
-							<p:outputLabel id="txtState" value="#{clienteBean.vo.endereco.estado}" styleClass="input-5left HtmlOutputTextResposta"  />
-							<p:outputLabel value="#{msgs['detcliente.lbl.cep']}:" for="cep" style="float:right;" />
-							<p:outputLabel id="cep" value="#{clienteBean.vo.endereco.cep}" styleClass="input-5left HtmlOutputTextResposta"  />
+							<h:outputLabel value="#{msgs['detcliente.lbl.cidade']}:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel id="txtCity" value="#{clienteBean.vo.endereco.cidade}" styleClass="input-5left HtmlOutputTextResposta"  />
+							<h:outputLabel value="#{msgs['detcliente.lbl.estado']}:" for="txtState" style="float:right;" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel id="txtState" value="#{clienteBean.vo.endereco.estado}" styleClass="input-5left HtmlOutputTextResposta"  />
+							<h:outputLabel value="#{msgs['detcliente.lbl.cep']}:" for="cep" style="float:right;" styleClass="HtmlOutputLabelResposta" />
+							<h:outputLabel id="cep" value="#{clienteBean.vo.endereco.cep}" styleClass="input-5left HtmlOutputTextResposta"  />
 						
-							<p:outputLabel value="#{msgs['detcliente.lbl.email']}:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
-							<p:outputLabel id="txtEmail" value="#{clienteBean.vo.email}" styleClass="input-5left HtmlOutputTextResposta" />
-							<p:outputLabel value="#{msgs['detcliente.lbl.telefone']}:" for="txtTelefone"/>
-							<p:outputLabel id="txtTelefone" value="#{clienteBean.vo.numTelefoneString}" styleClass="input-5left HtmlOutputTextResposta" />
-							<p:outputLabel value="#{msgs['detcliente.lbl.celular']}:" for="txtTelefoneCel" style="float:right;" />
-							<p:outputLabel id="txtTelefoneCel" value="#{clienteBean.vo.numCelularString}" styleClass="input-5left HtmlOutputTextResposta" />
+							<h:outputLabel value="#{msgs['detcliente.lbl.email']}:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel id="txtEmail" value="#{clienteBean.vo.email}" styleClass="input-5left HtmlOutputTextResposta" />
+							<h:outputLabel value="#{msgs['detcliente.lbl.telefone']}:" for="txtTelefone" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel id="txtTelefone" value="#{clienteBean.vo.numTelefoneString}" styleClass="input-5left HtmlOutputTextResposta" />
+							<h:outputLabel value="#{msgs['detcliente.lbl.celular']}:" for="txtTelefoneCel" style="float:right;" styleClass="HtmlOutputLabelResposta" />
+							<h:outputLabel id="txtTelefoneCel" value="#{clienteBean.vo.numCelularString}" styleClass="input-5left HtmlOutputTextResposta" />
 							
 							<h:panelGroup rendered="#{not empty clienteBean.vo.dataPrimeiraVenda}">
-								<p:outputLabel value="#{msgs['detcliente.lbl.dataprimeiravenda']}:" for="calendarDtFirstSale" />
+								<h:outputLabel value="#{msgs['detcliente.lbl.dataprimeiravenda']}:" for="calendarDtFirstSale" styleClass="HtmlOutputLabelResposta" />
 							</h:panelGroup>
 							<h:panelGroup rendered="#{not empty clienteBean.vo.dataPrimeiraVenda}">
-								<p:outputLabel id="calendarDtFirstSale" value="#{clienteBean.vo.dataPrimeiraVendaFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
+								<h:outputLabel id="calendarDtFirstSale" value="#{clienteBean.vo.dataPrimeiraVendaFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
 							</h:panelGroup>
 							<h:panelGroup rendered="#{not empty clienteBean.vo.dataUltimaVenda}">
-								<p:outputLabel value="#{msgs['detcliente.lbl.dataprimeiravenda']}:" for="calendarDtFirstSale" />
+								<h:outputLabel value="#{msgs['detcliente.lbl.dataprimeiravenda']}:" for="calendarDtFirstSale" styleClass="HtmlOutputLabelResposta" />
 							</h:panelGroup>
 							<h:panelGroup rendered="#{not empty clienteBean.vo.dataUltimaVenda}"> 
-								<p:outputLabel id="calendarDtLastSale" value="#{clienteBean.vo.dataUltimaVendaFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
+								<h:outputLabel id="calendarDtLastSale" value="#{clienteBean.vo.dataUltimaVendaFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
 							</h:panelGroup>
 						</h:panelGrid>
 					</div>

@@ -79,7 +79,7 @@
 						<p:ajax event="rowUnselect" update=":formGlobal:btnDetalhar" />
 						
 						<p:column headerText="#{msgs['generico.tabelacoluna.cliente']}" width="35%" 
-								filterBy="#{result.cliente.dadosPessoa.nome}" filterMatchMode="contains"
+								filterBy="#{result.cliente.dadosPessoa.nome}" filterMatchMode="contains" filterStyle="width:350px;"
 								sortBy="#{result.cliente.dadosPessoa.nome}">
 							<h:outputText value="#{result.cliente.dadosPessoa.nome}" style="text-align: left;" />
 						</p:column>

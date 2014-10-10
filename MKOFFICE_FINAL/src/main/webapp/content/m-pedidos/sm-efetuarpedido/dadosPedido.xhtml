@@ -40,41 +40,41 @@
 			<div id="formdiv" class="widget-body collapse in">
 				<div class="widget-inner">
 					<h:panelGrid cellpadding="0" cellspacing="0" columns="2" border="0" style="margin-top:10px;">
-						<p:outputLabel value="#{msgs['dadospedido.lbl.numeropedido']}:" for="txtCodPedido" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['dadospedido.lbl.numeropedido']}:" for="txtCodPedido" styleClass="HtmlOutputLabelResposta"/>
 						<p:inputText id="txtCodPedido" value="#{efetuarPedidoBean.pedidoDTO.codPedido}"  
 							onkeypress="return onlyNum(event)" 
 							styleClass="HtmlOutputTextResposta input-5left" 
 							size="13" maxlength="10" />
 						
-						<p:outputLabel value="#{msgs['dadospedido.lbl.datapedido']}:" for="txtDataPedido" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['dadospedido.lbl.datapedido']}:" for="txtDataPedido" styleClass="HtmlOutputLabelResposta"/>
 						<p:calendar id="txtDataPedido"	value="#{efetuarPedidoBean.pedidoDTO.dtPedido}" size="13"  pattern="dd/MM/yyyy" alt="date" styleClass="input-5left"/>
 						
-						<p:outputLabel value="#{msgs['dadospedido.lbl.valorpedido']}:" for="txtPrecoVarejo" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['dadospedido.lbl.valorpedido']}:" for="txtPrecoVarejo" styleClass="HtmlOutputLabelResposta"/>
 						<h:panelGrid columns="2">
-							<p:outputLabel value="R$" for="txtPrecoVarejo" styleClass="input-5left HtmlOutputTextResposta"/>
+							<h:outputLabel value="R$" for="txtPrecoVarejo" styleClass="input-5left HtmlOutputTextResposta"/>
 							<h:outputLabel id="txtPrecoVarejo" value="#{efetuarPedidoBean.pedidoDTO.valorTotalEmProdutos}" styleClass="input-5left HtmlOutputTextResposta">
 								<f:converter converterId="decimalConverter" />
 							</h:outputLabel>
 						</h:panelGrid>
 		
-						<p:outputLabel value="#{msgs['dadospedido.lbl.percentualdesconto']}:" for="txtPercDesconto" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['dadospedido.lbl.percentualdesconto']}:" for="txtPercDesconto" styleClass="HtmlOutputLabelResposta"/>
 						<h:selectOneMenu value="#{efetuarPedidoBean.pedidoDTO.porcDesconto}" style="width:104px;" id="txtPercDesconto" styleClass="input-5left HtmlOutputTextResposta">
 							<f:selectItems value="#{efetuarPedidoBean.cboPercentDesconto}" var="_percent" itemLabel="#{_percent.descricao}" itemValue="#{_percent.codigo}"/>
 							<p:ajax event="change" listener="#{efetuarPedidoBean.onChangePercDesconto()}" update="group-valor-atacado group-valor-lucro group-valor-final"/>
 						</h:selectOneMenu>
 						
-						<p:outputLabel value="#{msgs['dadospedido.lbl.valorpedidodesconto']}:" for="txtPrecoDesconto" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['dadospedido.lbl.valorpedidodesconto']}:" for="txtPrecoDesconto" styleClass="HtmlOutputLabelResposta"/>
 						<h:panelGrid columns="2" id="group-valor-atacado" > 
-							<p:outputLabel value="R$" for="txtPrecoVarejo" styleClass="input-5left HtmlOutputTextResposta"/>
+							<h:outputLabel value="R$" for="txtPrecoVarejo" styleClass="input-5left HtmlOutputTextResposta"/>
 							<h:outputLabel value="#{efetuarPedidoBean.pedidoDTO.valorTotalAtacado}" id="txtPrecoDesconto" styleClass="input-5left HtmlOutputTextResposta">
 								<f:converter converterId="decimalConverter" />
 							</h:outputLabel>
 						</h:panelGrid>
 											
-						<p:outputLabel value="#{msgs['dadospedido.lbl.totalpontos']}:" for="txtTotPontos" styleClass="HtmlOutputLabelResposta"/>
-						<p:outputLabel value="#{efetuarPedidoBean.pedidoDTO.pontosTotalPedido} pts" id="txtTotPontos" styleClass="input-5left HtmlOutputTextResposta" />
+						<h:outputLabel value="#{msgs['dadospedido.lbl.totalpontos']}:" for="txtTotPontos" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{efetuarPedidoBean.pedidoDTO.pontosTotalPedido} pts" id="txtTotPontos" styleClass="input-5left HtmlOutputTextResposta" />
 						
-						<p:outputLabel value="#{msgs['dadospedido.lbl.valorbonusutilizado']}:" for="txtValorBonus" styleClass="HtmlOutputLabelResposta" />
+						<h:outputLabel value="#{msgs['dadospedido.lbl.valorbonusutilizado']}:" for="txtValorBonus" styleClass="HtmlOutputLabelResposta" />
 						<p:inputText value="#{efetuarPedidoBean.pedidoDTO.valorBonusUtilizado}" id="txtValorBonus" styleClass="input-5left" alt="decimalBr8" size="13" maxlength="8">
 							<f:converter converterId="decimalConverter" />
 							<p:ajax event="blur"
@@ -82,23 +82,23 @@
 								update="group-valor-final" />
 						</p:inputText>
 		
-						<p:outputLabel value="#{msgs['dadospedido.lbl.valorfrete']}:" for="txtValorFrete" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['dadospedido.lbl.valorfrete']}:" for="txtValorFrete" styleClass="HtmlOutputLabelResposta"/>
 						<p:inputText value="#{efetuarPedidoBean.pedidoDTO.valorFrete}" id="txtValorFrete" styleClass="input-5left" alt="decimalBr8" size="13" maxlength="6">
 							<f:converter converterId="decimalConverter" />
 							<p:ajax event="blur" listener="#{efetuarPedidoBean.onBlurValorFreteAndBonusUtilizado()}" update="group-valor-final group-valor-lucro"/>
 						</p:inputText>
 							
-						<p:outputLabel value="#{msgs['dadospedido.lbl.valortotalpagar']}:" for="txtValorTotalPedido" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['dadospedido.lbl.valortotalpagar']}:" for="txtValorTotalPedido" styleClass="HtmlOutputLabelResposta"/>
 						<h:panelGrid id="group-valor-final" columns="2" >
-							<p:outputLabel value="R$" for="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta"/>
+							<h:outputLabel value="R$" for="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta"/>
 							<h:outputLabel value="#{efetuarPedidoBean.pedidoDTO.valorFinalTotalPago}" id="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta">
 								<f:converter converterId="decimalConverter" />
 							</h:outputLabel>
 						</h:panelGrid>
 		
-						<p:outputLabel value="#{msgs['dadospedido.lbl.lucroestimado']}:" for="txtValorLucroEstimado" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['dadospedido.lbl.lucroestimado']}:" for="txtValorLucroEstimado" styleClass="HtmlOutputLabelResposta"/>
 						<h:panelGrid id="group-valor-lucro" columns="2" >
-							<p:outputLabel value="R$" for="txtValorLucroEstimado" styleClass="input-5left HtmlOutputTextResposta"/>
+							<h:outputLabel value="R$" for="txtValorLucroEstimado" styleClass="input-5left HtmlOutputTextResposta"/>
 							<h:outputLabel value="#{efetuarPedidoBean.pedidoDTO.lucroTotal}" id="txtValorLucroEstimado" styleClass="input-5left HtmlOutputTextResposta">
 								<f:converter converterId="decimalConverter" />
 							</h:outputLabel>
@@ -129,11 +129,11 @@
 								<h:outputText value="#{result.produto.codProduto}"
 									style="text-align: center;" />
 							</p:column>
-							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="80%" sortBy="#{result.produto.descProduto}">
+							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="60%" sortBy="#{result.produto.descProduto}">
 								<h:outputText value="#{result.produto.descProduto}"
 									style="text-align: left;" />
 							</p:column>
-							<p:column headerText="#{msgs['generico.tabelacoluna.valorunitario']}" style="text-align: center;" width="5%" 
+							<p:column headerText="#{msgs['generico.tabelacoluna.valorunitario']}" style="text-align: center;" width="10%" 
 								sortBy="#{result.produto.preco}">
 								<h:outputText value="R$" style="text-align: right;" />
 								<h:outputText value="#{result.produto.preco}" style="text-align: right;" >
@@ -155,12 +155,12 @@
 		</div>
 						
 		<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="4" style="margin-top:5px;">
-			<p:outputLabel value="#{msgs['dadospedido.lbl.numeroprodutos']}:" />
-			<p:outputLabel value="#{efetuarPedidoBean.lblNumeroProdutosPedido}"
+			<h:outputLabel value="#{msgs['dadospedido.lbl.numeroprodutos']}:" />
+			<h:outputLabel value="#{efetuarPedidoBean.lblNumeroProdutosPedido}"
 				styleClass="input-5left HtmlOutputTextResposta" />
 
-			<p:outputLabel value="#{msgs['dadospedido.lbl.numeroitens']}" style="margin-left:10px;" />
-			<p:outputLabel value="#{efetuarPedidoBean.lblNumeroItensPedido}"
+			<h:outputLabel value="#{msgs['dadospedido.lbl.numeroitens']}" style="margin-left:10px;" />
+			<h:outputLabel value="#{efetuarPedidoBean.lblNumeroItensPedido}"
 				styleClass="input-5left HtmlOutputTextResposta" />
 				
 		</h:panelGrid>
@@ -170,11 +170,11 @@
 		<h:panelGroup>
 			<div class="buttonFooter">
 				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" 
-					style="float:left;" styleClass="btn btn-zen-2 btn-toolbar"
+					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
 					action="#{efetuarPedidoBean.navegarVoltarSelecProdPedido()}" immediate="true"  />
 				<p:commandButton id="btn-avancar" 
 								 value="#{msgs.btn_avancar}" 
-								 ajax="false" styleClass="btn btn-zen-5 btn-toolbar"
+								 ajax="false" styleClass="btn btn-zen-2 btn-toolbar"
 								 action="#{efetuarPedidoBean.navegarConcluirPedido()}"
 								 onclick="return alertaRevisarPedido(document.forms[1])"
 								 disabled="#{empty efetuarPedidoBean.listaProdutosInclusosPedido}" />

@@ -24,23 +24,24 @@
 	<ui:param name="titulo" value="" />
 
 	<ui:define name="body_content">
+	
 	<div class="widget">
 		<div class="widget-heading">
 			<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
 			<i class="icon-table"></i> #{msgs['index.titulotabela.agenda']}</a>
 		</div>
-		<div id="si" class="widget-body collapse in">
+		<div id="si" class="widget-body collapse in" style="margin: 0 auto !important">
 			<div class="widget-inner">				
-				<p:schedule id="schedule" style="width:700px;margin-top:10px;margin-bottom:10px;" widgetVar="meucalendario" locale="pt" value="#{scheduleController.eventModel}" 
+				<p:schedule id="schedule" style="width:1200px;margin-top:10px;margin-bottom:10px;" widgetVar="meucalendario" locale="pt" value="#{scheduleController.eventModel}" 
                     axisFormat="H:mm" timeFormat="H:mm" minTime="6" maxTime="22:00"  initialDate="#{scheduleController.dataInicioCalendar}">
                     <p:ajax event="dateSelect" listener="#{scheduleController.quandoNovo}" 
-                            update="eventDetails" oncomplete="caixaDialogo.show()" />  
+                            update="eventDetails" oncomplete="PF('caixaDialogo').show()" />  
                     <p:ajax event="eventSelect" listener="#{scheduleController.quandoSelecionado}" 
-                            update="messagesGlobal group-dados-agenda" oncomplete="caixaDialogo.show()" />  
+                            update="messagesGlobal group-dados-agenda" oncomplete="PF('caixaDialogo').show()" />  
                     <p:ajax event="eventMove" listener="#{scheduleController.quandoMovido}" 
-                            update="messagesGlobal" oncomplete="meucalendario.update()" />  
+                            update="messagesGlobal" oncomplete="PF('meucalendario').update()" />  
                     <p:ajax event="eventResize" listener="#{scheduleController.quandoRedimensionado}" 
-                            update="messagesGlobal" oncomplete="meucalendario.update()"/>  
+                            update="messagesGlobal" oncomplete="PF('meucalendario').update()"/>  
         
                 </p:schedule>
              </div>
@@ -106,7 +107,7 @@
 	            <p:commandButton
 	                value="#{msgs.btn_salvar}" onclick="return compara_datas(document.forms[1])"
 	                actionListener="#{scheduleController.salvar()}"
-	                oncomplete="meucalendario.update();caixaDialogo.hide();"
+	                oncomplete="PF('meucalendario').update();PF('caixaDialogo').hide();"
 	                update="messagesGlobal" />  
 	        </p:outputPanel>
 	    </p:dialog> 

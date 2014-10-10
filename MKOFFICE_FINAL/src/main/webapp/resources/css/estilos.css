@@ -90,6 +90,14 @@ label.painel-contas-footer{
     border: opx;
 }
 
-.spinner-input{
-	padding: 0 !important;
+
+.ui-spinner-input {
+    padding-right: 20px !important;
+    text-align: right !important;
+    vertical-align: middle !important;
+    margin-bottom: 0px !important;
+    width: 220px;
+}
+input, textarea, .uneditable-input {
+    width: 100px !important;
 }

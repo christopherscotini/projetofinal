@@ -73,13 +73,11 @@
 							value="#{historicoPedidoBean.listaDePedidosRealizados}" 
 							paginator="true" paginatorPosition="bottom" 
 							emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}.">
-	
-						<p:ajax event="rowSelect" update=":formGlobal:btnLimparSelecao" />
-						<p:ajax event="rowUnselect" update=":formGlobal:btnLimparSelecao" />
-						<p:ajax event="rowSelect" update=":formGlobal:btnDetalhar" />
-						<p:ajax event="rowUnselect" update=":formGlobal:btnDetalhar" />
 						
-						<p:column headerText="#{msgs['generico.tabelacoluna.codigopedido']}" style="text-align: center;" width="5%" 
+						<p:ajax event="rowSelect" update=":formGlobal:btnDetalhar :formGlobal:btnLimparSelecao" />
+						<p:ajax event="rowUnselect" update=":formGlobal:btnDetalhar :formGlobal:btnLimparSelecao" />	
+											
+						<p:column headerText="#{msgs['generico.tabelacoluna.codigopedido']}" style="text-align: center;" width="10%" 
 								filterBy="#{result.codPedido}" filterMatchMode="contains"
 								sortBy="#{result.codPedido}">
 							<h:outputText value="#{result.codPedido}"
@@ -115,6 +113,7 @@
 							</h:outputText>
 						</p:column>
 					</p:dataTable>
+					
 				</div>
 			</div>
 		</div>

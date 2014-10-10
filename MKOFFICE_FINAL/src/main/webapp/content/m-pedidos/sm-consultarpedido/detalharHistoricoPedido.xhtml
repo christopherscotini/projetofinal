@@ -38,29 +38,29 @@
 			<div id="si" class="widget-body collapse in">
 				<div class="widget-inner">
 					<h:panelGrid cellpadding="0" cellspacing="0" columns="4" border="0" style="margin-top:5px;margin-bottom:25px;">
-							<p:outputLabel value="#{msgs['detalharhistoricopedido.lbl.numeropedido']}:" for="txtNumPedido" styleClass="HtmlOutputLabelResposta"/>
-							<p:outputLabel id="txtNumPedido" value="#{historicoPedidoBean.pedidoSelecionado.codPedido}" styleClass="input-5left HtmlOutputTextResposta" />
+							<h:outputLabel value="#{msgs['detalharhistoricopedido.lbl.numeropedido']}:" for="txtNumPedido" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel id="txtNumPedido" value="#{historicoPedidoBean.pedidoSelecionado.codPedido}" styleClass="input-5left HtmlOutputTextResposta" />
 							
-							<p:outputLabel value="#{msgs['detalharhistoricopedido.lbl.valorpedido']}:" for="txtValorPedido" styleClass="HtmlOutputLabelResposta" />
+							<h:outputLabel value="#{msgs['detalharhistoricopedido.lbl.valorpedido']}:" for="txtValorPedido" styleClass="HtmlOutputLabelResposta" />
 							<h:panelGrid columns="2">
-								<p:outputLabel value="R$" for="txtValorPedido" styleClass="input-5left HtmlOutputTextResposta"/>
+								<h:outputLabel value="R$" for="txtValorPedido" styleClass="input-5left HtmlOutputTextResposta"/>
 								<h:outputLabel id="txtValorPedido" value="#{historicoPedidoBean.pedidoSelecionado.valorTotalEmProdutos}" styleClass="input-5left HtmlOutputTextResposta">
 									<f:converter converterId="decimalConverter" />
 								</h:outputLabel>
 							</h:panelGrid>	
 							
-							<p:outputLabel value="#{msgs['detalharhistoricopedido.lbl.datapedido']}:" for="txtDataPedido" styleClass="HtmlOutputLabelResposta"/>
-							<p:outputLabel id="txtDataPedido" value="#{historicoPedidoBean.pedidoSelecionado.dtPedidoFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
+							<h:outputLabel value="#{msgs['detalharhistoricopedido.lbl.datapedido']}:" for="txtDataPedido" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel id="txtDataPedido" value="#{historicoPedidoBean.pedidoSelecionado.dtPedidoFormatado}" styleClass="input-5left HtmlOutputTextResposta" />
 							
-							<p:outputLabel value="#{msgs['detalharhistoricopedido.lbl.percentualdesconto']}:" for="txtPercDesconto" styleClass="HtmlOutputLabelResposta" style="margin-left:10px;"/>
-							<p:outputLabel value="#{historicoPedidoBean.pedidoSelecionado.porcDesconto}%" id="txtPercDesconto" styleClass="input-5left HtmlOutputTextResposta" />
+							<h:outputLabel value="#{msgs['detalharhistoricopedido.lbl.percentualdesconto']}:" for="txtPercDesconto" styleClass="HtmlOutputLabelResposta" style="margin-left:10px;"/>
+							<h:outputLabel value="#{historicoPedidoBean.pedidoSelecionado.porcDesconto}%" id="txtPercDesconto" styleClass="input-5left HtmlOutputTextResposta" />
 	
-							<p:outputLabel value="#{msgs['detalharhistoricopedido.lbl.totalpontos']}:" for="txtTotPontos" styleClass="HtmlOutputLabelResposta"/>
-							<p:outputLabel value="#{historicoPedidoBean.pedidoSelecionado.pontosTotalPedido} pts" id="txtTotPontos" styleClass="input-5left HtmlOutputTextResposta" />
+							<h:outputLabel value="#{msgs['detalharhistoricopedido.lbl.totalpontos']}:" for="txtTotPontos" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel value="#{historicoPedidoBean.pedidoSelecionado.pontosTotalPedido} pts" id="txtTotPontos" styleClass="input-5left HtmlOutputTextResposta" />
 							
-							<p:outputLabel value="#{msgs['detalharhistoricopedido.lbl.valorbonusutilizado']}:" for="txtValorBonusUtilizado" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel value="#{msgs['detalharhistoricopedido.lbl.valorbonusutilizado']}:" for="txtValorBonusUtilizado" styleClass="HtmlOutputLabelResposta"/>
 							<h:panelGrid columns="2">
-								<p:outputLabel value="R$" for="txtValorBonusUtilizado" styleClass="input-5left HtmlOutputTextResposta" />
+								<h:outputLabel value="R$" for="txtValorBonusUtilizado" styleClass="input-5left HtmlOutputTextResposta" />
 								<h:outputLabel id="txtValorBonusUtilizado" value="#{historicoPedidoBean.pedidoSelecionado.valorBonusUtilizado}" styleClass="input-5left HtmlOutputTextResposta">
 									<f:converter converterId="decimalConverter" />
 								</h:outputLabel>
@@ -69,9 +69,9 @@
 							<h:panelGroup>	</h:panelGroup>						
 							<h:panelGroup>	</h:panelGroup>						
 	
-							<p:outputLabel value="#{msgs['detalharhistoricopedido.lbl.valorfrete']}:" for="txtValorFrete" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel value="#{msgs['detalharhistoricopedido.lbl.valorfrete']}:" for="txtValorFrete" styleClass="HtmlOutputLabelResposta"/>
 							<h:panelGrid columns="2">
-								<p:outputLabel value="R$" for="txtValorFrete" styleClass="input-5left HtmlOutputTextResposta"/>
+								<h:outputLabel value="R$" for="txtValorFrete" styleClass="input-5left HtmlOutputTextResposta"/>
 								<h:outputLabel value="#{historicoPedidoBean.pedidoSelecionado.valorFrete}" id="txtValorFrete" styleClass="HtmlOutputTextResposta" >
 									<f:converter converterId="decimalConverter" />
 								</h:outputLabel>
@@ -80,9 +80,9 @@
 							<h:panelGroup>	</h:panelGroup>						
 							<h:panelGroup>	</h:panelGroup>						
 							
-							<p:outputLabel value="#{msgs['detalharhistoricopedido.lbl.valortotalpagar']}:" for="txtValorTotalPedido" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel value="#{msgs['detalharhistoricopedido.lbl.valortotalpagar']}:" for="txtValorTotalPedido" styleClass="HtmlOutputLabelResposta"/>
 							<h:panelGrid columns="2">
-								<p:outputLabel value="R$" for="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta"/>
+								<h:outputLabel value="R$" for="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta"/>
 								<h:outputLabel value="#{historicoPedidoBean.pedidoSelecionado.valorFinalTotalPago}" id="txtValorTotalPedido" styleClass="HtmlOutputTextResposta">
 									<f:converter converterId="decimalConverter" />
 								</h:outputLabel>
@@ -91,9 +91,9 @@
 							<h:panelGroup>	</h:panelGroup>						
 							<h:panelGroup>	</h:panelGroup>						
 	
-							<p:outputLabel value="#{msgs['detalharhistoricopedido.lbl.lucroestimado']}:" for="txtLucroTotalPedido" styleClass="HtmlOutputLabelResposta"/>
+							<h:outputLabel value="#{msgs['detalharhistoricopedido.lbl.lucroestimado']}:" for="txtLucroTotalPedido" styleClass="HtmlOutputLabelResposta"/>
 							<h:panelGrid columns="2">
-								<p:outputLabel value="R$" for="txtLucroTotalPedido" styleClass="input-5left HtmlOutputTextResposta"/>
+								<h:outputLabel value="R$" for="txtLucroTotalPedido" styleClass="input-5left HtmlOutputTextResposta"/>
 								<h:outputLabel value="#{historicoPedidoBean.pedidoSelecionado.lucroTotal}" id="txtLucroTotalPedido" styleClass="HtmlOutputTextResposta">
 									<f:converter converterId="decimalConverter" />
 								</h:outputLabel>
@@ -112,8 +112,8 @@
 			<div id="si" class="widget-body collapse in">
 				<div class="widget-inner">		
 					<h:panelGrid columns="2" cellpadding="0" cellspacing="0" style="margin-top:5px;">
-						<p:outputLabel value="Forma de Pagamento:" for="txtFormaPagamento" styleClass="HtmlOutputLabelResposta" />
-						<p:outputLabel id="txtFormaPagamento" value="#{historicoPedidoBean.pedidoSelecionado.formaDePagamento.descFormaPgto}" styleClass="input-5left HtmlOutputTextResposta" />
+						<h:outputLabel value="Forma de Pagamento:" for="txtFormaPagamento" styleClass="HtmlOutputLabelResposta" />
+						<h:outputLabel id="txtFormaPagamento" value="#{historicoPedidoBean.pedidoSelecionado.formaDePagamento.descFormaPgto}" styleClass="input-5left HtmlOutputTextResposta" />
 					</h:panelGrid>
 	
 					<p:dataTable id="tableParcelas" style="width:42%"
@@ -182,11 +182,11 @@
 									<h:outputText value="#{result.produto.codProduto}"
 										style="text-align: center;" />
 								</p:column>
-								<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="80%" sortBy="#{result.produto.descProduto}">
+								<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="60%" sortBy="#{result.produto.descProduto}">
 									<h:outputText value="#{result.produto.descProduto}"
 										style="text-align: left;" />
 								</p:column>
-								<p:column headerText="#{msgs['generico.tabelacoluna.valorunitario']}" style="text-align: center;" width="5%" 
+								<p:column headerText="#{msgs['generico.tabelacoluna.valorunitario']}" style="text-align: center;" width="15%" 
 									sortBy="#{result.produto.preco}">
 									<h:outputText value="R$" style="text-align: right;" />
 									<h:outputText value="#{result.produto.preco}" style="text-align: right;" >
@@ -226,24 +226,24 @@
 			showEffect="slide" width="700px" height="180px;">
 			<h:panelGrid id="infoPagamento" columns="2"	style="margin-bottom:10px">
 
-				<p:outputLabel value="#{msgs['detalharhistoricopedido.lbl.descricaoparcela']}:" for="txtParcela" styleClass="HtmlOutputLabelResposta" />
-				<p:outputLabel id="txtParcela" value="#{historicoPedidoBean.parcelaSelecionadaPagamento.descricao} - #{historicoPedidoBean.parcelaSelecionadaPagamento.codSituacaoParcela.descSituacao}" 
+				<h:outputLabel value="#{msgs['detalharhistoricopedido.lbl.descricaoparcela']}:" for="txtParcela" styleClass="HtmlOutputLabelResposta" />
+				<h:outputLabel id="txtParcela" value="#{historicoPedidoBean.parcelaSelecionadaPagamento.descricao} - #{historicoPedidoBean.parcelaSelecionadaPagamento.codSituacaoParcela.descSituacao}" 
 						styleClass="input-5left HtmlOutputTextResposta" />
 
-				<p:outputLabel value="#{msgs['detalharhistoricopedido.lbl.valorparcela']}:" styleClass="HtmlOutputLabelResposta" />
+				<h:outputLabel value="#{msgs['detalharhistoricopedido.lbl.valorparcela']}:" styleClass="HtmlOutputLabelResposta" />
 				<h:panelGroup>
-					<p:outputLabel value="R$" styleClass="input-5left HtmlOutputTextResposta" />
+					<h:outputLabel value="R$" styleClass="input-5left HtmlOutputTextResposta" />
 					<h:outputLabel value="#{historicoPedidoBean.parcelaSelecionadaPagamento.valorParcela}" styleClass="input-5left HtmlOutputTextResposta" >
 						<f:converter converterId="decimalConverter" />
 					</h:outputLabel>
 				</h:panelGroup>
 
-				<p:outputLabel value="#{msgs['detalharhistoricopedido.lbl.datavencimentoparcela']}:" styleClass="HtmlOutputLabelResposta" />
+				<h:outputLabel value="#{msgs['detalharhistoricopedido.lbl.datavencimentoparcela']}:" styleClass="HtmlOutputLabelResposta" />
 				<h:outputLabel value="#{historicoPedidoBean.parcelaSelecionadaPagamento.dtVencimento}" styleClass="input-5left HtmlOutputTextResposta" >
 					<f:convertDateTime pattern="dd/MM/yyyy"/> 
 				</h:outputLabel>
 
-				<p:outputLabel value="#{msgs['detalharhistoricopedido.lbl.datapagamentoparcela']}:" styleClass="HtmlOutputLabelResposta" />
+				<h:outputLabel value="#{msgs['detalharhistoricopedido.lbl.datapagamentoparcela']}:" styleClass="HtmlOutputLabelResposta" />
 				<p:calendar id="calendarDataPagamento" value="#{historicoPedidoBean.parcelaSelecionadaPagamento.dtPagamento}" size="15" 
 					styleClass="input-5left" alt="date" pattern="dd/MM/yyyy" />
 					

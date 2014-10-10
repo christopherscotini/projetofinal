@@ -33,16 +33,7 @@
 			</li>
 			<li>#{msgs['dadosvenda.breadcumb.venda.cadastrarvenda.selecionarprodutos.dadosvenda']}</li>
 		</ul>
-		<p:breadCrumb>  
-		    <p:menuitem value="TelaInicial" action="#{efetuarVendaBean.scheduleBean.telaInicial()}" ajax="false"/>  
-		    <p:menuitem value="Venda" action="#{efetuarVendaBean.scheduleBean.telaInicial()}" ajax="false" />  
-		    <p:menuitem value="Efetuar Venda" action="#{efetuarVendaBean.iniciarTela()}" ajax="false" />  
-		    <p:menuitem value="Selecionar cliente" action="#{efetuarVendaBean.voltarParaSelecionarClientes}" ajax="false"/>  
-		    <p:menuitem value="Selecionar Produtos" action="#{efetuarVendaBean.voltarParaSelecionarProdutos()}" />  
-		    <p:menuitem value="Dados da venda"  />  
-		</p:breadCrumb>  
 	</ui:define>
-	<ui:param name="titulo" value="Dados da venda" />
 
 	<ui:define name="body_content">
 		<div class="widget">
@@ -61,37 +52,37 @@
 						<p:outputLabel value="#{efetuarVendaBean.venda.qtdeTotalPontosVendidos} pts" id="txtTotPontos" styleClass="input-5left HtmlOutputTextResposta" />
 	
 						<p:outputLabel value="#{msgs['dadosvenda.lbl.valorparcialvenda']}:" for="txtValorVenda" styleClass="HtmlOutputLabelResposta"/>
-						<h:panelGroup>
+						<h:panelGrid columns="2">
 							<p:outputLabel value="R$" for="txtValorVenda" styleClass="input-5left HtmlOutputTextResposta"/>
 							<h:outputLabel id="txtValorVenda" value="#{efetuarVendaBean.venda.valorVenda}" styleClass="input-5left HtmlOutputTextResposta">
 								<f:converter converterId="decimalConverter" />
 							</h:outputLabel>
-						</h:panelGroup>
+						</h:panelGrid>
 	
 						<p:outputLabel value="#{msgs['dadosvenda.lbl.descontode']}:" for="txtValorTotalDesc"
 							styleClass="HtmlOutputLabelResposta" />
 						<p:inputText value="#{efetuarVendaBean.venda.valorDescontoVenda}"
-							id="txtValorTotalDesc" alt="decimalBr8" size="13" maxlength="8">
+							id="txtValorTotalDesc" alt="decimalBr8" size="13" maxlength="8" styleClass="input-5left">
 							<f:converter converterId="decimalConverter" />
 							<p:ajax event="blur" listener="#{efetuarVendaBean.onBlurValorDesconto()}" update="group-valor-final group-valor-lucro" />
 						</p:inputText>
 	
 						<p:outputLabel value="#{msgs['dadosvenda.lbl.valortotalcobrar']}:" for="txtValorTotalPedido" styleClass="HtmlOutputLabelResposta"/>
-						<h:panelGroup id="group-valor-final">
+						<h:panelGrid id="group-valor-final" columns="2">
 							<p:outputLabel value="R$" for="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta"/>
 							<h:outputLabel value="#{efetuarVendaBean.totalAPagar}" id="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta">
 								<f:converter converterId="decimalConverter" />
 							</h:outputLabel>
-						</h:panelGroup>
+						</h:panelGrid>
 	
 						<p:outputLabel value="#{msgs['dadosvenda.lbl.lucroestimado']}:" for="txtValorLucroEst"
 							styleClass="HtmlOutputLabelResposta" />
-						<h:panelGroup id="group-valor-lucro">
+						<h:panelGrid id="group-valor-lucro" columns="2">
 							<p:outputLabel value="R$" for="txtValorLucroEst" styleClass="input-5left HtmlOutputTextResposta"/>
 							<h:outputLabel id="txtValorLucroEst" value="#{efetuarVendaBean.totalLucro}" styleClass="input-5left HtmlOutputTextResposta">
 								<f:converter converterId="decimalConverter" />
 							</h:outputLabel>
-						</h:panelGroup>
+						</h:panelGrid>
 	
 					</h:panelGrid>
 					</div>
@@ -118,11 +109,11 @@
 								<h:outputText value="#{result.codCatalogo.codProduto}"
 									style="text-align: center;" />
 							</p:column>
-							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="80%" sortBy="#{result.codCatalogo.descProduto}">
+							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="60%" sortBy="#{result.codCatalogo.descProduto}">
 								<h:outputText value="#{result.codCatalogo.descProduto}"
 									style="text-align: left;" />
 							</p:column>
-							<p:column headerText="#{msgs['generico.tabelacoluna.valorunitario']}" style="text-align: center;" width="5%" 
+							<p:column headerText="#{msgs['generico.tabelacoluna.valorunitario']}" style="text-align: center;" width="10%" 
 								sortBy="#{result.codCatalogo.preco}">
 								<h:outputText value="R$" style="text-align: right;" />
 								<h:outputText value="#{result.codCatalogo.preco}" style="text-align: right;" >
@@ -155,22 +146,21 @@
 		</div>
 					
 						
-					<hr class="lin"></hr>
-					
-					<h:panelGroup>
-						<div class="buttonFooter">
-							<p:commandButton id="btnVoltar" value="Voltar" ajax="false" style="float:left;" styleClass="btn btn-zen-2 btn-toolbar"
-								action="#{efetuarVendaBean.voltarParaSelecionarProdutos()}" immediate="true"  />
-							<p:commandButton id="btn-avancar" 
-											 value="#{msgs.btn_avancar}" 
-											 ajax="false" styleClass="btn btn-zen-5 btn-toolbar"
-											 action="#{efetuarVendaBean.navegarFinalizarPagamento()}"
-											 disabled="#{empty efetuarVendaBean.listaProdutosSelecionadosParaVenda}" />
-							<div style="height: 10px;width: 10px;"></div>	
-						</div>
-					</h:panelGroup>
+		<hr class="lin"></hr>
 		
-		</h:panelGrid>
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="Voltar" ajax="false" style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
+					action="#{efetuarVendaBean.voltarParaSelecionarProdutos()}" immediate="true"  />
+				<p:commandButton id="btn-avancar" 
+								 value="#{msgs.btn_avancar}" 
+								 ajax="false" styleClass="btn btn-zen-2 btn-toolbar"
+								 action="#{efetuarVendaBean.navegarFinalizarPagamento()}"
+								 disabled="#{empty efetuarVendaBean.listaProdutosSelecionadosParaVenda}" />
+				<div style="height: 10px;width: 10px;"></div>	
+			</div>
+		</h:panelGroup>
+		
 	</ui:define>
 
 </ui:composition>

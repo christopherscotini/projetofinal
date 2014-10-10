@@ -54,12 +54,10 @@
 							<h:outputText value="#{result.codCatalogo.descProduto}" style="text-align: left;" />
 						</p:column>
 						<p:column headerText="#{msgs['generico.tabelacoluna.pontosestoque']}" style="text-align: center;" width="10%" 
-							filterBy="#{result.qtdeTotalPontosMovimentadoProduto}" filterMatchMode="contains"
 							sortBy="#{result.qtdeTotalPontosMovimentadoProduto}">
 							<h:outputText value="#{result.qtdeTotalPontosMovimentadoProduto} pts" style="text-align: center;" />
 						</p:column>
 						<p:column headerText="#{msgs['generico.tabelacoluna.qtdeestoque']}" style="text-align: center;" width="5%"
-							filterBy="#{result.qtdeEmEstoque}" filterMatchMode="contains"
 							sortBy="#{result.qtdeEmEstoque}">
 							<h:outputText rendered="#{result.disponivel}"
 								value="#{result.qtdeEmEstoque}" style="text-align: center;" />
@@ -67,7 +65,6 @@
 								style="text-align: center;" />
 						</p:column>
 						<p:column headerText="#{msgs['generico.tabelacoluna.valorestoque']}" style="text-align: center;" width="10%"
-							filterBy="#{result.valorTotalMovimentadoProduto}" filterMatchMode="contains"
 							sortBy="#{result.valorTotalMovimentadoProduto}"> 
 							<h:outputText value="R$" style="text-align: center;" />
 							<h:outputText value="#{result.valorTotalMovimentadoProduto}" style="text-align: center;">
@@ -75,11 +72,11 @@
 							</h:outputText>
 						</p:column>
 						
-						<p:column headerText="" style="text-align: center;" width="5%">
+						<p:column headerText="" style="text-align: center;" width="9%">
 							<p:commandButton value="#{msgs['listarestoque.lbl.btn_atualizarestoque']}"
 								action="#{estoqueBean.addOrRemoveProductFromStock()}"
 								style="text-align: center;" update=":formDialog2:infosEstoque"
-								oncomplete="dialogEstoque.show()">
+								oncomplete="PF('dialogEstoque').show()">
 								<f:setPropertyActionListener 
 									target="#{estoqueBean.idProdutoDisponibilidade}"
 									value="#{result.codCatalogo.codCatalogo}" />
@@ -160,24 +157,24 @@
 
 				<h:outputLabel for="txtTipoFluxoDialogEstoque"
 					value="#{msgs['listarestoque.lbl.tipofluxo']}:" styleClass="HtmlOutputLabelResposta" />
-				<p:selectOneMenu id="txtTipoFluxoDialogEstoque" required="true" converter="genericEntityConverter"
+				<h:selectOneMenu id="txtTipoFluxoDialogEstoque" required="true" converter="genericEntityConverter"
 				 requiredMessage="#{msgs['listarestoque.mensagem.required.tipofluxoobrigatoria']}."
 					value="#{estoqueBean.produtoEstoqueDto.tipoFluxoEstoque}">
 					<f:selectItems value="#{estoqueBean.cboTipoFluxoEstoque}" var="c"
 						itemLabel="#{c.descFluxoEstoque}" itemValue="#{c}" />
 						<p:ajax event="change" update="infosEstoque" listener="#{estoqueBean.verificaTipoFLuxo()}"/>
-				</p:selectOneMenu>
+				</h:selectOneMenu>
 				
 				<p:outputLabel value="#{msgs['listarestoque.lbl.percentualdesconto']}:" rendered="#{estoqueBean.habilitaEntradaProduto}"
 						for="txtPercDesconto" styleClass="HtmlOutputLabelResposta" />
-					<p:selectOneMenu
+					<h:selectOneMenu
 						value="#{estoqueBean.produtoEstoqueDto.percDesconto}"
 						id="txtPercDesconto" rendered="#{estoqueBean.habilitaEntradaProduto}"
-						styleClass="input-5left HtmlOutputTextResposta">
+						styleClass="">
 						<f:selectItems value="#{estoqueBean.cboPercentDesconto}"
 							var="_percent" itemLabel="#{_percent.descricao}"
 							itemValue="#{_percent}" />
-					</p:selectOneMenu>
+					</h:selectOneMenu>
 
 				<h:outputLabel id="lblQtdeEstoque" for="txtQtdeTotalDialogEstoque" rendered="#{estoqueBean.habilitaEntradaProduto}"
 					value="#{msgs['listarestoque.lbl.entradaestoque']}:" styleClass="HtmlOutputLabelResposta" />
@@ -185,9 +182,8 @@
 					value="#{estoqueBean.produtoEstoqueDto.qtdeMovimentadoProduto}" min="0"
 					max="999" requiredMessage="#{msgs['listarestoque.mensagem.required.quantidadeobrigatoria']}."
 					required="true" size="5" maxlength="3"
-					onkeypress="return onlyNum(event)"
-					styleClass="input-5left HtmlOutputTextResposta spinner-input" />
-
+					onkeypress="return onlyNum(event)" />
+					
 				<h:outputLabel id="lblQtdeSaidaEstoque" for="txtQtdeTotalDialogEstoque" rendered="#{estoqueBean.habilitaSaidaProduto}"
 					value="#{msgs['listarestoque.lbl.saidaestoque']}:" styleClass="HtmlOutputLabelResposta" />
 				<h:selectOneMenu value="#{estoqueBean.produtoEstoqueDto.qtdeMovimentadoProduto}" style="width:40px;" rendered="#{estoqueBean.habilitaSaidaProduto}" >
@@ -197,10 +193,10 @@
 
 				<p:commandButton id="btnCancelar" value="#{msgs.btn_cancelar}"
 						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar"
-						oncomplete="dialogEstoque.hide();" />
+						oncomplete="PF('dialogEstoque').hide();" />
 				<p:commandButton
 					update=":formGlobal:tableListaEstoque :formGlobal:lblTotalReg"
-					oncomplete="dialogEstoque.hide();"
+					oncomplete="PF('dialogEstoque').hide();"
 					styleClass="btn btn-zen-2 btn-toolbar"
 					actionListener="#{estoqueBean.atualizarEstoque()}"
 					onclick="return validarFormAtualizarEstoque(document.forms[3])"

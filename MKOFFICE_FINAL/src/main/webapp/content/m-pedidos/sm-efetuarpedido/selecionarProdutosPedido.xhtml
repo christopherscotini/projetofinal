@@ -45,12 +45,12 @@
 						paginator="true" paginatorPosition="bottom"
 						emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}">
 	
-						<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" style="text-align: center;" width="5%" 
+						<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" style="text-align: center;" width="10%" 
 							filterBy="#{result.produto.codProduto}" filterMatchMode="contains"
 							sortBy="#{result.produto.codProduto}">
 							<h:outputText value="#{result.produto.codProduto}" style="text-align: center;" />
 						</p:column>
-						<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="40%" style="max-width: 400px; min-width: 250px; overflow: hidden"
+						<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="30%" style="max-width: 400px; min-width: 250px; overflow: hidden"
 							filterBy="#{result.produto.descProduto}" filterMatchMode="contains" filterStyle="width:350px;"
 							sortBy="#{result.produto.descProduto}">
 							<h:outputText value="#{result.produto.descProduto}"
@@ -63,7 +63,7 @@
 								style="text-align: center;" />
 						</p:column>
 						
-						<p:column headerText="VALOR UNITÁRIO" style="text-align: center;" width="5%" 
+						<p:column headerText="VALOR UNITÁRIO" style="text-align: center;" width="10%" 
 							filterBy="#{result.produto.preco}" filterMatchMode="contains"
 							sortBy="#{result.produto.preco}">
 							<h:outputText value="R$" style="text-align: right;" />
@@ -76,8 +76,8 @@
 							sortBy="#{result.qtdeProdutoCarrinho}" >
 							<h:outputText value="#{result.qtdeProdutoCarrinho}  " />
 						</p:column>
-						<p:column headerText="ATUALIZAR CARRINHO" style="text-align: center;" width="5%" >
-							<p:commandLink actionListener="#{efetuarPedidoBean.selectAddProdutoPedido(result)}" update=":formGlobal:infosCarrinho" oncomplete="dialogCarrinho.show()">
+						<p:column headerText="ATUALIZAR CARRINHO" style="text-align: center;" width="8%" >
+							<p:commandLink actionListener="#{efetuarPedidoBean.selectAddProdutoPedido(result)}" update=":formGlobal:infosCarrinho" oncomplete="PF('dialogCarrinho').show()">
 								<p:graphicImage value="/resources/images/cart-icons/icon-1.png" width="22px" height="20px"/>
 							</p:commandLink>
 						</p:column>
@@ -108,8 +108,8 @@
 						
 		<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
 			style="	margin-top:5px;">
-			<p:outputLabel value="#{msgs['selecionarprodutopedido.lbl.totalprodutoscatalogo']}:" />
-			<p:outputLabel value="#{efetuarPedidoBean.listaProdutosEmCatalogo.size()}" styleClass="input-5left HtmlOutputTextResposta"/>
+			<h:outputLabel value="#{msgs['selecionarprodutopedido.lbl.totalprodutoscatalogo']}:" />
+			<h:outputLabel value="#{efetuarPedidoBean.listaProdutosEmCatalogo.size()}" styleClass="input-5left HtmlOutputTextResposta"/>
 		</h:panelGrid>
 						
 		<hr class="lin" />
@@ -134,7 +134,7 @@
 		
 		<p:dialog header="#{msgs['selecionarprodutopedido.titulodialog.carrinho']}"
 			widgetVar="dialogCarrinho" resizable="false" modal="true"
-			showEffect="slide" width="500" height="180px;" closable="false">
+			showEffect="slide" width="500" height="180px;" closable="true">
 			<h:panelGrid id="infosCarrinho" columns="2"
 				style="margin-bottom:10px">
 
@@ -147,10 +147,10 @@
 				
 				<p:commandButton id="btnCancelar" value="#{msgs.btn_cancelar}"
 						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar"
-						oncomplete="dialogCarrinho.hide();" />
+						oncomplete="PF('dialogCarrinho').hide();" />
 				<p:commandButton
 					update=":formGlobal:tableCatalogo :formGlobal:btn-avancar"
-					oncomplete="dialogCarrinho.hide();" styleClass="btn btn-zen-2 btn-toolbar"
+					oncomplete="PF('dialogCarrinho').hide();" styleClass="btn btn-zen-2 btn-toolbar"
 					actionListener="#{efetuarPedidoBean.addProdutoPedido()}"
 					value="#{msgs['selecionarprodutopedido.btn_lbl.atualizarcarrinho']}" />
 			</h:panelGrid>
