@@ -82,6 +82,11 @@ public class HistoricoVendaBean extends AbstractModelBean{
 		return TELA_DETALHAR_VENDA;
 	}
 
+	public String navegarEditarVenda(){
+		
+		return "";
+	}
+	
 	public String voltarTelaHistoricoVendas(){
 		if(chamadaExterna){
 			if(codeBeanExterno.equals(CodeBeanConstants.CLIENTE_BEAN)){
@@ -106,7 +111,7 @@ public class HistoricoVendaBean extends AbstractModelBean{
 	}
 	
 
-//	=============================== Mï¿½TODOS PRIVATES =============================== 
+//	=============================== MÉTODOS PRIVATES =============================== 
 	private void isDesabilitaPagamentoParcela(){
 		for (int i = 0; i < vendaSelecionada.getParcelas().size(); i++) {
 			if(vendaSelecionada.getParcelas().get(i).isQuitado()){

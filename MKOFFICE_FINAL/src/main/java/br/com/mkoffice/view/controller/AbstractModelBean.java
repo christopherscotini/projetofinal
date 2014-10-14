@@ -23,6 +23,7 @@ import br.com.mkoffice.business.bo.FormaPagamentoBO;
 import br.com.mkoffice.business.bo.ParcelaBO;
 import br.com.mkoffice.business.bo.PedidoBO;
 import br.com.mkoffice.business.bo.PermissaoBO;
+import br.com.mkoffice.business.bo.ReportBO;
 import br.com.mkoffice.business.bo.SituacaoBO;
 import br.com.mkoffice.business.bo.TipoAgendaBO;
 import br.com.mkoffice.business.bo.UserBO;
@@ -95,6 +96,9 @@ public abstract class AbstractModelBean {
 	
 	@Inject
 	protected VendaBO vendaBO = null;
+	 
+	@Inject
+	protected ReportBO reportBO = null;
 	
 	public static String getMsgs(String messageId) {    
 	        FacesContext facesContext = FacesContext.getCurrentInstance();    

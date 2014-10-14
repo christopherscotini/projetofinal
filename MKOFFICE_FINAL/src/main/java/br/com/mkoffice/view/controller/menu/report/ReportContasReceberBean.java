@@ -28,7 +28,7 @@ import br.com.mkoffice.view.controller.AbstractModelBean;
 public class ReportContasReceberBean extends AbstractModelBean {
 
 	private final String TELA_REPORT_CONTAS_RECEBER = "/content/m-relatorios/finaceiro/reportContasReceber.xhtml";
-	private final String NAME_RELATORIO_CONTAS_RECEBER = "RelatÃ³rio de Contas Ã  Receber";
+	private final String NAME_RELATORIO_CONTAS_RECEBER = "Relatório de Contas à  Receber";
 	private final String PATH_REPORT_CONTAS_RECEBER = "financeiro/contas_a_receber.jasper";
 	
 	private TiposRelatorio tipoRelatorio;

@@ -32,7 +32,7 @@
 		</div>
 		<div id="si" class="widget-body collapse in" style="margin: 0 auto !important">
 			<div class="widget-inner">				
-				<p:schedule id="schedule" style="width:1200px;margin-top:10px;margin-bottom:10px;" widgetVar="meucalendario" locale="pt" value="#{scheduleController.eventModel}" 
+				<p:schedule id="schedule" style="width:100%;margin-top:10px;margin-bottom:10px;" widgetVar="meucalendario" locale="pt" value="#{scheduleController.eventModel}" 
                     axisFormat="H:mm" timeFormat="H:mm" minTime="6" maxTime="22:00"  initialDate="#{scheduleController.dataInicioCalendar}">
                     <p:ajax event="dateSelect" listener="#{scheduleController.quandoNovo}" 
                             update="eventDetails" oncomplete="PF('caixaDialogo').show()" />  

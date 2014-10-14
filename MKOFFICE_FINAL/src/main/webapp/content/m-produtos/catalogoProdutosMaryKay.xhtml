@@ -32,7 +32,7 @@
 	<ui:define name="body_content">
 		<div class="widget">
 			<div class="widget-heading">
-				<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
 				<i class="icon-table"></i> #{msgs['catalogoprodutos.titulotabela.catalogoprodutos']}</a>
 			</div>
 			<div id="si" class="widget-body collapse in">
@@ -87,7 +87,7 @@
 							<h:outputText value="#{result.disponivelDesc}" style="text-align: center;max-width: 40px; min-width: 40px;" />
 						</p:column>
 	
-						<p:column headerText="#{msgs['generico.tabelacoluna.quantidade']}" style="text-align: center;"
+						<p:column headerText="#{msgs['generico.tabelacoluna.quantidade']}" style="text-align: center;" width="5%"
 							sortBy="#{result.quantidadeEmEstoque}"  >
 							<h:outputText rendered="#{result.disponivel}"
 								value="#{result.quantidadeEmEstoque}"

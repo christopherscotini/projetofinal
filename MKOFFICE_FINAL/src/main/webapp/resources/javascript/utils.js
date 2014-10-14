@@ -1,12 +1,3 @@
-function loadMasksJQuery() {
-	jQuery.mask.masks = jQuery.extend(jQuery.mask.masks,{
-		decimalBr8:{ mask : '99,999.999', type : 'reverse' }
-	});
-
-	(function(jQuery){jQuery(function(){jQuery('input:text').setMask();});})(jQuery);
-	
-	$(".rf-cal-inp").setMask('39/19/9999');
-}
 
 //function onlyNum() {
 //	if (document.all) {// Internet Explorer

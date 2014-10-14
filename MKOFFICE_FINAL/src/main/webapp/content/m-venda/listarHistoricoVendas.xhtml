@@ -78,6 +78,11 @@
 						<p:ajax event="rowSelect" update=":formGlobal:btnDetalhar" />
 						<p:ajax event="rowUnselect" update=":formGlobal:btnDetalhar" />
 						
+						<p:column headerText="#{msgs['generico.tabelacoluna.datavenda']}" style="text-align: center;" width="10%" sortBy="#{result.dataVenda}">
+							<h:outputText value="#{result.dataVenda}" style="text-align: center;">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
 						<p:column headerText="#{msgs['generico.tabelacoluna.cliente']}" width="35%" 
 								filterBy="#{result.cliente.dadosPessoa.nome}" filterMatchMode="contains" filterStyle="width:350px;"
 								sortBy="#{result.cliente.dadosPessoa.nome}">
@@ -86,11 +91,6 @@
 						<p:column headerText="#{msgs['generico.tabelacoluna.celulardocliente']}" style="text-align: center;" width="10%" 
 								sortBy="#{result.cliente.numCelularString}">
 							<h:outputText value="#{result.cliente.numCelularString}" style="text-align: center;" />
-						</p:column>
-						<p:column headerText="#{msgs['generico.tabelacoluna.datavenda']}" style="text-align: center;" width="10%" sortBy="#{result.dataVenda}">
-							<h:outputText value="#{result.dataVenda}" style="text-align: center;">
-								<f:convertDateTime pattern="dd/MM/yyyy" />
-							</h:outputText>
 						</p:column>
 						<p:column headerText="#{msgs['generico.tabelacoluna.qtdeprodutosvendidos']}" width="10%" style="text-align: center;" sortBy="#{result.listaDeProdutos.size()}">
 							<h:outputText value="#{result.listaDeProdutos.size()} Produtos"

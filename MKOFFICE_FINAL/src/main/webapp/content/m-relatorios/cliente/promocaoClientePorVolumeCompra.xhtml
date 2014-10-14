@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+	</ui:define>
+	
+	<ui:define name="jsImports">
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['promocaoclienteporvolumecompra.breadcumb.relatorio']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['promocaoclienteporvolumecompra.breadcumb.relatorio.relatoriopromocaoclienteporvolumecompra']}</li>
+		</ul>
+	</ui:define>
+	
+	
+	<ui:define name="body_content">
+		<div class="row-fluid">
+			<div class="widget span12">
+				<div class="widget-heading">
+					<a class="accordion-toggle in" data-toggle="collapse" href="#divFiltro">
+						<i class="icon-th"></i> #{msgs['promocaoclienteporvolumecompra.lbl.pesquisa']}
+						<i class="icon-chevron-down pull-right"></i>
+					</a>
+				</div>
+				<div id="divFiltro" class="widget-body collapse in">
+					<div class="widget-inner">
+						<h:panelGrid columns="2" id="gridFiltro" >
+							<h:outputLabel value="Ano:" />
+							<h:selectOneMenu value="#{promocaoClientePorVolumeCompraBean.comboAnosFiltroSelecionado}">
+								<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}"/>
+								<f:selectItems value="#{promocaoClientePorVolumeCompraBean.comboAnosFiltro}" var="a" itemLabel="#{a}" itemValue="#{a}"/>
+							</h:selectOneMenu>
+							<h:outputLabel value="Valor de Corte:" />
+							<h:inputText value="#{promocaoClientePorVolumeCompraBean.valorCorteFiltro}" styleClass="currency" onfocus="loadMasksMoneyJQuery();" converter="decimalConverter" />
+						</h:panelGrid>
+						<h:panelGroup>
+							<div class="buttonFilter">
+								<p:commandButton id="btnLimpar" 
+									value="Limpar" 
+									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+									actionListener="#{promocaoClientePorVolumeCompraBean.limparCamposFiltro()}" 
+									ajax="true" update="gridFiltro" />
+								<p:commandButton id="btnPesquisar" 
+									value="#{msgs.btn_pesquisar}" 
+									action="#{promocaoClientePorVolumeCompraBean.pesquisarFiltro()}" 
+									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+									ajax="true" update="tableListVendas gridGraph" oncomplete="loadMasksMoneyJQuery();"/>
+							</div>
+						</h:panelGroup>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
+				<i class="icon-table"></i> #{msgs['promocaoclienteporvolumecompra.titulotabela.listaclientes']}
+				<i class="icon-chevron-down pull-right"></i>
+				</a>
+			</div>
+			<div id="si" class="widget-body collapse in">
+				<div class="widget-inner">
+					
+					<p:dataTable id="tableListVendas" 
+							style="margin-top:10px;"
+							var="result" rows="10" rowKey="#{result}" 
+							value="#{promocaoClientePorVolumeCompraBean.relatorio}" 
+							paginator="true" paginatorPosition="bottom" 
+							emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}."
+							sortBy="#{result.valorTotalVendas}" sortOrder="descending">
+						
+						<p:column headerText="#{msgs['generico.tabelacoluna.cliente']}" width="35%"	sortBy="#{result.cliente.dadosPessoa.nome}">
+							<h:outputText value="#{result.cliente.dadosPessoa.nome}" style="text-align: left;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.celulardocliente']}" style="text-align: center;" width="10%" sortBy="#{result.cliente.dadosPessoa.numCelular}">
+							<h:outputText value="#{result.cliente.dadosPessoa.numCelular}" style="text-align: center;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.datavenda']}" style="text-align: center;" width="10%" sortBy="#{result.dataUltimaVenda}">
+							<h:outputText value="#{result.dataUltimaVenda}" style="text-align: center;">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: center;" width="10%" sortBy="#{result.valorTotalVendas}">
+							<h:outputText value="#{result.valorTotalVendas}" style="text-align: center;">
+								<f:converter converterId="decimalConverter"/> 
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.qtdeprodutosvendidos']}" width="10%" style="text-align: center;" sortBy="#{result.quantidadeVendas}">
+							<h:outputText value="#{result.quantidadeVendas} Vendas" style="text-align: center;" />
+						</p:column>
+					</p:dataTable>
+					
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#dash" data-original-title="">
+				<i class="icon-table"></i> #{msgs['promocaoclienteporvolumecompra.lbl.legend.relatoriopromocaoclienteporvolumecompra']}
+				<i class="icon-chevron-down pull-right"></i>
+				</a>
+			</div>
+			<div id="dash" class="widget-body collapse in">
+				<div class="widget-inner">
+					<h:panelGrid id="gridGraph" style="margin: 0 auto;" >
+						<p:chart id="pie" type="pie" model="#{promocaoClientePorVolumeCompraBean.graficoPieMontanteAnualPorCliente}" rendered="#{not empty promocaoClientePorVolumeCompraBean.relatorio}" style="width:400px;height:300px" />
+					</h:panelGrid>
+				</div>
+			</div>
+		</div>
+		
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#dash" data-original-title="">
+				<i class="icon-table"></i> #{msgs['promocaoclienteporvolumecompra.lbl.legend.relatoriopromocaoclienteporvolumecompra']}
+				<i class="icon-chevron-down pull-right"></i>
+				</a>
+			</div>
+			<div id="dash" class="widget-body collapse in">
+				<div class="widget-inner">
+					<h:panelGrid id="gridGraph" style="margin: 0 auto;" >
+						<p:chart type="line" model="#{promocaoClientePorVolumeCompraBean.lineModel2}" style="height:300px;"/>
+					</h:panelGrid>
+				</div>
+			</div>
+		</div>
+		
+		
+	</ui:define>
+	
+	
+	
+</ui:composition>
