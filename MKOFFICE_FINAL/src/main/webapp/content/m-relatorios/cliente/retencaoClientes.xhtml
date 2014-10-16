@@ -19,10 +19,10 @@
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
-				<h:commandLink action="#" value="#{msgs['promocaoclienteporvolumecompra.breadcumb.relatorio']}" />
+				<h:commandLink action="#" value="#{msgs['retencaoclientes.breadcumb.relatorio']}" />
 				<span class="divider">/</span>
 			</li>
-			<li>#{msgs['promocaoclienteporvolumecompra.breadcumb.relatorio.relatoriopromocaoclienteporvolumecompra']}</li>
+			<li>#{msgs['retencaoclientes.breadcumb.relatorio.relatorioretencaoclientes']}</li>
 		</ul>
 	</ui:define>
 	
@@ -32,33 +32,28 @@
 			<div class="widget span12">
 				<div class="widget-heading">
 					<a class="accordion-toggle in" data-toggle="collapse" href="#divFiltro">
-						<i class="icon-th"></i> #{msgs['promocaoclienteporvolumecompra.lbl.pesquisa']}
+						<i class="icon-th"></i> #{msgs['retencaoclientes.lbl.pesquisa']}
 						<i class="icon-chevron-down pull-right"></i>
 					</a>
 				</div>
 				<div id="divFiltro" class="widget-body collapse in">
 					<div class="widget-inner">
 						<h:panelGrid columns="2" id="gridFiltro" >
-							<h:outputLabel value="#{msgs['promocaoclienteporvolumecompra.lbl.ano']}:" />
-							<h:selectOneMenu value="#{promocaoClientePorVolumeCompraBean.comboAnosFiltroSelecionado}">
-								<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}"/>
-								<f:selectItems value="#{promocaoClientePorVolumeCompraBean.comboAnosFiltro}" var="a" itemLabel="#{a}" itemValue="#{a}"/>
-							</h:selectOneMenu>
-							<h:outputLabel value="Valor de Corte:" />
-							<h:inputText value="#{promocaoClientePorVolumeCompraBean.valorCorteFiltro}" styleClass="currency" onfocus="loadMasksMoneyJQuery();" converter="decimalConverter" />
+							<h:outputLabel value="#{msgs['retencaoclientes.lbl.datacorteultimacompra']}:" />
+							<p:calendar value="#{retencaoClienteBean.dataCorteFiltro}" pattern="dd/MM/yyyy" />
 						</h:panelGrid>
 						<h:panelGroup>
 							<div class="buttonFilter">
 								<p:commandButton id="btnLimpar" 
 									value="#{msgs.btn_limpar}" 
 									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
-									actionListener="#{promocaoClientePorVolumeCompraBean.limparCamposFiltro()}" 
+									actionListener="#{retencaoClienteBean.limparCamposFiltro()}" 
 									ajax="true" update="gridFiltro" />
 								<p:commandButton id="btnPesquisar" 
 									value="#{msgs.btn_pesquisar}" 
-									action="#{promocaoClientePorVolumeCompraBean.pesquisarFiltro()}" 
+									action="#{retencaoClienteBean.pesquisarFiltro()}" 
 									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
-									ajax="false" update="tableListVendas gridGraph messagesGlobal" oncomplete="loadMasksMoneyJQuery();"/>
+									ajax="true" update="tableListVendas  messagesGlobal" oncomplete="loadMasksMoneyJQuery();"/>
 							</div>
 						</h:panelGroup>	
 					</div>
@@ -78,10 +73,9 @@
 					<p:dataTable id="tableListVendas" 
 							style="margin-top:10px;"
 							var="result" rows="10" rowKey="#{result}" 
-							value="#{promocaoClientePorVolumeCompraBean.relatorio}" 
+							value="#{retencaoClienteBean.relatorio}" 
 							paginator="true" paginatorPosition="bottom" 
-							emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}."
-							sortBy="#{result.valorTotalVendas}" sortOrder="descending">
+							emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}." >
 						
 						<p:column headerText="#{msgs['generico.tabelacoluna.cliente']}" width="35%"	sortBy="#{result.cliente.dadosPessoa.nome}">
 							<h:outputText value="#{result.cliente.dadosPessoa.nome}" style="text-align: left;" />
@@ -90,47 +84,16 @@
 							<h:outputText value="#{result.cliente.dadosPessoa.numCelular}" style="text-align: center;" />
 						</p:column>
 						<p:column headerText="#{msgs['generico.tabelacoluna.datavenda']}" style="text-align: center;" width="10%" sortBy="#{result.dataUltimaVenda}">
-							<h:outputText value="#{result.dataUltimaVenda}" style="text-align: center;">
+							<h:outputText value="Sem vendas" style="text-align: center;" rendered="#{empty result.dataUltimaCompra}" />
+							<h:outputText value="#{result.dataUltimaCompra}" style="text-align: center;" rendered="#{not empty result.dataUltimaCompra}" >
 								<f:convertDateTime pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
-						<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: center;" width="10%" sortBy="#{result.valorTotalVendas}">
-							<h:outputText value="#{result.valorTotalVendas}" style="text-align: center;">
-								<f:converter converterId="decimalConverter"/> 
-							</h:outputText>
-						</p:column>
-						<p:column headerText="#{msgs['generico.tabelacoluna.qtdeprodutosvendidos']}" width="10%" style="text-align: center;" sortBy="#{result.quantidadeVendas}">
-							<h:outputText value="#{result.quantidadeVendas} Vendas" style="text-align: center;" />
-						</p:column>
 					</p:dataTable>
-					
-					
 				</div>
 			</div>
 		</div>
 		
-		<div class="widget">
-			<div class="widget-heading">
-				<a class="accordion-toggle in" data-toggle="collapse" href="#dash" data-original-title="">
-				<i class="icon-table"></i> #{msgs['promocaoclienteporvolumecompra.lbl.legend.relatoriopromocaoclienteporvolumecompra']}
-				<i class="icon-chevron-down pull-right"></i>
-				</a>
-			</div>
-			<div id="dash" class="widget-body collapse in">
-				<div class="row-fluid">
-					<div class="span6">
-						<div class="widget-inner">
-							<p:chart id="pie" type="pie" model="#{promocaoClientePorVolumeCompraBean.graficoPieMontanteAnualPorCliente}" rendered="#{not empty promocaoClientePorVolumeCompraBean.relatorio}" style="width:100%;height:300px" />
-						</div>
-					</div>
-					<div class="span6">
-						<div class="widget-inner">
-							<p:chart type="line" model="#{promocaoClientePorVolumeCompraBean.graficoLineMontanteAnualPorCliente}" style="height:300px;" rendered="#{not empty promocaoClientePorVolumeCompraBean.relatorioDetalhado}"/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 		
 	</ui:define>
 </ui:composition>

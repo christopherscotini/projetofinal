@@ -158,7 +158,7 @@
 				<h:outputLabel value="#{efetuarVendaBean.produtoSelecionadoAddCarrinho.codCatalogo.descProduto}" id="txtProdutoDesc" styleClass="HtmlOutputLabelResposta" />
 				
 				<h:outputLabel value="#{msgs['selecionarclientevenda.lbl.quantidade']}:" for="txtQuantidade" styleClass="HtmlOutputLabelResposta" />
-				<h:selectOneMenu id="txtQuantidade" value="#{efetuarVendaBean.produtoSelecionadoAddCarrinho.qtdeMovimentadoProduto}" style="width:40px;" converter="javax.faces.Integer">
+				<h:selectOneMenu id="txtQuantidade" value="#{efetuarVendaBean.produtoSelecionadoAddCarrinho.qtdeMovimentadoProduto}" style="width:50px;" converter="javax.faces.Integer">
 					<f:selectItems value="#{efetuarVendaBean.produtoSelecionadoAddCarrinho.quantidadeDisponivelEstoque}" var="_qtde" itemLabel="#{_qtde.label}" itemValue="#{_qtde.value}" />
 				</h:selectOneMenu>
 				

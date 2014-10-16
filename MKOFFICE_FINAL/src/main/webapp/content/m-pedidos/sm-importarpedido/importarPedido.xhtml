@@ -47,8 +47,8 @@
 								mode="advanced"
 								invalidFileMessage="Formato invalido, importe somente arquivos .htm ou .html"
 								dragDropSupport="true" update="@form"
-								onstart="statusDialog.show();"
-								oncomplete="statusDialog.hide();loadMasksJQuery();"
+								onstart="PF('statusDialog').show();"
+								oncomplete="PF('statusDialog').hide();loadMasksJQuery();"
 								sizeLimit="100000000" fileLimit="3" cancelLabel="Cancelar"
 								label="Selecionar Pedido" uploadLabel="Importar"
 								allowTypes="/(\.|\/)(htm)$/" />

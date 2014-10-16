@@ -2,6 +2,7 @@ package br.com.mkoffice.view.controller.menu.report;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -17,6 +18,7 @@ import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDTO;
+import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO;
 import br.com.mkoffice.exceptions.BusinessException;
 import br.com.mkoffice.view.controller.AbstractModelBean;
 import br.com.mkoffice.view.utils.FacesUtils;
@@ -30,8 +32,10 @@ public class PromocaoClientePorVolumeCompraBean extends AbstractModelBean{
 	private Integer comboAnosFiltroSelecionado;
 	private BigDecimal valorCorteFiltro;
 	private List<ReportPromocaoClientePorVolumeVendaDTO> relatorio;
+	private List<ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO> relatorioDetalhado;
 	
 	private PieChartModel graficoPieMontanteAnualPorCliente;
+	private LineChartModel graficoLineMontanteAnualPorCliente;
 	
 	@Override
 	public String iniciarTela() {
@@ -43,6 +47,7 @@ public class PromocaoClientePorVolumeCompraBean extends AbstractModelBean{
 	@Override
 	public void limparCamposFiltro() {
 		graficoPieMontanteAnualPorCliente = new PieChartModel();
+		graficoLineMontanteAnualPorCliente = new LineChartModel();
 		valorCorteFiltro = BigDecimal.ZERO;
 		comboAnosFiltroSelecionado = null;
 		relatorio = null;
@@ -51,8 +56,10 @@ public class PromocaoClientePorVolumeCompraBean extends AbstractModelBean{
 	@Override
 	public String pesquisarFiltro() {
 		try{
-			relatorio = reportBO.getReportPromocaoClientePorVolume(valorCorteFiltro, null);
+			relatorio = reportBO.getReportPromocaoClientePorVolume(valorCorteFiltro, comboAnosFiltroSelecionado);
+			relatorioDetalhado = reportBO.getReportPromocaoClientePorVolumeDetalhado(valorCorteFiltro, comboAnosFiltroSelecionado);
 			createGraficoPieMontanteAnualPorCliente();
+			createGraficoLine();
 		}catch(BusinessException b){
 			FacesUtils.addErrorMessage(b.getMessage());
 		}
@@ -62,12 +69,12 @@ public class PromocaoClientePorVolumeCompraBean extends AbstractModelBean{
 	
 	
 	private void createGraficoPieMontanteAnualPorCliente() {
-        
+		graficoPieMontanteAnualPorCliente = new PieChartModel();
         for (int i = 0; i < relatorio.size(); i++) {
         	graficoPieMontanteAnualPorCliente.set(relatorio.get(i).getCliente().getDadosPessoa().getNome(), relatorio.get(i).getValorTotalVendas());
 		}
         
-        graficoPieMontanteAnualPorCliente.setTitle(getMsgs("generico.lbl.grafico"));
+        graficoPieMontanteAnualPorCliente.setTitle(getMsgs("promocaoclienteporvolumecompra.lbl.titulografico.pie"));
         graficoPieMontanteAnualPorCliente.setLegendPosition("e");
         graficoPieMontanteAnualPorCliente.setFill(false);
         graficoPieMontanteAnualPorCliente.setShowDataLabels(true);
@@ -75,87 +82,41 @@ public class PromocaoClientePorVolumeCompraBean extends AbstractModelBean{
         
     }
 	
-	private LineChartModel lineModel2;
 	private void createGraficoLine(){
-		lineModel2 = initCategoryModel();
-        lineModel2.setTitle("Category Chart");
-        lineModel2.setLegendPosition("e");
-        lineModel2.setShowPointLabels(true);
-        lineModel2.getAxes().put(AxisType.X, new CategoryAxis("Years"));
-        yAxis = lineModel2.getAxis(AxisType.Y);
-        yAxis.setLabel("Births");
+		graficoLineMontanteAnualPorCliente = initCategoryModel();
+		graficoLineMontanteAnualPorCliente.setTitle(getMsgs("promocaoclienteporvolumecompra.lbl.titulografico.line"));
+		graficoLineMontanteAnualPorCliente.setLegendPosition("w");
+		graficoLineMontanteAnualPorCliente.setAnimate(true);
+		graficoLineMontanteAnualPorCliente.setShowPointLabels(true);
+		graficoLineMontanteAnualPorCliente.getAxes().put(AxisType.X, new CategoryAxis(getMsgs("promocaoclienteporvolumecompra.lbl.titulografico.line.eixoX")));
+        Axis yAxis = graficoLineMontanteAnualPorCliente.getAxis(AxisType.Y);
+        yAxis = graficoLineMontanteAnualPorCliente.getAxis(AxisType.Y);
+        yAxis.setLabel(getMsgs("promocaoclienteporvolumecompra.lbl.titulografico.line.eixoY"));
         yAxis.setMin(0);
-        yAxis.setMax(200);
 	}
-	
-	private void createLineModels() {
-        lineModel1 = initLinearModel();
-        lineModel1.setTitle("Linear Chart");
-        lineModel1.setLegendPosition("e");
-        Axis yAxis = lineModel1.getAxis(AxisType.Y);
-        yAxis.setMin(0);
-        yAxis.setMax(10);
-         
-        lineModel2 = initCategoryModel();
-        lineModel2.setTitle("Category Chart");
-        lineModel2.setLegendPosition("e");
-        lineModel2.setShowPointLabels(true);
-        lineModel2.getAxes().put(AxisType.X, new CategoryAxis("Years"));
-        yAxis = lineModel2.getAxis(AxisType.Y);
-        yAxis.setLabel("Births");
-        yAxis.setMin(0);
-        yAxis.setMax(200);
-    }
-     
-    private CartesianChartModel initLinearModel() {
-        CartesianChartModel model = new CartesianChartModel();
- 
-        LineChartSeries series1 = new LineChartSeries();
-        series1.setLabel("Series 1");
- 
-        series1.set(1, 2);
-        series1.set(2, 1);
-        series1.set(3, 3);
-        series1.set(4, 6);
-        series1.set(5, 8);
- 
-        LineChartSeries series2 = new LineChartSeries();
-        series2.setLabel("Series 2");
- 
-        series2.set(1, 6);
-        series2.set(2, 3);
-        series2.set(3, 2);
-        series2.set(4, 7);
-        series2.set(5, 9);
- 
-        model.addSeries(series1);
-        model.addSeries(series2);
-         
-        return model;
-    }
-     
     private LineChartModel initCategoryModel() {
         LineChartModel model = new LineChartModel();
- 
-        ChartSeries boys = new ChartSeries();
-        boys.setLabel("Boys");
-        boys.set("2004", 120);
-        boys.set("2005", 100);
-        boys.set("2006", 44);
-        boys.set("2007", 150);
-        boys.set("2008", 25);
- 
-        ChartSeries girls = new ChartSeries();
-        girls.setLabel("Girls");
-        girls.set("2004", 52);
-        girls.set("2005", 60);
-        girls.set("2006", 110);
-        girls.set("2007", 90);
-        girls.set("2008", 120);
- 
-        model.addSeries(boys);
-        model.addSeries(girls);
-         
+
+        for (int i = 0; i < relatorioDetalhado.size(); i++) {
+        	ChartSeries data = new ChartSeries();
+        	data.setLabel(relatorioDetalhado.get(i).getCliente().getDadosPessoa().getNome());
+        	data.set("JAN", relatorioDetalhado.get(i).getValorMontanteJan());
+        	data.set("FEV", relatorioDetalhado.get(i).getValorMontanteFev());
+        	data.set("MAR", relatorioDetalhado.get(i).getValorMontanteMar());
+        	data.set("ABR", relatorioDetalhado.get(i).getValorMontanteAbr());
+        	data.set("MAI", relatorioDetalhado.get(i).getValorMontanteMai());
+        	data.set("JUN", relatorioDetalhado.get(i).getValorMontanteJun());
+        	data.set("JUL", relatorioDetalhado.get(i).getValorMontanteJul());
+        	data.set("AGO", relatorioDetalhado.get(i).getValorMontanteAgo());
+        	data.set("SET", relatorioDetalhado.get(i).getValorMontanteSet());
+        	data.set("OUT", relatorioDetalhado.get(i).getValorMontanteOut());
+        	data.set("NOV", relatorioDetalhado.get(i).getValorMontanteNov());
+        	data.set("DEZ", relatorioDetalhado.get(i).getValorMontanteDez());
+			
+        	model.addSeries(data);
+		}
+        
+        
         return model;
     }
 	
@@ -164,9 +125,18 @@ public class PromocaoClientePorVolumeCompraBean extends AbstractModelBean{
 
 	public List<Integer> getComboAnosFiltro() {
 		comboAnosFiltro = new ArrayList<>();
-		comboAnosFiltro.add(2012);
-		comboAnosFiltro.add(2013);
-		comboAnosFiltro.add(2014);
+		Calendar dateInicial = Calendar.getInstance();
+		dateInicial.set(Calendar.YEAR, 2012);
+		dateInicial.set(Calendar.MONTH, 0);
+		dateInicial.set(Calendar.DAY_OF_MONTH, 1);
+		dateInicial.set(Calendar.HOUR_OF_DAY, 0);
+		Calendar dateFinal = Calendar.getInstance();
+		
+		while (dateInicial.before(dateFinal)) {
+			comboAnosFiltro.add(dateInicial.get(Calendar.YEAR));
+			dateInicial.set(Calendar.YEAR, comboAnosFiltro.get(comboAnosFiltro.size()-1)+1);
+		}	
+		
 		return comboAnosFiltro;
 	}
 
@@ -206,5 +176,24 @@ public class PromocaoClientePorVolumeCompraBean extends AbstractModelBean{
 	public void setComboAnosFiltroSelecionado(Integer comboAnosFiltroSelecionado) {
 		this.comboAnosFiltroSelecionado = comboAnosFiltroSelecionado;
 	}
+
+	public LineChartModel getGraficoLineMontanteAnualPorCliente() {
+		return graficoLineMontanteAnualPorCliente;
+	}
+
+	public void setGraficoLineMontanteAnualPorCliente(
+			LineChartModel graficoLineMontanteAnualPorCliente) {
+		this.graficoLineMontanteAnualPorCliente = graficoLineMontanteAnualPorCliente;
+	}
+
+	public List<ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO> getRelatorioDetalhado() {
+		return relatorioDetalhado;
+	}
+
+	public void setRelatorioDetalhado(List<ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO> relatorioDetalhado) {
+		this.relatorioDetalhado = relatorioDetalhado;
+	}
+	
+	
 
 }

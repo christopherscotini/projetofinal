@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.Timeout;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import br.com.mkoffice.model.ClienteEntity;
 import br.com.mkoffice.model.ParcelasEntity;
@@ -34,6 +37,7 @@ public class VendaEntity implements Serializable {
 	private Long codVenda;
 
 	@Column(name = "DT_VENDA", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataVenda;
 
 	@Column(name = "VL_VLR_VENDA", nullable = false)
