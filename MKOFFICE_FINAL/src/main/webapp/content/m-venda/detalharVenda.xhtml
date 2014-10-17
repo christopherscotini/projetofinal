@@ -149,7 +149,7 @@
 									 value="#{p.codSituacaoParcela.descSituacao}" 
 									 actionListener="#{historicoVendaBean.onclickBtnPagamentoParcela(p)}"
 									 update=":formDialog:infoPagamento"
-									 oncomplete="dialogPagamento.show();loadMasksJQuery();" /> 
+									 oncomplete="PF('dialogPagamento').show();loadMasksJQuery();" /> 
 					        </p:column>
 					</p:dataTable>
 				</div>
@@ -252,7 +252,7 @@
 				<p:commandButton
 					update=":formGlobal:tableParcelas" 
 					onclick="return validaDataPagamento(document.forms[2])"
-					oncomplete="dialogPagamento.hide();" styleClass="btn btn-zen-2 btn-toolbar"
+					oncomplete="PF('dialogPagamento').hide();" styleClass="btn btn-zen-2 btn-toolbar"
 					actionListener="#{historicoVendaBean.efetuarPagamentoParcela()}"
 					value="#{msgs['detalharvenda.lbl.btn_efetuarpagamento']}" />
 			</h:panelGrid>
