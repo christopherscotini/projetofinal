@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+	</ui:define>
+	
+	<ui:define name="jsImports">
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/cadastro/valid-form-cliente.js"></script>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>  
+		    <p:menuitem value="TelaInicial" action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false"/>  
+		    <p:menuitem value="Consultar Clientes" ajax="false" action="#{clienteBean.voltarInclusao()}"/>  
+		    <p:menuitem value="Alteração do Cliente" />  
+		</p:breadCrumb>  
+	</ui:define>
+<ui:param name="titulo" value="Alteração do Cliente" />
+
+<ui:define name="body_content">
+
+	<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
+			<h:panelGroup id="tabela-dados-cliente" >
+				<h:panelGrid cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;">
+				
+					<p:outputLabel value="Nome:" for="txtNome" styleClass="HtmlOutputLabelResposta" />
+					<p:inputText id="txtNome" value="#{clienteBean.vo.nome}" size="50" styleClass="input-5left" />
+					<p:outputLabel for="cboSexo" value="Sexo:" styleClass="HtmlOutputLabelResposta"/>
+					<p:selectOneMenu id="cboSexo" value="#{clienteBean.vo.sexo}" style="margin-left:5px;" >
+						<f:selectItem itemLabel=".:Selecione:."/>
+						<f:selectItems value="#{clienteBean.comboSexualidade}" var="_gender" itemLabel="#{_gender.label}" itemValue="#{_gender.label}" />
+					</p:selectOneMenu>
+					<p:outputLabel value="Data de Nascimento:" for="calendarDtNasc" styleClass="HtmlOutputLabelResposta"/>
+					<p:calendar id="calendarDtNasc" value="#{clienteBean.vo.dataNascimento}" size="10" pattern="dd/MM/yyyy" alt="date" style="margin-left:5px;" />
+					
+					<p:outputLabel value="CEP:" for="cep" styleClass="HtmlOutputLabelResposta" />
+					<h:panelGroup>
+						<p:inputText id="cep" value="#{clienteBean.vo.endereco.cep}" size="10" styleClass="input-5left" alt="cep" />
+						<p:commandLink  value="Preencher" style="margin-left:5px;" ajax="false" partialSubmit="true" process="cep" actionListener="#{clienteBean.buscarEnderecoViaWebService()}"/>
+					</h:panelGroup>
+						<h:panelGroup></h:panelGroup> 
+					<h:panelGroup></h:panelGroup>
+					<h:panelGroup></h:panelGroup>
+					<h:panelGroup></h:panelGroup>
+
+					<p:outputLabel value="Endereço:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
+					<p:inputText id="txtAddress" value="#{clienteBean.vo.endereco.logradouro}" size="50" styleClass="input-5left" />
+					<p:outputLabel value="N°:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
+					<p:inputText id="txtNum" value="#{clienteBean.vo.endereco.numero}" size="5" maxlength="7" onkeypress="return onlyNum(event)" styleClass="input-5left" />
+					<p:outputLabel value="Bairro:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
+					<p:inputText id="txtBairro" value="#{clienteBean.vo.endereco.bairro}" size="20" styleClass="input-5left" />
+				
+					<p:outputLabel value="Complemento:" for="txtComplemento" styleClass="HtmlOutputLabelResposta"/>
+					<p:inputText id="txtComplemento" value="#{clienteBean.vo.endereco.complemento}" size="50" styleClass="input-5left"/>
+					<p:outputLabel value="Cidade:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
+					<p:inputText id="txtCity" value="#{clienteBean.vo.endereco.cidade}" size="30" styleClass="input-5left" />
+					<p:outputLabel value="Estado:" for="txtState" styleClass="HtmlOutputLabelResposta"/>
+					<p:selectOneMenu id="txtState" value="#{clienteBean.vo.endereco.estado}" size="5" styleClass="" style="margin-left:5px;" >
+						<f:selectItems value="#{clienteBean.comboUf}" var="_uf" itemLabel="#{_uf.label}" itemValue="#{_uf.label}"/>
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Email:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
+					<p:inputText id="txtEmail" value="#{clienteBean.vo.email}" size="45" styleClass="input-5left" />
+					<p:outputLabel value="Telefone:" for="txtTelefone" styleClass="HtmlOutputLabelResposta"/>
+					<p:inputText id="txtTelefone" value="#{clienteBean.vo.numTelefoneString}" size="15" styleClass="input-5left" alt="phone"/>
+					<p:outputLabel value="Celular:" for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
+					<p:inputText id="txtTelefoneCel" value="#{clienteBean.vo.numCelularString}" size="15" styleClass="input-5left" alt="cell9"  />
+				
+				</h:panelGrid>
+			</h:panelGroup>
+		
+		<h:panelGroup>
+			<p:outputLabel value="Informações Adicionais:" for="txtAdicionais" />
+		</h:panelGroup>
+
+		<h:panelGroup>
+			<p:inputTextarea id="txtAdicionais" value="#{clienteBean.vo.infAdicional}" cols="163" rows="10" autoResize="false" style="margin-top:5px;"/>
+		</h:panelGroup>
+		
+	
+	<hr class="lin"/>
+	
+	<h:panelGroup>
+		<div class="buttonFooter">
+			<p:commandButton id="btnVoltar" value="Voltar" ajax="false" action="#{clienteBean.voltarInclusao}" immediate="true" style="float:left;''" />
+			<p:commandButton id="btnLimpar" value="Limpar" ajax="false" action="#{clienteBean.limparFormulario()}" immediate="true" style="margin-left:5px;"/>
+			<p:commandButton id="btnSalvar" value="Salvar" ajax="false" action="#{clienteBean.executeSave()}" style="margin-left:5px;" />
+		</div>
+	</h:panelGroup>
+</h:panelGrid>
+</ui:define>
+
+</ui:composition>
