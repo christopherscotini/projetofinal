@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+	</ui:define>
+	
+	<ui:define name="jsImports">
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['contasreceber.breadcumb.caixa']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['contasreceber.breadcumb.caixa.contasreceber']}</li>
+		</ul>
+	</ui:define>
+	
+	<ui:define name="body_content">
+		<div class="row-fluid">
+			<div class="widget span12">
+				<div class="widget-heading">
+					<a class="accordion-toggle in" data-toggle="collapse" href="#divFiltro">
+						<i class="icon-th"></i> #{msgs['promocaoclienteporvolumecompra.lbl.pesquisa']}
+						<i class="icon-chevron-down pull-right"></i>
+					</a>
+				</div>
+				<div id="divFiltro" class="widget-body collapse in">
+					<div class="widget-inner">
+						<h:panelGrid columns="3" id="gridFiltro" >
+							<h:panelGroup>
+								<h:outputLabel value="#{msgs['contasreceber.lbl.situacao']}:" />
+								<h:selectOneMenu value="#{contasReceberBean.situacaoPagamentoFiltro}">
+									<f:selectItem itemLabel="#{msgs['contasreceber.lbl.todos']}"/>
+									<f:selectItems value="#{contasReceberBean.comboSituacaoPagamento}" var="a" itemLabel="#{a.descSituacao}" itemValue="#{a}" />
+								</h:selectOneMenu>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputLabel value="#{msgs['contasreceber.lbl.datainicio']}:" />
+								<p:calendar value="#{contasReceberBean.dataInicioFiltro}" pattern="dd/MM/yyyy" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputLabel value="#{msgs['contasreceber.lbl.datafim']}:" />
+								<p:calendar value="#{contasReceberBean.dataFinalFiltro}" pattern="dd/MM/yyyy" />
+							</h:panelGroup>
+						</h:panelGrid>
+						<h:panelGroup>
+							<div class="buttonFilter">
+								<p:commandButton id="btnLimpar" 
+									value="#{msgs.btn_limpar}" 
+									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+									actionListener="#{contasReceberBean.limparCamposFiltro()}" 
+									ajax="true" update="gridFiltro" />
+								<p:commandButton id="btnPesquisar" 
+									value="#{msgs.btn_pesquisar}" 
+									action="#{contasReceberBean.pesquisarFiltro()}" 
+									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+									ajax="false" update="tableListVendas gridGraph messagesGlobal" oncomplete="loadMasksMoneyJQuery();"/>
+							</div>
+						</h:panelGroup>	
+					</div>
+				</div>
+			</div>
+		</div>	
+	
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
+				<i class="icon-table"></i> #{msgs['contasreceber.titulotabela.contasreceber']}</a>
+			</div>
+			<div id="si" class="widget-body collapse in">
+				<div class="widget-inner">
+					
+				</div>
+			</div>
+		</div>
+	</ui:define>
+	
+	
+	
+</ui:composition>
