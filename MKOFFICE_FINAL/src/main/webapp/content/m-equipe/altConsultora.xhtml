@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+	</ui:define>
+	
+	<ui:define name="jsImports">
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:breadCrumb>  
+		    <p:menuitem value="TelaInicial" action="#{consultoraBean.scheduleBean.telaInicial()}" ajax="false" immediate="true"/>  
+		    <p:menuitem value="Consultar Consultoras" ajax="false" action="#{consultoraBean.voltarInclusao()}" immediate="true"/>  
+		    <p:menuitem value="Alteraração de dados da Consultora" />  
+		</p:breadCrumb>  
+	</ui:define>
+	<ui:param name="titulo" value="Alteraração de dados da Consultora" />
+
+	<ui:define name="body_content">
+
+		<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
+			
+			<h:panelGroup id="tabela-dados-cliente" >
+				
+				<h:panelGrid cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;">
+					
+					<p:outputLabel value="Cód. Consultora:" for="txtCodConsultora" styleClass="HtmlOutputLabelResposta" />
+					<p:outputLabel id="txtCodConsultora" value="#{consultoraBean.consultora.codConsultora}" styleClass="HtmlOutputTextResposta" />
+					<h:panelGroup> </h:panelGroup>
+					<h:panelGroup> </h:panelGroup>
+					<h:panelGroup> </h:panelGroup>
+					<h:panelGroup> </h:panelGroup>
+					
+					<p:outputLabel value="Nome:" for="txtNome" styleClass="HtmlOutputLabelResposta" />
+					<p:inputText id="txtNome" value="#{consultoraBean.consultora.dadosPessoa.nome}" size="50" styleClass="input-5left" />
+					<p:outputLabel for="cboSexo" value="Sexo:" styleClass="HtmlOutputLabelResposta"/>
+					<p:selectOneMenu id="cboSexo" value="#{consultoraBean.consultora.dadosPessoa.sexo}" style="margin-left:5px;" >
+						<f:selectItem itemLabel=".:Selecione:."/>
+						<f:selectItems value="#{clienteBean.comboSexualidade}" var="_gender" itemLabel="#{_gender.label}" itemValue="#{_gender.label}" />
+					</p:selectOneMenu>
+					<p:outputLabel value="Data de Nascimento:" for="calendarDtNasc" styleClass="HtmlOutputLabelResposta"/>
+					<p:calendar id="calendarDtNasc" value="#{consultoraBean.consultora.dadosPessoa.dataNascimento}" size="10" pattern="dd/MM/yyyy" alt="date" style="margin-left:5px;" />
+	
+					<p:outputLabel value="CEP:" for="cep" styleClass="HtmlOutputLabelResposta" />
+					<h:panelGroup>
+						<p:inputText id="cep" value="#{consultoraBean.consultora.dadosPessoa.endereco.cep}" size="10" styleClass="input-5left" alt="cep" />
+						<p:commandLink  value="Preencher" style="margin-left:5px;" ajax="false" partialSubmit="true" process="cep" actionListener="#{consultoraBean.buscarEnderecoViaWebService()}"/>
+					</h:panelGroup>
+					<h:panelGroup></h:panelGroup> 
+					<h:panelGroup></h:panelGroup>
+					<h:panelGroup></h:panelGroup>
+					<h:panelGroup></h:panelGroup>
+					
+					<p:outputLabel value="Endereço:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
+					<p:inputText id="txtAddress" value="#{consultoraBean.consultora.dadosPessoa.endereco.logradouro}" size="50" styleClass="input-5left" />
+					<p:outputLabel value="N°:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
+					<p:inputText id="txtNum" value="#{consultoraBean.consultora.dadosPessoa.endereco.numero}" size="5" maxlength="7" onkeypress="return onlyNum(event)" styleClass="input-5left" />
+					<p:outputLabel value="Bairro:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
+					<p:inputText id="txtBairro" value="#{consultoraBean.consultora.dadosPessoa.endereco.bairro}" size="20" styleClass="input-5left" />
+					
+					<p:outputLabel value="Complemento:" for="txtComplemento" styleClass="HtmlOutputLabelResposta"/>
+					<p:inputText id="txtComplemento" value="#{consultoraBean.consultora.dadosPessoa.endereco.complemento}" size="50" styleClass="input-5left"/>
+					<p:outputLabel value="Cidade:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
+					<p:inputText id="txtCity" value="#{consultoraBean.consultora.dadosPessoa.endereco.cidade}" size="30" styleClass="input-5left" />
+					<p:outputLabel value="Estado:" for="txtState" styleClass="HtmlOutputLabelResposta"/>
+					<p:selectOneMenu id="txtState" value="#{consultoraBean.consultora.dadosPessoa.endereco.estado}" size="5" styleClass="" style="margin-left:5px;" >
+						<f:selectItem itemLabel=".:Selecione:."/>
+						<f:selectItems value="#{consultoraBean.comboUf}" var="_uf" itemLabel="#{_uf.label}" itemValue="#{_uf.label}"/>
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Email:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
+					<p:inputText id="txtEmail" value="#{consultoraBean.consultora.dadosPessoa.email}" size="45" styleClass="input-5left" />
+					<p:outputLabel value="Telefone:" for="txtTelefone" styleClass="HtmlOutputLabelResposta"/>
+					<p:inputText id="txtTelefone" value="#{consultoraBean.consultora.numTelefoneString}" size="15" styleClass="input-5left" alt="phone"/>
+					<p:outputLabel value="Celular:" for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
+					<p:inputText id="txtTelefoneCel" value="#{consultoraBean.consultora.numCelularString}" size="15" styleClass="input-5left" alt="cell9" />
+
+					<p:outputLabel value="Data de Início:" for="dtInicio" styleClass="HtmlOutputLabelResposta" />
+					<p:calendar id="dtInicio" value="#{consultoraBean.consultora.dataInicio}" size="10" pattern="dd/MM/yyyy" alt="date" style="margin-left:5px;"  />
+					<p:outputLabel value="Status:" for="txtStatus" styleClass="HtmlOutputLabelResposta" />
+					<p:selectOneMenu id="txtStatus" value="#{consultoraBean.consultora.status}" size="15" styleClass="" style="margin-left:5px;"  >
+						<f:selectItem itemLabel=".:Selecione:."/>
+						<f:selectItems value="#{consultoraBean.statusConsultora}" var="_st" itemLabel="#{_st.toString()}  " itemValue="#{_st}" />
+					</p:selectOneMenu>
+				
+				</h:panelGrid>
+			</h:panelGroup>
+			
+			<p:fieldset legend="INFORMAÇÕES ADICIONAIS" style="margin-top:20px;" toggleable="true">
+				<p:inputTextarea id="txtAdicionais" value="#{consultoraBean.consultora.infAdicional}" cols="163" rows="10" autoResize="true" style="margin-top:5px;"/>
+			</p:fieldset>
+			
+			<hr class="lin"/>
+	
+			<h:panelGroup>
+				<div class="buttonFooter">
+					<p:commandButton id="btnVoltar" value="Voltar" ajax="false" action="#{consultoraBean.voltarInclusao()}" style="float:left" immediate="true" />
+					<p:commandButton id="btnLimpar" value="Limpar" ajax="false"  action="#{consultoraBean.limparFormulario()}"  immediate="true" style="margin-left:5px;"/>
+					<p:commandButton id="btnSalvar" value="Salvar" ajax="false" action="#{consultoraBean.executeSave()}" style="margin-left:5px;" onclick="return confirm('Confirmar o cadastro de '#{consultoraBean.consultora.dadosPessoa.nome})" />
+				</div>
+			</h:panelGroup>
+			
+		</h:panelGrid>
+		
+	</ui:define>
+	
+</ui:composition>
