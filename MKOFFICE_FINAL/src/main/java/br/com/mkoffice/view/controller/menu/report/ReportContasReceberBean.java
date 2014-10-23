@@ -53,7 +53,6 @@ public class ReportContasReceberBean extends AbstractModelBean {
 
 	@Override
 	public String pesquisarFiltro() {
-		parcelasFiltradas = parcelaBO.gerarRelatorioContasReceber(dataInicial, dataFinal, getLoginBean().getUsuario().getId());
 		
 		return "";
 	}

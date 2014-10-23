@@ -11,5 +11,4 @@ public interface ParcelaBO extends ServiceModel<ParcelasDTO> {
 
 	public boolean efetuarPagamento(ParcelasDTO parcela);
 
-	public List<ContasReceberReportDTO> gerarRelatorioContasReceber(Date dataInicial, Date dataFinal, Long idUsuario);
 }

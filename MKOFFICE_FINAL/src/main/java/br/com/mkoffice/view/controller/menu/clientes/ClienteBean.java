@@ -104,7 +104,7 @@ public class ClienteBean extends AbstractModelBean implements Serializable{
 		vo = Adapter.dtoToVo(clienteSelecionado);
 		cadastrar = false;
 		
-		return TELA_ALTERAR;
+		return TELA_CADASTRAR;
 	}
 	
 	public void limparFormulario(){

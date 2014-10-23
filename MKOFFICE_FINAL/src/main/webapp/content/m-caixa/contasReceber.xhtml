@@ -10,6 +10,7 @@
 	</ui:define>
 	
 	<ui:define name="jsImports">
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/menu_venda/validate_venda.js"></script>
 	</ui:define>
 
 	<ui:define name="breadcrumb">
@@ -40,19 +41,19 @@
 						<h:panelGrid columns="3" id="gridFiltro" >
 							<h:panelGroup>
 								<h:outputLabel value="#{msgs['contasreceber.lbl.situacao']}:" />
-								<h:selectOneMenu value="#{contasReceberBean.situacaoPagamentoFiltro}">
-									<f:selectItem itemLabel="#{msgs['contasreceber.lbl.todos']}"/>
-									<f:selectItems value="#{contasReceberBean.comboSituacaoPagamento}" var="a" itemLabel="#{a.descSituacao}" itemValue="#{a}" />
+								<h:selectOneMenu value="#{contasReceberBean.situacaoPagamentoFiltro}" >
+									<f:selectItems value="#{contasReceberBean.comboSituacaoPagamento}" var="a" itemLabel="#{a.descSituacao}" itemValue="#{a.id}" />
 								</h:selectOneMenu>
 							</h:panelGroup>
 							<h:panelGroup>
 								<h:outputLabel value="#{msgs['contasreceber.lbl.datainicio']}:" />
-								<p:calendar value="#{contasReceberBean.dataInicioFiltro}" pattern="dd/MM/yyyy" />
+								<p:calendar id="calendarDataInicial" value="#{contasReceberBean.dataInicioFiltro}" pattern="dd/MM/yyyy" />
 							</h:panelGroup>
 							<h:panelGroup>
 								<h:outputLabel value="#{msgs['contasreceber.lbl.datafim']}:" />
-								<p:calendar value="#{contasReceberBean.dataFinalFiltro}" pattern="dd/MM/yyyy" />
+								<p:calendar id="calendarDataFinal" value="#{contasReceberBean.dataFinalFiltro}" pattern="dd/MM/yyyy" />
 							</h:panelGroup>
+							<h:messages showDetail="true" showSummary="true"/>
 						</h:panelGrid>
 						<h:panelGroup>
 							<div class="buttonFilter">
@@ -65,7 +66,8 @@
 									value="#{msgs.btn_pesquisar}" 
 									action="#{contasReceberBean.pesquisarFiltro()}" 
 									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
-									ajax="false" update="tableListVendas gridGraph messagesGlobal" oncomplete="loadMasksMoneyJQuery();"/>
+									ajax="false" update="tableParcelas messagesGlobal" 
+									onclick="return validarPesquisaComDatasPermiteAmbasNull(document.forms[1])"/>
 							</div>
 						</h:panelGroup>	
 					</div>
@@ -80,6 +82,41 @@
 			</div>
 			<div id="si" class="widget-body collapse in">
 				<div class="widget-inner">
+					<p:dataTable id="tableParcelas" 
+							style="margin-top:20px;"
+							var="result" 
+							rows="10" 
+							rowKey="#{result}" 
+							value="#{contasReceberBean.parcelas}" 
+							paginator="true"
+							paginatorPosition="bottom" 
+							emptyMessage="">
+
+						<p:column headerText="#dtVencimento" width="10%" sortBy="#{result.dtVencimento}">
+							<h:outputText value="#{result.dtVencimento}" style="text-align: center;" >
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#dtPagamento" width="10%" sortBy="#{result.dtPagamento}">
+							<h:outputText value="#{result.dtPagamento}" style="text-align: center;" >
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#valorPago" width="15%" sortBy="#{result.valorPago}">
+							<h:outputText value="#{result.valorPago}" style="text-align: right;" >
+								<f:converter converterId="decimalConverter" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#valorParcela" width="15%" sortBy="#{result.valorParcela}">
+							<h:outputText value="#{result.valorParcela}" style="text-align: right;" >
+								<f:converter converterId="decimalConverter" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#nomecliente" width="30%" sortBy="#{result.codVenda.cliente.dadosPessoa.nome}">
+							<h:outputText value="#{result.codVenda.cliente.dadosPessoa.nome}" style="text-align: right;" />
+						</p:column>
+						
+					</p:dataTable>
 					
 				</div>
 			</div>

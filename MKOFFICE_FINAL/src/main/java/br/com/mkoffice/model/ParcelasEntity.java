@@ -189,4 +189,14 @@ public class ParcelasEntity implements Serializable{
 		this.usuario = usuario;
 	}
 
+	@Override
+	public String toString() {
+		return "ParcelasEntity [id=" + id + ", codVenda=" + codVenda
+				+ ", codPedido=" + codPedido + ", dtVencimento=" + dtVencimento
+				+ ", descricao=" + descricao + ", numParcela=" + numParcela
+				+ ", valorParcela=" + valorParcela + ", codSituacaoParcela="
+				+ codSituacaoParcela + ", dtPagamento=" + dtPagamento
+				+ ", valorPago=" + valorPago + ", usuario=" + usuario + "]";
+	}
+	
 }

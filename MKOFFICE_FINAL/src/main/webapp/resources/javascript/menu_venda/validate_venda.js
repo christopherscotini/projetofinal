@@ -7,12 +7,12 @@ function validarValorDigitado(objName, vMin, vMax) {
 	if (objName.value < vMin) {
 		objName.value = 1;
 		objName.value.focus();
-		alert('A Quantidade digitada é menor do que a permitida. Digite um valor maior que zero.');
+		alert('A Quantidade digitada \u00E9 menor do que a permitida. Digite um valor maior que zero.');
 	}
 	if (objName.value > vMin) {
 		objName.focus();
 		objName.value = 1;
-		alert('A Quantidade digitada é maior do que a permitida. Digite um valor menor ou igual a '
+		alert('A Quantidade digitada \u00E9 maior do que a permitida. Digite um valor menor ou igual a '
 				+ vMax + '.');
 	}
 
@@ -41,6 +41,17 @@ function validarPesquisaHistoricoVendas(form) {
 	if (dtInicialIsEmpty && dtFinalIsEmpty) {
 		alert("Preencha a Data Inicial e a Data Final.");
 		return false;
+	}else{
+		return compara_datas(form);
+	}
+}
+
+function validarPesquisaComDatasPermiteAmbasNull(form) {
+	var dtInicialIsEmpty = isEmpty(document.getElementById(form.name+':calendarDataInicial_input').value);
+	var dtFinalIsEmpty = isEmpty(document.getElementById(form.name+':calendarDataFinal_input').value);
+	
+	if (dtInicialIsEmpty && dtFinalIsEmpty) {
+		return true;
 	}else{
 		return compara_datas(form);
 	}

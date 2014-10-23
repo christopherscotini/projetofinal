@@ -54,7 +54,7 @@ function verificarRadioListaSelecionadoExcluir(rdoName) {
 	if (objRadio != null) {
 		for (var i = 0; i < objRadio.length; i++) {
 			if (objRadio[i].checked) {
-				confirm('Confirma Exclus�o?');
+				confirm('Confirma Exclus\u00E3o?');
 				return true;
 			}
 		}
@@ -63,7 +63,7 @@ function verificarRadioListaSelecionadoExcluir(rdoName) {
 		return false;
 	}
 
-	return confirm('Confirma Exclus�o?');
+	return confirm('Confirma Exclus\u00E3o?');
 }
 
 function valida_cnpj(campo){
@@ -124,7 +124,7 @@ function valida_cnpj(campo){
 		}
 		 
 		if (result == false) {
-			alert("CNPJ inv�lido!");
+			alert("CNPJ inv\u00E9lido!");
 			campo.focus();
 		}
 	}
@@ -162,12 +162,12 @@ function validaData(campo) {
 					&& (!isNaN(mes) && (mes > 0) && (mes < 13))
 					&& (!isNaN(ano) && (ano.length == 4) && (ano >= 1900));
 			if (!resultado) {
-				alert("Data inv�lida.");
+				alert("Data inv\u00E9lida.");
 				campo.focus();
 				return false;
 			}
 		} else {
-			alert("Data inv�lida.");
+			alert("Data inv\u00E9lida.");
 			campo.focus();
 			return false;
 		}
@@ -176,7 +176,7 @@ function validaData(campo) {
 }
 
 function compara_datas(form){   
-    //Verifica se a data inicial � maior que a data final   
+    //Verifica se a data inicial \u00E9 maior que a data final   
     
 	var controle = 0;
     var data_inicial = document.getElementById(form.name +":calendarDataInicial_input").value;
@@ -232,7 +232,7 @@ function compara_datas(form){
     }
 
 	if(controle > 0){
-		alert('Data Final � maior que a Data Inicial');
+		alert('Data Final \u00E9 maior que a Data Inicial');
 		return false;
 	}
 	else{

@@ -15,6 +15,7 @@ import br.com.mkoffice.business.bo.CatalogoBO;
 import br.com.mkoffice.business.bo.CategoriaBO;
 import br.com.mkoffice.business.bo.ClienteBO;
 import br.com.mkoffice.business.bo.ConsultoraBO;
+import br.com.mkoffice.business.bo.ContasReceberBO;
 import br.com.mkoffice.business.bo.DefaultConfigurationBO;
 import br.com.mkoffice.business.bo.EstoqueBO;
 import br.com.mkoffice.business.bo.EstoqueHistoricoBO;
@@ -99,6 +100,9 @@ public abstract class AbstractModelBean {
 	 
 	@Inject
 	protected ReportBO reportBO = null;
+
+	@Inject
+	protected ContasReceberBO contasReceberBO = null;
 	
 	public static String getMsgs(String messageId) {    
 	        FacesContext facesContext = FacesContext.getCurrentInstance();    

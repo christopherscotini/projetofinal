@@ -1,6 +1,5 @@
 package br.com.mkoffice.business.bo.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -11,7 +10,6 @@ import br.com.mkoffice.business.exception.ValidationFormAbstractException;
 import br.com.mkoffice.dao.jpa.cadastro.ParcelaRepository;
 import br.com.mkoffice.dao.jpa.cadastro.SituacaoRepository;
 import br.com.mkoffice.dto.ParcelasDTO;
-import br.com.mkoffice.dto.reports.financeiro.ContasReceberReportDTO;
 import br.com.mkoffice.model.ParcelasEntity;
 import br.com.mkoffice.model.admin.SituacaoEntity;
 import br.com.mkoffice.utils.Adapter;
@@ -58,12 +56,6 @@ public class ParcelaBOImpl implements ParcelaBO {
 	@Override
 	public void validateForm(ParcelasDTO entidade) throws ValidationFormAbstractException {
 
-	}
-
-	@Override
-	public List<ContasReceberReportDTO> gerarRelatorioContasReceber(Date dataInicial, Date dataFinal, Long idUsuario) {
-		
-		return null;
 	}
 
 }
