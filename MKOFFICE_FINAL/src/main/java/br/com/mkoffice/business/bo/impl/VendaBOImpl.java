@@ -162,18 +162,24 @@ public class VendaBOImpl implements VendaBO {
 	    Calendar dtSegundaFase = new GregorianCalendar();  
 	    Calendar dtTerceiraFase = new GregorianCalendar();  
 	    
+	    
+	    
 	    TipoAgendaEntity tipoAgenda = tipoAgendaDao.findByFilter(TipoAgendaEnum.AGENDA_ACOMPANHAMENTO.toString()).get(0);
 	    
 	    dtInicio.setTime(dto.getDataVenda()); 
+	    dtPrimeiraFase.setTime(dto.getDataVenda());
+	    dtSegundaFase.setTime(dto.getDataVenda());
+	    dtTerceiraFase.setTime(dto.getDataVenda());
+	    
 	    dtPrimeiraFase.add(dtInicio.DAY_OF_MONTH, 3);  
-	    dtSegundaFase.add(dtInicio.DAY_OF_MONTH, 14);  
+	    dtSegundaFase.add(dtInicio.DAY_OF_MONTH, 15);  
 	    dtTerceiraFase.add(dtInicio.MONTH, 2);  
 		
 		AgendaEntity agenda = new AgendaEntity();
 		agenda.setUsuario(dto.getUsuario());
-		agenda.setDataInicio(dtInicio.getTime()); 
-		agenda.setDataFim(dtInicio.getTime()); 
-		agenda.setDescricao("1ï¿½ FA da cliente "+dto.getCliente().getDadosPessoa().getNome()); 
+		agenda.setDataInicio(dtPrimeiraFase.getTime()); 
+		agenda.setDataFim(dtPrimeiraFase.getTime()); 
+		agenda.setDescricao("1° FA da cliente "+dto.getCliente().getDadosPessoa().getNome()); 
 		agenda.setDiaTodo(true); 
 		agenda.setTipoAgenda(tipoAgenda);
 		
@@ -181,7 +187,7 @@ public class VendaBOImpl implements VendaBO {
 		agenda2.setUsuario(dto.getUsuario());
 		agenda2.setDataInicio(dtSegundaFase.getTime()); 
 		agenda2.setDataFim(dtSegundaFase.getTime()); 
-		agenda2.setDescricao("2ï¿½ FA da cliente "+dto.getCliente().getDadosPessoa().getNome()); 
+		agenda2.setDescricao("2° FA da cliente "+dto.getCliente().getDadosPessoa().getNome()); 
 		agenda2.setTipoAgenda(tipoAgenda);
 		agenda2.setDiaTodo(true); 
 
@@ -189,7 +195,7 @@ public class VendaBOImpl implements VendaBO {
 		agenda3.setUsuario(dto.getUsuario());
 		agenda3.setDataInicio(dtTerceiraFase.getTime()); 
 		agenda3.setDataFim(dtTerceiraFase.getTime()); 
-		agenda3.setDescricao("3ï¿½ FA da cliente "+dto.getCliente().getDadosPessoa().getNome()); 
+		agenda3.setDescricao("3° FA da cliente "+dto.getCliente().getDadosPessoa().getNome()); 
 		agenda3.setDiaTodo(true); 
 		agenda3.setTipoAgenda(tipoAgenda);
 		
