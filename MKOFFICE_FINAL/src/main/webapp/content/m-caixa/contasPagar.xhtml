@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+	</ui:define>
+	
+	<ui:define name="jsImports">
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/menu_pedido/validate_pedido.js"></script>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['contaspagar.breadcumb.caixa']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['contaspagar.breadcumb.caixa.contaspagar']}</li>
+		</ul>
+	</ui:define>
+	
+	<ui:define name="body_content">
+		<div class="row-fluid">
+			<div class="widget span12">
+				<div class="widget-heading">
+					<a class="accordion-toggle in" data-toggle="collapse" href="#divFiltro">
+						<i class="icon-th"></i> #{msgs['promocaoclienteporvolumecompra.lbl.pesquisa']}
+						<i class="icon-chevron-down pull-right"></i>
+					</a>
+				</div>
+				<div id="divFiltro" class="widget-body collapse in">
+					<div class="widget-inner">
+						<h:panelGrid columns="3" id="gridFiltro" >
+							<h:panelGroup>
+								<h:outputLabel value="#{msgs['contaspagar.lbl.situacao']}:" />
+								<h:selectOneMenu value="#{contasPagarBean.situacaoPagamentoFiltro}" >
+									<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}"/>
+									<f:selectItems value="#{contasPagarBean.comboSituacaoPagamento}" var="a" itemLabel="#{a.descSituacao}" itemValue="#{a.id}" />
+								</h:selectOneMenu>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputLabel value="#{msgs['contaspagar.lbl.datainicio']}:" />
+								<p:calendar id="calendarDataInicial" value="#{contasPagarBean.dataInicioFiltro}" pattern="dd/MM/yyyy" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputLabel value="#{msgs['contaspagar.lbl.datafim']}:" />
+								<p:calendar id="calendarDataFinal" value="#{contasPagarBean.dataFinalFiltro}" pattern="dd/MM/yyyy" />
+							</h:panelGroup>
+							<h:messages showDetail="true" showSummary="true"/>
+						</h:panelGrid>
+						<h:panelGroup>
+							<div class="buttonFilter">
+								<p:commandButton id="btnLimpar" 
+									value="#{msgs.btn_limpar}" 
+									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+									actionListener="#{contasPagarBean.limparCamposFiltro()}" 
+									ajax="true" update="gridFiltro" />
+								<p:commandButton id="btnPesquisar" 
+									value="#{msgs.btn_pesquisar}" 
+									action="#{contasPagarBean.pesquisarFiltro()}" 
+									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+									ajax="false" update="tableParcelas messagesGlobal" 
+									onclick="return validarPesquisaComDatasPermiteAmbasNull(document.forms[1])"/>
+							</div>
+						</h:panelGroup>	
+					</div>
+				</div>
+			</div>
+		</div>	
+	
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
+				<i class="icon-table"></i> #{msgs['contaspagar.titulotabela.contaspagar']}</a>
+			</div>
+			<div id="si" class="widget-body collapse in">
+				<div class="widget-inner">
+					<p:dataTable id="tableParcelas" 
+							style="margin-top:20px;"
+							var="result" 
+							rows="10" 
+							rowKey="#{result}" 
+							value="#{contasPagarBean.parcelas}" 
+							paginator="true"
+							paginatorPosition="bottom" 
+							emptyMessage="">
+
+						<p:column headerText="#{msgs['contaspagar.tabelacoluna.datavencimento']}" width="10%" sortBy="#{result.dtVencimento}">
+							<h:outputText value="#{result.dtVencimento}" style="text-align: center;" >
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs['contaspagar.tabelacoluna.datapagamento']}" width="10%" sortBy="#{result.dtPagamento}">
+							<h:outputText value="#{result.dtPagamento}" style="text-align: center;" >
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs['contaspagar.tabelacoluna.valorpago']}" width="15%" sortBy="#{result.valorPago}">
+							<h:outputText value="#{result.valorPago}" style="text-align: right;" >
+								<f:converter converterId="decimalConverter" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs['contaspagar.tabelacoluna.valorparcela']}" width="15%" sortBy="#{result.valorParcela}">
+							<h:outputText value="#{result.valorParcela}" style="text-align: right;" >
+								<f:converter converterId="decimalConverter" />
+							</h:outputText>
+						</p:column>
+						
+					</p:dataTable>
+					
+				</div>
+			</div>
+		</div>
+	</ui:define>
+	
+	
+	
+</ui:composition>
