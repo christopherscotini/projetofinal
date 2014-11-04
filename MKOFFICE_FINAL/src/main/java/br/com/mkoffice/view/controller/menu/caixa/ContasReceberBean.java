@@ -25,6 +25,7 @@ public class ContasReceberBean extends AbstractModelBean{
 	@Override
 	public String iniciarTela() {
 		limparCamposFiltro();
+		parcelas = new ArrayList<ParcelasEntity>();
 		
 		return TELA_CONTAS_RECEBER;
 	}

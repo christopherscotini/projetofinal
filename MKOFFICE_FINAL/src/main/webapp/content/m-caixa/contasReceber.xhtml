@@ -42,6 +42,7 @@
 							<h:panelGroup>
 								<h:outputLabel value="#{msgs['contasreceber.lbl.situacao']}:" />
 								<h:selectOneMenu value="#{contasReceberBean.situacaoPagamentoFiltro}" >
+									<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}"/>
 									<f:selectItems value="#{contasReceberBean.comboSituacaoPagamento}" var="a" itemLabel="#{a.descSituacao}" itemValue="#{a.id}" />
 								</h:selectOneMenu>
 							</h:panelGroup>
@@ -92,35 +93,52 @@
 							paginatorPosition="bottom" 
 							emptyMessage="">
 
-						<p:column headerText="#dtVencimento" width="10%" sortBy="#{result.dtVencimento}">
+						<p:column headerText="#{msgs['generico.tabelacoluna.cliente']}" width="30%" sortBy="#{result.codVenda.cliente.dadosPessoa.nome}">
+							<h:outputText value="#{result.codVenda.cliente.dadosPessoa.nome}" style="text-align: right;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.parcela']}" width="10%" sortBy="#{result.descricao}">
+							<h:outputText value="Parcela #{result.descricao}" style="text-align: right;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.datavencimento']}" width="10%" sortBy="#{result.dtVencimento}">
 							<h:outputText value="#{result.dtVencimento}" style="text-align: center;" >
 								<f:convertDateTime pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
-						<p:column headerText="#dtPagamento" width="10%" sortBy="#{result.dtPagamento}">
+						<p:column headerText="#{msgs['generico.tabelacoluna.valorparcela']}" width="15%" sortBy="#{result.valorParcela}">
+							<h:outputText value="R$ " style="text-align: left;" />
+							<h:outputText value="#{result.valorParcela}" style="text-align: left;" >
+								<f:converter converterId="decimalConverter" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.datapagamento']}" width="10%" sortBy="#{result.dtPagamento}">
 							<h:outputText value="#{result.dtPagamento}" style="text-align: center;" >
 								<f:convertDateTime pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
-						<p:column headerText="#valorPago" width="15%" sortBy="#{result.valorPago}">
+						<p:column headerText="#{msgs['generico.tabelacoluna.valorpago']}" width="15%" sortBy="#{result.valorPago}">
+							<h:outputText value="R$ " style="text-align: center;" />
 							<h:outputText value="#{result.valorPago}" style="text-align: right;" >
 								<f:converter converterId="decimalConverter" />
 							</h:outputText>
 						</p:column>
-						<p:column headerText="#valorParcela" width="15%" sortBy="#{result.valorParcela}">
-							<h:outputText value="#{result.valorParcela}" style="text-align: right;" >
-								<f:converter converterId="decimalConverter" />
-							</h:outputText>
-						</p:column>
-						<p:column headerText="#nomecliente" width="30%" sortBy="#{result.codVenda.cliente.dadosPessoa.nome}">
-							<h:outputText value="#{result.codVenda.cliente.dadosPessoa.nome}" style="text-align: right;" />
-						</p:column>
-						
+
 					</p:dataTable>
 					
 				</div>
 			</div>
 		</div>
+		
+		<hr class="lin"></hr>
+	
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" 
+					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
+					action="#{clienteBean.scheduleBean.telaInicial()}" immediate="true"  />
+				<div style="height: 10px;width: 10px;"></div>	
+			</div>
+		</h:panelGroup>
+		
 	</ui:define>
 	
 	

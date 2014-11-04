@@ -61,7 +61,7 @@ public class CatalogoDTO {
 
 
 	public String getDisponivelDesc() {
-		return disponivel == true ? "Em Estoque" : "Não Disponivel";
+		return disponivel == true ? "Em Estoque" : "Indisponivel";
 	}
 	public void setDisponivel(boolean disponivel) {
 		this.disponivel = disponivel;

@@ -60,7 +60,7 @@ public class VendaEntity implements Serializable {
 	@JoinColumn(name = "TB_FORMA_PAGTO_VENDA_FK")
 	private FormaPagamentoEntity formaDePagamento;
 	
-	@OneToMany(mappedBy = "codVenda", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "codVenda", fetch = FetchType.EAGER)
 	private List<ParcelasEntity> parcelas;
 
 	@OneToMany(mappedBy = "codVenda", fetch = FetchType.LAZY, cascade= CascadeType.PERSIST)

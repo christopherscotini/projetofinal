@@ -172,11 +172,11 @@
 		<h:panelGroup>
 			<div class="buttonFooter">
 				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" 
-					style="float:left;" styleClass="btn btn-zen-2 btn-toolbar"
+					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
 					action="#{importarPedidoBean.navegarVoltarDadosPedidoImportado()}" immediate="true"  />
 				<p:commandButton id="btn-avancar" 
 								 value="#{msgs.btn_avancar}" 
-								 ajax="false" styleClass="btn btn-zen-5 btn-toolbar"
+								 ajax="false" styleClass="btn btn-zen-2 btn-toolbar"
 								 action="#{importarPedidoBean.navegarConcluirPedidoImportado()}"
 								 onclick="return alertaRevisarPedido(document.forms[1])"
 								 disabled="#{empty importarPedidoBean.pedidoImportado.produtos}" />

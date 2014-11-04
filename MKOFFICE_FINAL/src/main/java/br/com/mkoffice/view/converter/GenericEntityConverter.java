@@ -22,7 +22,7 @@ public class GenericEntityConverter implements Converter{
         	Collection items =  (Collection) component.getChildren().get(0).getAttributes().get("value");
         	return findById(items, id);
         }catch(Exception ex){
-        	throw new ConverterException("Não foi possível aplicar conversão de item com valor ["+value+"] no componente ["+component.getId()+"]", ex);
+        	throw new ConverterException("Nao foi possivel aplicar conversï¿½o de item com valor ["+value+"] no componente ["+component.getId()+"]", ex);
         }
     }
 	
@@ -51,7 +51,7 @@ public class GenericEntityConverter implements Converter{
     		idField.setAccessible(true);
     		return (Long) idField.get(bean);
     	}catch(Exception ex){
-    		throw new RuntimeException("Não foi possível obter a propriedade 'id' do item",ex);
+    		throw new RuntimeException("Nao foi possivel obter a propriedade 'id' do item",ex);
     	}
     }
 	

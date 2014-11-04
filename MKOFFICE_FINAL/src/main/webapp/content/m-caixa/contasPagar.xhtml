@@ -93,23 +93,31 @@
 							paginatorPosition="bottom" 
 							emptyMessage="">
 
-						<p:column headerText="#{msgs['contaspagar.tabelacoluna.datavencimento']}" width="10%" sortBy="#{result.dtVencimento}">
+						<p:column headerText="#{msgs['generico.tabelacoluna.codigopedido']}" width="10%" sortBy="#{result.codPedido.codPedido}">
+							<h:outputText value="#{result.codPedido.codPedido}" style="text-align: left;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.parcela']}" width="10%" style="text-align: center;" sortBy="#{result.descricao}">
+							<h:outputText value="Parcela #{result.descricao}" style="text-align: center;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.datavencimento']}" width="10%" style="text-align: center;" sortBy="#{result.dtVencimento}">
 							<h:outputText value="#{result.dtVencimento}" style="text-align: center;" >
 								<f:convertDateTime pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
-						<p:column headerText="#{msgs['contaspagar.tabelacoluna.datapagamento']}" width="10%" sortBy="#{result.dtPagamento}">
+						<p:column headerText="#{msgs['generico.tabelacoluna.valorparcela']}" width="15%"  sortBy="#{result.valorParcela}">
+							<h:outputText value="R$ "  />
+							<h:outputText value="#{result.valorParcela}"  >
+								<f:converter converterId="decimalConverter" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.datapagamento']}" width="10%" style="text-align: center;" sortBy="#{result.dtPagamento}">
 							<h:outputText value="#{result.dtPagamento}" style="text-align: center;" >
 								<f:convertDateTime pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
-						<p:column headerText="#{msgs['contaspagar.tabelacoluna.valorpago']}" width="15%" sortBy="#{result.valorPago}">
-							<h:outputText value="#{result.valorPago}" style="text-align: right;" >
-								<f:converter converterId="decimalConverter" />
-							</h:outputText>
-						</p:column>
-						<p:column headerText="#{msgs['contaspagar.tabelacoluna.valorparcela']}" width="15%" sortBy="#{result.valorParcela}">
-							<h:outputText value="#{result.valorParcela}" style="text-align: right;" >
+						<p:column headerText="#{msgs['generico.tabelacoluna.valorpago']}" width="15%" sortBy="#{result.valorPago}">
+							<h:outputText value="R$ " />
+							<h:outputText value="#{result.valorPago}" >
 								<f:converter converterId="decimalConverter" />
 							</h:outputText>
 						</p:column>
@@ -119,6 +127,19 @@
 				</div>
 			</div>
 		</div>
+		
+		<hr class="lin"></hr>
+	
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" 
+					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
+					action="#{clienteBean.scheduleBean.telaInicial()}" immediate="true"  />
+				<div style="height: 10px;width: 10px;"></div>	
+			</div>
+		</h:panelGroup>
+		
+		
 	</ui:define>
 	
 	

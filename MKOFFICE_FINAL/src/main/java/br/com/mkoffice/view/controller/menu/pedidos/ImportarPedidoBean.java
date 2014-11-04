@@ -174,7 +174,7 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 			if(validarFormDadosPedido()){
 				pedidoBO.existePedido(pedidoDTO);
 			}else{
-				FacesUtils.addErrorMessage("Insira o número do pedido");
+				FacesUtils.addErrorMessage("Insira o nï¿½mero do pedido");
 				return "";
 			}
 		} catch (BusinessException b) {
@@ -205,9 +205,8 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 		pedidoDTO.setParcelas(prepararParcelas());
 		
 		try {
-			FacesUtils.addInfoMessage("Pedido Nï¿½ "
-					+ pedidoBO.efetuarPedidoImportado(pedidoDTO).getCodPedido()
-					+ " foi realizado com sucesso.");
+			FacesUtils.addInfoMessage(getMsgs("concluirpedido.lbl.bean_pedidonumero")+" "+pedidoBO.efetuarPedidoImportado(pedidoDTO).getCodPedido()
+					+ getMsgs("concluirpedido.lbl.bean_realizadosucesso")+".");
 		} catch (BusinessException b) {
 			FacesUtils.addErrorMessage(b.getMessage());
 			return "";
@@ -261,8 +260,8 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 		
 		for (int i = 0; i < pedidoDTO.getFormaDePagamento().getNumeroParcelas(); i++) {//personalizar a qtde de parcelas
 			
-			String lblAVista = "R$ "+DecimalUtils.format(BigDecimal.valueOf((preco/(i+1))))+" ï¿½ vista";
-			String lbl = (i+1)+"X sem juros R$ "+DecimalUtils.format(BigDecimal.valueOf((preco/(i+1))));
+			String lblAVista = "R$ "+DecimalUtils.format(BigDecimal.valueOf((preco/(i+1))))+" "+getMsgs("concluirpedido.lbl.bean_avista");
+			String lbl = (i+1)+getMsgs("concluirpedido.lbl.bean_semjuros")+" R$ "+DecimalUtils.format(BigDecimal.valueOf((preco/(i+1))));
 			
 			ParcelasEntity parcela = new ParcelasEntity(null, i== 0 ? lblAVista : lbl, (i+1), BigDecimal.valueOf((preco/(i+1))), null, null, i==0?BigDecimal.valueOf((preco/(i+1))):null);
 			
@@ -305,7 +304,7 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 		return TELA_IMPORTAR_PEDIDO;
 	}
 	
-	// aï¿½ï¿½es limpar algo da pagina
+	// acoes limpar algo da pagina
 	@Override
 	public void limparCamposFiltro() {
 		pedidoImportado = new DadosPedido();
@@ -319,7 +318,7 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 		pedidoImportado.setProdutos(null);
 	}
 	
-	// aï¿½ï¿½es retorno de pagina
+	// acoes retorno de pagina
 	public String navegarVoltarAddCategoriaPedido() {
 		faltouCategoria = false;
 		return TELA_IMPORTAR_PEDIDO;
