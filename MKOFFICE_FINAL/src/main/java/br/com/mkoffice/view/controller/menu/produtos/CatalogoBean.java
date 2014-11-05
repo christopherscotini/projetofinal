@@ -86,7 +86,7 @@ public class CatalogoBean extends AbstractModelBean implements Serializable{
 	public void executeSaveProdutoDialog(){
 		try{
 			catalogoBO.adicionarEntidade(produtoDto);
-			FacesUtils.addInfoMessage(MessagesConstants.INCLUSAO_SUCESSO+"\nC�d. Produto: "+produtoDto.getCodProduto()+"\nProduto: "+produtoDto.getDescProduto());
+			FacesUtils.addInfoMessage(MessagesConstants.INCLUSAO_SUCESSO+"\nCód. Produto: "+produtoDto.getCodProduto()+"\nProduto: "+produtoDto.getDescProduto());
 			carregarAllListaCatalogo();
 		}catch(BusinessException b){
 			FacesUtils.addErrorMessage(b.getMessage());

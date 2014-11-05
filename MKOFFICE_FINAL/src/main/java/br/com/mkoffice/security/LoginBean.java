@@ -1,6 +1,7 @@
 package br.com.mkoffice.security;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -11,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import br.com.mkoffice.business.bo.ReportBO;
 import br.com.mkoffice.business.bo.UserBO;
 import br.com.mkoffice.model.admin.UserEntity;
 import br.com.mkoffice.security.util.SessionContants;
@@ -28,11 +30,15 @@ public class LoginBean implements Serializable {
 
 	@Inject
 	private UserBO userBO = null;
+
+	@Inject
+	private ReportBO reportBO = null;
 	
 	public static final String LOGIN_FALHA = "login_falha";
 	public static final String SESSAO_INEXISTENTE = "sessao_invalida";
 	public static final String USUARIO_SESSAO = "usuario";
 	private boolean erro;
+	private BigDecimal saldo;
 
 	private UserEntity usuario;
 	private ControladorAcesso controladorAcesso;
@@ -43,6 +49,7 @@ public class LoginBean implements Serializable {
 	@PostConstruct
 	public void inicializar() {
 		usuario = new UserEntity();
+		saldo = null;
 		controladorAcesso = new ControladorAcesso();
 	}
 	
@@ -55,7 +62,7 @@ public class LoginBean implements Serializable {
 		if (usuarioSessao != null) {
 			sessao.setAttribute(SessionContants.SESSION_USER, null);
 		}
-		
+		saldo = null;
 		context.getExternalContext().invalidateSession();
 	}
 
@@ -78,6 +85,7 @@ public class LoginBean implements Serializable {
 					
 					erro = false;
 					usuario = usuarioLogado;
+					saldo = reportBO.getSaldoUsuario(usuario);
 					return PagesContants.PAGINA_INDEX;
 				}
 		}
@@ -101,7 +109,7 @@ public class LoginBean implements Serializable {
 		}
 		
 		context.getExternalContext().invalidateSession();
-		
+		saldo = null;
 		return PagesContants.PAGINA_LOGIN;
 	}
 
@@ -147,5 +155,13 @@ public class LoginBean implements Serializable {
 
 	public void setErro(boolean erro) {
 		this.erro = erro;
+	}
+
+	public BigDecimal getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(BigDecimal saldo) {
+		this.saldo = saldo;
 	}
 }

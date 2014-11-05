@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+	</ui:define>
+	
+	<ui:define name="jsImports">
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/menu_pedido/validate_pedido.js"></script>
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['dashboardcaixa.breadcumb.caixa']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['dashboardcaixa.breadcumb.caixa.visaogeral']}</li>
+		</ul>
+	</ui:define>
+	
+	<ui:define name="body_content">
+		<div class="row-fluid">
+			<div class="span8">
+			</div>
+			<div class="span4">
+				<h3 style="text-align: right;">SALDO: <u>R$<h:outputText value="#{loginBean.saldo}" ><f:converter converterId="decimalConverter" /></h:outputText></u></h3>
+			</div>
+		</div>
+		<div class="row-fluid">
+		<h:commandLink action="#" value="" >
+			<div class="widget span4">
+				<div class="widget-body collapse in">
+					<div class="widget-inner">
+						<div style="text-align: center;">
+							<h3><u>#{msgs['dashboardcaixa.lbl.faturamento']}</u></h3>
+							<h2>R$<h:outputText value="#{dashboardCaixaBean.dashboardCaixa.valorFaturamento}" ><f:converter converterId="decimalConverter" /></h:outputText></h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:commandLink>
+			<div class="widget span4">
+				<div class="widget-body collapse in">
+					<div class="widget-inner">
+						<div style="text-align: center;">
+							<h3><u>#{msgs['dashboardcaixa.lbl.numvendas']}</u></h3>
+							<h2><h:outputText value="#{dashboardCaixaBean.dashboardCaixa.numVendas}" /></h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="widget span4">
+				<div class="widget-body collapse in">
+					<div class="widget-inner">
+						<div style="text-align: center;">
+							<h3><u>#{msgs['dashboardcaixa.lbl.numprodutosvendidos']}</u></h3>
+							<H2><h:outputText value="#{dashboardCaixaBean.dashboardCaixa.numProdutosVendidos}" /></H2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="widget span6">
+				<div class="widget-body collapse in">
+					<div class="widget-inner">
+						<div style="text-align: center;">
+							<h3><u>#{msgs['dashboardcaixa.lbl.produtosmaisvendidos']}</u></h3>
+							<H2>545</H2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="widget span6">
+				<div class="widget-body collapse in">
+					<div class="widget-inner">
+						<div style="text-align: center;">
+							<h3><u>#{msgs['dashboardcaixa.lbl.clientemaiscomprou']} (R$)</u></h3>
+							<H2><h:outputText value="#{dashboardCaixaBean.dashboardCaixa.clienteMaisComprou.cliente.dadosPessoa.nome}" /></H2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<hr />
+	
+		<div class="row-fluid">
+			<div class="widget span4">
+				<div class="widget-body collapse in">
+					<div class="widget-inner">
+						<div style="text-align: center;">
+							<h3><u>#{msgs['dashboardcaixa.lbl.gastos']}</u></h3>
+							<h2>R$<h:outputText value="#{dashboardCaixaBean.dashboardCaixa.valorGasto}" ><f:converter converterId="decimalConverter" /></h:outputText></h2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="widget span4">
+				<div class="widget-body collapse in">
+					<div class="widget-inner">
+						<div style="text-align: center;">
+							<h3><u>#{msgs['dashboardcaixa.lbl.numpedidos']}</u></h3>
+							<H2><h:outputText value="#{dashboardCaixaBean.dashboardCaixa.numPedidos}" /></H2>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="widget span4">
+				<div class="widget-body collapse in">
+					<div class="widget-inner">
+						<div style="text-align: center;">
+							<h3><u>#{msgs['dashboardcaixa.lbl.numprodutoscompradps']}</u></h3>
+							<H2><h:outputText value="#{dashboardCaixaBean.dashboardCaixa.numProdutosComprados}" /></H2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="widget span6">
+				<div class="widget-body collapse in">
+					<div class="widget-inner">
+						<div style="text-align: center;">
+							<h3><u>#{msgs['dashboardcaixa.lbl.produtosmenosvendidos']}</u></h3>
+							<H2>545</H2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	</ui:define>
+	
+</ui:composition>
