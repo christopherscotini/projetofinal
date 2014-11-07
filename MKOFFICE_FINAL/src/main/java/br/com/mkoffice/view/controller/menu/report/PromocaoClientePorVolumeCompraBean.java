@@ -1,8 +1,6 @@
 package br.com.mkoffice.view.controller.menu.report;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -10,11 +8,9 @@ import javax.faces.bean.SessionScoped;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
-import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDTO;
@@ -28,7 +24,6 @@ import br.com.mkoffice.view.utils.FacesUtils;
 public class PromocaoClientePorVolumeCompraBean extends AbstractModelBean{
 
 	private final String TELA_RELATORIO_PROMOCAO_CLIENTE_VOLUME_DE_COMPRA = "/content/m-relatorios/cliente/promocaoClientePorVolumeCompra.xhtml";
-	private List<Integer>comboAnosFiltro;
 	private Integer comboAnosFiltroSelecionado;
 	private BigDecimal valorCorteFiltro;
 	private List<ReportPromocaoClientePorVolumeVendaDTO> relatorio;
@@ -56,8 +51,8 @@ public class PromocaoClientePorVolumeCompraBean extends AbstractModelBean{
 	@Override
 	public String pesquisarFiltro() {
 		try{
-			relatorio = reportBO.getReportPromocaoClientePorVolume(valorCorteFiltro, comboAnosFiltroSelecionado);
-			relatorioDetalhado = reportBO.getReportPromocaoClientePorVolumeDetalhado(valorCorteFiltro, comboAnosFiltroSelecionado);
+			relatorio = reportBO.getReportPromocaoClientePorVolume(valorCorteFiltro, comboAnosFiltroSelecionado, getLoginBean().getUsuario().getId());
+			relatorioDetalhado = reportBO.getReportPromocaoClientePorVolumeDetalhado(valorCorteFiltro, comboAnosFiltroSelecionado, getLoginBean().getUsuario().getId());
 			createGraficoPieMontanteAnualPorCliente();
 			createGraficoLine();
 		}catch(BusinessException b){
@@ -120,25 +115,10 @@ public class PromocaoClientePorVolumeCompraBean extends AbstractModelBean{
         return model;
     }
 	
-//	=============================== MÉTODOS GET E SET =============================== 
+//	=============================== Mï¿½TODOS GET E SET =============================== 
 	
 
-	public List<Integer> getComboAnosFiltro() {
-		comboAnosFiltro = new ArrayList<>();
-		Calendar dateInicial = Calendar.getInstance();
-		dateInicial.set(Calendar.YEAR, 2012);
-		dateInicial.set(Calendar.MONTH, 0);
-		dateInicial.set(Calendar.DAY_OF_MONTH, 1);
-		dateInicial.set(Calendar.HOUR_OF_DAY, 0);
-		Calendar dateFinal = Calendar.getInstance();
-		
-		while (dateInicial.before(dateFinal)) {
-			comboAnosFiltro.add(dateInicial.get(Calendar.YEAR));
-			dateInicial.set(Calendar.YEAR, comboAnosFiltro.get(comboAnosFiltro.size()-1)+1);
-		}	
-		
-		return comboAnosFiltro;
-	}
+
 
 	public PieChartModel getGraficoPieMontanteAnualPorCliente() {
 		return graficoPieMontanteAnualPorCliente;
@@ -147,10 +127,6 @@ public class PromocaoClientePorVolumeCompraBean extends AbstractModelBean{
 	public void setGraficoPieMontanteAnualPorCliente(
 			PieChartModel graficoPieMontanteAnualPorCliente) {
 		this.graficoPieMontanteAnualPorCliente = graficoPieMontanteAnualPorCliente;
-	}
-
-	public void setComboAnosFiltro(List<Integer> comboAnosFiltro) {
-		this.comboAnosFiltro = comboAnosFiltro;
 	}
 
 	public BigDecimal getValorCorteFiltro() {

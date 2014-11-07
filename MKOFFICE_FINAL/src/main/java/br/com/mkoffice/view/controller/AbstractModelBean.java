@@ -2,6 +2,7 @@ package br.com.mkoffice.view.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -136,6 +137,23 @@ public abstract class AbstractModelBean {
 				Arrays.asList(PercentDescontoEnum.values()));
 	}
 
+	public List<Integer> getComboAnosFiltro() {
+		List<Integer>comboAnosFiltro = new ArrayList<Integer>();
+		Calendar dateInicial = Calendar.getInstance();
+		dateInicial.set(Calendar.YEAR, 2012);
+		dateInicial.set(Calendar.MONTH, 0);
+		dateInicial.set(Calendar.DAY_OF_MONTH, 1);
+		dateInicial.set(Calendar.HOUR_OF_DAY, 0);
+		Calendar dateFinal = Calendar.getInstance();
+		
+		while (dateInicial.before(dateFinal)) {
+			comboAnosFiltro.add(dateInicial.get(Calendar.YEAR));
+			dateInicial.set(Calendar.YEAR, comboAnosFiltro.get(comboAnosFiltro.size()-1)+1);
+		}	
+		
+		return comboAnosFiltro;
+	}
+	
 	public List<FormaPagamentoEntity> getCboFormaPagamento() {
 		return formaPagamentoBO.listarTodos();
 	}

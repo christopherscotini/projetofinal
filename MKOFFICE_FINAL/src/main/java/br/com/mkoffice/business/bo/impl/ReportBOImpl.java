@@ -10,13 +10,14 @@ import javax.inject.Inject;
 
 import br.com.mkoffice.business.bo.ReportBO;
 import br.com.mkoffice.business.exception.ValidationFormRequiredException;
-import br.com.mkoffice.dao.jpa.cadastro.ReportDashboardCaixaRepository;
-import br.com.mkoffice.dao.jpa.cadastro.ReportPromocaoClienteVolumeVendaRepository;
-import br.com.mkoffice.dao.jpa.cadastro.ReportRetencaoClientesRepository;
+import br.com.mkoffice.dao.jpa.cadastro.ParcelaRepository;
+import br.com.mkoffice.dao.jpa.cadastro.ReportClienteRepository;
+import br.com.mkoffice.dao.jpa.cadastro.ReportEstoqueRepository;
 import br.com.mkoffice.dto.reports.DashboardCaixaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportRetencaoClientesDTO;
+import br.com.mkoffice.dto.reports.estoque.ReportProdutosMaisMenosVendidosDTO;
 import br.com.mkoffice.model.admin.UserEntity;
 import br.com.mkoffice.utils.MkmtsUtil;
 
@@ -24,25 +25,24 @@ import br.com.mkoffice.utils.MkmtsUtil;
 public class ReportBOImpl implements ReportBO{
 
 	@Inject
-	private ReportPromocaoClienteVolumeVendaRepository repoPromocaoClientePorVolumeVenda = null;
+	private ReportClienteRepository reportClienteRepository = null;
 
 	@Inject
-	private ReportRetencaoClientesRepository repoRetencaoClientesRepository = null;
+	private ParcelaRepository parcelaRepository = null;
 
 	@Inject
-	private ReportDashboardCaixaRepository repoDashboardCaixaRepository = null;
+	private ReportEstoqueRepository reportEstoqueRepository = null;
 	
 	@Override
-	public List<ReportPromocaoClientePorVolumeVendaDTO> getReportPromocaoClientePorVolume(BigDecimal valorCorte, Integer anoFiltro) {
+	public List<ReportPromocaoClientePorVolumeVendaDTO> getReportPromocaoClientePorVolume(BigDecimal valorCorte, Integer anoFiltro, Long idUsuario) {
 		validadeFiltroPromocaoClientePorVolumeVenda(valorCorte, anoFiltro);
-			
-		return repoPromocaoClientePorVolumeVenda.gerarRelatorioPorVolumeVenda(valorCorte, anoFiltro);
+		return reportClienteRepository.gerarRelatorioPorVolumeVenda(valorCorte, anoFiltro, idUsuario);
 	}
 
 	@Override
-	public List<ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO> getReportPromocaoClientePorVolumeDetalhado(BigDecimal valorCorteFiltro, Integer comboAnosFiltroSelecionado) {
+	public List<ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO> getReportPromocaoClientePorVolumeDetalhado(BigDecimal valorCorteFiltro, Integer comboAnosFiltroSelecionado, Long idUsuario) {
 		validadeFiltroPromocaoClientePorVolumeVenda(valorCorteFiltro, comboAnosFiltroSelecionado);
-		return repoPromocaoClientePorVolumeVenda.gerarRelatorioPorVolumeVendaDetalhado(valorCorteFiltro, comboAnosFiltroSelecionado);
+		return reportClienteRepository.gerarRelatorioPorVolumeVendaDetalhado(valorCorteFiltro, comboAnosFiltroSelecionado, idUsuario);
 	}
 
 	private void validadeFiltroPromocaoClientePorVolumeVenda(BigDecimal valorCorte, Integer anoFiltro) {
@@ -52,10 +52,10 @@ public class ReportBOImpl implements ReportBO{
 	}
 
 	@Override
-	public List<ReportRetencaoClientesDTO> getReportRetencaoClientes(Date dataCorteFiltro) {
+	public List<ReportRetencaoClientesDTO> getReportRetencaoClientes(Date dataCorteFiltro, Long idUsuario) {
 		validateReportRetencaoClientes(dataCorteFiltro);
 		
-		return repoRetencaoClientesRepository.gerarRelatorioRetencaoClientes(dataCorteFiltro);
+		return reportClienteRepository.gerarRelatorioRetencaoClientes(dataCorteFiltro, idUsuario);
 	}
 
 	private void validateReportRetencaoClientes(Date dataCorteFiltro){
@@ -65,20 +65,29 @@ public class ReportBOImpl implements ReportBO{
 	}
 
 	@Override
-	public DashboardCaixaDTO getReportVisaoGeralCaixa(Date ano) {
+	public DashboardCaixaDTO getReportVisaoGeralCaixa(Date ano, Long idUsuario) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(ano);
 		Integer anoFiltro = c.get(Calendar.YEAR);
-		return repoDashboardCaixaRepository.gerarRelatorioDashboardCaixa(anoFiltro);
+		return parcelaRepository.gerarRelatorioDashboardCaixa(anoFiltro, idUsuario);
 	}
 	
 	@Override
 	public BigDecimal getSaldoUsuario(UserEntity usuario) {
-		StringBuilder q1 = new StringBuilder("select sum(p.valorPago) from ParcelasEntity p where p.codVenda is not null");
-		StringBuilder q2 = new StringBuilder("select sum(p.valorPago) from ParcelasEntity p where p.codPedido is not null");
-		BigDecimal faturamento = new BigDecimal(repoDashboardCaixaRepository.getEntityManager().createQuery(q1.toString()).getSingleResult().toString());
-		BigDecimal gasto = new BigDecimal(repoDashboardCaixaRepository.getEntityManager().createQuery(q2.toString()).getSingleResult().toString());
+		StringBuilder q1 = new StringBuilder("select sum(p.valorPago) from ParcelasEntity p where p.codVenda is not null and p.usuario.id = :idUsuario");
+		StringBuilder q2 = new StringBuilder("select sum(p.valorPago) from ParcelasEntity p where p.codPedido is not null and p.usuario.id = :idUsuario");
+		BigDecimal faturamento = (BigDecimal) parcelaRepository.getEntityManager().createQuery(q1.toString()).setParameter("idUsuario", usuario.getId()).getSingleResult();
+		BigDecimal gasto = (BigDecimal) parcelaRepository.getEntityManager().createQuery(q2.toString()).setParameter("idUsuario", usuario.getId()).getSingleResult();
+		faturamento = faturamento==null?BigDecimal.ZERO:faturamento;
+		gasto = gasto==null?BigDecimal.ZERO:gasto;
 		return faturamento.subtract(gasto);
 	}
 	
+	@Override
+	public ReportProdutosMaisMenosVendidosDTO getReportProdutoMaisMenosVendidos(Integer anoFiltro, Long idUsuario) {
+		ReportProdutosMaisMenosVendidosDTO dto = new ReportProdutosMaisMenosVendidosDTO();
+		dto.setProdutosMaisVendidos(reportEstoqueRepository.gerarProdutosMaisVendidos(anoFiltro, idUsuario));
+		dto.setProdutosMenosVendidos(reportEstoqueRepository.gerarProdutosMenosVendidos(anoFiltro, idUsuario));
+		return dto;
+	}
 }

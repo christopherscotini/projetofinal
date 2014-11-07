@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+	</ui:define>
+	
+	<ui:define name="jsImports">
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['produtomaismenosvendidos.breadcumb.relatorio']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['produtomaismenosvendidos.breadcumb.relatorio.estoque']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['produtomaismenosvendidos.breadcumb.relatorio.estoque.produtomaismenosvendidos']}</li>
+		</ul>
+	</ui:define>
+	
+	
+	<ui:define name="body_content">
+		<div class="row-fluid">
+			<div class="widget span12">
+				<div class="widget-heading">
+					<a class="accordion-toggle in" data-toggle="collapse" href="#divFiltro">
+						<i class="icon-th"></i> #{msgs['produtomaismenosvendidos.lbl.pesquisa']}
+						<i class="icon-chevron-down pull-right"></i>
+					</a>
+				</div>
+				<div id="divFiltro" class="widget-body collapse in">
+					<div class="widget-inner">
+						<h:panelGrid columns="2" id="gridFiltro" >
+							<h:outputLabel value="#{msgs['produtomaismenosvendidos.lbl.anode']}:" />
+							<h:selectOneMenu value="#{reportProdutosMaisMenosVendidosBean.anoFiltro}">
+								<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}"/>
+								<f:selectItems value="#{reportProdutosMaisMenosVendidosBean.comboAnosFiltro}" var="a" itemLabel="#{a}" itemValue="#{a}"/>
+							</h:selectOneMenu>
+						</h:panelGrid>
+						<h:panelGroup>
+							<div class="buttonFilter">
+								<p:commandButton id="btnLimpar" 
+									value="#{msgs.btn_limpar}" 
+									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+									actionListener="#{reportProdutosMaisMenosVendidosBean.limparCamposFiltro()}" 
+									ajax="true" update="gridFiltro" />
+								<p:commandButton id="btnPesquisar" 
+									value="#{msgs.btn_pesquisar}" 
+									action="#{reportProdutosMaisMenosVendidosBean.pesquisarFiltro()}" 
+									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+									ajax="true" update="tableListMenosVendidos tableListMaisVendidos messagesGlobal" oncomplete="loadMasksMoneyJQuery();"/>
+							</div>
+						</h:panelGroup>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="widget span6">
+				<div class="widget-heading">
+					<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
+					<i class="icon-table"></i> #{msgs['produtomaismenosvendidos.titulotabela.produtosmaisvendidos']}
+					<i class="icon-chevron-down pull-right"></i>
+					</a>
+				</div>
+				<div id="si" class="widget-body collapse in">
+					<div class="widget-inner">
+						<p:dataTable id="tableListMaisVendidos" 
+								style="margin-top:10px;"
+								var="result" rows="10" rowKey="#{result}" 
+								value="#{reportProdutosMaisMenosVendidosBean.report.produtosMaisVendidos}" 
+								paginator="true" paginatorPosition="bottom" 
+								emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}." >
+							
+							<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" width="35%"	sortBy="#{result.produto.codProduto}">
+								<h:outputText value="#{result.produto.codProduto}" style="text-align: left;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="35%"	sortBy="#{result.produto.descProduto}">
+								<h:outputText value="#{result.produto.descProduto}" style="text-align: left;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.quantidade']}" style="text-align: center;" width="10%" sortBy="#{result.numProdutosMovimentados}">
+								<h:outputText value="#{result.numProdutosMovimentados}" style="text-align: center;" />
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+			<div class="widget span6">
+				<div class="widget-heading">
+					<a class="accordion-toggle in" data-toggle="collapse" href="#si2" data-original-title="">
+					<i class="icon-table"></i> #{msgs['produtomaismenosvendidos.titulotabela.produtosmenosvendidos']}
+					<i class="icon-chevron-down pull-right"></i>
+					</a>
+				</div>
+				<div id="si2" class="widget-body collapse in">
+					<div class="widget-inner">
+						<p:dataTable id="tableListMenosVendidos" 
+								style="margin-top:10px;"
+								var="result" rows="10" rowKey="#{result}" 
+								value="#{reportProdutosMaisMenosVendidosBean.report.produtosMenosVendidos}" 
+								paginator="true" paginatorPosition="bottom" 
+								emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}." >
+							
+							<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" width="35%"	sortBy="#{result.produto.codProduto}">
+								<h:outputText value="#{result.produto.codProduto}" style="text-align: left;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="35%"	sortBy="#{result.produto.descProduto}">
+								<h:outputText value="#{result.produto.descProduto}" style="text-align: left;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.quantidade']}" style="text-align: center;" width="10%" sortBy="#{result.numProdutosMovimentados}">
+								<h:outputText value="#{result.numProdutosMovimentados}" style="text-align: center;" />
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+	</ui:define>
+</ui:composition>

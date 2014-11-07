@@ -36,7 +36,7 @@ public class RetencaoClienteBean extends AbstractModelBean{
 	@Override
 	public String pesquisarFiltro() {
 		try{
-			relatorio = reportBO.getReportRetencaoClientes(dataCorteFiltro);
+			relatorio = reportBO.getReportRetencaoClientes(dataCorteFiltro, getLoginBean().getUsuario().getId());
 		}catch(BusinessException b){
 			FacesUtils.addErrorMessage(b.getMessage());
 		}

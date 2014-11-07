@@ -18,7 +18,7 @@ public class DashboardCaixaBean extends AbstractModelBean{
 	
 	@Override
 	public String iniciarTela() {
-		dashboardCaixa = reportBO.getReportVisaoGeralCaixa(new Date());
+		dashboardCaixa = reportBO.getReportVisaoGeralCaixa(new Date(), getLoginBean().getUsuario().getId());
 		return TELA_DASHBOARD_CAIXA;
 	}
 

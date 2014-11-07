@@ -11,15 +11,9 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.com.mkoffice.business.bo.ContasPagarBO;
-import br.com.mkoffice.business.bo.SituacaoBO;
-import br.com.mkoffice.business.exception.RegistroJaCadastradoException;
 import br.com.mkoffice.business.exception.ValidationFormAbstractException;
-import br.com.mkoffice.business.exception.ValidationFormRequiredException;
-import br.com.mkoffice.dao.jpa.cadastro.ContasPagarRepository;
-import br.com.mkoffice.dao.jpa.cadastro.ContasReceberRepository;
-import br.com.mkoffice.dao.jpa.cadastro.SituacaoRepository;
+import br.com.mkoffice.dao.jpa.cadastro.ParcelaRepository;
 import br.com.mkoffice.model.ParcelasEntity;
-import br.com.mkoffice.model.admin.SituacaoEntity;
 import br.com.mkoffice.utils.MkmtsUtil;
 
 /**
@@ -31,7 +25,7 @@ import br.com.mkoffice.utils.MkmtsUtil;
 public class ContasPagarBOImpl implements ContasPagarBO{
 
 	@Inject
-	private ContasPagarRepository dao = null;
+	private ParcelaRepository dao = null;
 
 	
 	@Override
@@ -39,15 +33,15 @@ public class ContasPagarBOImpl implements ContasPagarBO{
 		situacaoPagamento = MkmtsUtil.verificaLongNulo(situacaoPagamento == null ? 0 : Long.valueOf(situacaoPagamento));
 		
 		if(situacaoPagamento.equals(1L)){
-			return dao.filterByDateSituacaoPago(dataInicial, dataFinal);
+			return dao.filterByDateSituacaoPagoContasPagar(dataInicial, dataFinal);
 		}else{
 			if(situacaoPagamento.equals(2L)){
-				return dao.filterByDateSituacaoPendente(dataInicial, dataFinal);
+				return dao.filterByDateSituacaoPendenteContasPagar(dataInicial, dataFinal);
 			}else{
 				if(situacaoPagamento.equals(99L)){
 					List<ParcelasEntity>entities = new ArrayList<ParcelasEntity>();
-					entities.addAll(dao.filterByDateSituacaoPago(dataInicial, dataFinal));
-					entities.addAll(dao.filterByDateSituacaoPendente(dataInicial, dataFinal));
+					entities.addAll(dao.filterByDateSituacaoPagoContasPagar(dataInicial, dataFinal));
+					entities.addAll(dao.filterByDateSituacaoPendenteContasPagar(dataInicial, dataFinal));
 					return entities;
 				}
 			}

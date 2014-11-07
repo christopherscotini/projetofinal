@@ -12,8 +12,8 @@ import java.util.Locale;
 /**
  * @author ffranco
  * 
- *         Para alterar o gabarito para este comentário do tipo gerado vá para Janela&gt;Preferências&gt;Java&gt;Geração
- *         de Códigos&gt;Código e Comentários
+ *         Para alterar o gabarito para este comentï¿½rio do tipo gerado vï¿½ para Janela&gt;Preferï¿½ncias&gt;Java&gt;Geraï¿½ï¿½o
+ *         de Cï¿½digos&gt;Cï¿½digo e Comentï¿½rios
  */
 public final class MkmtsUtil {
 
@@ -28,7 +28,7 @@ public final class MkmtsUtil {
     static final String DECIMAL_PATTERN = "#,##0.00";
 
 	private MkmtsUtil() {
-		// Classes de utilidades não devem possuir um construtor público.
+		// Classes de utilidades nï¿½o devem possuir um construtor pï¿½blico.
 	}
 
 	public static String formatarCampoDeValorMonetario(Double valorini) {
@@ -110,7 +110,7 @@ public final class MkmtsUtil {
 	}
 
 	/*
-	 * completa um valor com zeros a Direita até completar o tamanho máximo
+	 * completa um valor com zeros a Direita atï¿½ completar o tamanho mï¿½ximo
 	 */
 	public static String preencherZerosADireita(String valor, int tamanhoMaximo) {
 		return insereCaracterADireita(valor, "0", tamanhoMaximo);
@@ -152,7 +152,7 @@ public final class MkmtsUtil {
 		return sb.toString();
 	}
 
-	/* Preenche o campo passado com 0 a esquerda até o tamanho maximo. */
+	/* Preenche o campo passado com 0 a esquerda atï¿½ o tamanho maximo. */
 	public static String preencherZerosAEsquerda(String campo, int tamanhoMaximo) {
 		StringBuilder sb = new StringBuilder(addZero(campo, tamanhoMaximo));
 		return sb.toString();
@@ -243,6 +243,14 @@ public final class MkmtsUtil {
 		}
 
 	}
+	
+	public static Integer castObjectToInteger(Object nro) {
+		if(nro != null){
+			return new Integer(nro.toString());
+		}
+		return null;
+	}
+	
 
 	/**
 	 * Converte Data para string no formato definido na mascara.
@@ -299,7 +307,7 @@ public final class MkmtsUtil {
 
 	}
 
-	// Retorna o mês da data em formato String
+	// Retorna o mï¿½s da data em formato String
 	public static String extrairMesData(Date data) {
 
 		Calendar date = Calendar.getInstance();
@@ -347,7 +355,7 @@ public final class MkmtsUtil {
 
 	}
 
-	// Retorna o mês da data em formato Integer
+	// Retorna o mï¿½s da data em formato Integer
 	public static Integer extrairMesDataInteiro(Date data) {
 
 		Calendar date = Calendar.getInstance();
@@ -380,16 +388,16 @@ public final class MkmtsUtil {
 	}
 
 	/**
-	 * Concatena dia(Integer), mês(Integer) e ano (Integer) e tem como retono uma String.
+	 * Concatena dia(Integer), mï¿½s(Integer) e ano (Integer) e tem como retono uma String.
 	 * 
 	 * @param dia
-	 *            Deve ser passado o dia em inteiro para a formatação
+	 *            Deve ser passado o dia em inteiro para a formataï¿½ï¿½o
 	 * @param mes
-	 *            Deve ser passado o mês em inteiro para a formatação
+	 *            Deve ser passado o mï¿½s em inteiro para a formataï¿½ï¿½o
 	 * @param ano
-	 *            Deve ser passado o ano em inteiro para a formatação
+	 *            Deve ser passado o ano em inteiro para a formataï¿½ï¿½o
 	 * @param formatacao
-	 *            Deve ser passado a String que será utilizada como formatação da data
+	 *            Deve ser passado a String que serï¿½ utilizada como formataï¿½ï¿½o da data
 	 * @return data formatada em String
 	 */
 
@@ -417,10 +425,10 @@ public final class MkmtsUtil {
 	}
 
 	/**
-	 * Concatena dia, mês e ano do formato DATE e converte para inteiro.
+	 * Concatena dia, mï¿½s e ano do formato DATE e converte para inteiro.
 	 * 
 	 * @param data
-	 *            Deve ser passado a data no formato DATE para a formatação.
+	 *            Deve ser passado a data no formato DATE para a formataï¿½ï¿½o.
 	 * @return data formatada em inteiro.
 	 */
 
@@ -442,7 +450,7 @@ public final class MkmtsUtil {
 	}
 
 	/**
-	 * Concatena dia, mês e ano do formato STRING e converte para inteiro.
+	 * Concatena dia, mï¿½s e ano do formato STRING e converte para inteiro.
 	 * 
 	 * @param data
 	 *            Deve ser passado uma data no formato String.
@@ -475,7 +483,7 @@ public final class MkmtsUtil {
 	 * @param data
 	 *            Deve ser passado uma data no formato Integer.
 	 * @param mascara
-	 *            Deve ser passado a máscara utilizada para formatar a data.
+	 *            Deve ser passado a mï¿½scara utilizada para formatar a data.
 	 * @return data formatada em String.
 	 */
 	public static String extrairDataFormatada(Integer data, String mascara) {
@@ -499,7 +507,7 @@ public final class MkmtsUtil {
 	 * @param hora
 	 *            Deve ser passada uma hora no formato Integer.
 	 * @param mascara
-	 *            Deve ser passado a máscara utilizada para formatar a hora, ex: ":".
+	 *            Deve ser passado a mï¿½scara utilizada para formatar a hora, ex: ":".
 	 * @return hora formatada em String.
 	 */
 	public static String extrairHoraFormatada(Integer hora, String mascara) {
@@ -516,10 +524,10 @@ public final class MkmtsUtil {
 	}
 
 	/**
-	 * Função criada para formatar o campo de Id de Documento para fins de apresentação visual.
+	 * Funï¿½ï¿½o criada para formatar o campo de Id de Documento para fins de apresentaï¿½ï¿½o visual.
 	 * 
 	 * @param idDocumento
-	 *            Deve ser uma String , seu tamanho deve ser 44 ou 47 caracteres e não pode haver formatação.
+	 *            Deve ser uma String , seu tamanho deve ser 44 ou 47 caracteres e nï¿½o pode haver formataï¿½ï¿½o.
 	 * @return idDocumento formatado em formato String.
 	 */
 

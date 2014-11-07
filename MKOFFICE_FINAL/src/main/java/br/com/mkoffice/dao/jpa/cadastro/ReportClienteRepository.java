@@ -12,20 +12,21 @@ import br.com.mkoffice.dto.reports.cliente.ReportRetencaoClientesDTO;
 import br.com.mkoffice.model.ClienteEntity;
 import br.com.mkoffice.utils.MkmtsUtil;
 
-public class ReportPromocaoClienteVolumeVendaRepository extends JpaGenericDao<ReportPromocaoClientePorVolumeVendaDTO, Long>{
+public class ReportClienteRepository extends JpaGenericDao<ReportPromocaoClientePorVolumeVendaDTO, Long>{
 	
-	public List<ReportPromocaoClientePorVolumeVendaDTO> gerarRelatorioPorVolumeVenda(BigDecimal valorCorte, Integer anoFiltro){
+	public List<ReportPromocaoClientePorVolumeVendaDTO> gerarRelatorioPorVolumeVenda(BigDecimal valorCorte, Integer anoFiltro, Long idUsuario){
 		List<ReportPromocaoClientePorVolumeVendaDTO> ret = new ArrayList<ReportPromocaoClientePorVolumeVendaDTO>();
 		StringBuilder query = new StringBuilder();
 		query.append("select c as CLIENTE, sum(v.valorVenda) as SOMA_VALOR_VENDAS, max(v.dataVenda) as DATA_ULTIMA_VENDA").append(" ");
 		query.append("from ClienteEntity c left outer join c.listaVendas v").append(" ");
 		query.append("WHERE v.dataVenda BETWEEN '"+anoFiltro+"/01/01 00:00:00' AND '"+anoFiltro+"/12/31 23:59:59'").append(" ");
+		query.append("AND c.usuario.id = :idUsuario").append(" ");
 		query.append("group by c.id").append(" "); 
 		query.append("having  sum(v.valorVenda) >= :valorCorte").append(" ");
 		query.append("order by v.valorVenda desc").append(" ");
 		
 		
-		List<Object[]> list = getEntityManager().createQuery(query.toString()).setParameter("valorCorte", valorCorte).getResultList();
+		List<Object[]> list = getEntityManager().createQuery(query.toString()).setParameter("valorCorte", valorCorte).setParameter("idUsuario", idUsuario).getResultList();
 		
 		for (int i = 0; i < list.size(); i++) {
 			list.get(i)[1] = list.get(i)[1]==null?BigDecimal.ZERO:list.get(i)[1];
@@ -42,7 +43,7 @@ public class ReportPromocaoClienteVolumeVendaRepository extends JpaGenericDao<Re
 	}
 
 
-	public List<ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO> gerarRelatorioPorVolumeVendaDetalhado(BigDecimal valorCorte, Integer anoFiltro){
+	public List<ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO> gerarRelatorioPorVolumeVendaDetalhado(BigDecimal valorCorte, Integer anoFiltro, Long idUsuario){
 		List<ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO> ret = new ArrayList<ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO>();
 
 		StringBuilder query = new StringBuilder();
@@ -62,11 +63,12 @@ public class ReportPromocaoClienteVolumeVendaRepository extends JpaGenericDao<Re
 		query.append("sum(case when month(v.dataVenda)=12 then v.valorVenda else 0 end) AS Dez").append(" ");
 		query.append("from VendaEntity v").append(" "); 
 		query.append("WHERE v.dataVenda BETWEEN '"+anoFiltro+"/01/01 00:00:00' AND '"+anoFiltro+"/12/31 23:59:59'").append(" ");
+		query.append("AND v.usuario.id = :idUsuario").append(" ");
 		query.append("group by v.cliente").append(" ");
 		query.append("having  sum(v.valorVenda) >= :valorCorte").append(" ");
 		query.append("order by v.valorVenda desc").append(" ");
 		
-		List<Object[]> list = getEntityManager().createQuery(query.toString()).setParameter("valorCorte", valorCorte) .getResultList();
+		List<Object[]> list = getEntityManager().createQuery(query.toString()).setParameter("valorCorte", valorCorte).setParameter("idUsuario", idUsuario).getResultList();
 		
 		for (int i = 0; i < list.size(); i++) {
 			ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO dto = new ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO();
@@ -87,6 +89,32 @@ public class ReportPromocaoClienteVolumeVendaRepository extends JpaGenericDao<Re
 			ret.add(dto);
 		}
 		
+		
+		return ret;
+	}
+	
+	public List<ReportRetencaoClientesDTO> gerarRelatorioRetencaoClientes(Date dataCorteFiltro, Long idUsuario){
+		List<ReportRetencaoClientesDTO> ret = new ArrayList<ReportRetencaoClientesDTO>();
+		StringBuilder query = new StringBuilder();
+		
+		query.append("select c as CLIENTE, max(v.dataVenda) as ULTIMA_VENDA").append(" ");
+		query.append("from ClienteEntity c left outer join c.listaVendas v").append(" ");
+		query.append("WHERE v.dataVenda <= '"+MkmtsUtil.converterDataString(dataCorteFiltro, "yyyy/MM/dd")+" 23:59:59'").append(" ");
+		query.append("AND c.usuario.id = :idUsuario").append(" "); 
+		query.append("group by c.id").append(" "); 
+		query.append("order by 2").append(" ");
+		
+		List<Object[]> list = getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList();
+		
+		for (int i = 0; i < list.size(); i++) {
+			
+			ReportRetencaoClientesDTO dto = new ReportRetencaoClientesDTO();
+			dto.setCliente((ClienteEntity) list.get(i)[0]);
+			if(list.get(i)[1]!=null){
+				dto.setDataUltimaCompra((Date) list.get(i)[1]);
+			}
+			ret.add(dto);
+		}
 		
 		return ret;
 	}

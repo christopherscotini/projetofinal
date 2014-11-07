@@ -8,17 +8,20 @@ import br.com.mkoffice.dto.reports.DashboardCaixaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportRetencaoClientesDTO;
+import br.com.mkoffice.dto.reports.estoque.ReportProdutosMaisMenosVendidosDTO;
 import br.com.mkoffice.model.admin.UserEntity;
 
 public interface ReportBO {
 
-	List<ReportPromocaoClientePorVolumeVendaDTO> getReportPromocaoClientePorVolume(BigDecimal valorCorte, Integer anoFiltro);
+	List<ReportPromocaoClientePorVolumeVendaDTO> getReportPromocaoClientePorVolume(BigDecimal valorCorte, Integer anoFiltro, Long idUsuario);
 
-	List<ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO> getReportPromocaoClientePorVolumeDetalhado(BigDecimal valorCorteFiltro, Integer comboAnosFiltroSelecionado);
+	List<ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO> getReportPromocaoClientePorVolumeDetalhado(BigDecimal valorCorteFiltro, Integer comboAnosFiltroSelecionado, Long idUsuario);
 
-	List<ReportRetencaoClientesDTO> getReportRetencaoClientes(Date dataCorteFiltro);
+	List<ReportRetencaoClientesDTO> getReportRetencaoClientes(Date dataCorteFiltro, Long idUsuario);
 	
-	DashboardCaixaDTO getReportVisaoGeralCaixa(Date ano);
+	DashboardCaixaDTO getReportVisaoGeralCaixa(Date ano, Long idUsuario);
 
 	BigDecimal getSaldoUsuario(UserEntity usuario);
+
+	ReportProdutosMaisMenosVendidosDTO getReportProdutoMaisMenosVendidos(Integer anoFiltro, Long idUsuario);
 }
