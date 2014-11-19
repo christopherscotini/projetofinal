@@ -15,7 +15,6 @@
 			<li class="dropdown-submenu">
             	<a href="#" class="dropdown-toggle" data-toggle="dropdown">#{msgs['menu.lbl.relatorio.cliente']}</a>
                 <ul class="dropdown-menu">
-					<li><h:commandLink action="#{promocaoClientePorVolumeCompraBean.iniciarTela()}" value="#{msgs['menu.lbl.relatorio.cliente.promocaovolumecompra']}" /> </li>
 					<li><h:commandLink action="#{retencaoClienteBean.iniciarTela()}" value="#{msgs['menu.lbl.relatorio.cliente.retencaoclientes']}" /> </li>
                 </ul>
             </li>
@@ -23,27 +22,24 @@
             	<a href="#" class="dropdown-toggle" data-toggle="dropdown">#{msgs['menu.lbl.relatorio.estoque']}</a>
                 <ul class="dropdown-menu">
 					<li><h:commandLink action="#{reportProdutosMaisMenosVendidosBean.iniciarTela()}" value="#{msgs['menu.lbl.relatorio.estoque.produtomaismenosvendidos']}" /> </li>
+					<li><h:commandLink action="#{movimentacaoEstoqueBean.iniciarTela()}" value="#{msgs['menu.lbl.relatorio.estoque.movimentacaoestoque']}" /> </li>
                 </ul>
             </li>
 			<li class="dropdown-submenu">
             	<a href="#" class="dropdown-toggle" data-toggle="dropdown">#{msgs['menu.lbl.relatorio.pedido']}</a>
                 <ul class="dropdown-menu">
-					<li><h:commandLink action="#{promocaoClientePorVolumeCompraBean.iniciarTela()}" value="#{msgs['menu.lbl.relatorio.cliente.promocaovolumecompra']}" /> </li>
-					<li><h:commandLink action="#{retencaoClienteBean.iniciarTela()}" value="#{msgs['menu.lbl.relatorio.cliente.retencaoclientes']}" /> </li>
+					<li><h:commandLink action="#{reportPedidoBean.iniciarTela()}" value="#{msgs['menu.lbl.relatorio.pedido.pedidosconsolidados']}" /> </li>
                 </ul>
             </li>
 			<li class="dropdown-submenu">
             	<a href="#" class="dropdown-toggle" data-toggle="dropdown">#{msgs['menu.lbl.relatorio.venda']}</a>
                 <ul class="dropdown-menu">
 					<li><h:commandLink action="#{promocaoClientePorVolumeCompraBean.iniciarTela()}" value="#{msgs['menu.lbl.relatorio.cliente.promocaovolumecompra']}" /> </li>
-					<li><h:commandLink action="#{retencaoClienteBean.iniciarTela()}" value="#{msgs['menu.lbl.relatorio.cliente.retencaoclientes']}" /> </li>
                 </ul>
             </li>
 			<li class="dropdown-submenu">
             	<a href="#" class="dropdown-toggle" data-toggle="dropdown">#{msgs['menu.lbl.relatorio.caixa']}</a>
                 <ul class="dropdown-menu">
-					<li><h:commandLink action="#{promocaoClientePorVolumeCompraBean.iniciarTela()}" value="#{msgs['menu.lbl.relatorio.cliente.promocaovolumecompra']}" /> </li>
-					<li><h:commandLink action="#{retencaoClienteBean.iniciarTela()}" value="#{msgs['menu.lbl.relatorio.cliente.retencaoclientes']}" /> </li>
                 </ul>
             </li>
 		</ul>

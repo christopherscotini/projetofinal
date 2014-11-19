@@ -400,9 +400,9 @@ public class Adapter {
 				, dto.getCodVenda()
 				, dto.getCodCatalogo()
 				, dto.isDisponivel()
-				, dto.getQtdeEmEstoque());
+				, dto.getQtdeEmEstoque()
+				, dto.getUsuario());
 		
-		entity.setUsuario(dto.getUsuario());
 		
 		return entity;
 	}

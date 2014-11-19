@@ -10,7 +10,9 @@ import java.util.List;
 import javax.persistence.NoResultException;
 
 import br.com.mkoffice.dao.jpa.JpaGenericDao;
+import br.com.mkoffice.dto.DataFilter;
 import br.com.mkoffice.dto.PedidoDTO;
+import br.com.mkoffice.dto.reports.pedido.ReportPedidoConsolidadoDTO;
 import br.com.mkoffice.model.pedido.PedidoEntity;
 import br.com.mkoffice.model.produto.CatalogoEntity;
 import br.com.mkoffice.utils.Adapter;
@@ -89,7 +91,7 @@ public class PedidoRepository extends JpaGenericDao<PedidoEntity, Long> {
 		}
 
 		if(null != dtInicio){
-			builder.append("AND p.dtPedido BETWEEN '"+MkmtsUtil.converterDataString(dtInicio, "dd/MM/yyyy")+" 00:00:00' AND '"+MkmtsUtil.converterDataString(dtFim, "yyyy-MM-dd")+" 23:59:59'");
+			builder.append("AND p.dtPedido BETWEEN '"+MkmtsUtil.converterDataString(dtInicio, "yyyy-MM-dd")+" 00:00:00' AND '"+MkmtsUtil.converterDataString(dtFim, "yyyy-MM-dd")+" 23:59:59'");
 			builder.append(_ESPACE);
 		}
 		builder.append("ORDER BY p.codPedido, p.dtPedido ASC");
@@ -104,6 +106,37 @@ public class PedidoRepository extends JpaGenericDao<PedidoEntity, Long> {
 		}
 		
 		return retorno;
+	}
+
+
+	public ReportPedidoConsolidadoDTO gerarRelatorioPedidoConsolidado(DataFilter dataFiltro, Long idUsuario) {
+		ReportPedidoConsolidadoDTO dto = new ReportPedidoConsolidadoDTO();
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT p FROM PedidoEntity p").append(" ");
+		query.append("WHERE p.usuario.id = :idUsuario").append(" ");
+
+		if(null != dataFiltro.getDataInicio()){
+			query.append("AND p.dtPedido BETWEEN '"+MkmtsUtil.converterDataString(dataFiltro.getDataInicio(), "yyyy-MM-dd")+" 00:00:00' AND '"+MkmtsUtil.converterDataString(dataFiltro.getDataFinal(), "yyyy-MM-dd")+" 23:59:59'").append(" ");
+		}
+		
+		
+		dto.setPedidos(getEntityManager().createQuery(query.toString())
+			.setParameter("idUsuario", idUsuario)
+			.getResultList());
+		
+		dto.setNumeroPedidos(dto.getPedidos().size());
+		
+		for (int i = 0; i < dto.getPedidos().size(); i++) {
+			for (int j = 0; j < dto.getPedidos().get(i).getPedidoProdutosList().size(); j++) {
+				dto.setNumeroProdutosPedidos(dto.getNumeroProdutosPedidos()+dto.getPedidos().get(i).getPedidoProdutosList().get(j).getQdteCompradaProduto());
+			}
+			dto.setValorTotalPagoPedidos(dto.getValorTotalPagoPedidos().add(dto.getPedidos().get(i).getValorTotalPago()));
+			dto.setValorTotalRevendaPedidos(dto.getValorTotalRevendaPedidos().add(dto.getPedidos().get(i).getValorTotalEmProdutos()));
+			dto.setNumeroTotalPontosPedidos(dto.getNumeroTotalPontosPedidos()+dto.getPedidos().get(i).getPontosTotalPedido());
+		}
+		
+		
+		return dto;
 	}
 	
 }

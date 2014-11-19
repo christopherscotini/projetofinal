@@ -76,7 +76,8 @@ public class EstoqueRepository extends JpaGenericDao<EstoqueEntity, Integer> imp
 				, produto.getCodVenda()
 				, produto.getCodCatalogo()
 				, Boolean.TRUE
-				, produto.getQtdeMovimentadoProduto());
+				, produto.getQtdeMovimentadoProduto()
+				, produto.getUsuario());
 		entity.setUsuario(produto.getUsuario());
 		insert(entity);
 				
@@ -186,7 +187,7 @@ public class EstoqueRepository extends JpaGenericDao<EstoqueEntity, Integer> imp
 			//setando false na fl_disponivel
 
 			for (int i = 0; i < produtos.size(); i++) {
-				getEntityManager().createQuery("UPDATE EstoqueEntity e SET e.disponivel = 0, e.qtdeEmEstoqueAtual = 0  WHERE e.id = "+produtos.get(i).getId()).executeUpdate();
+				getEntityManager().createQuery("UPDATE EstoqueEntity e SET e.disponivel = 0, e.qtdeEmEstoqueAtual = 0  WHERE e.id = "+produtos.get(i).getId()+" AND e.usuario.id = "+produto.getUsuario().getId()).executeUpdate();
 				EstoqueEntity entity = new EstoqueEntity(
 						null
 						, produtos.get(i).getQtdeMovimentadoProduto()
@@ -199,7 +200,8 @@ public class EstoqueRepository extends JpaGenericDao<EstoqueEntity, Integer> imp
 						, produto.getCodVenda()
 						, produto.getCodCatalogo()
 						, Boolean.FALSE
-						, new Integer(0));
+						, new Integer(0)
+						, produto.getUsuario());
 				entity.setUsuario(produto.getUsuario());
 				insert(entity);
 				
@@ -219,7 +221,7 @@ public class EstoqueRepository extends JpaGenericDao<EstoqueEntity, Integer> imp
 
 				if(produto.getQtdeMovimentadoProduto() - qtdeBaixadoDoEstoque >= estoqueMaisAntigo.getQtdeEmEstoqueAtual()){
 					qtdeBaixadoDoEstoque += estoqueMaisAntigo.getQtdeEmEstoqueAtual();
-					getEntityManager().createQuery("UPDATE EstoqueEntity e SET e.disponivel = 0, e.qtdeEmEstoqueAtual = 0  WHERE e.id = "+estoqueMaisAntigo.getId()).executeUpdate();
+					getEntityManager().createQuery("UPDATE EstoqueEntity e SET e.disponivel = 0, e.qtdeEmEstoqueAtual = 0  WHERE e.id = "+estoqueMaisAntigo.getId()+" AND e.usuario.id = "+produto.getUsuario().getId()).executeUpdate();
 					
 					insert(new EstoqueEntity(
 							null
@@ -233,15 +235,16 @@ public class EstoqueRepository extends JpaGenericDao<EstoqueEntity, Integer> imp
 							, produto.getCodVenda()
 							, produto.getCodCatalogo()
 							, Boolean.FALSE
-							, new Integer(0)));
+							, new Integer(0)
+							, produto.getUsuario()));
 					
 				}
 				else{
 					Integer qtdeEstoqueAtual = estoqueMaisAntigo.getQtdeEmEstoqueAtual() - (produto.getQtdeMovimentadoProduto() - qtdeBaixadoDoEstoque);
-					getEntityManager().createQuery("UPDATE EstoqueEntity e SET e.qtdeEmEstoqueAtual = :qtdeEmEstoqueAtual  WHERE e.id = "+estoqueMaisAntigo.getId()).setParameter("qtdeEmEstoqueAtual", qtdeEstoqueAtual).executeUpdate();
+					getEntityManager().createQuery("UPDATE EstoqueEntity e SET e.qtdeEmEstoqueAtual = :qtdeEmEstoqueAtual  WHERE e.id = "+estoqueMaisAntigo.getId()+ "AND e.usuario.id = "+produto.getUsuario().getId()).setParameter("qtdeEmEstoqueAtual", qtdeEstoqueAtual).executeUpdate();
 					insert(new EstoqueEntity(
 							null
-							, qtdeEstoqueAtual
+							, new Integer(produto.getQtdeMovimentadoProduto() - qtdeBaixadoDoEstoque)
 							, produto.getQtdeTotalPontosMovimentadoProduto()
 							, produto.getValorTotalMovimentadoProduto()
 							, produto.getTipoFluxoEstoque()
@@ -251,7 +254,8 @@ public class EstoqueRepository extends JpaGenericDao<EstoqueEntity, Integer> imp
 							, produto.getCodVenda()
 							, produto.getCodCatalogo()
 							, Boolean.FALSE
-							, new Integer(produto.getQtdeMovimentadoProduto() - qtdeBaixadoDoEstoque)));
+							, qtdeEstoqueAtual
+							, produto.getUsuario()));
 					
 					qtdeBaixadoDoEstoque+=(produto.getQtdeMovimentadoProduto() - qtdeBaixadoDoEstoque);
 				}

@@ -40,7 +40,7 @@ public class PedidoBOImpl implements PedidoBO {
 	@Override
 	public PedidoDTO efetuarPedido(PedidoDTO dto) {
 		if(dao.existsPedido(dto)){
-			throw new RegistroJaCadastradoException("Pedido N° "+dto.getCodPedido());
+			throw new RegistroJaCadastradoException("Pedido NÂ° "+dto.getCodPedido());
 		}
 		
 		for (int i = 0; i < dto.getListaProdutosComprados().size(); i++) {
@@ -100,7 +100,7 @@ public class PedidoBOImpl implements PedidoBO {
 	@Override
 	public boolean existePedido(PedidoDTO dto) {
 		if(dao.existsPedido(dto)){
-			throw new RegistroJaCadastradoException("Pedido N° "+dto.getCodPedido());
+			throw new RegistroJaCadastradoException("Pedido Nï¿½ "+dto.getCodPedido());
 		}
 		
 		return NAO_EXISTE_EM_ESTOQUE;

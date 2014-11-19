@@ -86,7 +86,7 @@ public class EstoqueEntity implements Serializable {
 			PercentDescontoEnum percDesconto, Date dtMovimentacao,
 			PedidoEntity codPedido, VendaEntity codVenda,
 			CatalogoEntity codCatalogo,
-			boolean disponivel, Integer qtdeEmEstoqueAtual) {
+			boolean disponivel, Integer qtdeEmEstoqueAtual, UserEntity user) {
 		super();
 		this.id = id;
 		this.qtdeMovimentadoProduto = qtdeMovimentadoProduto;
@@ -100,6 +100,7 @@ public class EstoqueEntity implements Serializable {
 		this.codCatalogo = codCatalogo;
 		this.disponivel = disponivel;
 		this.qtdeEmEstoqueAtual = qtdeEmEstoqueAtual;
+		this.usuario = user;
 	}
 
 
@@ -209,5 +210,23 @@ public class EstoqueEntity implements Serializable {
 	public void setUsuario(UserEntity usuario) {
 		this.usuario = usuario;
 	}
+
+	@Override
+	public String toString() {
+		return "EstoqueEntity [id=" + id + ", qtdeMovimentadoProduto="
+				+ qtdeMovimentadoProduto + ", qtdeEmEstoqueAtual="
+				+ qtdeEmEstoqueAtual + ", qtdeTotalPontosMovimentadoProduto="
+				+ qtdeTotalPontosMovimentadoProduto
+				+ ", valorTotalMovimentadoProduto="
+				+ valorTotalMovimentadoProduto + ", tipoFluxoEstoque="
+				+ tipoFluxoEstoque + ", percDesconto=" + percDesconto
+				+ ", dtMovimentacao=" + dtMovimentacao + ", disponivel="
+				+ disponivel + ", codPedido=" + codPedido + ", codVenda="
+				+ codVenda + ", codCatalogo=" + codCatalogo + ", usuario="
+				+ usuario + "]";
+	}
+	
+	
+	
 	
 }

@@ -93,6 +93,7 @@ public class VendaBOImpl implements VendaBO {
 			venda.getListaDeProdutos().get(i).setCodVenda(Adapter.dtoToEntity(venda));
 			venda.getListaDeProdutos().get(i).setTipoFluxoEstoque(fluxo);
 			venda.getListaDeProdutos().get(i).setPercentDesconto(PercentDescontoEnum._0);
+			venda.getListaDeProdutos().get(i).setUsuario(venda.getUsuario());
 		}
 		
 		for (int i = 0; i < retorno.getParcelas().size(); i++) {
@@ -179,7 +180,7 @@ public class VendaBOImpl implements VendaBO {
 		agenda.setUsuario(dto.getUsuario());
 		agenda.setDataInicio(dtPrimeiraFase.getTime()); 
 		agenda.setDataFim(dtPrimeiraFase.getTime()); 
-		agenda.setDescricao("1° FA da cliente "+dto.getCliente().getDadosPessoa().getNome()); 
+		agenda.setDescricao("1ï¿½ FA da cliente "+dto.getCliente().getDadosPessoa().getNome()); 
 		agenda.setDiaTodo(true); 
 		agenda.setTipoAgenda(tipoAgenda);
 		
@@ -187,7 +188,7 @@ public class VendaBOImpl implements VendaBO {
 		agenda2.setUsuario(dto.getUsuario());
 		agenda2.setDataInicio(dtSegundaFase.getTime()); 
 		agenda2.setDataFim(dtSegundaFase.getTime()); 
-		agenda2.setDescricao("2° FA da cliente "+dto.getCliente().getDadosPessoa().getNome()); 
+		agenda2.setDescricao("2ï¿½ FA da cliente "+dto.getCliente().getDadosPessoa().getNome()); 
 		agenda2.setTipoAgenda(tipoAgenda);
 		agenda2.setDiaTodo(true); 
 
@@ -195,7 +196,7 @@ public class VendaBOImpl implements VendaBO {
 		agenda3.setUsuario(dto.getUsuario());
 		agenda3.setDataInicio(dtTerceiraFase.getTime()); 
 		agenda3.setDataFim(dtTerceiraFase.getTime()); 
-		agenda3.setDescricao("3° FA da cliente "+dto.getCliente().getDadosPessoa().getNome()); 
+		agenda3.setDescricao("3ï¿½ FA da cliente "+dto.getCliente().getDadosPessoa().getNome()); 
 		agenda3.setDiaTodo(true); 
 		agenda3.setTipoAgenda(tipoAgenda);
 		

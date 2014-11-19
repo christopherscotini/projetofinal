@@ -11,14 +11,19 @@ import javax.inject.Inject;
 import br.com.mkoffice.business.bo.ReportBO;
 import br.com.mkoffice.business.exception.ValidationFormRequiredException;
 import br.com.mkoffice.dao.jpa.cadastro.ParcelaRepository;
+import br.com.mkoffice.dao.jpa.cadastro.PedidoRepository;
 import br.com.mkoffice.dao.jpa.cadastro.ReportClienteRepository;
 import br.com.mkoffice.dao.jpa.cadastro.ReportEstoqueRepository;
+import br.com.mkoffice.dto.DataFilter;
 import br.com.mkoffice.dto.reports.DashboardCaixaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportRetencaoClientesDTO;
 import br.com.mkoffice.dto.reports.estoque.ReportProdutosMaisMenosVendidosDTO;
+import br.com.mkoffice.dto.reports.pedido.ReportPedidoConsolidadoDTO;
+import br.com.mkoffice.model.admin.FluxoEstoqueEntity;
 import br.com.mkoffice.model.admin.UserEntity;
+import br.com.mkoffice.model.estoque.EstoqueEntity;
 import br.com.mkoffice.utils.MkmtsUtil;
 
 @Stateless
@@ -32,6 +37,10 @@ public class ReportBOImpl implements ReportBO{
 
 	@Inject
 	private ReportEstoqueRepository reportEstoqueRepository = null;
+	
+	@Inject
+	private PedidoRepository pedidoRepository = null;
+	
 	
 	@Override
 	public List<ReportPromocaoClientePorVolumeVendaDTO> getReportPromocaoClientePorVolume(BigDecimal valorCorte, Integer anoFiltro, Long idUsuario) {
@@ -90,4 +99,16 @@ public class ReportBOImpl implements ReportBO{
 		dto.setProdutosMenosVendidos(reportEstoqueRepository.gerarProdutosMenosVendidos(anoFiltro, idUsuario));
 		return dto;
 	}
+	
+	@Override
+	public List<EstoqueEntity> getReportMovimentacaoEstoque(Date dataInicioFiltro, Date dataFimFiltro, Long fluxoEstoqueFiltro, Long idUsuario) {
+		return reportEstoqueRepository.gerarMovimentacaoEstoque(dataInicioFiltro, dataFimFiltro, fluxoEstoqueFiltro, idUsuario);
+	}
+	
+	@Override
+	public ReportPedidoConsolidadoDTO getReportPedidoConsolidado(DataFilter dataFiltro, Long idUsuario) {
+		
+		return pedidoRepository.gerarRelatorioPedidoConsolidado(dataFiltro, idUsuario);
+	}
+	
 }

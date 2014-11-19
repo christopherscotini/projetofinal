@@ -158,8 +158,11 @@ public abstract class AbstractModelBean {
 		return formaPagamentoBO.listarTodos();
 	}
 
-	public List<FluxoEstoqueEntity> getTipoFluxoEstoque() {
-		return fluxoEstoqueBO.listarTodos();
+	public List<FluxoEstoqueEntity> getCboFluxoEstoque() {
+		List<FluxoEstoqueEntity> ret = new ArrayList<FluxoEstoqueEntity>();
+		ret.add(new FluxoEstoqueEntity(99999999L, getMsgs("generico.lbl_todos"), false));
+		ret.addAll(fluxoEstoqueBO.listarTodos());
+		return ret;
 	}
 
 	public List<SituacaoEntity> getSituacaoPagamentoTodos() {

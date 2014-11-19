@@ -4,12 +4,16 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import br.com.mkoffice.dto.DataFilter;
 import br.com.mkoffice.dto.reports.DashboardCaixaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportRetencaoClientesDTO;
 import br.com.mkoffice.dto.reports.estoque.ReportProdutosMaisMenosVendidosDTO;
+import br.com.mkoffice.dto.reports.pedido.ReportPedidoConsolidadoDTO;
+import br.com.mkoffice.model.admin.FluxoEstoqueEntity;
 import br.com.mkoffice.model.admin.UserEntity;
+import br.com.mkoffice.model.estoque.EstoqueEntity;
 
 public interface ReportBO {
 
@@ -24,4 +28,8 @@ public interface ReportBO {
 	BigDecimal getSaldoUsuario(UserEntity usuario);
 
 	ReportProdutosMaisMenosVendidosDTO getReportProdutoMaisMenosVendidos(Integer anoFiltro, Long idUsuario);
+
+	List<EstoqueEntity> getReportMovimentacaoEstoque(Date dataInicioFiltro, Date dataFimFiltro, Long fluxoEstoqueFiltro, Long idUsuario);
+
+	ReportPedidoConsolidadoDTO getReportPedidoConsolidado(DataFilter dataFiltro, Long idUsuario);
 }

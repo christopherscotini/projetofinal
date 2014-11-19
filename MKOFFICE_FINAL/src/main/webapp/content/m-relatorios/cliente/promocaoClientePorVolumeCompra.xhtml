@@ -136,5 +136,16 @@
 			</div>
 		</div>
 		
+		<hr class="lin"></hr>
+	
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" 
+					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
+					action="#{clienteBean.scheduleBean.telaInicial()}" immediate="true"  />
+				<div style="height: 10px;width: 10px;"></div>	
+			</div>
+		</h:panelGroup>
+		
 	</ui:define>
 </ui:composition>

@@ -6,6 +6,8 @@ import java.util.List;
 public interface Dao<T, ID extends Serializable> {
 
 	final String _ESPACE = " ";
+	final String _DATE_MASK = "yyyy-MM-dd";
+	
 
 	T insert(T entity);
 

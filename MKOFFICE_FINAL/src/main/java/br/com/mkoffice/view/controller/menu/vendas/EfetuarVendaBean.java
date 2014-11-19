@@ -112,7 +112,7 @@ public class EfetuarVendaBean extends AbstractModelBean implements Serializable{
 		clienteVo = Adapter.dtoToVo(clienteSelecionado);
 		venda = new VendaDTO();
 		venda.setUsuario(getLoginBean().getUsuario());
-		
+		filteredProdutcsSale = null;
 		listaProdutosSelecionadosParaVenda = null;
 		carregarListaProdutos();
 		
@@ -121,7 +121,7 @@ public class EfetuarVendaBean extends AbstractModelBean implements Serializable{
 		totalProdutosVenda = 0;
 
 		if(listaProdutosDisponiveis.isEmpty()){
-			FacesUtils.addInfoMessage("Nï¿½o hï¿½ produtos em estoque.");
+			FacesUtils.addInfoMessage("NÃ£o hÃ¡ produtos em estoque.");
 		}else{
 			for (int i = 0; i < listaProdutosDisponiveis.size(); i++) {
 				listaProdutosDisponiveis.get(i).setQtdeMovimentadoProduto(new Integer(0));
@@ -213,9 +213,9 @@ public class EfetuarVendaBean extends AbstractModelBean implements Serializable{
 		venda.setParcelas(prepararParcelas());
 		
 		try{
-			FacesUtils.addInfoMessage("Sua venda foi efetuada com sucesso.\nCód.Venda: "+vendaBO.efetuarVenda(venda).getCodVenda());
+			FacesUtils.addInfoMessage("Sua venda foi efetuada com sucesso.\nCÃ³d.Venda: "+vendaBO.efetuarVenda(venda).getCodVenda());
 		}catch(BusinessException be){
-			FacesUtils.addErrorMessage("Sua venda não foi efetuada com sucesso.");
+			FacesUtils.addErrorMessage("Sua venda nÃ£o foi efetuada com sucesso.");
 		}
 		
 		return iniciarTela();
@@ -230,8 +230,8 @@ public class EfetuarVendaBean extends AbstractModelBean implements Serializable{
 		
 		for (int i = 0; i < venda.getFormaPagamento().getNumeroParcelas(); i++) {//personalizar a qtde de parcelas
 			
-			String lblAVista = "R$ "+DecimalUtils.format(BigDecimal.valueOf((preco/(i+1))))+" à vista";
-			String lbl = (i+1)+"X sem juros R$ "+DecimalUtils.format(BigDecimal.valueOf((preco/(i+1))));
+			String lblAVista = "R$ "+DecimalUtils.format(BigDecimal.valueOf((preco/(i+1))))+" "+getMsgs("concluirpedido.lbl.bean_avista");
+			String lbl = (i+1)+getMsgs("concluirpedido.lbl.bean_semjuros")+" R$ "+DecimalUtils.format(BigDecimal.valueOf((preco/(i+1))));
 			
 			ParcelasEntity parcela = new ParcelasEntity(null, i== 0 ? lblAVista : lbl, (i+1), BigDecimal.valueOf((preco/(i+1))), null, null, i==0?BigDecimal.valueOf((preco/(i+1))):null);
 			

@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+	</ui:define>
+	
+	<ui:define name="jsImports">
+	</ui:define>
+
+
+	<ui:define name="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['movimentacaoestoque.breadcumb.relatorio']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['movimentacaoestoque.breadcumb.relatorio.estoque']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['movimentacaoestoque.breadcumb.relatorio.estoque.movimentacaoestoque']}</li>
+		</ul>
+	</ui:define>
+	
+	
+	<ui:define name="body_content">
+		<div class="row-fluid">
+			<div class="widget span12">
+				<div class="widget-heading">
+					<a class="accordion-toggle in" data-toggle="collapse" href="#divFiltro">
+						<i class="icon-th"></i> #{msgs['movimentacaoestoque.lbl.pesquisa']}
+						<i class="icon-chevron-down pull-right"></i>
+					</a>
+				</div>
+				<div id="divFiltro" class="widget-body collapse in">
+					<div class="widget-inner">
+						<h:panelGrid columns="3" id="gridFiltro" >
+							<h:panelGroup>
+								<h:outputLabel value="#{msgs['movimentacaoestoque.lbl.fluxoestoque']}:" />
+								<h:selectOneMenu value="#{movimentacaoEstoqueBean.fluxoEstoqueFiltro}" >
+									<f:selectItems value="#{movimentacaoEstoqueBean.cboFluxoEstoque}" var="a" itemLabel="#{a.descFluxoEstoque}" itemValue="#{a.id}" />
+								</h:selectOneMenu>
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputLabel value="#{msgs['movimentacaoestoque.lbl.datainicio']}:" />
+								<p:calendar id="calendarDataInicial" value="#{movimentacaoEstoqueBean.dataInicioFiltro}" pattern="dd/MM/yyyy" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputLabel value="#{msgs['movimentacaoestoque.lbl.datafim']}:" />
+								<p:calendar id="calendarDataFinal" value="#{movimentacaoEstoqueBean.dataFimFiltro}" pattern="dd/MM/yyyy" />
+							</h:panelGroup>
+							<h:messages showDetail="true" showSummary="true"/>
+						</h:panelGrid>
+						<h:panelGroup>
+							<div class="buttonFilter">
+								<p:commandButton id="btnLimpar" 
+									value="#{msgs.btn_limpar}" 
+									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+									actionListener="#{movimentacaoEstoqueBean.limparCamposFiltro()}" 
+									ajax="true" update="gridFiltro" />
+								<p:commandButton id="btnPesquisar" 
+									value="#{msgs.btn_pesquisar}" 
+									action="#{movimentacaoEstoqueBean.pesquisarFiltro()}" 
+									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+									ajax="false" update="tableListMovimentacaoEstoque messagesGlobal" 
+									onclick="return validarPesquisaComDatasPermiteAmbasNull(document.forms[1])"/>
+							</div>
+						</h:panelGroup>	
+					</div>
+				</div>
+			</div>
+		</div>	
+		
+		
+		<div class="row-fluid">
+			<div class="widget span12">
+				<div class="widget-heading">
+					<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
+					<i class="icon-table"></i> #{msgs['movimentacaoestoque.titulotabela.movimentacaoestoque']}
+					<i class="icon-chevron-down pull-right"></i>
+					</a>
+				</div>
+				<div id="si" class="widget-body collapse in">
+					<div class="widget-inner">
+						<p:dataTable id="tableListMovimentacaoEstoque" 
+								style="margin-top:10px;"
+								var="result" rows="10" rowKey="#{result}" 
+								value="#{movimentacaoEstoqueBean.report}" 
+								paginator="true" paginatorPosition="bottom" 
+								emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}." >
+							
+							<p:column headerText="#{msgs['generico.tabelacoluna.datamovimentacao']}" style="text-align: center;" width="8%" sortBy="#{result.dtMovimentacao}">
+								<h:outputText value="#{result.dtMovimentacao}" style="text-align: center;">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="35%"	sortBy="#{result.codCatalogo.descProduto}">
+								<h:outputText value="#{result.codCatalogo.descProduto}" style="text-align: left;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.qtdemovimentado']}" width="8%" style="text-align: center;" sortBy="#{result.qtdeMovimentadoProduto}">
+								<h:outputText value="#{result.qtdeMovimentadoProduto}" style="text-align: center;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.valorunitario']}" width="8%" style="text-align: center;" sortBy="#{result.valorVenda}">
+								<h:outputText value="R$" style="text-align: center;" />
+								<h:outputText value="#{result.codCatalogo.preco}" style="text-align: center;">
+									<f:converter converterId="decimalConverter" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.porcentagemdesconto']}" width="5%" style="text-align: center;" sortBy="#{result.valorVenda}">
+								<h:outputText value="#{result.percDesconto.descricao}" style="text-align: center;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.fluxoestoque']}" style="text-align: center;" width="10%" sortBy="#{result.tipoFluxoEstoque.descFluxoEstoque}">
+								<h:outputText value="#{result.tipoFluxoEstoque.descFluxoEstoque}" style="text-align: center;" />
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<hr class="lin"></hr>
+	
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" 
+					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
+					action="#{clienteBean.scheduleBean.telaInicial()}" immediate="true"  />
+				<div style="height: 10px;width: 10px;"></div>	
+			</div>
+		</h:panelGroup>
+		
+	
+	</ui:define>
+	
+</ui:composition>

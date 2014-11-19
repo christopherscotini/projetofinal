@@ -42,20 +42,26 @@
 				</div>
 				<div id="divFiltro" class="widget-body collapse in">
 					<div class="widget-inner">
-						<h:panelGrid columns="2" id="gridFiltro" >
-							<h:outputLabel value="#{msgs['retencaoclientes.lbl.datacorteultimacompra']}:" />
-							<p:calendar value="#{retencaoClienteBean.dataCorteFiltro}" pattern="dd/MM/yyyy" />
+						<h:panelGrid columns="3" id="gridFiltro" >
+							<h:panelGroup>
+								<h:outputLabel value="#{msgs['contaspagar.lbl.datainicio']}:" />
+								<p:calendar id="calendarDataInicial" value="#{reportPedidoBean.dataFiltro.dataInicio}" pattern="dd/MM/yyyy" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputLabel value="#{msgs['contaspagar.lbl.datafim']}:" />
+								<p:calendar id="calendarDataFinal" value="#{reportPedidoBean.dataFiltro.dataFinal}" pattern="dd/MM/yyyy" />
+							</h:panelGroup>
 						</h:panelGrid>
 						<h:panelGroup>
 							<div class="buttonFilter">
 								<p:commandButton id="btnLimpar" 
 									value="#{msgs.btn_limpar}" 
 									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
-									actionListener="#{retencaoClienteBean.limparCamposFiltro()}" 
+									actionListener="#{reportPedidoBean.limparCamposFiltro()}" 
 									ajax="true" update="gridFiltro" />
 								<p:commandButton id="btnPesquisar" 
 									value="#{msgs.btn_pesquisar}" 
-									action="#{retencaoClienteBean.pesquisarFiltro()}" 
+									action="#{reportPedidoBean.pesquisarFiltro()}" 
 									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
 									ajax="true" update="tableListVendas  messagesGlobal" oncomplete="loadMasksMoneyJQuery();"/>
 							</div>

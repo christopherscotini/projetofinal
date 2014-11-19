@@ -55,7 +55,7 @@
 						styleClass="dataTable"
 						filteredValue="#{efetuarVendaBean.filteredProdutcsSale}"
 						paginator="true" paginatorPosition="bottom"
-						emptyMessage="Não há produtos em estoque">
+						emptyMessage="NÃ£o hÃ¡ produtos em estoque">
 	
 						<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" style="text-align: center;" width="10%" 
 								filterBy="#{result.codCatalogo.codProduto}" filterMatchMode="contains"
@@ -88,6 +88,11 @@
 							<p:column headerText="#{msgs['generico.tabelacoluna.quantidade']}" style="text-align: center;" width="5%" 
 								sortBy="#{result.qtdeMovimentadoProduto}">
 								<h:outputText value="#{result.qtdeMovimentadoProduto}  " />
+							</p:column>
+							
+							<p:column headerText="#{msgs['generico.tabelacoluna.qtdeestoque']}" style="text-align: center;" width="5%" 
+								sortBy="#{result.qtdeEmEstoque}">
+								<h:outputText value="#{result.qtdeEmEstoque}  " />
 							</p:column>
 							
 							<p:column headerText="#{msgs['generico.tabelacoluna.carrinho']}" style="text-align: center;" width="5%" >
