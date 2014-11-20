@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -32,6 +31,8 @@ import br.com.mkoffice.view.utils.FacesUtils;
 @SessionScoped
 public class ScheduleController extends AbstractModelBean{
 
+	private final String TELA_AGENDA = "/content/m-agenda/agenda.xhtml";
+	
 	private ScheduleModel eventModel;
 	private List<AgendaDTO>listaAgenda;
 	private AgendaDTO agenda;
@@ -45,10 +46,9 @@ public class ScheduleController extends AbstractModelBean{
 	public String telaInicial() {
 		inicializar();
 		
-		return "/index";
+		return TELA_AGENDA;
 	}
     
-		@PostConstruct
 	 	private void inicializar(){
 	 		habilitaPainelDetalhe = false;
 	        agenda = new AgendaDTO();
