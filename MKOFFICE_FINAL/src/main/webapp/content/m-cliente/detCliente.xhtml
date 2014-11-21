@@ -15,7 +15,7 @@
 	<ui:define name="breadcrumb">
 		<ul class="breadcrumb">
 			<li class="active">
-				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
@@ -121,7 +121,7 @@
 									selection="#{clienteBean.vendaSelecionada}"
 									value="#{clienteBean.clienteSelecionado.listaVendas}" 
 									paginator="true" paginatorPosition="bottom" 
-									emptyMessage="Dados não encontrados."
+									emptyMessage="Dados nï¿½o encontrados."
 									sortBy="#{result.dataVenda}" sortOrder="descending">
 			
 								<p:ajax event="rowSelect" update="btnDetalhar btnLimpar" />

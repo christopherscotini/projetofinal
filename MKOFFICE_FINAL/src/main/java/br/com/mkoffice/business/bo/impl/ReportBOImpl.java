@@ -101,8 +101,8 @@ public class ReportBOImpl implements ReportBO{
 	}
 	
 	@Override
-	public List<EstoqueEntity> getReportMovimentacaoEstoque(Date dataInicioFiltro, Date dataFimFiltro, Long fluxoEstoqueFiltro, Long idUsuario) {
-		return reportEstoqueRepository.gerarMovimentacaoEstoque(dataInicioFiltro, dataFimFiltro, fluxoEstoqueFiltro, idUsuario);
+	public List<EstoqueEntity> getReportMovimentacaoEstoque(DataFilter dataFiltro, Long fluxoEstoqueFiltro, Long idUsuario) {
+		return reportEstoqueRepository.gerarMovimentacaoEstoque(dataFiltro, fluxoEstoqueFiltro, idUsuario);
 	}
 	
 	@Override

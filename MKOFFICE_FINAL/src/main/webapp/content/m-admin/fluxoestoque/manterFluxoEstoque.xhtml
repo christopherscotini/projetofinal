@@ -16,7 +16,7 @@
 	<ui:define name="breadcrumb">
 		<ul class="breadcrumb">
 			<li class="active">
-				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
@@ -108,7 +108,7 @@
 				style="margin-bottom:10px">
 
 				<p:outputLabel value="#{msgs['manterfluxoestoque.lbl.fluxo']}:" for="txtFluxoEstoque" styleClass="HtmlOutputLabelResposta" />
-				<p:inputText id="txtFluxoEstoque" value="#{fluxoEstoqueBean.fluxo.descFluxoEstoque}" size="50" styleClass="input-5left" required="true" requiredMessage="O campo PERMISSÃO é necessário." >
+				<p:inputText id="txtFluxoEstoque" value="#{fluxoEstoqueBean.fluxo.descFluxoEstoque}" size="50" styleClass="input-5left" required="true" requiredMessage="O campo PERMISSï¿½O ï¿½ necessï¿½rio." >
 					<f:validateLength minimum="3" for="txtFluxoEstoque"/>
 				</p:inputText>
 

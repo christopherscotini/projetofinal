@@ -11,7 +11,6 @@ import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDe
 import br.com.mkoffice.dto.reports.cliente.ReportRetencaoClientesDTO;
 import br.com.mkoffice.dto.reports.estoque.ReportProdutosMaisMenosVendidosDTO;
 import br.com.mkoffice.dto.reports.pedido.ReportPedidoConsolidadoDTO;
-import br.com.mkoffice.model.admin.FluxoEstoqueEntity;
 import br.com.mkoffice.model.admin.UserEntity;
 import br.com.mkoffice.model.estoque.EstoqueEntity;
 
@@ -29,7 +28,7 @@ public interface ReportBO {
 
 	ReportProdutosMaisMenosVendidosDTO getReportProdutoMaisMenosVendidos(Integer anoFiltro, Long idUsuario);
 
-	List<EstoqueEntity> getReportMovimentacaoEstoque(Date dataInicioFiltro, Date dataFimFiltro, Long fluxoEstoqueFiltro, Long idUsuario);
+	List<EstoqueEntity> getReportMovimentacaoEstoque(DataFilter dataFiltro, Long fluxoEstoqueFiltro, Long idUsuario);
 
 	ReportPedidoConsolidadoDTO getReportPedidoConsolidado(DataFilter dataFiltro, Long idUsuario);
 }

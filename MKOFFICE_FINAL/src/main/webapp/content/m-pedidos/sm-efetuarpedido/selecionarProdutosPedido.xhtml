@@ -15,7 +15,7 @@
 	<ui:define name="breadcrumb">
 		<ul class="breadcrumb">
 			<li class="active">
-				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
@@ -63,7 +63,7 @@
 								style="text-align: center;" />
 						</p:column>
 						
-						<p:column headerText="VALOR UNITÁRIO" style="text-align: center;" width="10%" 
+						<p:column headerText="VALOR UNITï¿½RIO" style="text-align: center;" width="10%" 
 							filterBy="#{result.produto.preco}" filterMatchMode="contains"
 							sortBy="#{result.produto.preco}">
 							<h:outputText value="R$" style="text-align: right;" />

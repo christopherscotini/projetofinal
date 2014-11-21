@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import br.com.mkoffice.business.exception.NoDataFoundException;
+import br.com.mkoffice.dto.DataFilter;
 import br.com.mkoffice.exceptions.BusinessException;
 import br.com.mkoffice.model.ParcelasEntity;
 import br.com.mkoffice.model.admin.SituacaoEntity;
@@ -21,8 +22,7 @@ public class ContasPagarBean extends AbstractModelBean{
 	private final String TELA_CONTAS_PAGAR = "/content/m-caixa/contasPagar.xhtml";
 	
 	private Long situacaoPagamentoFiltro;
-	private Date dataInicioFiltro;
-	private Date dataFinalFiltro;
+	private DataFilter dataFiltro;
 	private List<ParcelasEntity>parcelas;
 	
 	@Override
@@ -34,16 +34,15 @@ public class ContasPagarBean extends AbstractModelBean{
 
 	@Override
 	public void limparCamposFiltro() {
-		situacaoPagamentoFiltro = null;
-		dataInicioFiltro = null;
-		dataFinalFiltro = null;
+		situacaoPagamentoFiltro = getComboSituacaoPagamento().get(0).getId();
+		dataFiltro = new DataFilter(true);
 	}
 
 	@Override
 	public String pesquisarFiltro() {
 		
 		try{
-			parcelas = contasPagarBO.filtrar(dataInicioFiltro, dataFinalFiltro, situacaoPagamentoFiltro);
+			parcelas = contasPagarBO.filtrar(dataFiltro, situacaoPagamentoFiltro);
 		}catch(NoDataFoundException ndf){
 			parcelas = null;
 			FacesUtils.addErrorMessage(ndf.getMessage());
@@ -58,8 +57,9 @@ public class ContasPagarBean extends AbstractModelBean{
 		SituacaoEntity todos = new SituacaoEntity();
 		todos.setId(99L);
 		todos.setDescSituacao(getMsgs("contaspagar.lbl.todos"));;
-		List<SituacaoEntity> ret = situacaoBO.listarTodos();
+		List<SituacaoEntity> ret = new ArrayList<SituacaoEntity>();
 		ret.add(todos);
+		ret.addAll(situacaoBO.listarTodos());
 		return ret;
 	}
 
@@ -71,28 +71,20 @@ public class ContasPagarBean extends AbstractModelBean{
 		this.situacaoPagamentoFiltro = situacaoPagamentoFiltro;
 	}
 
-	public Date getDataInicioFiltro() {
-		return dataInicioFiltro;
-	}
-
-	public void setDataInicioFiltro(Date dataInicioFiltro) {
-		this.dataInicioFiltro = dataInicioFiltro;
-	}
-
-	public Date getDataFinalFiltro() {
-		return dataFinalFiltro;
-	}
-
-	public void setDataFinalFiltro(Date dataFinalFiltro) {
-		this.dataFinalFiltro = dataFinalFiltro;
-	}
-
 	public List<ParcelasEntity> getParcelas() {
 		return parcelas;
 	}
 
 	public void setParcelas(List<ParcelasEntity> parcelas) {
 		this.parcelas = parcelas;
+	}
+
+	public DataFilter getDataFiltro() {
+		return dataFiltro;
+	}
+
+	public void setDataFiltro(DataFilter dataFiltro) {
+		this.dataFiltro = dataFiltro;
 	}
 
 }

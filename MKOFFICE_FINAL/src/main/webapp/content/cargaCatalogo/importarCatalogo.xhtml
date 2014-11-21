@@ -18,7 +18,7 @@
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
 			<p:menuitem value="TelaInicial"
-				action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false" />
+				action="#{loginBean.telaIndex()}" ajax="false" />
 			<p:menuitem value="Importar Pedido"
 				action="#{cargaCatalogoBean.iniciarTela()}" ajax="false" />
 			<p:menuitem value="Importar Catalogo" />
@@ -56,7 +56,7 @@
 				<h:panelGrid columns="1">
 					<h:outputLabel for="txtCatDialog" value="Categoria:"
 							styleClass="" />
-					<p:selectOneListbox id="txtCatDialog" converter="genericEntityConverter" required="true" requiredMessage="Selecione a CATEGORIA dos produtos para importação."
+					<p:selectOneListbox id="txtCatDialog" converter="genericEntityConverter" required="true" requiredMessage="Selecione a CATEGORIA dos produtos para importaï¿½ï¿½o."
 						value="#{cargaCatalogoBean.categoriaSelecionada}" style="width:350px;height:300px">
 						<f:selectItems value="#{cargaCatalogoBean.comboCategorias}" var="c"
 							itemLabel="#{c.codSecao.descSecao.subSequence(0,1)}#{c.codSecao.descSecao.subSequence(c.codSecao.descSecao.length()-1,c.codSecao.descSecao.length())} - #{c.descCategoria}"
@@ -73,10 +73,10 @@
 							value="#{cargaCatalogoBean.listaProdutosInclusos}"
 							var="result" rowKey="#{result}" rows="10" editable="true"
 							editMode="cell" styleClass="dataTable" paginator="true"
-							paginatorPosition="bottom" emptyMessage="Dados não encontrados">
+							paginatorPosition="bottom" emptyMessage="Dados nï¿½o encontrados">
 
 
-							<p:column headerText="CÓDIGO MK" style="text-align: center;"
+							<p:column headerText="Cï¿½DIGO MK" style="text-align: center;"
 								width="10%" sortBy="#{result.codProduto}">
 								<h:outputLabel value="#{result.codProduto}"
 									style="text-align: center;" />
@@ -86,7 +86,7 @@
 								<h:outputLabel value="#{result.descProduto}"
 									style="text-align: left;" />
 							</p:column>
-							<p:column headerText="PREÇO" width="80%" >
+							<p:column headerText="PREï¿½O" width="80%" >
 								<h:outputLabel value="R$" style="text-align: left;" />
 								<h:outputLabel value="#{result.preco}" style="text-align: left;" >
 									<f:converter converterId="decimalConverter" />
@@ -101,7 +101,7 @@
 
 						<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0"
 							columns="2" style="	margin-top:5px;">
-							<p:outputLabel value="Nº de produtos:" />
+							<p:outputLabel value="Nï¿½ de produtos:" />
 							<p:outputLabel value="#{cargaCatalogoBean.listaProdutosInclusos.size()}"
 								styleClass="input-5left HtmlOutputTextResposta" />
 						</h:panelGrid>

@@ -15,18 +15,18 @@
 	<ui:define name="breadcrumb">
 		<ul class="breadcrumb">
 			<li class="active">
-				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
-				<h:commandLink action="#" value="#{msgs['retencaoclientes.breadcumb.relatorio']}" />
+				<h:commandLink action="#" value="#{msgs['consolidadopedido.breadcumb.relatorio']}" />
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
-				<h:commandLink action="#" value="#{msgs['retencaoclientes.breadcumb.relatorio.cliente']}" />
+				<h:commandLink action="#" value="#{msgs['consolidadopedido.breadcumb.relatorio.pedido']}" />
 				<span class="divider">/</span>
 			</li>
-			<li>#{msgs['retencaoclientes.breadcumb.relatorio.cliente.relatorioretencaoclientes']}</li>
+			<li>#{msgs['consolidadopedido.breadcumb.relatorio.pedido.pedidoconsolidado']}</li>
 		</ul>
 	</ui:define>
 	
@@ -36,7 +36,7 @@
 			<div class="widget span12">
 				<div class="widget-heading">
 					<a class="accordion-toggle in" data-toggle="collapse" href="#divFiltro">
-						<i class="icon-th"></i> #{msgs['retencaoclientes.lbl.pesquisa']}
+						<i class="icon-th"></i> #{msgs['consolidadopedido.lbl.pesquisa']}
 						<i class="icon-chevron-down pull-right"></i>
 					</a>
 				</div>
@@ -44,11 +44,11 @@
 					<div class="widget-inner">
 						<h:panelGrid columns="3" id="gridFiltro" >
 							<h:panelGroup>
-								<h:outputLabel value="#{msgs['contaspagar.lbl.datainicio']}:" />
+								<h:outputLabel value="#{msgs['consolidadopedido.lbl.datainicio']}:" />
 								<p:calendar id="calendarDataInicial" value="#{reportPedidoBean.dataFiltro.dataInicio}" pattern="dd/MM/yyyy" />
 							</h:panelGroup>
 							<h:panelGroup>
-								<h:outputLabel value="#{msgs['contaspagar.lbl.datafim']}:" />
+								<h:outputLabel value="#{msgs['consolidadopedido.lbl.datafim']}:" />
 								<p:calendar id="calendarDataFinal" value="#{reportPedidoBean.dataFiltro.dataFinal}" pattern="dd/MM/yyyy" />
 							</h:panelGroup>
 						</h:panelGrid>
@@ -63,40 +63,94 @@
 									value="#{msgs.btn_pesquisar}" 
 									action="#{reportPedidoBean.pesquisarFiltro()}" 
 									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
-									ajax="true" update="tableListVendas  messagesGlobal" oncomplete="loadMasksMoneyJQuery();"/>
+									ajax="true" update="@form messagesGlobal" oncomplete="loadMasksMoneyJQuery();"/>
 							</div>
 						</h:panelGroup>	
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		<ui:fragment id="painelConsolidado">
+			<div class="widget">
+				<div class="widget-heading">
+					<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
+					<i class="icon-table"></i> #{msgs['consolidadopedido.lbl.legend.dadosconsolidados']}</a>
+				</div>
+				<div id="si" class="widget-body collapse in">
+					<div class="widget-inner">
+						<h:panelGrid cellpadding="0" cellspacing="0" columns="6" border="0" style="margin-top:5px;margin-bottom:25px;">
+							<h:outputLabel value="#{msgs['consolidadopedido.lbl.numpedidos']}:" styleClass="HtmlOutputLabelResposta" />
+							<h:outputLabel value="#{reportPedidoBean.relatorio.numeroPedidos}" styleClass="HtmlOutputTextResposta" />
+							<h:outputLabel value="#{msgs['consolidadopedido.lbl.numprodutoscomprados']}:" styleClass="HtmlOutputLabelResposta" />
+							<h:outputLabel value="#{reportPedidoBean.relatorio.numeroProdutosPedidos}" styleClass="HtmlOutputTextResposta" />
+							<h:outputLabel value="#{msgs['consolidadopedido.lbl.pontuacao']}:" styleClass="HtmlOutputLabelResposta" />
+							<h:outputLabel value="#{reportPedidoBean.relatorio.numeroTotalPontosPedidos}" styleClass="HtmlOutputTextResposta"/>
+							
+							<h:outputLabel value="#{msgs['consolidadopedido.lbl.valortotalpago']}:" styleClass="HtmlOutputLabelResposta" />
+							<h:outputLabel value="#{reportPedidoBean.relatorio.valorTotalPagoPedidos}" styleClass="HtmlOutputTextResposta">
+								<f:converter converterId="decimalConverter" />
+							</h:outputLabel>
+							
+							<h:outputLabel value="#{msgs['consolidadopedido.lbl.valortotalpararevenda']}:" styleClass="HtmlOutputLabelResposta" />
+							<h:outputLabel value="#{reportPedidoBean.relatorio.valorTotalRevendaPedidos}" styleClass="HtmlOutputTextResposta" >
+								<f:converter converterId="decimalConverter" />
+							</h:outputLabel>
+						</h:panelGrid>
+					</div>
+				</div>
+			</div>
+		</ui:fragment>
+		
 		<div class="widget">
 			<div class="widget-heading">
 				<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
-				<i class="icon-table"></i> #{msgs['promocaoclienteporvolumecompra.titulotabela.listaclientes']}
+				<i class="icon-table"></i> #{msgs['consolidadopedido.titulotabela.listapedidos']}
 				<i class="icon-chevron-down pull-right"></i>
 				</a>
 			</div>
 			<div id="si" class="widget-body collapse in">
 				<div class="widget-inner">
-					
-					<p:dataTable id="tableListVendas" 
+					<p:dataTable id="tableListPedidos" 
 							style="margin-top:10px;"
 							var="result" rows="10" rowKey="#{result}" 
-							value="#{retencaoClienteBean.relatorio}" 
+							selectionMode="single"
+							selection="#{historicoPedidoBean.pedidoSelecionado}"
+							filteredValue="#{reportPedidoBean.relatorio.pedidos}"
+							value="#{historicoPedidoBean.listaDePedidosRealizados}" 
 							paginator="true" paginatorPosition="bottom" 
-							emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}." >
+							emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}.">
 						
-						<p:column headerText="#{msgs['generico.tabelacoluna.cliente']}" width="35%"	sortBy="#{result.cliente.dadosPessoa.nome}">
-							<h:outputText value="#{result.cliente.dadosPessoa.nome}" style="text-align: left;" />
+						<p:column headerText="#{msgs['generico.tabelacoluna.codigopedido']}" style="text-align: center;" width="10%" 
+								sortBy="#{result.codPedido}">
+							<h:outputText value="#{result.codPedido}"
+								style="text-align: center;" />
 						</p:column>
-						<p:column headerText="#{msgs['generico.tabelacoluna.celulardocliente']}" style="text-align: center;" width="10%" sortBy="#{result.cliente.dadosPessoa.numCelular}">
-							<h:outputText value="#{result.cliente.dadosPessoa.numCelular}" style="text-align: center;" />
-						</p:column>
-						<p:column headerText="#{msgs['generico.tabelacoluna.datavenda']}" style="text-align: center;" width="10%" sortBy="#{result.dataUltimaVenda}">
-							<h:outputText value="Sem vendas" style="text-align: center;" rendered="#{empty result.dataUltimaCompra}" />
-							<h:outputText value="#{result.dataUltimaCompra}" style="text-align: center;" rendered="#{not empty result.dataUltimaCompra}" >
+						<p:column headerText="#{msgs['generico.tabelacoluna.datacompra']}" sortBy="#{result.dtPedido}"
+							style="text-align: center;" width="10%">
+							<h:outputText value="#{result.dtPedido}" style="text-align: center;">
 								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.pontuacao']}" sortBy="#{result.pontosTotalPedido}"
+								  width="10%" style="text-align: center;">
+							<h:outputText value="#{result.pontosTotalPedido} pts"	style="text-align: center;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.porcentagemdesconto']}" sortBy="#{result.porcDesconto}" width="10%" style="text-align: center;">
+							<h:outputText value="#{result.porcDesconto}%"	style="text-align: center;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.formapagamento']}" width="10%" style="text-align: center;"
+								sortBy="#{result.valorTotalEmProdutos}" > 
+							<h:outputText value="#{result.formaDePagamento.descFormaPgto}"	style="text-align: center;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.situacaopagamento']}" width="10%" style="text-align: center;" 
+								sortBy="#{result.descSituacaoPagamento}">
+							<h:outputText value="#{result.descSituacaoPagamento}" style="text-align: center;" />
+						</p:column>
+						<p:column headerText="#{msgs['generico.tabelacoluna.valorpago']}" sortBy="#{result.valorTotalAtacado}" width="10%" style="text-align: center;">
+							<h:outputText value="R$" style="text-align: center;" />
+							<h:outputText value="#{result.valorFinalTotalPago}"	style="text-align: center;" >
+								<f:converter converterId="decimalConverter" />
 							</h:outputText>
 						</p:column>
 					</p:dataTable>
@@ -110,7 +164,7 @@
 			<div class="buttonFooter">
 				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" 
 					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
-					action="#{clienteBean.scheduleBean.telaInicial()}" immediate="true"  />
+					action="#{loginBean.telaIndex()}" immediate="true"  />
 				<div style="height: 10px;width: 10px;"></div>	
 			</div>
 		</h:panelGroup>

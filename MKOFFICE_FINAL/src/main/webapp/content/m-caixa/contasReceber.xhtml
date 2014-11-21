@@ -16,7 +16,7 @@
 	<ui:define name="breadcrumb">
 		<ul class="breadcrumb">
 			<li class="active">
-				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
@@ -48,11 +48,11 @@
 							</h:panelGroup>
 							<h:panelGroup>
 								<h:outputLabel value="#{msgs['contasreceber.lbl.datainicio']}:" />
-								<p:calendar id="calendarDataInicial" value="#{contasReceberBean.dataInicioFiltro}" pattern="dd/MM/yyyy" />
+								<p:calendar id="calendarDataInicial" value="#{contasReceberBean.dataFiltro.dataInicio}" pattern="dd/MM/yyyy" />
 							</h:panelGroup>
 							<h:panelGroup>
 								<h:outputLabel value="#{msgs['contasreceber.lbl.datafim']}:" />
-								<p:calendar id="calendarDataFinal" value="#{contasReceberBean.dataFinalFiltro}" pattern="dd/MM/yyyy" />
+								<p:calendar id="calendarDataFinal" value="#{contasReceberBean.dataFiltro.dataFinal}" pattern="dd/MM/yyyy" />
 							</h:panelGroup>
 							<h:messages showDetail="true" showSummary="true"/>
 						</h:panelGrid>
@@ -134,7 +134,7 @@
 			<div class="buttonFooter">
 				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" 
 					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
-					action="#{clienteBean.scheduleBean.telaInicial()}" immediate="true"  />
+					action="#{loginBean.telaIndex()}" immediate="true"  />
 				<div style="height: 10px;width: 10px;"></div>	
 			</div>
 		</h:panelGroup>

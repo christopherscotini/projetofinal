@@ -15,7 +15,7 @@
 	<ui:define name="breadcrumb">
 		<ul class="breadcrumb">
 			<li class="active">
-				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
@@ -140,7 +140,7 @@
 						rows="10"
 						styleClass="dataTable"
 						paginator="true" paginatorPosition="bottom"
-						emptyMessage="Dados não encontrados">
+						emptyMessage="Dados nï¿½o encontrados">
 
 						<f:facet name="header">  
 				            #{msgs['dadosvenda.lbl.produtosinclusoscarrinho']}

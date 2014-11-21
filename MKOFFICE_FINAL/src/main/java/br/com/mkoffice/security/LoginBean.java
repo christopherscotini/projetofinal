@@ -46,6 +46,10 @@ public class LoginBean implements Serializable {
 	public LoginBean() {
 	}
 
+	public String telaIndex(){
+		return "/index.xhtml";
+	}
+	
 	@PostConstruct
 	public void inicializar() {
 		usuario = new UserEntity();

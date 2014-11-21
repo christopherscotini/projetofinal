@@ -4,7 +4,6 @@
 package br.com.mkoffice.business.bo.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -13,6 +12,7 @@ import javax.inject.Inject;
 import br.com.mkoffice.business.bo.ContasPagarBO;
 import br.com.mkoffice.business.exception.ValidationFormAbstractException;
 import br.com.mkoffice.dao.jpa.cadastro.ParcelaRepository;
+import br.com.mkoffice.dto.DataFilter;
 import br.com.mkoffice.model.ParcelasEntity;
 import br.com.mkoffice.utils.MkmtsUtil;
 
@@ -29,19 +29,19 @@ public class ContasPagarBOImpl implements ContasPagarBO{
 
 	
 	@Override
-	public List<ParcelasEntity> filtrar(Date dataInicial, Date dataFinal, Long situacaoPagamento) {
+	public List<ParcelasEntity> filtrar(DataFilter dataFiltro, Long situacaoPagamento) {
 		situacaoPagamento = MkmtsUtil.verificaLongNulo(situacaoPagamento == null ? 0 : Long.valueOf(situacaoPagamento));
 		
 		if(situacaoPagamento.equals(1L)){
-			return dao.filterByDateSituacaoPagoContasPagar(dataInicial, dataFinal);
+			return dao.filterByDateSituacaoPagoContasPagar(dataFiltro);
 		}else{
 			if(situacaoPagamento.equals(2L)){
-				return dao.filterByDateSituacaoPendenteContasPagar(dataInicial, dataFinal);
+				return dao.filterByDateSituacaoPendenteContasPagar(dataFiltro);
 			}else{
 				if(situacaoPagamento.equals(99L)){
 					List<ParcelasEntity>entities = new ArrayList<ParcelasEntity>();
-					entities.addAll(dao.filterByDateSituacaoPagoContasPagar(dataInicial, dataFinal));
-					entities.addAll(dao.filterByDateSituacaoPendenteContasPagar(dataInicial, dataFinal));
+					entities.addAll(dao.filterByDateSituacaoPagoContasPagar(dataFiltro));
+					entities.addAll(dao.filterByDateSituacaoPendenteContasPagar(dataFiltro));
 					return entities;
 				}
 			}

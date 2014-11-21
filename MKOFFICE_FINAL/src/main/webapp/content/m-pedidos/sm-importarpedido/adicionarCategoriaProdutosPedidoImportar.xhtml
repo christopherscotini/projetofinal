@@ -14,7 +14,7 @@
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>  
-		    <p:menuitem value="TelaInicial" action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false"/>  
+		    <p:menuitem value="TelaInicial" action="#{loginBean.telaIndex()}" ajax="false"/>  
 		    <p:menuitem value="Importar Pedido" action="#{importarPedidoBean.iniciarTela()}" ajax="false" />  
 		    <p:menuitem value="Adicionar categoria ao Produtos do Pedido" />  
 		</p:breadCrumb>  
@@ -36,14 +36,14 @@
 								editable="true" editMode="cell"
 								styleClass="dataTable"
 								paginator="true" paginatorPosition="bottom"
-								emptyMessage="Dados não encontrados">
+								emptyMessage="Dados nï¿½o encontrados">
 		
 								<f:facet name="header">  
 						            Produtos Inclusos no Pedido
 						        </f:facet>
 						        
 								
-								<p:column headerText="CÓDIGO MK" style="text-align: center;"
+								<p:column headerText="Cï¿½DIGO MK" style="text-align: center;"
 									width="10%" sortBy="#{result.produto.codProduto}">
 									<h:outputText value="#{result.produto.codProduto}"
 										style="text-align: center;" />

@@ -18,14 +18,14 @@
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>
 			<p:menuitem value="TelaInicial"
-				action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false" />>  
+				action="#{loginBean.telaIndex()}" ajax="false" />>  
 		    <p:menuitem value="Produtos" />
 			<p:menuitem value="Estoque" />
 			<p:menuitem value="Consultar Estoque" />
 			<p:menuitem value="Adicionar produto no estoque" />
 		</p:breadCrumb>
 	</ui:define>
-	<ui:param name="titulo" value="Catálogo de Produtos MK"></ui:param>
+	<ui:param name="titulo" value="Catï¿½logo de Produtos MK"></ui:param>
 
 	<ui:define name="body_content">
 		<h:panelGrid cellpadding="0" cellspacing="0" columns="1"
@@ -38,7 +38,7 @@
 						<p:inputText id="txtDesc"
 							value="#{estoqueBean.nomeProdutoFiltro}" maxlength="18"
 							style="margin-left:5px;" size="50" />
-						<p:outputLabel value="Cód. Produto:" for="txtCod"
+						<p:outputLabel value="Cï¿½d. Produto:" for="txtCod"
 							styleClass="HtmlOutputLabelResposta" />
 						<p:inputText id="txtCod" value="#{estoqueBean.codMkFiltro}"
 							maxlength="18" style="margin-left:5px;" />
@@ -81,11 +81,11 @@
 						selection="#{estoqueBean.listaProdutoCatalogoSelecionados}"
 						styleClass="dataTable"
 						paginator="true" paginatorPosition="bottom"
-						emptyMessage="Dados não encontrados">>
+						emptyMessage="Dados nï¿½o encontrados">>
 
 						<p:column selectionMode="multiple" style="width:2%" />
 
-						<p:column  headerText="CÓDIGO MK" style="text-align: center;"
+						<p:column  headerText="Cï¿½DIGO MK" style="text-align: center;"
 							width="5%" sortBy="#{result.produto.codProduto}">
 							<h:outputText value="#{result.produto.codProduto}"
 								style="text-align: center;" />
@@ -96,13 +96,13 @@
 							<h:outputText value="#{result.produto.descProduto}"
 								style="text-align: left;" />
 						</p:column>
-						<p:column headerText="SEÇÃO - CATEGORIA"
+						<p:column headerText="SEï¿½ï¿½O - CATEGORIA"
 							sortBy="#{result.produto.codCategoria.descCategoria}"
 							style="max-width: 250px; min-width: 250px; overflow: hidden">
 							<h:outputText
 								value="#{result.produto.codCategoria.codSecao.descSecao} - #{result.produto.codCategoria.descCategoria}" />
 						</p:column>
-						<p:column headerText="PREÇO" style="text-align: center;"
+						<p:column headerText="PREï¿½O" style="text-align: center;"
 							width="5%" sortBy="#{result.produto.preco}">
 							<h:outputText value="R$" style="text-align: center;" />
 							<h:outputText value="#{result.produto.preco}"

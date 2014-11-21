@@ -110,7 +110,7 @@ public class PedidoRepository extends JpaGenericDao<PedidoEntity, Long> {
 
 
 	public ReportPedidoConsolidadoDTO gerarRelatorioPedidoConsolidado(DataFilter dataFiltro, Long idUsuario) {
-		ReportPedidoConsolidadoDTO dto = new ReportPedidoConsolidadoDTO();
+		ReportPedidoConsolidadoDTO returnzz = new ReportPedidoConsolidadoDTO();
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT p FROM PedidoEntity p").append(" ");
 		query.append("WHERE p.usuario.id = :idUsuario").append(" ");
@@ -120,23 +120,29 @@ public class PedidoRepository extends JpaGenericDao<PedidoEntity, Long> {
 		}
 		
 		
-		dto.setPedidos(getEntityManager().createQuery(query.toString())
-			.setParameter("idUsuario", idUsuario)
-			.getResultList());
-		
-		dto.setNumeroPedidos(dto.getPedidos().size());
-		
-		for (int i = 0; i < dto.getPedidos().size(); i++) {
-			for (int j = 0; j < dto.getPedidos().get(i).getPedidoProdutosList().size(); j++) {
-				dto.setNumeroProdutosPedidos(dto.getNumeroProdutosPedidos()+dto.getPedidos().get(i).getPedidoProdutosList().get(j).getQdteCompradaProduto());
-			}
-			dto.setValorTotalPagoPedidos(dto.getValorTotalPagoPedidos().add(dto.getPedidos().get(i).getValorTotalPago()));
-			dto.setValorTotalRevendaPedidos(dto.getValorTotalRevendaPedidos().add(dto.getPedidos().get(i).getValorTotalEmProdutos()));
-			dto.setNumeroTotalPontosPedidos(dto.getNumeroTotalPontosPedidos()+dto.getPedidos().get(i).getPontosTotalPedido());
+		returnzz.setPedidos(new ArrayList<PedidoDTO>());
+		List<PedidoEntity>listaRetornadaEntities = getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList();
+		for (int i = 0; i < listaRetornadaEntities.size(); i++) {
+			PedidoDTO dto = new PedidoDTO();
+			dto = Adapter.entityToDto(listaRetornadaEntities.get(i));
+			dto.setDescSituacaoPagamento(listaRetornadaEntities.get(i).getParcelas().get(listaRetornadaEntities.get(i).getParcelas().size()-1).getCodSituacaoParcela().getDescSituacao());
+			returnzz.getPedidos().add(dto);
 		}
 		
 		
-		return dto;
+		returnzz.setNumeroPedidos(returnzz.getPedidos().size());
+		
+		for (int i = 0; i < returnzz.getPedidos().size(); i++) {
+			for (int j = 0; j < returnzz.getPedidos().get(i).getListaProdutosComprados().size(); j++) {
+				returnzz.setNumeroProdutosPedidos(returnzz.getNumeroProdutosPedidos()+returnzz.getPedidos().get(i).getListaProdutosComprados().get(j).getQtdeProdutoCarrinho());
+			}
+			returnzz.setValorTotalPagoPedidos(returnzz.getValorTotalPagoPedidos().add(returnzz.getPedidos().get(i).getValorFinalTotalPago()));
+			returnzz.setValorTotalRevendaPedidos(returnzz.getValorTotalRevendaPedidos().add(returnzz.getPedidos().get(i).getValorTotalEmProdutos()));
+			returnzz.setNumeroTotalPontosPedidos(returnzz.getNumeroTotalPontosPedidos()+returnzz.getPedidos().get(i).getPontosTotalPedido());
+		}
+		
+		
+		return returnzz;
 	}
 	
 }

@@ -25,13 +25,13 @@ public class ReportPedidoBean extends AbstractModelBean{
 	@Override
 	public String iniciarTela() {
 		limparCamposFiltro();
-		
+		pesquisarFiltro();
 		return TELA_REPORT_PEDIDOS;
 	}
 
 	@Override
 	public void limparCamposFiltro() {
-		dataFiltro = new DataFilter();
+		dataFiltro = new DataFilter(true);
 		relatorio = null;
 	}
 

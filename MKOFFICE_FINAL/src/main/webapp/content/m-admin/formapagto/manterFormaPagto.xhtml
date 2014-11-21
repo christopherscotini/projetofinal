@@ -16,7 +16,7 @@
 	<ui:define name="breadcrumb">
 		<ul class="breadcrumb">
 			<li class="active">
-				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
@@ -112,7 +112,7 @@
 				style="margin-bottom:10px">
 
 				<p:outputLabel value="Forma de Pagamento?" for="txtFormaPagto" styleClass="HtmlOutputLabelResposta" />
-				<p:inputText id="txtFormaPagto" value="#{formaPagamentoBean.formaPagto.descFormaPgto}" size="50" styleClass="input-5left" required="true" requiredMessage="O campo PERMISSÃO é necessário." >
+				<p:inputText id="txtFormaPagto" value="#{formaPagamentoBean.formaPagto.descFormaPgto}" size="50" styleClass="input-5left" required="true" requiredMessage="O campo PERMISSï¿½O ï¿½ necessï¿½rio." >
 					<f:validateLength minimum="3" for="txtFormaPagto"/>
 				</p:inputText>
 
@@ -121,7 +121,7 @@
 					<p:ajax update="infosFormaPagto" />
 				</p:selectBooleanCheckbox>
 
-				<p:outputLabel id="lblTxtNumParcelas" value="N° de parcelas:" for="txtNumParcelas" styleClass="HtmlOutputLabelResposta" rendered="#{formaPagamentoBean.formaPagto.possuiParcelas}"/>
+				<p:outputLabel id="lblTxtNumParcelas" value="Nï¿½ de parcelas:" for="txtNumParcelas" styleClass="HtmlOutputLabelResposta" rendered="#{formaPagamentoBean.formaPagto.possuiParcelas}"/>
 				<p:spinner id="txtNumParcelas" maxlength="3" size="4" min="1"
 					rendered="#{formaPagamentoBean.formaPagto.possuiParcelas}"
 					value="#{formaPagamentoBean.formaPagto.numeroParcelas}" 

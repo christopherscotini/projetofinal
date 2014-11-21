@@ -14,7 +14,7 @@
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>  
-		    <p:menuitem value="TelaInicial" action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false"/>  
+		    <p:menuitem value="TelaInicial" action="#{loginBean.telaIndex()}" ajax="false"/>  
 		    <p:menuitem value="Efetuar Venda" action="#{efetuarVendaBean.iniciarTela()}" ajax="false" />  
 		    <p:menuitem value="Selecionar Cliente" action="#{efetuarVendaBean.voltarParaSelecionarClientes}" ajax="false"/>  
 		    <p:menuitem value="Selecionar Produtos" action="#{efetuarVendaBean.voltarParaSelecionarProdutos}" ajax="false"/>  
@@ -36,9 +36,9 @@
 						<h:panelGroup></h:panelGroup>
 						<h:panelGroup></h:panelGroup>
 						
-						<p:outputLabel value="Endereço:" for="txtAddress" />
+						<p:outputLabel value="Endereï¿½o:" for="txtAddress" />
 						<p:outputLabel id="txtAddress" value="#{efetuarVendaBean.clienteVo.endereco.logradouro}" styleClass="input-5left HtmlOutputTextResposta" />
-						<p:outputLabel value="N°:" for="txtNum" style="float:right;"/> 
+						<p:outputLabel value="Nï¿½:" for="txtNum" style="float:right;"/> 
 						<p:outputLabel id="txtNum" value="#{efetuarVendaBean.clienteVo.endereco.numero}" styleClass="input-5left HtmlOutputTextResposta"  />
 						<p:outputLabel value="Bairro:" for="txtBairro" style="float:right;"/>
 						<p:outputLabel id="txtBairro" value="#{efetuarVendaBean.clienteVo.endereco.bairro}" styleClass="input-5left HtmlOutputTextResposta"  />
@@ -77,14 +77,14 @@
 								editable="true" editMode="cell"
 								styleClass="dataTable"
 								paginator="true" paginatorPosition="bottom"
-								emptyMessage="Dados não encontrados">
+								emptyMessage="Dados nï¿½o encontrados">
 		
 								<f:facet name="header">  
 						            Produtos Selecionados
 						        </f:facet>
 						        
 								
-								<p:column headerText="CÓDIGO MK" style="text-align: center;"
+								<p:column headerText="Cï¿½DIGO MK" style="text-align: center;"
 									width="10%">
 									<h:outputLabel value="#{result.codCatalogo.codProduto}"
 										style="text-align: center;" />
@@ -93,7 +93,7 @@
 									<h:outputLabel value="#{result.codCatalogo.descProduto}"
 										style="text-align: left;" />
 								</p:column>
-								<p:column headerText="Valor Unitário" style="text-align: center;"
+								<p:column headerText="Valor Unitï¿½rio" style="text-align: center;"
 									width="10%" 	>
 									<h:outputLabel value="R$" style="text-align: center;" />
 									<h:outputLabel value="#{result.codCatalogo.preco}"

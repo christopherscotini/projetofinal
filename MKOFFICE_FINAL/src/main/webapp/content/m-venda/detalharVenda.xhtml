@@ -15,7 +15,7 @@
 	<ui:define name="breadcrumb">
 		<ul class="breadcrumb">
 			<li class="active">
-				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
@@ -116,10 +116,10 @@
 							value="#{historicoVendaBean.vendaVo.parcelas}" var="p"
 							rowKey="#{p}" rows="10"
 							styleClass="dataTable"
-							emptyMessage="Não há parcelas" >
+							emptyMessage="Nï¿½o hï¿½ parcelas" >
 		
 							<f:facet name="header">  
-					            Situação das parcelas
+					            Situaï¿½ï¿½o das parcelas
 					        </f:facet>
 					        
 							<p:column headerText="#{msgs['generico.tabelacoluna.situacao']}">
@@ -170,7 +170,7 @@
 								rowKey="#{result}" rows="10"
 								styleClass="dataTable"
 								paginator="true" paginatorPosition="bottom"
-								emptyMessage="Não há produtos no pedido">
+								emptyMessage="Nï¿½o hï¿½ produtos no pedido">
 				
 								<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" style="text-align: center;"
 										width="10%" sortBy="#{result.produto.codProduto}">

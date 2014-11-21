@@ -15,12 +15,12 @@
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>  
-		    <p:menuitem value="TelaInicial" action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false"/>  
+		    <p:menuitem value="TelaInicial" action="#{loginBean.telaIndex()}" ajax="false"/>  
 		    <p:menuitem value="Consultar Clientes" ajax="false" action="#{clienteBean.voltarInclusao()}"/>  
-		    <p:menuitem value="Alteração do Cliente" />  
+		    <p:menuitem value="Alteraï¿½ï¿½o do Cliente" />  
 		</p:breadCrumb>  
 	</ui:define>
-<ui:param name="titulo" value="Alteração do Cliente" />
+<ui:param name="titulo" value="Alteraï¿½ï¿½o do Cliente" />
 
 <ui:define name="body_content">
 
@@ -48,9 +48,9 @@
 					<h:panelGroup></h:panelGroup>
 					<h:panelGroup></h:panelGroup>
 
-					<p:outputLabel value="Endereço:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
+					<p:outputLabel value="Endereï¿½o:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
 					<p:inputText id="txtAddress" value="#{clienteBean.vo.endereco.logradouro}" size="50" styleClass="input-5left" />
-					<p:outputLabel value="N°:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
+					<p:outputLabel value="Nï¿½:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
 					<p:inputText id="txtNum" value="#{clienteBean.vo.endereco.numero}" size="5" maxlength="7" onkeypress="return onlyNum(event)" styleClass="input-5left" />
 					<p:outputLabel value="Bairro:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
 					<p:inputText id="txtBairro" value="#{clienteBean.vo.endereco.bairro}" size="20" styleClass="input-5left" />
@@ -75,7 +75,7 @@
 			</h:panelGroup>
 		
 		<h:panelGroup>
-			<p:outputLabel value="Informações Adicionais:" for="txtAdicionais" />
+			<p:outputLabel value="Informaï¿½ï¿½es Adicionais:" for="txtAdicionais" />
 		</h:panelGroup>
 
 		<h:panelGroup>

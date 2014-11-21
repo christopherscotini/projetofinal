@@ -18,7 +18,7 @@
 	<ui:define name="breadcrumb">
 		<ul class="breadcrumb">
 			<li class="active">
-				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
@@ -72,9 +72,9 @@
 									value="#{importarPedidoBean.pedidoImportado.produtos}"
 									var="result" rowKey="#{result}" rows="10" editable="true"
 									editMode="cell" styleClass="dataTable" paginator="true"
-									paginatorPosition="bottom" emptyMessage="Dados não encontrados">
+									paginatorPosition="bottom" emptyMessage="Dados nï¿½o encontrados">
 		
-									<p:column headerText="CÓDIGO MK" style="text-align: center;"
+									<p:column headerText="Cï¿½DIGO MK" style="text-align: center;"
 										width="10%" sortBy="#{result.produto.codProduto}">
 										<h:outputText value="#{result.produto.codProduto}"
 											style="text-align: center;" />
@@ -93,7 +93,7 @@
 			
 								<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0"
 									columns="2" style="	margin-top:5px;">
-									<p:outputLabel value="Nº de produtos:" />
+									<p:outputLabel value="Nï¿½ de produtos:" />
 									<p:outputLabel value="#{importarPedidoBean.pedidoImportado.produtos.size()}"
 										styleClass="input-5left HtmlOutputTextResposta" />
 								</h:panelGrid>

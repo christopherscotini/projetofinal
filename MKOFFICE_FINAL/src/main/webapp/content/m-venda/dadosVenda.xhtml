@@ -16,7 +16,7 @@
 	<ui:define name="breadcrumb">
 		<ul class="breadcrumb">
 			<li class="active">
-				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
@@ -46,7 +46,7 @@
 					<h:panelGrid cellpadding="0" cellspacing="0" columns="2" border="0" style="margin-top:10px;">
 						
 						<p:outputLabel value="#{msgs['dadosvenda.lbl.datavenda']}:" for="txtDataVenda" styleClass="HtmlOutputLabelResposta"/>
-						<p:calendar id="txtDataVenda"	value="#{efetuarVendaBean.venda.dataVenda}" size="13"  pattern="dd/MM/yyyy" alt="date" required="true" requiredMessage="Data da venda obrigatória." />
+						<p:calendar id="txtDataVenda"	value="#{efetuarVendaBean.venda.dataVenda}" size="13"  pattern="dd/MM/yyyy" alt="date" required="true" requiredMessage="Data da venda obrigatï¿½ria." />
 						
 						<p:outputLabel value="#{msgs['dadosvenda.lbl.totalpontos']}:" for="txtTotPontos" styleClass="HtmlOutputLabelResposta"/>
 						<h:outputLabel value="#{efetuarVendaBean.venda.qtdeTotalPontosVendidos} pts" id="txtTotPontos" styleClass="input-5left HtmlOutputTextResposta" />

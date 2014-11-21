@@ -14,7 +14,7 @@
 	<ui:define name="breadcrumb">
 		<ul class="breadcrumb">
 			<li class="active">
-				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
@@ -123,7 +123,7 @@
 							emptyMessage="#{msgs['generico.mensagem.naohaparcelas']}" >
 		
 							<f:facet name="header">  
-					            Situação das parcelas
+					            Situaï¿½ï¿½o das parcelas
 					        </f:facet>
 					        
 							<p:column headerText="#{msgs['generico.tabelacoluna.situacao']}">

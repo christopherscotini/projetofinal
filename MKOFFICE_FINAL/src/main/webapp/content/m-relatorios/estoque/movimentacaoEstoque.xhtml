@@ -16,7 +16,7 @@
 	<ui:define name="breadcrumb">
 		<ul class="breadcrumb">
 			<li class="active">
-				<h:commandLink action="#{clienteBean.scheduleBean.telaInicial()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
 				<span class="divider">/</span>
 			</li>
 			<li class="active">
@@ -52,11 +52,11 @@
 							</h:panelGroup>
 							<h:panelGroup>
 								<h:outputLabel value="#{msgs['movimentacaoestoque.lbl.datainicio']}:" />
-								<p:calendar id="calendarDataInicial" value="#{movimentacaoEstoqueBean.dataInicioFiltro}" pattern="dd/MM/yyyy" />
+								<p:calendar id="calendarDataInicial" value="#{movimentacaoEstoqueBean.dataFiltro.dataInicio}" pattern="dd/MM/yyyy" />
 							</h:panelGroup>
 							<h:panelGroup>
 								<h:outputLabel value="#{msgs['movimentacaoestoque.lbl.datafim']}:" />
-								<p:calendar id="calendarDataFinal" value="#{movimentacaoEstoqueBean.dataFimFiltro}" pattern="dd/MM/yyyy" />
+								<p:calendar id="calendarDataFinal" value="#{movimentacaoEstoqueBean.dataFiltro.dataFinal}" pattern="dd/MM/yyyy" />
 							</h:panelGroup>
 							<h:messages showDetail="true" showSummary="true"/>
 						</h:panelGrid>
@@ -109,13 +109,13 @@
 							<p:column headerText="#{msgs['generico.tabelacoluna.qtdemovimentado']}" width="8%" style="text-align: center;" sortBy="#{result.qtdeMovimentadoProduto}">
 								<h:outputText value="#{result.qtdeMovimentadoProduto}" style="text-align: center;" />
 							</p:column>
-							<p:column headerText="#{msgs['generico.tabelacoluna.valorunitario']}" width="8%" style="text-align: center;" sortBy="#{result.valorVenda}">
+							<p:column headerText="#{msgs['generico.tabelacoluna.valorunitario']}" width="8%" style="text-align: center;" sortBy="#{result.codCatalogo.preco}">
 								<h:outputText value="R$" style="text-align: center;" />
 								<h:outputText value="#{result.codCatalogo.preco}" style="text-align: center;">
 									<f:converter converterId="decimalConverter" />
 								</h:outputText>
 							</p:column>
-							<p:column headerText="#{msgs['generico.tabelacoluna.porcentagemdesconto']}" width="5%" style="text-align: center;" sortBy="#{result.valorVenda}">
+							<p:column headerText="#{msgs['generico.tabelacoluna.porcentagemdesconto']}" width="5%" style="text-align: center;" sortBy="#{result.percDesconto.descricao}">
 								<h:outputText value="#{result.percDesconto.descricao}" style="text-align: center;" />
 							</p:column>
 							<p:column headerText="#{msgs['generico.tabelacoluna.fluxoestoque']}" style="text-align: center;" width="10%" sortBy="#{result.tipoFluxoEstoque.descFluxoEstoque}">
@@ -133,7 +133,7 @@
 			<div class="buttonFooter">
 				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" 
 					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
-					action="#{clienteBean.scheduleBean.telaInicial()}" immediate="true"  />
+					action="#{loginBean.telaIndex()}" immediate="true"  />
 				<div style="height: 10px;width: 10px;"></div>	
 			</div>
 		</h:panelGroup>

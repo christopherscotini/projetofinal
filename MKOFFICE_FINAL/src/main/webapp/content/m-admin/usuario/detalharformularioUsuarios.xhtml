@@ -15,17 +15,17 @@
 
 	<ui:define name="breadcrumb">
 		<p:breadCrumb>  
-		    <p:menuitem value="TelaInicial" action="#{clienteBean.scheduleBean.telaInicial()}" ajax="false" immediate="true"/>  
+		    <p:menuitem value="TelaInicial" action="#{loginBean.telaIndex()}" ajax="false" immediate="true"/>  
 		    <p:menuitem value="Consultar Clientes" ajax="false" action="#{clienteBean.voltarInclusao()}"/>  
 		    <p:menuitem value="Cadastro do Cliente" />  
 		</p:breadCrumb>  
 	</ui:define>
-	<ui:param name="titulo" value="Alteração da assinatura" />
+	<ui:param name="titulo" value="Alteraï¿½ï¿½o da assinatura" />
 
 	<ui:define name="body_content">
 		<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
 			<h:panelGroup id="tabela-dados-cliente" >
-				<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="INFORMAÇÕES PESSOAIS" />
+				<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="INFORMAï¿½ï¿½ES PESSOAIS" />
 				<hr class="lin"/>
 				<h:panelGrid cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;">
 					<p:outputLabel value="Nome:" for="txtNome" styleClass="HtmlOutputLabelResposta" />
@@ -51,12 +51,12 @@
 
 					<p:outputLabel value="CEP:" for="cep" styleClass="HtmlOutputLabelResposta" />
 					<p:outputLabel id="cep" value="#{usuarioBean.vo.endereco.cep}" size="10" styleClass="input-5left HtmlOutputTextResposta" alt="cep" />
-					<p:outputLabel value="Endereço:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
+					<p:outputLabel value="Endereï¿½o:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
 					<p:outputLabel id="txtAddress" value="#{usuarioBean.vo.endereco.logradouro}" size="50" styleClass="input-5left HtmlOutputTextResposta" />
 					<p:outputLabel value="Estado:" for="txtState" styleClass="HtmlOutputLabelResposta"/>
 					<p:outputLabel id="txtState" value="#{usuarioBean.vo.endereco.estado}" size="5" styleClass="HtmlOutputTextResposta" style="margin-left:5px;" />
 
-					<p:outputLabel value="N°:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
+					<p:outputLabel value="Nï¿½:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
 					<p:outputLabel id="txtNum" value="#{usuarioBean.vo.endereco.numero}" size="5" maxlength="7" onkeypress="return onlyNum(event)" styleClass="input-5left HtmlOutputTextResposta" />
 					<p:outputLabel value="Cidade:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
 					<p:outputLabel id="txtCity" value="#{usuarioBean.vo.endereco.cidade}" size="30" styleClass="input-5left HtmlOutputTextResposta" />
