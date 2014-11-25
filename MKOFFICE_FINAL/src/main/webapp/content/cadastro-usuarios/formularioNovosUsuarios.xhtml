@@ -18,6 +18,8 @@
 	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/utils.js"></script>
 	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/primefaces-locale.js"></script>
 	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/menu.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/jquery-maskMoney.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/jquery.mask.js"></script>
 	<link rel="shortcut icon" type="image/jpg" href="#{request.contextPath}/resources/images/logo.jpg" />
 	<ui:insert name="jsImports" />
 	<title>MK Office</title>
@@ -65,56 +67,57 @@
 						</div>
 						<div id="formdiv" class="widget-body collapse in">
 							<div class="widget-inner">	
-								<h:panelGrid cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;">
+								<h:panelGrid id="formgrid" cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;">
 									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.nome']}:" for="txtNome" styleClass="HtmlOutputLabelResposta" />
-									<p:inputText id="txtNome" value="#{formularioUsuarioBean.vo.nome}" size="50" styleClass="input-5left" />
+									<h:inputText id="txtNome" value="#{formularioUsuarioBean.vo.nome}" size="50" styleClass="input-5left input-xlarge"  />
 									<p:outputLabel for="cboSexo" value="#{msgs['formularionovosusuarios.lbl.sexo']}:" styleClass="HtmlOutputLabelResposta"/>
-									<p:selectOneMenu id="cboSexo" value="#{formularioUsuarioBean.vo.sexo}" style="margin-left:5px;" >
+									<h:selectOneMenu id="cboSexo" value="#{formularioUsuarioBean.vo.sexo}" style="margin-left:5px;" >
 										<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}"/>
 										<f:selectItems value="#{formularioUsuarioBean.comboSexualidade}" var="_gender" itemLabel="#{_gender.label}" itemValue="#{_gender.label}" />
-									</p:selectOneMenu>
+									</h:selectOneMenu>
 									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.datanascimento']}:" for="calendarDtNasc" styleClass="HtmlOutputLabelResposta"/>
 									<p:calendar id="calendarDtNasc" value="#{formularioUsuarioBean.vo.dataNascimento}" size="10" pattern="dd/MM/yyyy" alt="date" style="margin-left:5px;" />
 									
-									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.cpf']}:" for="txtCPF" styleClass="HtmlOutputLabelResposta"/>
-									<p:inputText id="txtCPF" value="#{formularioUsuarioBean.vo.cpfString}" size="15" alt="cpf" styleClass="input-5left" />
-									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.email']}:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
-									<p:inputText id="txtEmail" value="#{formularioUsuarioBean.vo.email}" size="45" styleClass="input-5left" />
-									<h:panelGroup></h:panelGroup>
-									<h:panelGroup></h:panelGroup>
-				
-									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.telefone']}:" for="txtTelefone" styleClass="HtmlOutputLabelResposta"/>
-									<p:inputText id="txtTelefone" value="#{formularioUsuarioBean.vo.numTelefoneString}" size="15" styleClass="input-5left" alt="phone"/>
-									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.celular']}:" for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
-									<p:inputText id="txtTelefoneCel" value="#{formularioUsuarioBean.vo.numCelularString}" size="15" styleClass="input-5left" alt="cell9"  />
-									<h:panelGroup></h:panelGroup> 
-									<h:panelGroup></h:panelGroup>
-				
+									
 									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.cep']}:" for="cep" styleClass="HtmlOutputLabelResposta" />
 									<h:panelGroup>
-										<p:inputText id="cep" value="#{formularioUsuarioBean.vo.endereco.cep}" size="10" styleClass="input-5left" alt="cep" />
-										<p:commandLink  value="Preencher" style="margin-left:5px;" ajax="false" actionListener="#{formularioUsuarioBean.buscarEnderecoViaWebService()}"/>
+										<h:inputText id="cep" value="#{formularioUsuarioBean.vo.endereco.cep}" size="10" styleClass="cep input-5left" alt="cep" />
+										<p:commandLink  value="#{msgs['formularionovosusuarios.lbl.preencher']}" style="margin-left:5px;" ajax="false" partialSubmit="true" process="cep" actionListener="#{formularioUsuarioBean.buscarEnderecoViaWebService()}"/>
 									</h:panelGroup>										
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.cpf']}:" for="txtCPF" styleClass="HtmlOutputLabelResposta"/>
+									<p:inputText id="txtCPF" value="#{formularioUsuarioBean.vo.cpfString}" size="15" alt="cpf" styleClass="input-5left" />
+									<h:panelGroup></h:panelGroup>
+									<h:panelGroup></h:panelGroup>
+					
 									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.endereco']}:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
-									<p:inputText id="txtAddress" value="#{formularioUsuarioBean.vo.endereco.logradouro}" size="50" styleClass="input-5left" />
-									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.estado']}:" for="txtState" styleClass="HtmlOutputLabelResposta"/>
-									<p:selectOneMenu id="txtState" value="#{formularioUsuarioBean.vo.endereco.estado}" size="5" styleClass="" style="margin-left:5px;" >
-										<f:selectItems value="#{formularioUsuarioBean.comboUf}" var="_uf" itemLabel="#{_uf.label}" itemValue="#{_uf.label}"/>
-									</p:selectOneMenu>
-				
+									<h:inputText id="txtAddress" value="#{formularioUsuarioBean.vo.endereco.logradouro}" size="50" styleClass="input-5left input-xlarge" />
 									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.numerocasa']}:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
-									<p:inputText id="txtNum" value="#{formularioUsuarioBean.vo.endereco.numero}" size="5" maxlength="7" onkeypress="return onlyNum(event)" styleClass="input-5left" />
-									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.cidade']}:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
-									<p:inputText id="txtCity" value="#{formularioUsuarioBean.vo.endereco.cidade}" size="30" styleClass="input-5left" />
-						
+									<h:inputText id="txtNum" value="#{formularioUsuarioBean.vo.endereco.numero}" size="5" maxlength="7" onkeypress="return onlyNum(event)" styleClass="input-5left" />
 									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.bairro']}:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
-									<p:inputText id="txtBairro" value="#{formularioUsuarioBean.vo.endereco.bairro}" size="20" styleClass="input-5left" />
+									<h:inputText id="txtBairro" value="#{formularioUsuarioBean.vo.endereco.bairro}" size="20" styleClass="input-5left" />
+						
 									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.complemento']}:" for="txtComplemento" styleClass="HtmlOutputLabelResposta"/>
-									<p:inputText id="txtComplemento" value="#{formularioUsuarioBean.vo.endereco.complemento}" size="50" styleClass="input-5left"/>
-								</h:panelGrid>
-							</div>
+									<h:inputText id="txtComplemento" value="#{formularioUsuarioBean.vo.endereco.complemento}" size="50" styleClass="input-5leftcinput-xlarge"/>
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.cidade']}:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
+									<h:inputText id="txtCity" value="#{formularioUsuarioBean.vo.endereco.cidade}" size="30" styleClass="input-5left" />
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.estado']}:" for="cboState" styleClass="HtmlOutputLabelResposta"/>
+									<h:selectOneMenu id="cboState" value="#{formularioUsuarioBean.vo.endereco.estado}" style="margin-left:5px;" >
+										<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}"/>
+										<f:selectItems value="#{formularioUsuarioBean.comboUf}" var="_gender" itemLabel="#{_gender.label}" itemValue="#{_gender.label}" />
+									</h:selectOneMenu>
+									
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.email']}:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
+									<h:inputText id="txtEmail" value="#{formularioUsuarioBean.vo.email}" size="45" styleClass="input-5left input-xlarge" >
+									</h:inputText>
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.telefone']}:" for="txtTelefone" styleClass="HtmlOutputLabelResposta"/>
+									<h:inputText id="txtTelefone" value="#{formularioUsuarioBean.vo.numTelefoneString}" size="15" styleClass="phone input-5left"/>
+									<p:outputLabel value="#{msgs['formularionovosusuarios.lbl.celular']}:" for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
+									<h:inputText id="txtTelefoneCel" value="#{formularioUsuarioBean.vo.numCelularString}" size="15" styleClass="cell9 input-5left"  />
+					
+							</h:panelGrid>
 						</div>
 					</div>
+				</div>
 			
 					<div class="widget">
 						<div class="widget-heading">
@@ -148,6 +151,24 @@
 												 strongLabel="#{msgs['formularionovosusuarios.lbl.senhaforte']}"
 												 feedback="true" />
 		
+								</h:panelGrid>
+							</div>
+						</div>
+					</div>
+					
+					<div class="widget">
+						<div class="widget-heading">
+							<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
+							<i class="icon-table"></i> #{msgs['formularionovosusuarios.lbl.legend.configuracaoparametros']}</a>
+						</div>
+						<div id="formdiv" class="widget-body collapse in">
+							<div class="widget-inner">	
+								<h:panelGrid id="infosParametro" columns="2" style="margin-bottom:10px">
+									<h:outputLabel value="#{msgs['formularionovosusuarios.lbl.valormetafaturamento']}:" for="txtValorMetaFaturamento" styleClass="HtmlOutputLabelResposta" />
+									<h:inputText id="txtValorMetaFaturamento" value="#{formularioUsuarioBean.parametros.valorMetaFaturamento}" styleClass="input-5left currency" />
+				
+									<h:outputLabel value="#{msgs['formularionovosusuarios.lbl.valorlimitegastos']}:" for="txtValorLimiteGastos" styleClass="HtmlOutputLabelResposta" />
+									<h:inputText id="txtValorLimiteGastos" value="#{formularioUsuarioBean.parametros.valorLimiteGasto}" styleClass="input-5left currency" />
 								</h:panelGrid>
 							</div>
 						</div>

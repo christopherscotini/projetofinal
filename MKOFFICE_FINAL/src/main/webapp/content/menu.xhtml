@@ -38,6 +38,23 @@
 	                <img alt="" src="#{facesContext.externalContext.requestContextPath}/#{loginBean.usuario.urlAvatar}" class="img-polaroid">#{msgs['menu.lbl.mensagemboasvindas']}, #{loginBean.usuario.dadosPessoa.nome}</img>
 	                <div class="btn-toolbar">
 	                    <div class="btn-group">
+	                    	<a class="btn" data-toggle="dropdown" href="#" data-original-title="">
+								<i class="icon-envelope"></i>Configurações<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#" data-original-title="">
+									<i class="icon-pencil"></i>
+									Alterar Usuario
+									</a>
+									<a href="#" data-original-title="">
+									<i class="icon-cog"></i>
+									Configurar Parametros do Dashboard
+									</a>
+								</li>
+							</ul>
+	                    </div>
+	                    <div class="btn-group">
 	                        <h:commandLink action="#{loginBean.doLogout()}" class="btn btn-inverse"><i class='icon-off'></i> #{msgs.btn_sair}</h:commandLink>
 	                    </div>
 	                </div>

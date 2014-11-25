@@ -10,13 +10,9 @@ import br.com.mkoffice.model.produto.CatalogoEntity;
 public class DashboardCaixaDTO {
 	
 	private BigDecimal valorFaturamento;
-	private Integer numVendas;
-	private Integer numProdutosVendidos;
-	private List<ProdutosMaisMenosVendidosDTO> produtosMaisVendidos;
-	private ReportPromocaoClientePorVolumeVendaDTO clienteMaisComprou;
 	private BigDecimal valorGasto;
-	private Integer numPedidos;
-	private Integer numProdutosComprados;
+	private ReportPromocaoClientePorVolumeVendaDTO clienteMaisComprou;
+	private List<ProdutosMaisMenosVendidosDTO> produtosMaisVendidos;
 	private List<ProdutosMaisMenosVendidosDTO> produtosMenosVendidos;
 	
 	public BigDecimal getValorFaturamento() {
@@ -24,18 +20,6 @@ public class DashboardCaixaDTO {
 	}
 	public void setValorFaturamento(BigDecimal valorFaturamento) {
 		this.valorFaturamento = valorFaturamento;
-	}
-	public Integer getNumVendas() {
-		return numVendas;
-	}
-	public void setNumVendas(Integer numVendas) {
-		this.numVendas = numVendas;
-	}
-	public Integer getNumProdutosVendidos() {
-		return numProdutosVendidos;
-	}
-	public void setNumProdutosVendidos(Integer numProdutosVendidos) {
-		this.numProdutosVendidos = numProdutosVendidos;
 	}
 	public List<ProdutosMaisMenosVendidosDTO> getProdutosMaisVendidos() {
 		return produtosMaisVendidos;
@@ -48,18 +32,6 @@ public class DashboardCaixaDTO {
 	}
 	public void setValorGasto(BigDecimal valorGasto) {
 		this.valorGasto = valorGasto;
-	}
-	public Integer getNumPedidos() {
-		return numPedidos;
-	}
-	public void setNumPedidos(Integer numPedidos) {
-		this.numPedidos = numPedidos;
-	}
-	public Integer getNumProdutosComprados() {
-		return numProdutosComprados;
-	}
-	public void setNumProdutosComprados(Integer numProdutosComprados) {
-		this.numProdutosComprados = numProdutosComprados;
 	}
 	public List<ProdutosMaisMenosVendidosDTO> getProdutosMenosVendidos() {
 		return produtosMenosVendidos;

@@ -13,7 +13,9 @@ import br.com.mkoffice.business.exception.RegistroJaCadastradoException;
 import br.com.mkoffice.business.exception.ValidationFormInvalidException;
 import br.com.mkoffice.business.exception.ValidationFormRequiredException;
 import br.com.mkoffice.business.validator.CpfValidator;
+import br.com.mkoffice.dao.jpa.cadastro.ParametrosDashboardRepository;
 import br.com.mkoffice.dao.jpa.cadastro.UserRepository;
+import br.com.mkoffice.model.ParametrosDashboardEntity;
 import br.com.mkoffice.model.admin.UserEntity;
 import br.com.mkoffice.utils.CpfCnpjUtils;
 import br.com.mkoffice.utils.CriptografiaUtil;
@@ -30,6 +32,9 @@ public class UserBOImpl implements UserBO{
 
 	@Inject
 	private UserRepository dao = null;
+
+	@Inject
+	private ParametrosDashboardRepository parametrosDashboardRepository = null;
 
 	@Override
 	public UserEntity verificarLogin(UserEntity usuario) {
@@ -49,13 +54,22 @@ public class UserBOImpl implements UserBO{
 		if(dao.existsUserWithUsername(usuario)){
 			throw new RegistroJaCadastradoException("Usuario "+usuario.getUsername());
 		}
-		
+		if(usuario.getDadosPessoa().getSexo().equalsIgnoreCase("m")){
+			usuario.setUrlAvatar("resources/images/avatar/man_business_avatar.png");
+		}else{
+			usuario.setUrlAvatar("resources/images/avatar/woman_business_avatar.png");
+		}
 		usuario.setUsername(usuario.getUsername().toLowerCase());
 		usuario.setPassword(CriptografiaUtil.criptografar(usuario.getPassword()));
 		return dao.insert(usuario);
 	}
 
-
+	@Override
+	public ParametrosDashboardEntity atualizarParametros(ParametrosDashboardEntity parametros){
+		parametros = parametrosDashboardRepository.insert(parametros);
+		return parametros;
+	}
+	
 	@Override
 	public UserEntity editarEntidade(UserEntity usuario) {
 		validateFormAlterar(usuario);
@@ -106,11 +120,11 @@ public class UserBOImpl implements UserBO{
 		}
 		
 		if(!StringUtil.isNotBlank(entidade.getDadosPessoa().getEndereco().getLogradouro())){
-			throw new ValidationFormRequiredException("ENDEREÇO");
+			throw new ValidationFormRequiredException("ENDEREï¿½O");
 		}
 		
 		if(!StringUtil.isNotBlank(entidade.getDadosPessoa().getEndereco().getNumero())){
-			throw new ValidationFormRequiredException("NÚMERO");
+			throw new ValidationFormRequiredException("Nï¿½MERO");
 		}
 		
 		if(!StringUtil.isNotBlank(entidade.getDadosPessoa().getEndereco().getBairro())){
@@ -143,7 +157,7 @@ public class UserBOImpl implements UserBO{
 		}
 
 		if(!(StringUtil.isNotBlank(entidade.getUsername()))){
-			throw new ValidationFormRequiredException("USUÁRIO");
+			throw new ValidationFormRequiredException("USUï¿½RIO");
 		}
 
 	}
@@ -172,11 +186,11 @@ public class UserBOImpl implements UserBO{
 		}
 		
 		if(!StringUtil.isNotBlank(entidade.getDadosPessoa().getEndereco().getLogradouro())){
-			throw new ValidationFormRequiredException("ENDEREÇO");
+			throw new ValidationFormRequiredException("ENDEREï¿½O");
 		}
 		
 		if(!StringUtil.isNotBlank(entidade.getDadosPessoa().getEndereco().getNumero())){
-			throw new ValidationFormRequiredException("NÚMERO");
+			throw new ValidationFormRequiredException("Nï¿½MERO");
 		}
 		
 		if(!StringUtil.isNotBlank(entidade.getDadosPessoa().getEndereco().getBairro())){
@@ -209,7 +223,7 @@ public class UserBOImpl implements UserBO{
 		}
 
 		if(!(StringUtil.isNotBlank(entidade.getUsername()))){
-			throw new ValidationFormRequiredException("USUÁRIO");
+			throw new ValidationFormRequiredException("USUï¿½RIO");
 		}
 
 		if(!(StringUtil.isNotBlank(entidade.getPassword()))){

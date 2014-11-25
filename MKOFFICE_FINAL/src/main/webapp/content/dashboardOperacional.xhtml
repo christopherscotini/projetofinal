@@ -1,3 +1,4 @@
+
 <?xml version='1.0' encoding='ISO-8859-1' ?>
 <ui:composition template="/template/template_main.xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -19,11 +20,7 @@
 				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
 				<span class="divider">/</span>
 			</li>
-			<li class="active">
-				<h:commandLink action="#" value="#{msgs['dashboardcaixa.breadcumb.caixa']}" />
-				<span class="divider">/</span>
-			</li>
-			<li>#{msgs['dashboardcaixa.breadcumb.caixa.visaogeral']}</li>
+			<li>#{msgs['dashboardoperacional.breadcumb.inicial']}</li>
 		</ul>
 	</ui:define>
 	
@@ -41,7 +38,7 @@
 				<div class="widget-body collapse in">
 					<div class="widget-inner">
 						<div style="text-align: center;">
-							<h3><u>#{msgs['dashboardcaixa.lbl.faturamento']}</u></h3>
+							<h3><u>#{msgs['dashboardoperacional.lbl.faturamento']}</u></h3>
 							<h2>R$<h:outputText value="#{dashboardCaixaBean.dashboardCaixa.valorFaturamento}" ><f:converter converterId="decimalConverter" /></h:outputText></h2>
 						</div>
 					</div>
@@ -52,7 +49,7 @@
 				<div class="widget-body collapse in">
 					<div class="widget-inner">
 						<div style="text-align: center;">
-							<h3><u>#{msgs['dashboardcaixa.lbl.numvendas']}</u></h3>
+							<h3><u>#{msgs['dashboardoperacional.lbl.numvendas']}</u></h3>
 							<h2><h:outputText value="#{dashboardCaixaBean.dashboardCaixa.numVendas}" /></h2>
 						</div>
 					</div>
@@ -62,7 +59,7 @@
 				<div class="widget-body collapse in">
 					<div class="widget-inner">
 						<div style="text-align: center;">
-							<h3><u>#{msgs['dashboardcaixa.lbl.numprodutosvendidos']}</u></h3>
+							<h3><u>#{msgs['dashboardoperacional.lbl.numprodutosvendidos']}</u></h3>
 							<H2><h:outputText value="#{dashboardCaixaBean.dashboardCaixa.numProdutosVendidos}" /></H2>
 						</div>
 					</div>
@@ -75,7 +72,7 @@
 				<div class="widget-body collapse in">
 					<div class="widget-inner">
 						<div style="text-align: center;">
-							<h3><u>#{msgs['dashboardcaixa.lbl.produtosmaisvendidos']}</u></h3>
+							<h3><u>#{msgs['dashboardoperacional.lbl.produtosmaisvendidos']}</u></h3>
 							<H2>545</H2>
 						</div>
 					</div>
@@ -85,7 +82,7 @@
 				<div class="widget-body collapse in">
 					<div class="widget-inner">
 						<div style="text-align: center;">
-							<h3><u>#{msgs['dashboardcaixa.lbl.clientemaiscomprou']} (R$)</u></h3>
+							<h3><u>#{msgs['dashboardoperacional.lbl.clientemaiscomprou']} (R$)</u></h3>
 							<H2><h:outputText value="#{dashboardCaixaBean.dashboardCaixa.clienteMaisComprou.cliente.dadosPessoa.nome}" /></H2>
 						</div>
 					</div>
@@ -100,7 +97,7 @@
 				<div class="widget-body collapse in">
 					<div class="widget-inner">
 						<div style="text-align: center;">
-							<h3><u>#{msgs['dashboardcaixa.lbl.gastos']}</u></h3>
+							<h3><u>#{msgs['dashboardoperacional.lbl.gastos']}</u></h3>
 							<h2>R$<h:outputText value="#{dashboardCaixaBean.dashboardCaixa.valorGasto}" ><f:converter converterId="decimalConverter" /></h:outputText></h2>
 						</div>
 					</div>
@@ -110,7 +107,7 @@
 				<div class="widget-body collapse in">
 					<div class="widget-inner">
 						<div style="text-align: center;">
-							<h3><u>#{msgs['dashboardcaixa.lbl.numpedidos']}</u></h3>
+							<h3><u>#{msgs['dashboardoperacional.lbl.numpedidos']}</u></h3>
 							<H2><h:outputText value="#{dashboardCaixaBean.dashboardCaixa.numPedidos}" /></H2>
 						</div>
 					</div>
@@ -120,7 +117,7 @@
 				<div class="widget-body collapse in">
 					<div class="widget-inner">
 						<div style="text-align: center;">
-							<h3><u>#{msgs['dashboardcaixa.lbl.numprodutoscompradps']}</u></h3>
+							<h3><u>#{msgs['dashboardoperacional.lbl.numprodutoscompradps']}</u></h3>
 							<H2><h:outputText value="#{dashboardCaixaBean.dashboardCaixa.numProdutosComprados}" /></H2>
 						</div>
 					</div>
@@ -133,7 +130,7 @@
 				<div class="widget-body collapse in">
 					<div class="widget-inner">
 						<div style="text-align: center;">
-							<h3><u>#{msgs['dashboardcaixa.lbl.produtosmenosvendidos']}</u></h3>
+							<h3><u>#{msgs['dashboardoperacional.lbl.produtosmenosvendidos']}</u></h3>
 							<H2>545</H2>
 						</div>
 					</div>

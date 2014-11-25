@@ -18,24 +18,28 @@ public class ReportEstoqueRepository extends JpaGenericDao<ProdutoMovimentadoDTO
 	public List<ProdutoMovimentadoDTO> gerarProdutosMaisVendidos(Integer anoFiltro, Long idUsuario) {
 		
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT h.codCatalogo AS PRODUTO, count(*) AS NUM_MOVIMENTADO FROM HistoricoVendasEntity h").append(" ");
-		query.append("WHERE h.codVenda.usuario.id = :idUsuario").append(" ");
-		query.append("GROUP BY h.codCatalogo").append(" ");
-		query.append("ORDER BY count(*) desc, h.codCatalogo").append(" ");
+		query.append("SELECT e.codCatalogo, sum(e.qtdeMovimentadoProduto) AS COMPRADOS FROM EstoqueEntity e").append(" ");
+		query.append("WHERE e.tipoFluxoEstoque.fluxoSaida = 0").append(" ");
+		query.append("AND e.usuario = :idUsuario").append(" ");
+		if(!anoFiltro.equals(9999)){query.append("AND e.dtMovimentacao BETWEEN '"+anoFiltro+"-01-01 00:00:00' AND '"+anoFiltro+"-12-31 23:59:59'").append(" ");}
+		query.append("GROUP BY e.codCatalogo").append(" ");
+		query.append("ORDER BY count(*) desc, e.codCatalogo").append(" ");
 		
-		return extract((List<Object[]>)getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList());
+		return extract((List<Object[]>)getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).setMaxResults(10).getResultList());
 		
 	}
 
 	public List<ProdutoMovimentadoDTO> gerarProdutosMenosVendidos(Integer anoFiltro, Long idUsuario) {
 		
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT h.codCatalogo AS PRODUTO, count(*) AS NUM_MOVIMENTADO FROM HistoricoVendasEntity h").append(" ");
-		query.append("WHERE h.codVenda.usuario.id = :idUsuario").append(" ");
-		query.append("GROUP BY h.codCatalogo").append(" ");
-		query.append("ORDER BY count(*), h.codCatalogo").append(" ");
+		query.append("SELECT e.codCatalogo, sum(e.qtdeMovimentadoProduto) AS COMPRADOS FROM EstoqueEntity e").append(" ");
+		query.append("WHERE e.tipoFluxoEstoque.fluxoSaida = 1").append(" ");
+		query.append("AND e.usuario = :idUsuario").append(" ");
+		if(!anoFiltro.equals(9999)){query.append("AND e.dtMovimentacao BETWEEN '"+anoFiltro+"-01-01 00:00:00' AND '"+anoFiltro+"-12-31 23:59:59'").append(" ");}
+		query.append("GROUP BY e.codCatalogo").append(" ");
+		query.append("ORDER BY count(*) desc, e.codCatalogo").append(" ");
 		
-		return extract((List<Object[]>)getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList());
+		return extract((List<Object[]>)getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).setMaxResults(10).getResultList());
 	}
 
 	

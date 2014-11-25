@@ -22,7 +22,7 @@ public interface ReportBO {
 
 	List<ReportRetencaoClientesDTO> getReportRetencaoClientes(Date dataCorteFiltro, Long idUsuario);
 	
-	DashboardCaixaDTO getReportVisaoGeralCaixa(Date ano, Long idUsuario);
+	DashboardCaixaDTO getDashboardOperacional(Date ano, Long idUsuario);
 
 	BigDecimal getSaldoUsuario(UserEntity usuario);
 

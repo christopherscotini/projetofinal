@@ -10,6 +10,7 @@
 	</ui:define>
 	
 	<ui:define name="jsImports">
+	
 	</ui:define>
 
 	<ui:define name="breadcrumb">
@@ -45,7 +46,7 @@
 						<h:panelGrid columns="2" id="gridFiltro" >
 							<h:outputLabel value="#{msgs['produtomaismenosvendidos.lbl.anode']}:" />
 							<h:selectOneMenu value="#{reportProdutosMaisMenosVendidosBean.anoFiltro}">
-								<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}"/>
+								<f:selectItem itemLabel="#{msgs['generico.lbl_todos']}" itemValue="9999"/>
 								<f:selectItems value="#{reportProdutosMaisMenosVendidosBean.comboAnosFiltro}" var="a" itemLabel="#{a}" itemValue="#{a}"/>
 							</h:selectOneMenu>
 						</h:panelGrid>
@@ -81,7 +82,6 @@
 								style="margin-top:10px;"
 								var="result" rows="10" rowKey="#{result}" 
 								value="#{reportProdutosMaisMenosVendidosBean.report.produtosMaisVendidos}" 
-								paginator="true" paginatorPosition="bottom" 
 								emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}." >
 							
 							<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" width="35%"	sortBy="#{result.produto.codProduto}">
@@ -110,7 +110,6 @@
 								style="margin-top:10px;"
 								var="result" rows="10" rowKey="#{result}" 
 								value="#{reportProdutosMaisMenosVendidosBean.report.produtosMenosVendidos}" 
-								paginator="true" paginatorPosition="bottom" 
 								emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}." >
 							
 							<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" width="35%"	sortBy="#{result.produto.codProduto}">
@@ -127,6 +126,19 @@
 				</div>
 			</div>
 		</div>
+		
+		<hr class="lin" />
+				
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
+					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
+					action="#{loginBean.telaIndex()}" ajax="false" />
+<!-- 						<p:commandButton rendered="true" id="btnAvancar" value="Movimentar produtos em estoque" -->
+<!-- 							action="#{estoqueBean.selecionarProdutosParaEstoque()}" ajax="false" /> -->
+			</div>
+			<div style="height: 10px;width: 10px;"></div>
+		</h:panelGroup>
 		
 		
 	</ui:define>

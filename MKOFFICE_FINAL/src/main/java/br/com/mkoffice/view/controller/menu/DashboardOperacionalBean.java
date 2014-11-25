@@ -1,4 +1,4 @@
-package br.com.mkoffice.view.controller.menu.caixa;
+package br.com.mkoffice.view.controller.menu;
 
 import java.util.Date;
 
@@ -10,15 +10,19 @@ import br.com.mkoffice.view.controller.AbstractModelBean;
 
 @ManagedBean
 @SessionScoped
-public class DashboardCaixaBean extends AbstractModelBean{
+public class DashboardOperacionalBean extends AbstractModelBean{
 
-	private final String TELA_DASHBOARD_CAIXA = "/content/m-caixa/dashboardCaixa.xhtml";
+	private final String TELA_DASHBOARD_CAIXA = "/content/dashboardOperacional.xhtml";
 	private DashboardCaixaDTO dashboardCaixa;
 	
 	
+	public DashboardOperacionalBean() {
+		
+	}
+	
 	@Override
 	public String iniciarTela() {
-		dashboardCaixa = reportBO.getReportVisaoGeralCaixa(new Date(), getLoginBean().getUsuario().getId());
+		dashboardCaixa = reportBO.getDashboardOperacional(new Date(), getLoginBean().getUsuario().getId());
 		return TELA_DASHBOARD_CAIXA;
 	}
 

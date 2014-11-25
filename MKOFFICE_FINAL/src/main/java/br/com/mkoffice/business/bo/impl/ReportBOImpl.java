@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import br.com.mkoffice.business.bo.ReportBO;
 import br.com.mkoffice.business.exception.ValidationFormRequiredException;
+import br.com.mkoffice.dao.jpa.cadastro.DashboardOperacionalRepository;
 import br.com.mkoffice.dao.jpa.cadastro.ParcelaRepository;
 import br.com.mkoffice.dao.jpa.cadastro.PedidoRepository;
 import br.com.mkoffice.dao.jpa.cadastro.ReportClienteRepository;
@@ -40,6 +41,9 @@ public class ReportBOImpl implements ReportBO{
 	
 	@Inject
 	private PedidoRepository pedidoRepository = null;
+
+	@Inject
+	private DashboardOperacionalRepository dashboardOperacionalRepository = null;
 	
 	
 	@Override
@@ -74,11 +78,11 @@ public class ReportBOImpl implements ReportBO{
 	}
 
 	@Override
-	public DashboardCaixaDTO getReportVisaoGeralCaixa(Date ano, Long idUsuario) {
+	public DashboardCaixaDTO getDashboardOperacional(Date ano, Long idUsuario) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(ano);
 		Integer anoFiltro = c.get(Calendar.YEAR);
-		return parcelaRepository.gerarRelatorioDashboardCaixa(anoFiltro, idUsuario);
+		return dashboardOperacionalRepository.gerarRelatorioDashboardCaixa(anoFiltro, idUsuario);
 	}
 	
 	@Override

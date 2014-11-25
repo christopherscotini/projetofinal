@@ -1,9 +1,12 @@
 package br.com.mkoffice.view.controller;
 
+import java.math.BigDecimal;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import br.com.mkoffice.exceptions.BusinessException;
+import br.com.mkoffice.model.ParametrosDashboardEntity;
 import br.com.mkoffice.model.admin.UserEntity;
 import br.com.mkoffice.model.embeddable.Endereco;
 import br.com.mkoffice.model.embeddable.Pessoa;
@@ -26,6 +29,7 @@ public class FormularioUsuarioBean extends AbstractModelBean{
 		private final String TELA_CADASTRO = "/content/cadastro-usuarios/formularioNovosUsuarios.xhtml";
 		private ClienteVO vo = null;
 		private String password = null;
+		private ParametrosDashboardEntity parametros;
 		
 		@Override
 		public String iniciarTela() {
@@ -57,12 +61,22 @@ public class FormularioUsuarioBean extends AbstractModelBean{
 					}else{
 						FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.senhasnaoconferem"));
 						return "";
+					}if(parametros.getValorLimiteGasto() == null || parametros.getValorLimiteGasto().compareTo(BigDecimal.ZERO) <= 0){
+						FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.valorlimitegastosinvalido"));
+						return "";
+					}else{
+						if(parametros.getValorMetaFaturamento() == null || parametros.getValorMetaFaturamento().compareTo(BigDecimal.ZERO) <= 0){
+							FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.valorfaturamentoinvalido"));
+							return "";
+						}
 					}
 				}
-				userBO.adicionarEntidade(usuarioCadastro);
+				
+				usuarioCadastro = userBO.adicionarEntidade(usuarioCadastro);
+				parametros.setUsuario(usuarioCadastro); 
+				userBO.atualizarParametros(parametros);
 				FacesUtils.addMessageInclusaoSucesso();
 			}catch(BusinessException b){
-				
 				FacesUtils.addErrorMessage(b.getMessage());
 				return "";
 			}
@@ -110,6 +124,7 @@ public class FormularioUsuarioBean extends AbstractModelBean{
 			vo.setUsuario(new UserEntity());
 			vo.setEndereco(new Endereco());
 			password = "";
+			parametros = new ParametrosDashboardEntity();
 		}
 
 		/**		**************************		  GETs E SETs      ****************************/
@@ -128,6 +143,14 @@ public class FormularioUsuarioBean extends AbstractModelBean{
 
 		public void setPassword(String password) {
 			this.password = password;
+		}
+
+		public ParametrosDashboardEntity getParametros() {
+			return parametros;
+		}
+
+		public void setParametros(ParametrosDashboardEntity parametros) {
+			this.parametros = parametros;
 		}
 
 }

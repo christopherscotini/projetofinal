@@ -62,7 +62,7 @@
 						<p:outputLabel value="#{msgs['dadosvenda.lbl.descontode']}:" for="txtValorTotalDesc"
 							styleClass="HtmlOutputLabelResposta" />
 						<p:inputText value="#{efetuarVendaBean.venda.valorDescontoVenda}"
-							id="txtValorTotalDesc" alt="decimalBr8" size="13" maxlength="8" styleClass="input-5left">
+							id="txtValorTotalDesc" size="13" maxlength="10" styleClass="input-5left currency">
 							<f:converter converterId="decimalConverter" />
 							<p:ajax event="blur" listener="#{efetuarVendaBean.onBlurValorDesconto()}" update="group-valor-final group-valor-lucro" />
 						</p:inputText>

@@ -1,13 +1,9 @@
 package br.com.mkoffice.view.controller.menu.report;
 
-import java.util.Date;
-import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import br.com.mkoffice.dto.DataFilter;
-import br.com.mkoffice.dto.reports.cliente.ReportRetencaoClientesDTO;
 import br.com.mkoffice.dto.reports.pedido.ReportPedidoConsolidadoDTO;
 import br.com.mkoffice.exceptions.BusinessException;
 import br.com.mkoffice.view.controller.AbstractModelBean;

@@ -75,7 +75,7 @@
 						<h:outputLabel value="#{efetuarPedidoBean.pedidoDTO.pontosTotalPedido} pts" id="txtTotPontos" styleClass="input-5left HtmlOutputTextResposta" />
 						
 						<h:outputLabel value="#{msgs['dadospedido.lbl.valorbonusutilizado']}:" for="txtValorBonus" styleClass="HtmlOutputLabelResposta" />
-						<p:inputText value="#{efetuarPedidoBean.pedidoDTO.valorBonusUtilizado}" id="txtValorBonus" styleClass="input-5left" alt="decimalBr8" size="13" maxlength="8">
+						<p:inputText value="#{efetuarPedidoBean.pedidoDTO.valorBonusUtilizado}" id="txtValorBonus" styleClass="input-5left currency" size="13" maxlength="10">
 							<f:converter converterId="decimalConverter" />
 							<p:ajax event="blur"
 								listener="#{efetuarPedidoBean.onBlurValorFreteAndBonusUtilizado()}"
@@ -83,7 +83,7 @@
 						</p:inputText>
 		
 						<h:outputLabel value="#{msgs['dadospedido.lbl.valorfrete']}:" for="txtValorFrete" styleClass="HtmlOutputLabelResposta"/>
-						<p:inputText value="#{efetuarPedidoBean.pedidoDTO.valorFrete}" id="txtValorFrete" styleClass="input-5left" alt="decimalBr8" size="13" maxlength="6">
+						<p:inputText value="#{efetuarPedidoBean.pedidoDTO.valorFrete}" id="txtValorFrete" styleClass="input-5left currency" size="13" maxlength="10">
 							<f:converter converterId="decimalConverter" />
 							<p:ajax event="blur" listener="#{efetuarPedidoBean.onBlurValorFreteAndBonusUtilizado()}" update="group-valor-final group-valor-lucro"/>
 						</p:inputText>

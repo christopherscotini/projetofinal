@@ -29,6 +29,7 @@
 		
 		<class>br.com.mkoffice.model.agenda.AgendaEntity</class>
 		<class>br.com.mkoffice.model.agenda.TipoAgendaEntity</class>
+		<class>br.com.mkoffice.model.ParametrosDashboardEntity</class>
 
 		<class>br.com.mkoffice.model.admin.UserEntity</class>
 		<class>br.com.mkoffice.model.admin.PermissaoEntity</class>

@@ -158,8 +158,7 @@
 				<h:outputLabel for="txtPrecoDialog" value="#{msgs['catalogoprodutos.lbl.preco']}:"
 					styleClass="HtmlOutputLabelResposta" />
 				<p:inputText id="txtPrecoDialog"
-					value="#{catalogoBean.produtoDto.preco}" maxlength="10"
-					alt="decimalBr8">
+					value="#{catalogoBean.produtoDto.preco}" styleClass="currency" maxlength="10" >
 					<f:converter converterId="decimalConverter" />
 				</p:inputText>
 
