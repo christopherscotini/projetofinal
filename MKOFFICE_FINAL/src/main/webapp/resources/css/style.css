@@ -75,7 +75,6 @@ header a:hover [class^="icon-refresh"], header a:hover [class^="icon-cogs"]  {
 }
 
 .navbar .navbar-inner .info-menu {
-    line-height: 23px;
     text-align: right;
 }
 .navbar .navbar-inner .info-menu img {

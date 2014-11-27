@@ -3,13 +3,10 @@
  */
 package br.com.mkoffice.dao.jpa.cadastro;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import br.com.mkoffice.dao.jpa.JpaGenericDao;
 import br.com.mkoffice.dto.DataFilter;
-import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDTO;
-import br.com.mkoffice.model.ClienteEntity;
 import br.com.mkoffice.model.ParcelasEntity;
 import br.com.mkoffice.utils.MkmtsUtil;
 

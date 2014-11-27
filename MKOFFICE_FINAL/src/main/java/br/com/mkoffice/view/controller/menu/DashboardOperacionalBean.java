@@ -1,28 +1,44 @@
 package br.com.mkoffice.view.controller.menu;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import br.com.mkoffice.dto.reports.DashboardCaixaDTO;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.MeterGaugeChartModel;
+
+import br.com.mkoffice.dto.dashboard.DashboardOperacionalDTO;
+import br.com.mkoffice.model.ParametrosDashboardEntity;
 import br.com.mkoffice.view.controller.AbstractModelBean;
 
 @ManagedBean
 @SessionScoped
 public class DashboardOperacionalBean extends AbstractModelBean{
 
-	private final String TELA_DASHBOARD_CAIXA = "/content/dashboardOperacional.xhtml";
-	private DashboardCaixaDTO dashboardCaixa;
-	
+	private final String TELA_DASHBOARD_CAIXA = "/index.xhtml";
+	private DashboardOperacionalDTO dashboardOperacional;
+	private MeterGaugeChartModel graficoFaturamento;
+	private MeterGaugeChartModel graficoLucroDesejado;
+	private BarChartModel graficoRankingClientes;
+	private ParametrosDashboardEntity parametros;
 	
 	public DashboardOperacionalBean() {
-		
 	}
 	
 	@Override
 	public String iniciarTela() {
-		dashboardCaixa = reportBO.getDashboardOperacional(new Date(), getLoginBean().getUsuario().getId());
+		dashboardOperacional = dashboardOperacionalBO.gerarDashBoard(loginBean.getUsuario().getId());
+		parametros = parametroDashboardBO.carregarParametros(loginBean.getUsuario().getId());
+		montarGraficosCaixa();
+		montarGraficosCliente();
+		
 		return TELA_DASHBOARD_CAIXA;
 	}
 
@@ -36,12 +52,116 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 		return null;
 	}
 
-	public DashboardCaixaDTO getDashboardCaixa() {
-		return dashboardCaixa;
+	private void montarGraficosCaixa(){
+		montarGraficoLucroEstimado();
+		montarGraficoFaturamento();
+		
+	}
+	
+	private void montarGraficoLucroEstimado(){
+		
+		final Double d3 = parametros.getValorLucroDesejado().doubleValue();
+		final Double d2 = d3*2;
+		final Double d1 = d2+d3;
+		
+        List<Number> intervals = new ArrayList<Number>(){{add(d3);add(d2);add(d1);}};
+
+        graficoLucroDesejado = new MeterGaugeChartModel(dashboardOperacional.getValorLucroMesAtual(), intervals);
+        graficoLucroDesejado.setTitle("Lucro");
+        graficoLucroDesejado.setSeriesColors("cc6666,E7E658,66cc66");
+        graficoLucroDesejado.setGaugeLabel("");
+        graficoLucroDesejado.setGaugeLabelPosition("bottom");
+        graficoLucroDesejado.setLabelHeightAdjust(110);
+        graficoLucroDesejado.setIntervalOuterRadius(90);
+		
+	}
+	private void montarGraficoFaturamento(){
+		final Double d3 = parametros.getValorMetaFaturamento().doubleValue();
+		final Double d2 = d3*2;
+		final Double d1 = d2+d3;
+		
+		List<Number> intervals = new ArrayList<Number>(){{add(d3);add(d2);add(d1);}};
+		
+		graficoFaturamento = new MeterGaugeChartModel(dashboardOperacional.getValorFaturamentoMesAtual(), intervals);
+		graficoFaturamento.setTitle("Faturamento");
+		graficoFaturamento.setSeriesColors("cc6666,E7E658,66cc66");
+		graficoFaturamento.setGaugeLabel("");
+		graficoFaturamento.setGaugeLabelPosition("bottom");
+		graficoFaturamento.setLabelHeightAdjust(110);
+		graficoFaturamento.setIntervalOuterRadius(90);
+		
+	}
+	
+	private void montarGraficosCliente(){
+		montarGraficoRankingClientes();
+	}
+	
+
+	private void montarGraficoRankingClientes(){
+		graficoRankingClientes = new BarChartModel();
+		
+		ChartSeries clientes = new ChartSeries();
+		clientes.setLabel("Clientes");
+		
+		BigDecimal valorMax = BigDecimal.ZERO;
+		if(dashboardOperacional.getRankingClientes().size() <= 0){
+			clientes.set("", 0);
+			valorMax = new BigDecimal("100");
+		}else{
+	        for (int i = 0; i < dashboardOperacional.getRankingClientes().size(); i++) {
+	        	clientes.set(dashboardOperacional.getRankingClientes().get(i).getCliente().getDadosPessoa().getNome().substring(0, 10), dashboardOperacional.getRankingClientes().get(i).getSomaValorCompra());
+	        	if(dashboardOperacional.getRankingClientes().get(i).getSomaValorCompra().compareTo(valorMax) > 0){
+	        		valorMax = dashboardOperacional.getRankingClientes().get(i).getSomaValorCompra();
+	        	}
+	        }
+		}
+	 
+        graficoRankingClientes.addSeries(clientes);
+		graficoRankingClientes.setTitle("Ranking das Clientes que mais compraram");
+		graficoRankingClientes.setLegendPosition("ne");
+         
+        Axis xAxis = graficoRankingClientes.getAxis(AxisType.X);
+        xAxis.setLabel("Clientes");
+         
+        Axis yAxis = graficoRankingClientes.getAxis(AxisType.Y);
+        yAxis.setLabel("(R$) Montante");
+        yAxis.setMin(BigDecimal.ZERO);
+        valorMax = valorMax.add(valorMax.multiply(new BigDecimal("0.20")));
+        yAxis.setMax(valorMax);
+	}
+	
+
+	public DashboardOperacionalDTO getDashboardOperacional() {
+		return dashboardOperacional;
 	}
 
-	public void setDashboardCaixa(DashboardCaixaDTO dashboardCaixa) {
-		this.dashboardCaixa = dashboardCaixa;
+	public void setDashboardOperacional(DashboardOperacionalDTO dashboardOperacional) {
+		this.dashboardOperacional = dashboardOperacional;
 	}
+
+	public MeterGaugeChartModel getGraficoFaturamento() {
+		return graficoFaturamento;
+	}
+
+	public void setGraficoFaturamento(MeterGaugeChartModel graficoFaturamento) {
+		this.graficoFaturamento = graficoFaturamento;
+	}
+
+	public MeterGaugeChartModel getGraficoLucroDesejado() {
+		return graficoLucroDesejado;
+	}
+
+	public void setGraficoLucroDesejado(MeterGaugeChartModel graficoLucroDesejado) {
+		this.graficoLucroDesejado = graficoLucroDesejado;
+	}
+
+	public BarChartModel getGraficoRankingClientes() {
+		return graficoRankingClientes;
+	}
+
+	public void setGraficoRankingClientes(BarChartModel graficoRankingClientes) {
+		this.graficoRankingClientes = graficoRankingClientes;
+	}
+
 
 }

@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.mkoffice.dto.DataFilter;
-import br.com.mkoffice.dto.reports.DashboardCaixaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportRetencaoClientesDTO;
@@ -22,8 +21,6 @@ public interface ReportBO {
 
 	List<ReportRetencaoClientesDTO> getReportRetencaoClientes(Date dataCorteFiltro, Long idUsuario);
 	
-	DashboardCaixaDTO getDashboardOperacional(Date ano, Long idUsuario);
-
 	BigDecimal getSaldoUsuario(UserEntity usuario);
 
 	ReportProdutosMaisMenosVendidosDTO getReportProdutoMaisMenosVendidos(Integer anoFiltro, Long idUsuario);

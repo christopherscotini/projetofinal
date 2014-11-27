@@ -183,7 +183,7 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 		}
 		
 		numParcelasPagamento = null;
-		dtVctoPrimeiraParcela = new Date();
+		dtVctoPrimeiraParcela = pedidoDTO.getDtPedido();
 		
 		pedidoDTO.setFormaDePagamento(getCboFormaPagamento().get(0));
 		onChangeFormaPagamento();

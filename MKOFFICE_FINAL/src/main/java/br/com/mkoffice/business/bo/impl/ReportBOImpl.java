@@ -1,7 +1,6 @@
 package br.com.mkoffice.business.bo.impl;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -10,19 +9,16 @@ import javax.inject.Inject;
 
 import br.com.mkoffice.business.bo.ReportBO;
 import br.com.mkoffice.business.exception.ValidationFormRequiredException;
-import br.com.mkoffice.dao.jpa.cadastro.DashboardOperacionalRepository;
 import br.com.mkoffice.dao.jpa.cadastro.ParcelaRepository;
 import br.com.mkoffice.dao.jpa.cadastro.PedidoRepository;
 import br.com.mkoffice.dao.jpa.cadastro.ReportClienteRepository;
 import br.com.mkoffice.dao.jpa.cadastro.ReportEstoqueRepository;
 import br.com.mkoffice.dto.DataFilter;
-import br.com.mkoffice.dto.reports.DashboardCaixaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportRetencaoClientesDTO;
 import br.com.mkoffice.dto.reports.estoque.ReportProdutosMaisMenosVendidosDTO;
 import br.com.mkoffice.dto.reports.pedido.ReportPedidoConsolidadoDTO;
-import br.com.mkoffice.model.admin.FluxoEstoqueEntity;
 import br.com.mkoffice.model.admin.UserEntity;
 import br.com.mkoffice.model.estoque.EstoqueEntity;
 import br.com.mkoffice.utils.MkmtsUtil;
@@ -42,10 +38,6 @@ public class ReportBOImpl implements ReportBO{
 	@Inject
 	private PedidoRepository pedidoRepository = null;
 
-	@Inject
-	private DashboardOperacionalRepository dashboardOperacionalRepository = null;
-	
-	
 	@Override
 	public List<ReportPromocaoClientePorVolumeVendaDTO> getReportPromocaoClientePorVolume(BigDecimal valorCorte, Integer anoFiltro, Long idUsuario) {
 		validadeFiltroPromocaoClientePorVolumeVenda(valorCorte, anoFiltro);
@@ -77,14 +69,6 @@ public class ReportBOImpl implements ReportBO{
 		}
 	}
 
-	@Override
-	public DashboardCaixaDTO getDashboardOperacional(Date ano, Long idUsuario) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(ano);
-		Integer anoFiltro = c.get(Calendar.YEAR);
-		return dashboardOperacionalRepository.gerarRelatorioDashboardCaixa(anoFiltro, idUsuario);
-	}
-	
 	@Override
 	public BigDecimal getSaldoUsuario(UserEntity usuario) {
 		StringBuilder q1 = new StringBuilder("select sum(p.valorPago) from ParcelasEntity p where p.codVenda is not null and p.usuario.id = :idUsuario");

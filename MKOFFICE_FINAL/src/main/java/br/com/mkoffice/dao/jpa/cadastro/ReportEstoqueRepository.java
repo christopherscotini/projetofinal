@@ -1,13 +1,11 @@
 package br.com.mkoffice.dao.jpa.cadastro;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import br.com.mkoffice.dao.jpa.JpaGenericDao;
 import br.com.mkoffice.dto.DataFilter;
 import br.com.mkoffice.dto.reports.estoque.ProdutoMovimentadoDTO;
-import br.com.mkoffice.model.admin.FluxoEstoqueEntity;
 import br.com.mkoffice.model.estoque.EstoqueEntity;
 import br.com.mkoffice.model.produto.CatalogoEntity;
 import br.com.mkoffice.utils.MkmtsUtil;

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50612
 File Encoding         : 65001
 
-Date: 2014-11-07 13:31:31
+Date: 2014-11-27 17:30:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -473,17 +473,17 @@ CREATE TABLE `tb_cliente` (
 -- ----------------------------
 -- Records of tb_cliente
 -- ----------------------------
-INSERT INTO `tb_cliente` VALUES ('1', '2013-10-29 00:00:00', 'gomessilvae@gmail.com', 'Jd. Belval', '06422-100', 'Barueri', 'Apto 42 - Bloco C', 'SP', 'Estrada da nações', '395', null, 'Elaine Gomes da Silva ', '1143820180', '1172758962', 'Feminino', null, '2013-11-21 00:00:00', null, 'Pele mista\r\nBase beige 6 / bronze 1', '2');
-INSERT INTO `tb_cliente` VALUES ('2', '2013-11-08 00:00:00', 'ritanegro@gmail.com', 'Vila São Francisco', '05351-035', 'São Paulo', 'Apto 53 - Perissá', 'SP', 'RUA DR HELIO FIDELIS', '26', null, 'Rita de Cassia Negro da Silva', '11996172320', '1137842780', 'Feminino', null, '2013-11-21 00:00:00', null, 'Pele mista\r\nBase bronze 2', '2');
-INSERT INTO `tb_cliente` VALUES ('3', '2013-07-05 00:00:00', 'amanda.fercoelho@hotmail.com', 'Jaguaribe', '06050-300', 'Osasco', 'Apto 91B', 'SP', 'Av. José Julio', '541', null, 'Amanda C. F. Pissarra', '11994422869', '1136542734', 'Feminino', null, '2013-11-21 00:00:00', null, 'Pele norma\r\nBase Ivory 5', '2');
+INSERT INTO `tb_cliente` VALUES ('1', '2013-10-29 00:00:00', 'gomessilvae@gmail.com', 'Jd. Belval', '06422-100', 'Barueri', 'Apto 42 - Bloco C', 'SP', 'Estrada da nações', '395', null, 'Elaine Gomes da Silva ', '1143820180', '1172758962', 'Feminino', null, null, null, 'Pele mista\r\nBase beige 6 / bronze 1', '2');
+INSERT INTO `tb_cliente` VALUES ('2', '2013-11-08 00:00:00', 'ritanegro@gmail.com', 'Vila São Francisco', '05351-035', 'São Paulo', 'Apto 53 - Perissá', 'SP', 'RUA DR HELIO FIDELIS', '26', null, 'Rita de Cassia Negro da Silva', '11996172320', '1137842780', 'Feminino', null, null, null, 'Pele mista\r\nBase bronze 2', '2');
+INSERT INTO `tb_cliente` VALUES ('3', '2013-07-05 00:00:00', 'amanda.fercoelho@hotmail.com', 'Jaguaribe', '06050-300', 'Osasco', 'Apto 91B', 'SP', 'Av. José Julio', '541', null, 'Amanda C. F. Pissarra', '11994422869', '1136542734', 'Feminino', null, null, null, 'Pele norma\r\nBase Ivory 5', '2');
 INSERT INTO `tb_cliente` VALUES ('4', '2013-05-04 00:00:00', 'caroline.silva73@yahoo.com', 'Km 18', '06192-040', 'Osasco', '', 'SP', 'Rua Guilherme de Jesus', '08', null, 'Caroline Silva', '11972177209', '1136952767', 'Feminino', '2013-08-24 00:00:00', null, null, 'Pele normal\r\nBase beige 2', '2');
 INSERT INTO `tb_cliente` VALUES ('5', '2013-04-03 00:00:00', 'evelynalves@hotmail.com', 'Metalúrgicos', '06150-210', 'Osasco', '', 'SP', 'Rua Antonio Coutinho Neto', '09', null, 'Evelyn Carolina Alves', '11987066542', '1128013293', 'Feminino', '2013-08-24 00:00:00', null, null, 'Pele normal\r\nBase beige 2', '2');
 INSERT INTO `tb_cliente` VALUES ('6', '2013-06-25 00:00:00', 'jullymacedo@gmail.com', 'Piratininga', '06233-030', 'Osasco', 'Bloco 26 ap 32', 'SP', 'Rua Paula Rodrigues', '175', null, 'Juliana Macedo de Noronha', '11983951581', '1135998426', 'Feminino', '2013-08-24 00:00:00', null, null, 'Pele Oleose\r\nBase beige 3', '2');
-INSERT INTO `tb_cliente` VALUES ('7', '2013-06-08 00:00:00', 'tgbonatelli@hotmail.com', 'Sumarezinho', '05440-000', 'São Paulo', 'Ap 123c', 'SP', 'Rua Paulistânia', '46', null, 'Tarsila Grigolin Bonatelli', '11989968118', '1133845878', 'Feminino', null, '2013-11-21 00:00:00', null, 'Base beige 3\r\nPela mista\r\nUsa a linha Botanical Effects - Firmador para os olhos Timewise - Microdermoabrasão Timewise\r\nGosta de perfumes cítricos', '2');
-INSERT INTO `tb_cliente` VALUES ('8', '2013-08-02 00:00:00', 'camillacoscia@gmail.com', 'Parque São Domingos', '05126-040', 'São Paulo', 'Apto 45A', 'SP', 'Rua João Veloso de Oliveira0', '165', null, 'Camilla Coscia Neves Rebello', '11954467572', null, 'Feminino', null, '2013-11-26 00:00:00', null, 'Base beige 5\r\nPele normal', '2');
-INSERT INTO `tb_cliente` VALUES ('9', '2013-12-27 00:00:00', 'revianna8@hotmail.com', 'Brasilândia', '02844-060', 'São Paulo', ' Bl 29 - apto 71', 'SP', 'Rua Tiro ao Pombo', '402', null, 'Renata Cunha Vianna', '11996379658', '1123731897', 'Feminino', null, '2013-11-26 00:00:00', null, 'Base Beige 2\r\nPele normal', '2');
-INSERT INTO `tb_cliente` VALUES ('10', '2013-07-19 00:00:00', 'sonia3923@hotmail.com', 'Jd. do Tiro', '32681-240', 'São Paulo', 'Bloco 8 - Apto 124', 'SP', 'Rua Rui de Moraes Apocalipse', '326', null, 'Sonia Cunha', '11970576979', '1139233957', 'Feminino', null, '2013-11-26 00:00:00', null, 'Base beige 5\r\nPele normal', '2');
-INSERT INTO `tb_cliente` VALUES ('11', '2013-03-11 00:00:00', 'ediana.vieira@hotmail.com', 'Presidente Altino', '06260-180', 'Osasco', '', 'SP', 'R Rev. João e pereira', '459', null, 'Ediana Vieira santos', '11997156463', null, 'Feminino', null, '2013-11-26 00:00:00', null, 'Base Beige 8\r\nPele mista', '2');
+INSERT INTO `tb_cliente` VALUES ('7', '2013-06-08 00:00:00', 'tgbonatelli@hotmail.com', 'Sumarezinho', '05440-000', 'São Paulo', 'Ap 123c', 'SP', 'Rua Paulistânia', '46', null, 'Tarsila Grigolin Bonatelli', '11989968118', '1133845878', 'Feminino', null, null, null, 'Base beige 3\r\nPela mista\r\nUsa a linha Botanical Effects - Firmador para os olhos Timewise - Microdermoabrasão Timewise\r\nGosta de perfumes cítricos', '2');
+INSERT INTO `tb_cliente` VALUES ('8', '2013-08-02 00:00:00', 'camillacoscia@gmail.com', 'Parque São Domingos', '05126-040', 'São Paulo', 'Apto 45A', 'SP', 'Rua João Veloso de Oliveira0', '165', null, 'Camilla Coscia Neves Rebello', '11954467572', null, 'Feminino', null, null, null, 'Base beige 5\r\nPele normal', '2');
+INSERT INTO `tb_cliente` VALUES ('9', '2013-12-27 00:00:00', 'revianna8@hotmail.com', 'Brasilândia', '02844-060', 'São Paulo', ' Bl 29 - apto 71', 'SP', 'Rua Tiro ao Pombo', '402', null, 'Renata Cunha Vianna', '11996379658', '1123731897', 'Feminino', null, null, null, 'Base Beige 2\r\nPele normal', '2');
+INSERT INTO `tb_cliente` VALUES ('10', '2013-07-19 00:00:00', 'sonia3923@hotmail.com', 'Jd. do Tiro', '32681-240', 'São Paulo', 'Bloco 8 - Apto 124', 'SP', 'Rua Rui de Moraes Apocalipse', '326', null, 'Sonia Cunha', '11970576979', '1139233957', 'Feminino', null, null, null, 'Base beige 5\r\nPele normal', '2');
+INSERT INTO `tb_cliente` VALUES ('11', '2013-03-11 00:00:00', 'ediana.vieira@hotmail.com', 'Presidente Altino', '06260-180', 'Osasco', '', 'SP', 'R Rev. João e pereira', '459', null, 'Ediana Vieira santos', '11997156463', null, 'Feminino', null, null, null, 'Base Beige 8\r\nPele mista', '2');
 
 -- ----------------------------
 -- Table structure for tb_configuracao_sistema
@@ -618,6 +618,26 @@ INSERT INTO `tb_forma_pgto` VALUES ('3', 'BOLETO', '1', '0');
 INSERT INTO `tb_forma_pgto` VALUES ('4', 'CARTÃO DE CRÉDITO', '4', '1');
 
 -- ----------------------------
+-- Table structure for tb_parametro_dashboard
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_parametro_dashboard`;
+CREATE TABLE `tb_parametro_dashboard` (
+  `ID_PARAMETRO` bigint(20) NOT NULL AUTO_INCREMENT,
+  `VL_LUCRO_DESEJADO` decimal(19,2) DEFAULT NULL,
+  `VL_META_FATURAMENTO` decimal(19,2) DEFAULT NULL,
+  `TB_USUARIO_FK` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`ID_PARAMETRO`),
+  KEY `FK463D037DB9C1A942` (`TB_USUARIO_FK`),
+  CONSTRAINT `FK463D037DB9C1A942` FOREIGN KEY (`TB_USUARIO_FK`) REFERENCES `tb_user` (`ID_USER`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of tb_parametro_dashboard
+-- ----------------------------
+INSERT INTO `tb_parametro_dashboard` VALUES ('1', '1000.00', '1000.00', '1');
+INSERT INTO `tb_parametro_dashboard` VALUES ('2', '1000.00', '1000.00', '2');
+
+-- ----------------------------
 -- Table structure for tb_parcela
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_parcela`;
@@ -668,6 +688,8 @@ CREATE TABLE `tb_pedido` (
   PRIMARY KEY (`ID_PEDIDO`),
   UNIQUE KEY `ID_PEDIDO` (`ID_PEDIDO`),
   KEY `FK9C620636B9C1A942` (`TB_USUARIO_FK`),
+  KEY `FK9C620636959CA7F7` (`TB_FORMA_PAGTO_PEDIDO_FK`),
+  CONSTRAINT `FK9C620636959CA7F7` FOREIGN KEY (`TB_FORMA_PAGTO_PEDIDO_FK`) REFERENCES `tb_forma_pgto` (`ID_FORMA_PGTO`),
   CONSTRAINT `FK9C620636B9C1A942` FOREIGN KEY (`TB_USUARIO_FK`) REFERENCES `tb_user` (`ID_USER`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -687,7 +709,11 @@ CREATE TABLE `tb_pedido_join_tb_catalogo` (
   `VL_VLR_TOTAL_COMPRADO` decimal(19,2) DEFAULT NULL,
   `ID_CATALOGO_FK` bigint(20) DEFAULT NULL,
   `ID_PEDIDO_FK` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`ID_JOIN`)
+  PRIMARY KEY (`ID_JOIN`),
+  KEY `FK2FC2297BC23AFF1E` (`ID_PEDIDO_FK`),
+  KEY `FK2FC2297BD01FCCE6` (`ID_CATALOGO_FK`),
+  CONSTRAINT `FK2FC2297BD01FCCE6` FOREIGN KEY (`ID_CATALOGO_FK`) REFERENCES `tb_catalogo` (`ID_CATALOGO`),
+  CONSTRAINT `FK2FC2297BC23AFF1E` FOREIGN KEY (`ID_PEDIDO_FK`) REFERENCES `tb_pedido` (`ID_PEDIDO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -812,7 +838,13 @@ CREATE TABLE `tb_venda` (
   `TB_CLIENTE_TB_VENDA_FK` bigint(20) NOT NULL,
   `TB_FORMA_PAGTO_VENDA_FK` bigint(20) DEFAULT NULL,
   `TB_USUARIO_FK` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`ID_VENDA`)
+  PRIMARY KEY (`ID_VENDA`),
+  KEY `FK6036D32BCFA52D92` (`TB_CLIENTE_TB_VENDA_FK`),
+  KEY `FK6036D32BB9C1A942` (`TB_USUARIO_FK`),
+  KEY `FK6036D32B6D3F8462` (`TB_FORMA_PAGTO_VENDA_FK`),
+  CONSTRAINT `FK6036D32B6D3F8462` FOREIGN KEY (`TB_FORMA_PAGTO_VENDA_FK`) REFERENCES `tb_forma_pgto` (`ID_FORMA_PGTO`),
+  CONSTRAINT `FK6036D32BB9C1A942` FOREIGN KEY (`TB_USUARIO_FK`) REFERENCES `tb_user` (`ID_USER`),
+  CONSTRAINT `FK6036D32BCFA52D92` FOREIGN KEY (`TB_CLIENTE_TB_VENDA_FK`) REFERENCES `tb_cliente` (`ID_CLIENTE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -831,7 +863,11 @@ CREATE TABLE `tb_venda_join_tb_catalogo` (
   `VL_VLR_TOTAL_VENDIDO` decimal(19,2) DEFAULT NULL,
   `ID_CATALOGO_FK` bigint(20) DEFAULT NULL,
   `ID_VENDA_FK` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`ID_JOIN`)
+  PRIMARY KEY (`ID_JOIN`),
+  KEY `FK6E3C4526D01FCCE6` (`ID_CATALOGO_FK`),
+  KEY `FK6E3C452668EDB0EB` (`ID_VENDA_FK`),
+  CONSTRAINT `FK6E3C452668EDB0EB` FOREIGN KEY (`ID_VENDA_FK`) REFERENCES `tb_venda` (`ID_VENDA`),
+  CONSTRAINT `FK6E3C4526D01FCCE6` FOREIGN KEY (`ID_CATALOGO_FK`) REFERENCES `tb_catalogo` (`ID_CATALOGO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

@@ -28,8 +28,8 @@ public class ParametrosDashboardEntity implements Serializable{
 	@Column(name = "VL_META_FATURAMENTO")
 	private BigDecimal valorMetaFaturamento;
 	
-	@Column(name = "VL_LIMITE_GASTO")
-	private BigDecimal valorLimiteGasto;
+	@Column(name = "VL_LUCRO_DESEJADO")
+	private BigDecimal valorLucroDesejado;
 	
 	@ManyToOne
 	@JoinColumn(name = "TB_USUARIO_FK")
@@ -51,12 +51,12 @@ public class ParametrosDashboardEntity implements Serializable{
 		this.valorMetaFaturamento = valorMetaFaturamento;
 	}
 
-	public BigDecimal getValorLimiteGasto() {
-		return valorLimiteGasto;
+	public BigDecimal getValorLucroDesejado() {
+		return valorLucroDesejado;
 	}
 
-	public void setValorLimiteGasto(BigDecimal valorLimiteGasto) {
-		this.valorLimiteGasto = valorLimiteGasto;
+	public void setValorLucroDesejado(BigDecimal valorLucroDesejado) {
+		this.valorLucroDesejado = valorLucroDesejado;
 	}
 
 	public UserEntity getUsuario() {

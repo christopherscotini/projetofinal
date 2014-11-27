@@ -199,7 +199,7 @@ public class EfetuarVendaBean extends AbstractModelBean implements Serializable{
 	public String navegarFinalizarPagamento(){
 		
 		numParcelasPagamento = null;
-		dtVctoPrimeiraParcela = new Date();
+		dtVctoPrimeiraParcela = venda.getDataVenda();
 		venda.setFormaPagamento(getCboFormaPagamento().get(0));
 		onChangeFormaPagamento();	
 		

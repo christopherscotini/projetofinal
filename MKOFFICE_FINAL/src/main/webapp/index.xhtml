@@ -27,18 +27,123 @@
 		<div class="widget">
 			<div class="widget-heading">
 				<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
-				<i class="icon-table"></i> </a>
+				<i class="icon-table"></i> VENDAS</a>
 			</div>
 			<div class="widget-body collapse in">
 				<div class="widget-inner">
-					<h:panelGrid cellpadding="0" cellspacing="0" columns="2" border="0" style="margin-top:10px;">
-						<p:outputLabel value="#{msgs['dadosvenda.lbl.descontode']}:" styleClass="HtmlOutputLabelResposta" />
-						<h:selectOneMenu value="">
-							<f:selectItem itemValue="JAN" itemLabel="JANEIRO" />
-							<f:selectItem itemValue="FEV" itemLabel="FEVEREIRO" />
-							<f:selectItem itemValue="MAR" itemLabel="MARCO" />
-						</h:selectOneMenu>
-					</h:panelGrid>
+					
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
+				<i class="icon-table"></i> CAIXA</a>
+			</div>
+			<div class="widget-body collapse in">
+				<div class="widget-inner">
+					<div class="row-fluid">
+						<div class="span6">
+							<p:chart type="metergauge" model="#{dashboardOperacionalBean.graficoFaturamento}" style="width:400px;height:250px;margin:0 auto;" />
+							<div class="infobox-container">
+								<div class="infobox infobox-green">
+									<div class="infobox-icon">
+										<i class="ace-icon fa fa-money"></i>
+									</div>
+									<div class="infobox-data">
+										<span class="infobox-data-number"> 
+										<h:outputLabel value="#{dashboardOperacionalBean.dashboardOperacional.valorFaturamentoMesAtual}" style="font-size: 22px;" >
+											<f:converter converterId="decimalConverter" />
+										</h:outputLabel>
+										</span>
+										<div class="infobox-content"> em reais (R$)</div>
+									</div>
+									<div class="badge badge-#{dashboardOperacionalBean.dashboardOperacional.percentualDiferencaFaturamentoMesAtualMesAnterior?'success':'important'}" title="em relacao ao mes anterior" style="margin-left: 5px;">
+										#{dashboardOperacionalBean.dashboardOperacional.percentualDiferencaFaturamentoMesAtualMesAnterior}%
+										<i class="ace-icon fa fa-arrow-up"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="span6">
+							<p:chart type="metergauge" model="#{dashboardOperacionalBean.graficoLucroDesejado}" style="width:400px;height:250px;margin:0 auto;" />
+							<div class="infobox-container">
+								<div class="infobox infobox-green">
+									<div class="infobox-icon">
+										<i class="ace-icon fa fa-money"></i>
+									</div>
+									<div class="infobox-data">
+										<span class="infobox-data-number"> 
+										<h:outputLabel value="#{dashboardOperacionalBean.dashboardOperacional.valorLucroMesAtual}" style="font-size: 22px;" >
+											<f:converter converterId="decimalConverter" />
+										</h:outputLabel>
+										</span>
+										<div class="infobox-content"> em reais (R$)</div>
+									</div>
+									<div class="badge badge-#{dashboardOperacionalBean.dashboardOperacional.percentualDiferencaLucroMesAtualMesAnteriorPositivo?'success':'important'}" title="em relacao ao mes anterior" style="margin-left: 5px;">
+										#{dashboardOperacionalBean.dashboardOperacional.percentualDiferencaLucroMesAtualMesAnterior}%
+										<i class="ace-icon fa fa-arrow-up"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
+				<i class="icon-table"></i> CLIENTES</a>
+			</div>
+			<div class="widget-body collapse in">
+				<div class="widget-inner">
+					<div class="row-fluid">
+						<div class="span8">
+							<p:chart type="bar" model="#{dashboardOperacionalBean.graficoRankingClientes}" style="height:300px;margin:0 auto;"/>
+						</div>
+						<div class="widget span4">
+							<div class="widget-heading">
+								<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
+								<i class="icon-shopping-cart"></i> #{msgs['dashboardoperacional.legend.ultimasvendas']}</a>
+							</div>
+							<div class="widget-body collapse in">
+								<div class="widget-inner">
+									<p:dataTable id="tableListVendas" 
+									style="margin-top:10px;" 
+									var="result" rows="10" rowKey="#{result}" 
+									value="#{dashboardOperacionalBean.dashboardOperacional.listaUltimasVendas}" 
+									emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}" >
+									
+									<p:column headerText="#{msgs['generico.tabelacoluna.datavenda']}" style="text-align: center;" width="10%" >
+									<h:outputText value="#{result.dataVenda}" style="text-align: center;">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+									</p:column>
+									<p:column headerText="#{msgs['generico.tabelacoluna.cliente']}" width="35%" >
+										<h:outputText value="#{result.cliente.dadosPessoa.nome}" style="text-align: left;" />
+									</p:column>
+									
+									</p:dataTable>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
+				<i class="icon-table"></i> PRODUTOS</a>
+			</div>
+			<div class="widget-body collapse in">
+				<div class="widget-inner">
+					
+					
+					
 				</div>
 			</div>
 		</div>

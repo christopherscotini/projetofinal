@@ -21,7 +21,6 @@
 	        </h:commandLink>
 	        <nav class="nav-collapse collapse">
 	            <ul class="nav">
-	                <ui:include src="/content/menu_content/_menuAdmin.xhtml" />
 	                <ui:include src="/content/menu_content/_menuAgenda.xhtml" />
 	                <ui:include src="/content/menu_content/_menuCliente.xhtml" />
 	                <ui:include src="/content/menu_content/_menuProduto.xhtml" />
@@ -39,7 +38,7 @@
 	                <div class="btn-toolbar">
 	                    <div class="btn-group">
 	                    	<a class="btn" data-toggle="dropdown" href="#" data-original-title="">
-								<i class="icon-envelope"></i>Configurações<span class="caret"></span>
+								<i class="icon-cog"></i> Configurações<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
 								<li>
@@ -52,6 +51,14 @@
 									Configurar Parametros do Dashboard
 									</a>
 								</li>
+								<ui:fragment rendered="#{loginBean.controladorAcesso.permissaoAdministrador}">
+									<li><h:commandLink action="#{usuarioBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.usuarios.manterusuarios']}" /> </li>
+									<li><h:commandLink action="#{permissaoBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.usuarios.manterpermissoes']}" /> </li>
+									<li><h:commandLink action="#{fluxoEstoqueBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.estoque.manterfluxoestoque']}" /> </li>
+									<li><h:commandLink action="#{formaPagamentoBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.pagamento.formapagamento']}" /> </li>
+									<li><h:commandLink action="#{cargaCatalogoBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.produto.catalogo']}" /> </li>
+									<li><h:commandLink action="#{categoriaBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.produto.categoria']}" /> </li>
+								</ui:fragment>
 							</ul>
 	                    </div>
 	                    <div class="btn-group">

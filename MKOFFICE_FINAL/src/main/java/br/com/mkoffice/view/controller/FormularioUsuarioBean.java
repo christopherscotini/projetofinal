@@ -61,7 +61,7 @@ public class FormularioUsuarioBean extends AbstractModelBean{
 					}else{
 						FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.senhasnaoconferem"));
 						return "";
-					}if(parametros.getValorLimiteGasto() == null || parametros.getValorLimiteGasto().compareTo(BigDecimal.ZERO) <= 0){
+					}if(parametros.getValorLucroDesejado() == null || parametros.getValorLucroDesejado().compareTo(BigDecimal.ZERO) <= 0){
 						FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.valorlimitegastosinvalido"));
 						return "";
 					}else{

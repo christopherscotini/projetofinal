@@ -168,7 +168,7 @@ public class EfetuarPedidoBean extends AbstractModelBean implements Serializable
 		}
 		
 		numParcelasPagamento = null;
-		dtVctoPrimeiraParcela = new Date();
+		dtVctoPrimeiraParcela = pedidoDTO.getDtPedido();
 		
 		pedidoDTO.setFormaDePagamento(getCboFormaPagamento().get(0));
 		onChangeFormaPagamento();	

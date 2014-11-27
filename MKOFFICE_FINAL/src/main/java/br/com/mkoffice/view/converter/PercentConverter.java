@@ -20,7 +20,7 @@ public class PercentConverter implements Converter {
 
 		public String getAsString(FacesContext context, UIComponent component, Object value) throws ConverterException {
 			if (value instanceof BigDecimal) {
-				return DecimalUtils.formatPercent((BigDecimal) value);
+				return DecimalUtils.formatPercent((BigDecimal) value).concat("%");
 			}
 
 			return null;

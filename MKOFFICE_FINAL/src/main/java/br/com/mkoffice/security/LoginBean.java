@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.el.ELResolver;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -17,6 +18,7 @@ import br.com.mkoffice.business.bo.UserBO;
 import br.com.mkoffice.model.admin.UserEntity;
 import br.com.mkoffice.security.util.SessionContants;
 import br.com.mkoffice.utils.constants.PagesContants;
+import br.com.mkoffice.view.controller.menu.DashboardOperacionalBean;
 
 /**
  * * Bean responsvel por controlar operaes de login, logout e controle de *
@@ -43,11 +45,17 @@ public class LoginBean implements Serializable {
 	private UserEntity usuario;
 	private ControladorAcesso controladorAcesso;
 
+
+	
 	public LoginBean() {
 	}
 
 	public String telaIndex(){
-		return "/index.xhtml";
+		FacesContext c = FacesContext.getCurrentInstance();  
+        ELResolver r = c.getApplication().getELResolver();  
+        DashboardOperacionalBean dashboardOperacionalBean = (DashboardOperacionalBean) r.getValue(c.getELContext(), null, "dashboardOperacionalBean");  
+		
+		return dashboardOperacionalBean.iniciarTela();
 	}
 	
 	@PostConstruct
@@ -90,7 +98,12 @@ public class LoginBean implements Serializable {
 					erro = false;
 					usuario = usuarioLogado;
 					saldo = reportBO.getSaldoUsuario(usuario);
-					return PagesContants.PAGINA_INDEX;
+					
+					FacesContext c = FacesContext.getCurrentInstance();  
+			        ELResolver r = c.getApplication().getELResolver();  
+			        DashboardOperacionalBean dashboardOperacionalBean = (DashboardOperacionalBean) r.getValue(c.getELContext(), null, "dashboardOperacionalBean");  
+					
+					return dashboardOperacionalBean.iniciarTela();
 				}
 		}
 		
@@ -168,4 +181,7 @@ public class LoginBean implements Serializable {
 	public void setSaldo(BigDecimal saldo) {
 		this.saldo = saldo;
 	}
+
+	
+	
 }

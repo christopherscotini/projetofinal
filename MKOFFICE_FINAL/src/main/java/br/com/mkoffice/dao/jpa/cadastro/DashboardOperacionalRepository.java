@@ -1,23 +1,32 @@
 package br.com.mkoffice.dao.jpa.cadastro;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import br.com.mkoffice.dao.jpa.JpaGenericDao;
-import br.com.mkoffice.dto.reports.DashboardCaixaDTO;
+import br.com.mkoffice.dto.DataFilter;
+import br.com.mkoffice.dto.dashboard.ClientePorMontanteCompradoDTO;
+import br.com.mkoffice.dto.dashboard.DashboardOperacionalDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDTO;
 import br.com.mkoffice.model.ClienteEntity;
 import br.com.mkoffice.model.ParcelasEntity;
+import br.com.mkoffice.model.venda.VendaEntity;
+import br.com.mkoffice.utils.MkmtsUtil;
 
 public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity, Long> {
 
-	public DashboardCaixaDTO gerarRelatorioDashboardCaixa(Integer anoFiltro, Long idUsuario){
-		DashboardCaixaDTO dto = new DashboardCaixaDTO();
+	public DashboardOperacionalDTO gerarRelatorioDashboardCaixa(Integer anoFiltro, Long idUsuario){
+		DashboardOperacionalDTO dto = new DashboardOperacionalDTO();
 		Object[]query1Result = (Object[]) getEntityManager().createQuery(getQuery1(anoFiltro)).setParameter("idUsuario", idUsuario).getSingleResult();
-		dto.setValorFaturamento((BigDecimal) query1Result[0]);
+//		dto.setValorFaturamento((BigDecimal) query1Result[0]);
 //		dto.setNumVendas(MkmtsUtil.castObjectToInteger(query1Result[1]));
 //		dto.setNumProdutosVendidos(MkmtsUtil.castObjectToInteger(getEntityManager().createQuery(getQuery2(anoFiltro)).setParameter("idUsuario", idUsuario).getSingleResult()));
-		dto.setClienteMaisComprou(extractClienteMaisComprou(getEntityManager().createQuery(getQuery3(anoFiltro)).setMaxResults(1).setParameter("idUsuario", idUsuario).getResultList()));
+//		dto.setClienteMaisComprou(extractClienteMaisComprou(getEntityManager().createQuery(getQuery3(anoFiltro)).setMaxResults(1).setParameter("idUsuario", idUsuario).getResultList()));
 		
 		Object[]query4Result = (Object[]) getEntityManager().createQuery(getQuery4(anoFiltro)).setParameter("idUsuario", idUsuario).getSingleResult();
 		dto.setValorGasto((BigDecimal) query4Result[0]);
@@ -98,5 +107,118 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 		return query6.toString();
 	}
 
+
+	public List<VendaEntity> selectTop5UltimasVendas(Long idUsuario) {
+		StringBuilder query = new StringBuilder();
+		query.append("select v FROM VendaEntity v").append(" ");
+		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
+		query.append("ORDER BY v.dataVenda DESC").append(" ");
+		
+		return getEntityManager().createQuery(query.toString()).setMaxResults(5).setParameter("idUsuario", idUsuario).getResultList();
+	}
+
+
+	public List<ClientePorMontanteCompradoDTO> selectTop10RankingVendaClientes(Long idUsuario) {
+		StringBuilder query = new StringBuilder();
+		query.append("select sum(v.valorVenda), v.cliente FROM VendaEntity v").append(" ");
+		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
+		query.append("GROUP BY v.cliente").append(" ");
+		query.append("ORDER BY sum(v.valorVenda) DESC").append(" ");
+		
+		List<Object[]>ret = getEntityManager().createQuery(query.toString()).setMaxResults(10).setParameter("idUsuario", idUsuario).getResultList();
+		List<ClientePorMontanteCompradoDTO> returnzz = new ArrayList<ClientePorMontanteCompradoDTO>();
+
+		for (int i = 0; i < ret.size(); i++) {
+			ClientePorMontanteCompradoDTO obj = new ClientePorMontanteCompradoDTO();
+			obj.setSomaValorCompra((BigDecimal)ret.get(i)[0]);
+			obj.setCliente((ClienteEntity)ret.get(i)[1]);
+			returnzz.add(obj);
+		}
+		
+		return returnzz;
+	}
+
+	public BigDecimal selectValorFaturamentoMesAtual(Long idUsuario) {
+		DataFilter dataFiltro = new DataFilter(true);
+		
+		StringBuilder query = new StringBuilder();
+		query.append("select sum(p.valorPago) FROM VendaEntity v").append(" ");
+		query.append("JOIN v.parcelas p").append(" ");
+		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
+		query.append("AND p.dtPagamento BETWEEN '")
+		.append(MkmtsUtil.converterDataString(dataFiltro.getDataInicio(), _DATE_MASK)).append(" 00:00:00")
+		.append("' AND '")
+		.append(MkmtsUtil.converterDataString(dataFiltro.getDataFinal(), _DATE_MASK)).append(" 23:59:59").append("' ")
+		.append("AND p.codVenda IS NOT NULL").append(" ");
+		
+		
+		return (BigDecimal) getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario) .getSingleResult();
+	}
+
+	public BigDecimal selectValorFaturamentoMesAnterior(Long idUsuario) {
+		DataFilter filtro = montarFiltroDataMesAnterior();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("select sum(p.valorPago) FROM VendaEntity v").append(" ");
+		query.append("JOIN v.parcelas p").append(" ");
+		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
+		query.append("AND p.dtPagamento BETWEEN '")
+		.append(MkmtsUtil.converterDataString(filtro.getDataInicio(), _DATE_MASK)).append(" 00:00:00")
+		.append("' AND '")
+		.append(MkmtsUtil.converterDataString(filtro.getDataFinal(), _DATE_MASK)).append(" 23:59:59").append("' ")
+		.append("AND p.codVenda IS NOT NULL").append(" ");
+		
+		return (BigDecimal) getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario) .getSingleResult();
+	}
+
+
+	public BigDecimal selectValorLucroMesAnterior(Long idUsuario) {
+		DataFilter filtro = montarFiltroDataMesAnterior();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("select sum(v.valorLucroVenda) FROM VendaEntity v").append(" ");
+		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
+		query.append("AND v.dataVenda BETWEEN '")
+		.append(MkmtsUtil.converterDataString(filtro.getDataInicio(), _DATE_MASK)).append(" 00:00:00")
+		.append("' AND '")
+		.append(MkmtsUtil.converterDataString(filtro.getDataFinal(), _DATE_MASK)).append(" 23:59:59").append("' ");
+		
+		return (BigDecimal) getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario) .getSingleResult();
+		
+	}
+
+	public BigDecimal selectValorLucroMesAtual(Long idUsuario) {
+		DataFilter filtro = new DataFilter(true);
+		
+		StringBuilder query = new StringBuilder();
+		query.append("select sum(v.valorLucroVenda) FROM VendaEntity v").append(" ");
+		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
+		query.append("AND v.dataVenda BETWEEN '")
+		.append(MkmtsUtil.converterDataString(filtro.getDataInicio(), _DATE_MASK)).append(" 00:00:00")
+		.append("' AND '")
+		.append(MkmtsUtil.converterDataString(filtro.getDataFinal(), _DATE_MASK)).append(" 23:59:59").append("' ");
+		
+		return (BigDecimal) getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario) .getSingleResult();
+	}
+	
+	
+	
+	private DataFilter montarFiltroDataMesAnterior(){
+		Calendar mesAtual = Calendar.getInstance();
+		mesAtual.set(Calendar.DAY_OF_MONTH, 1);
+		Calendar cA1 = Calendar.getInstance();
+		cA1.set(Calendar.YEAR, mesAtual.get(Calendar.YEAR));
+		cA1.set(Calendar.MONTH, mesAtual.get(Calendar.MONTH)-1);
+		cA1.set(Calendar.DAY_OF_MONTH, mesAtual.get(Calendar.DAY_OF_MONTH));
+		Calendar cA2 = Calendar.getInstance();
+		cA2.set(Calendar.YEAR, cA1.get(Calendar.YEAR));
+		cA2.set(Calendar.MONTH, cA1.get(Calendar.MONTH)+1);
+		cA2.set(Calendar.DAY_OF_MONTH, cA1.get(Calendar.DAY_OF_MONTH)-1);
+		
+		return new DataFilter(cA1.getTime(), cA2.getTime());
+	}
 	
 }
+
+
+
