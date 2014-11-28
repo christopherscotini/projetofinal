@@ -1,7 +1,6 @@
 package br.com.mkoffice.view.controller.menu;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,9 @@ import javax.faces.bean.SessionScoped;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.MeterGaugeChartModel;
 
 import br.com.mkoffice.dto.dashboard.DashboardOperacionalDTO;
@@ -27,6 +28,7 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 	private MeterGaugeChartModel graficoFaturamento;
 	private MeterGaugeChartModel graficoLucroDesejado;
 	private BarChartModel graficoRankingClientes;
+	private LineChartModel graficoBalanco;
 	private ParametrosDashboardEntity parametros;
 	
 	public DashboardOperacionalBean() {
@@ -55,7 +57,7 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 	private void montarGraficosCaixa(){
 		montarGraficoLucroEstimado();
 		montarGraficoFaturamento();
-		
+		montarGraficoBalanco();
 	}
 	
 	private void montarGraficoLucroEstimado(){
@@ -91,6 +93,46 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 		graficoFaturamento.setIntervalOuterRadius(90);
 		
 	}
+	
+	private void montarGraficoBalanco(){
+		graficoBalanco = new LineChartModel();
+		BigDecimal valorMin = BigDecimal.ZERO;
+		BigDecimal valorMax = BigDecimal.ZERO;
+		ChartSeries balanco = new ChartSeries();
+		for (int i = 0; i < dashboardOperacional.getHistoricoBalanco().size(); i++) {
+			balanco.set(dashboardOperacional.getHistoricoBalanco().get(i).getMes(), dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco());
+			if(dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco().compareTo(valorMax) > 0){
+	    		valorMax = dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco();
+	    	}
+			if(dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco().compareTo(valorMax) < 0){
+				valorMin = dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco();
+			}
+		}
+		
+		graficoBalanco.addSeries(balanco);
+		
+		graficoBalanco.setTitle("Timeline Balanço");
+		graficoBalanco.setLegendPosition("e");
+		graficoBalanco.getAxes().put(AxisType.X, new CategoryAxis(getMsgs("promocaoclienteporvolumecompra.lbl.titulografico.line.eixoX")));
+		Axis yAxis = graficoBalanco.getAxis(AxisType.Y);
+		yAxis.setLabel(getMsgs("promocaoclienteporvolumecompra.lbl.titulografico.line.eixoY"));
+		valorMax = valorMax.add(valorMax.multiply(new BigDecimal("0.20")));
+		valorMin = valorMin.add(valorMin.multiply(new BigDecimal("0.20")));
+		if(valorMin.compareTo(BigDecimal.ZERO) >= 0){
+			yAxis.setMin(BigDecimal.ZERO.setScale(2));
+		}else{
+			BigDecimal valorMinPos = valorMin.multiply(new BigDecimal("-1"));
+			if(valorMinPos.compareTo(valorMax)<=0){
+				valorMin = valorMax.multiply(new BigDecimal("-1"));
+			}else{
+				valorMax = valorMin.multiply(new BigDecimal("-1"));
+			}
+			yAxis.setMin(valorMin.setScale(2));
+		}
+		yAxis.setMax(valorMax.setScale(2));
+		
+	}
+	
 	
 	private void montarGraficosCliente(){
 		montarGraficoRankingClientes();
@@ -161,6 +203,14 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 
 	public void setGraficoRankingClientes(BarChartModel graficoRankingClientes) {
 		this.graficoRankingClientes = graficoRankingClientes;
+	}
+
+	public LineChartModel getGraficoBalanco() {
+		return graficoBalanco;
+	}
+
+	public void setGraficoBalanco(LineChartModel graficoBalanco) {
+		this.graficoBalanco = graficoBalanco;
 	}
 
 

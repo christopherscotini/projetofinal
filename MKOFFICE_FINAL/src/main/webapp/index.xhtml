@@ -45,6 +45,27 @@
 			<div class="widget-body collapse in">
 				<div class="widget-inner">
 					<div class="row-fluid">
+						<div class="infobox infobox-blue infobox-small infobox-dark" style="margin:0 auto;">
+							<div class="infobox-icon">
+								<i class="ace-icon fa fa-usd"></i>
+							</div>
+							<div class="infobox-data">
+								<div class="infobox-content">#{msgs['dashboardoperacional.lbl.balanco']}</div>
+								<div class="infobox-content">$
+									#{dashboardOperacionalBean.dashboardOperacional.balanco.valorBalanco}
+								</div>
+							</div>
+						</div>
+						
+						<p:chart type="line" model="#{dashboardOperacionalBean.graficoBalanco}" style="height:300px;"/>
+						
+					</div>
+					
+					
+					
+					<hr class="lin"/>
+					
+					<div class="row-fluid">
 						<div class="span6">
 							<p:chart type="metergauge" model="#{dashboardOperacionalBean.graficoFaturamento}" style="width:400px;height:250px;margin:0 auto;" />
 							<div class="infobox-container">
@@ -60,7 +81,7 @@
 										</span>
 										<div class="infobox-content"> em reais (R$)</div>
 									</div>
-									<div class="badge badge-#{dashboardOperacionalBean.dashboardOperacional.percentualDiferencaFaturamentoMesAtualMesAnterior?'success':'important'}" title="em relacao ao mes anterior" style="margin-left: 5px;">
+									<div class="badge badge-#{dashboardOperacionalBean.dashboardOperacional.percentualDiferencaFaturamentoMesAtualMesAnteriorPositivo?'success':'important'}" title="em relacao ao mes anterior" style="margin-left: 5px;">
 										#{dashboardOperacionalBean.dashboardOperacional.percentualDiferencaFaturamentoMesAtualMesAnterior}%
 										<i class="ace-icon fa fa-arrow-up"></i>
 									</div>

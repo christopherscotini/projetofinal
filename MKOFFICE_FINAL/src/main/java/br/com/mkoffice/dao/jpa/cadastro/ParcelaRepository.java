@@ -3,11 +3,13 @@
  */
 package br.com.mkoffice.dao.jpa.cadastro;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import br.com.mkoffice.dao.jpa.JpaGenericDao;
 import br.com.mkoffice.dto.DataFilter;
 import br.com.mkoffice.model.ParcelasEntity;
+import br.com.mkoffice.model.admin.UserEntity;
 import br.com.mkoffice.utils.MkmtsUtil;
 
 /**
@@ -90,4 +92,14 @@ public class ParcelaRepository extends JpaGenericDao<ParcelasEntity, Long> {
 		return getEntityManager().createQuery(query.toString()).getResultList();
 	}
 	/*** FIM CONTAS A RECEBER ***/
+	
+	public BigDecimal getSaldoUsuario(Long idUsuario) {
+		StringBuilder q1 = new StringBuilder("select sum(p.valorPago) from ParcelasEntity p where p.codVenda is not null and p.usuario.id = :idUsuario");
+		StringBuilder q2 = new StringBuilder("select sum(p.valorPago) from ParcelasEntity p where p.codPedido is not null and p.usuario.id = :idUsuario");
+		BigDecimal faturamento = (BigDecimal) getEntityManager().createQuery(q1.toString()).setParameter("idUsuario", idUsuario).getSingleResult();
+		BigDecimal gasto = (BigDecimal) getEntityManager().createQuery(q2.toString()).setParameter("idUsuario", idUsuario).getSingleResult();
+		faturamento = faturamento==null?BigDecimal.ZERO:faturamento;
+		gasto = gasto==null?BigDecimal.ZERO:gasto;
+		return faturamento.subtract(gasto);
+	}
 }

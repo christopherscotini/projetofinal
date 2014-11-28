@@ -70,17 +70,6 @@ public class ReportBOImpl implements ReportBO{
 	}
 
 	@Override
-	public BigDecimal getSaldoUsuario(UserEntity usuario) {
-		StringBuilder q1 = new StringBuilder("select sum(p.valorPago) from ParcelasEntity p where p.codVenda is not null and p.usuario.id = :idUsuario");
-		StringBuilder q2 = new StringBuilder("select sum(p.valorPago) from ParcelasEntity p where p.codPedido is not null and p.usuario.id = :idUsuario");
-		BigDecimal faturamento = (BigDecimal) parcelaRepository.getEntityManager().createQuery(q1.toString()).setParameter("idUsuario", usuario.getId()).getSingleResult();
-		BigDecimal gasto = (BigDecimal) parcelaRepository.getEntityManager().createQuery(q2.toString()).setParameter("idUsuario", usuario.getId()).getSingleResult();
-		faturamento = faturamento==null?BigDecimal.ZERO:faturamento;
-		gasto = gasto==null?BigDecimal.ZERO:gasto;
-		return faturamento.subtract(gasto);
-	}
-	
-	@Override
 	public ReportProdutosMaisMenosVendidosDTO getReportProdutoMaisMenosVendidos(Integer anoFiltro, Long idUsuario) {
 		ReportProdutosMaisMenosVendidosDTO dto = new ReportProdutosMaisMenosVendidosDTO();
 		dto.setProdutosMaisVendidos(reportEstoqueRepository.gerarProdutosMaisVendidos(anoFiltro, idUsuario));

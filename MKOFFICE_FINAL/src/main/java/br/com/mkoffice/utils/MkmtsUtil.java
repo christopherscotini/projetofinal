@@ -309,18 +309,33 @@ public final class MkmtsUtil {
 
 	// Retorna o m�s da data em formato String
 	public static String extrairMesData(Date data) {
-
 		Calendar date = Calendar.getInstance();
 
 		if (data != null) {
-
 			date.setTime(data);
-
 			return preencherZerosAEsquerda(String.valueOf(date.get(Calendar.MONTH) + 1), 2);
 		} else {
 			return "";
 		}
 
+	}
+	
+	public static String extrairMesDataNome(Date data, boolean abreviado){
+		    String[] meses = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};  
+		    String[] mesesAbr = {"JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"};  
+		    
+		    Calendar date = Calendar.getInstance();
+
+			if (data != null) {
+				date.setTime(data);
+				if (abreviado) {
+					return mesesAbr[date.get(Calendar.MONTH)];
+				}else{
+					return meses[date.get(Calendar.MONTH)];
+				}
+			} else {
+				return "";
+			}
 	}
 
 	// Retorna o ano da data em formato String

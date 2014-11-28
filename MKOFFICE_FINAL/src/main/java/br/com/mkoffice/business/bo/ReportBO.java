@@ -21,8 +21,6 @@ public interface ReportBO {
 
 	List<ReportRetencaoClientesDTO> getReportRetencaoClientes(Date dataCorteFiltro, Long idUsuario);
 	
-	BigDecimal getSaldoUsuario(UserEntity usuario);
-
 	ReportProdutosMaisMenosVendidosDTO getReportProdutoMaisMenosVendidos(Integer anoFiltro, Long idUsuario);
 
 	List<EstoqueEntity> getReportMovimentacaoEstoque(DataFilter dataFiltro, Long fluxoEstoqueFiltro, Long idUsuario);

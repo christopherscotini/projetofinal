@@ -33,9 +33,6 @@ public class LoginBean implements Serializable {
 	@Inject
 	private UserBO userBO = null;
 
-	@Inject
-	private ReportBO reportBO = null;
-	
 	public static final String LOGIN_FALHA = "login_falha";
 	public static final String SESSAO_INEXISTENTE = "sessao_invalida";
 	public static final String USUARIO_SESSAO = "usuario";
@@ -97,7 +94,6 @@ public class LoginBean implements Serializable {
 					
 					erro = false;
 					usuario = usuarioLogado;
-					saldo = reportBO.getSaldoUsuario(usuario);
 					
 					FacesContext c = FacesContext.getCurrentInstance();  
 			        ELResolver r = c.getApplication().getELResolver();  

@@ -14,6 +14,8 @@ public class DashboardOperacionalDTO {
 	
 	private final BigDecimal _100 = new BigDecimal("100.00");
 	private BigDecimal valorFaturamentoMesAnterior;
+	private BalancoDTO balanco;
+	private List<BalancoDTO>historicoBalanco;
 	private BigDecimal valorFaturamentoMesAtual;
 	private BigDecimal valorGasto;
 	private BigDecimal valorLucroMesAnterior;
@@ -75,16 +77,11 @@ public class DashboardOperacionalDTO {
 	}
 	
 	public void calcularPercentualDiferencaFaturamentoMesAtualMesAnterior(){
-		if(valorFaturamentoMesAnterior == null || valorFaturamentoMesAnterior.compareTo(BigDecimal.ZERO) <= 0){
-			if(valorFaturamentoMesAtual == null || valorFaturamentoMesAtual.compareTo(BigDecimal.ZERO) <= 0){
-				setPercentualDiferencaFaturamentoMesAtualMesAnterior(BigDecimal.ZERO);
-			}else{
-				setPercentualDiferencaFaturamentoMesAtualMesAnterior(valorFaturamentoMesAtual.multiply(_100).divide(valorFaturamentoMesAtual));
-			}
+		if(valorFaturamentoMesAnterior.compareTo(BigDecimal.ZERO) == 0 ){
+			setPercentualDiferencaFaturamentoMesAtualMesAnterior(valorFaturamentoMesAtual.multiply(_100));
 		}else{
 			setPercentualDiferencaFaturamentoMesAtualMesAnterior(valorFaturamentoMesAtual.multiply(_100).divide(valorFaturamentoMesAnterior, RoundingMode.HALF_EVEN));
 		}
-		
 	}
 	public BigDecimal getValorLucroMesAnterior() {
 		if(valorLucroMesAnterior == null){
@@ -117,16 +114,23 @@ public class DashboardOperacionalDTO {
 	}
 	
 	public void calcularPercentualDiferencaLucroMesAtualMesAnterior(){
-		if(valorLucroMesAnterior == null || valorFaturamentoMesAnterior.compareTo(BigDecimal.ZERO) <= 0){
-			if(valorLucroMesAtual == null || valorLucroMesAtual.compareTo(BigDecimal.ZERO) <= 0){
-				setPercentualDiferencaLucroMesAtualMesAnterior(BigDecimal.ZERO);
-			}else{
-				setPercentualDiferencaLucroMesAtualMesAnterior(valorLucroMesAtual.multiply(_100).divide(valorLucroMesAtual));
-			}
+		if(valorFaturamentoMesAnterior.compareTo(BigDecimal.ZERO) == 0 ){
+			setPercentualDiferencaLucroMesAtualMesAnterior(valorLucroMesAtual.multiply(_100));
 		}else{
 			setPercentualDiferencaLucroMesAtualMesAnterior(valorLucroMesAtual.multiply(_100).divide(valorLucroMesAnterior, RoundingMode.HALF_EVEN));
 		}
-		
+	}
+	public List<BalancoDTO> getHistoricoBalanco() {
+		return historicoBalanco;
+	}
+	public void setHistoricoBalanco(List<BalancoDTO> historicoBalanco) {
+		this.historicoBalanco = historicoBalanco;
+	}
+	public BalancoDTO getBalanco() {
+		return balanco;
+	}
+	public void setBalanco(BalancoDTO balanco) {
+		this.balanco = balanco;
 	}
 	
 
