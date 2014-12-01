@@ -6,6 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import br.com.mkoffice.exceptions.BusinessException;
+import br.com.mkoffice.model.ParametrosDashboardEntity;
 import br.com.mkoffice.model.admin.PermissaoEntity;
 import br.com.mkoffice.model.admin.UserEntity;
 import br.com.mkoffice.model.embeddable.Endereco;
@@ -32,10 +33,11 @@ public class UsuarioBean extends AbstractModelBean{
 	private UserEntity usuarioSelecionado;
 	private boolean cadastrar;
 	
+	private ParametrosDashboardEntity parametros;
+	
 	private ClienteVO vo = null;
 	private String password = null;
-	
-	
+
 	@Override
 	public String iniciarTela() {
 		limparCamposFiltro();
@@ -80,6 +82,8 @@ public class UsuarioBean extends AbstractModelBean{
 		
 		vo = converterUserEntityToClienteCo(usuarioSelecionado);
 		
+		parametros = userBO.buscarParametros(usuarioSelecionado);	
+		
 		return TELA_DETALHAR_CADASTRO_USUARIO;
 	}
 	
@@ -101,20 +105,20 @@ public class UsuarioBean extends AbstractModelBean{
 		try{
 			
 			if(!StringUtil.isNotBlank(password) && !StringUtil.isNotBlank(usuarioCadastro.getPassword())){
-				FacesUtils.addErrorMessage("Senha: Campo obrigatório!");
+				FacesUtils.addErrorMessage("Senha: Campo obrigatï¿½rio!");
 				return "";
 			}else{
 				if(!password.equals("")){
 					if(password.equals(vo.getUsuario().getPasswordConfirm())){
 						usuarioCadastro.setPassword(password.trim());
 					}else{
-						FacesUtils.addErrorMessage("As senhas não conferem.");
+						FacesUtils.addErrorMessage("As senhas nï¿½o conferem.");
 						return "";
 					}
 					usuarioCadastro.setPassword(password.trim());
 				}else{
 					if(!vo.getUsuario().getPasswordConfirm().equals("")){
-						FacesUtils.addErrorMessage("As senhas não conferem.");
+						FacesUtils.addErrorMessage("As senhas nï¿½o conferem.");
 						return "";
 					}
 				}
@@ -262,4 +266,11 @@ public class UsuarioBean extends AbstractModelBean{
 		this.filteredUsuarios = filteredUsuarios;
 	}
 
+	public ParametrosDashboardEntity getParametros() {
+		return parametros;
+	}
+	
+	public void setParametros(ParametrosDashboardEntity parametros) {
+		this.parametros = parametros;
+	}
 }

@@ -42,7 +42,6 @@
 							rowKey="#{result}" 
 							selectionMode="single"
 							selection="#{fluxoEstoqueBean.fluxoSelecionada}"
-							filteredValue="#{fluxoEstoqueBean.filteredValue}"
 							value="#{fluxoEstoqueBean.fluxos}" 
 							paginator="true"
 							paginatorPosition="bottom" 
@@ -65,38 +64,45 @@
 		<h:panelGroup>
 			<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
 					style="	margin-top:5px;">
-					<p:outputLabel value="#{msgs['manterfluxoestoque.lbl.totalfluxoestoquecadastrados']}:" />
-					<p:outputLabel value="#{fluxoEstoqueBean.fluxos.size()}" styleClass="input-5left HtmlOutputTextResposta" />
+					<h:outputLabel value="#{msgs['manterfluxoestoque.lbl.totalfluxoestoquecadastrados']}:" />
+					<h:outputLabel value="#{fluxoEstoqueBean.fluxos.size()}" styleClass="input-5left HtmlOutputTextResposta" />
 			</h:panelGrid>
 		</h:panelGroup>
 						
 		
 		<hr class="lin" />
-			
-		<h:panelGroup id="group-botoes-footer">
+		
+			<h:panelGroup id="group-botoes-footer">
 			<div class="buttonFooter" >
 				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
-					style="float:left;" action="/index" ajax="false" />
+					style="float:left;"
+					styleClass="btn btn-zen-5 btn-toolbar"
+					action="/index" ajax="false" />
+				
 				<p:commandButton id="btnLimpar" value="#{msgs.btn_desmarcarselecionado}"
-					action="#{fluxoEstoqueBean.limparSelecaoTabela()}" ajax="true" disabled="#{empty fluxoEstoqueBean.fluxoSelecionada}"
-					style="margin-left:5px;" update="tableFluxoEstoque group-botoes-footer" />
+					action="#{fluxoEstoqueBean.limparSelecaoTabela()}" 
+					ajax="true" disabled="#{empty fluxoEstoqueBean.fluxoSelecionada}"
+					style="margin-left:5px;" 
+					styleClass="btn btn-zen-2 btn-toolbar"
+					update="tableFluxoEstoque group-botoes-footer" />
 				
 				<p:commandButton id="btnAlterar" value="#{msgs.btn_alterar}"
 					action="#{fluxoEstoqueBean.navegarAlterarFluxo()}" ajax="true" 
 					disabled="#{empty fluxoEstoqueBean.fluxoSelecionada}" 
 					style="margin-left:5px;"
+					styleClass="btn btn-zen-2 btn-toolbar"
 				 	update=":formDialog:infosPermissao"
-					oncomplete="dialogFluxoEstoque.show();loadMasksJQuery();" />
-				
+					oncomplete="PF('dialogFluxoEstoque').show();loadMasksJQuery();" />
+					
 				<p:commandButton id="btnCadastrar" value="#{msgs.btn_cadastrar}"
 					action="#{fluxoEstoqueBean.navegarIncluirFluxo()}" ajax="true"
 					style="margin-left:5px;"
+					styleClass="btn btn-zen-2 btn-toolbar"
 				 	update=":formDialog:infosPermissao"
-					oncomplete="dialogFluxoEstoque.show();loadMasksJQuery();" />
+					oncomplete="PF('dialogFluxoEstoque').show();loadMasksJQuery();" />
 			</div>
 			<div style="height: 10px;width: 10px;"></div>
 		</h:panelGroup>
-		
 	</ui:define>
 	
 	
@@ -107,24 +113,24 @@
 			<h:panelGrid id="infosPermissao" columns="2"
 				style="margin-bottom:10px">
 
-				<p:outputLabel value="#{msgs['manterfluxoestoque.lbl.fluxo']}:" for="txtFluxoEstoque" styleClass="HtmlOutputLabelResposta" />
-				<p:inputText id="txtFluxoEstoque" value="#{fluxoEstoqueBean.fluxo.descFluxoEstoque}" size="50" styleClass="input-5left" required="true" requiredMessage="O campo PERMISS�O � necess�rio." >
+				<h:outputLabel value="#{msgs['manterfluxoestoque.lbl.fluxo']}:" for="txtFluxoEstoque" styleClass="HtmlOutputLabelResposta" />
+				<p:inputText id="txtFluxoEstoque" value="#{fluxoEstoqueBean.fluxo.descFluxoEstoque}" size="50" styleClass="input-5left" required="true" requiredMessage="#{msgs['manterfluxoestoque.req.campofluxo']}" >
 					<f:validateLength minimum="3" for="txtFluxoEstoque"/>
 				</p:inputText>
 
 				<p:selectBooleanCheckbox id="chkFluxoSaida" value="#{fluxoEstoqueBean.fluxo.fluxoSaida}" styleClass="" style="float: right"  />
-				<p:outputLabel value="#{msgs['manterfluxoestoque.lbl.fluxosaida']}?" for="chkFluxoSaida" styleClass="input-5left" />
+				<h:outputLabel value="#{msgs['manterfluxoestoque.lbl.fluxosaida']}?" for="chkFluxoSaida" styleClass="input-5left" />
 
 				<p:commandButton id="btnCancelar" value="#{msgs.btn_cancelar}"
 						style="float:right;" 
 						styleClass="btn btn-zen-5 btn-toolbar" 
-						oncomplete="dialogFluxoEstoque.hide();" />
+						oncomplete="PF('dialogFluxoEstoque').hide();" />
 						
 				<p:commandButton
 					update=":formGlobal:tableFluxoEstoque :formGlobal:lblTotalReg"
 					onclick="return validateForm(document.forms[2])"
 					styleClass="btn btn-zen-2 btn-toolbar"
-					oncomplete="dialogFluxoEstoque.hide();"
+					oncomplete="PF('dialogFluxoEstoque').hide();"
 					actionListener="#{fluxoEstoqueBean.executeSave()}"
 					value="#{msgs.btn_salvar}" />
 			</h:panelGrid>

@@ -13,5 +13,6 @@ public interface UserBO extends ServiceModel<UserEntity>{
 	public UserEntity verificarLogin(UserEntity usuario);
 	public List<UserEntity> buscarEntidadePorFiltro(String username);
 	public ParametrosDashboardEntity atualizarParametros(ParametrosDashboardEntity parametros);
+	public ParametrosDashboardEntity buscarParametros(UserEntity usuario);
 	
 }

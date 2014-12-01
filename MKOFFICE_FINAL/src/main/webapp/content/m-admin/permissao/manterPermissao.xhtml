@@ -65,8 +65,8 @@
 		<h:panelGroup>
 			<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
 					style="	margin-top:5px;">
-					<p:outputLabel value="#{msgs['manterpermissao.lbl.totalpermissoescadastrados']}:" />
-					<p:outputLabel value="#{permissaoBean.permissoes.size()}" styleClass="input-5left HtmlOutputTextResposta" />
+					<h:outputLabel value="#{msgs['manterpermissao.lbl.totalpermissoescadastrados']}:" />
+					<h:outputLabel value="#{permissaoBean.permissoes.size()}" styleClass="input-5left HtmlOutputTextResposta" />
 			</h:panelGrid>
 		</h:panelGroup>
 				
@@ -93,14 +93,14 @@
 				style="margin-left:5px;"
 				styleClass="btn btn-zen-2 btn-toolbar"
 			 	update=":formDialog:infosPermissao"
-				oncomplete="dialogPermissao.show();loadMasksJQuery();" />
+				oncomplete="PF('dialogPermissao').show();loadMasksJQuery();" />
 			
 			<p:commandButton id="btnCadastrar" value="#{msgs.btn_cadastrar}"
 				action="#{permissaoBean.navegarIncluirPermissao()}" ajax="true"
 				style="margin-left:5px;"
 				styleClass="btn btn-zen-2 btn-toolbar"
 			 	update=":formDialog:infosPermissao"
-				oncomplete="dialogPermissao.show();loadMasksJQuery();" />
+				oncomplete="PF('dialogPermissao').show();loadMasksJQuery();" />
 		</div>
 		<div style="height: 10px;width: 10px;"></div>
 	</h:panelGroup>
@@ -115,19 +115,20 @@
 			<h:panelGrid id="infosPermissao" columns="2"
 				style="margin-bottom:10px">
 
-				<p:outputLabel value="#{msgs['manterpermissao.lbl.permissao']}:" for="txtPermissao" styleClass="HtmlOutputLabelResposta" />
-				<p:inputText id="txtPermissao" value="#{permissaoBean.permissao.descPermissao}" size="50" styleClass="input-5left" required="true" requiredMessage="O campo PERMISS�O � necess�rio." >
+				<h:outputLabel value="#{msgs['manterpermissao.lbl.permissao']}" for="txtPermissao" styleClass="HtmlOutputLabelResposta" />
+				<p:inputText id="txtPermissao" value="#{permissaoBean.permissao.descPermissao}" size="50" styleClass="input-5left" required="false" requiredMessage="#{msgs['manterpermissao.req.campopermissao']}" >
 					<f:validateLength minimum="3" for="txtUsuario"/>
 				</p:inputText>
 
 				<p:commandButton id="btnCancelar" value="#{msgs.btn_cancelar}"
-						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar"
-						 oncomplete="dialogPermissao.hide();" />
+						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar" 
+						oncomplete="PF('dialogPermissao').hide();" />
+						
 				<p:commandButton
 					update=":formGlobal:tableUsuarios :formGlobal:lblTotalReg"
 					onclick="return validateForm(document.forms[2])"
 					styleClass="btn btn-zen-2 btn-toolbar"
-					oncomplete="dialogPermissao.hide();"
+					oncomplete="PF('dialogPermissao').hide();"
 					actionListener="#{permissaoBean.executeSave()}"
 					value="#{msgs.btn_salvar}" />
 			</h:panelGrid>

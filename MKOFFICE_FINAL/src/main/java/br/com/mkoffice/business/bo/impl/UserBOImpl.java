@@ -71,6 +71,11 @@ public class UserBOImpl implements UserBO{
 	}
 	
 	@Override
+	public ParametrosDashboardEntity buscarParametros(UserEntity usuario){
+		return parametrosDashboardRepository.findByUsuario(usuario.getId());
+	}
+	
+	@Override
 	public UserEntity editarEntidade(UserEntity usuario) {
 		validateFormAlterar(usuario);
 		if(dao.existsUserWithCpf(usuario)){

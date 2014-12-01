@@ -52,12 +52,37 @@
 									</a>
 								</li>
 								<ui:fragment rendered="#{loginBean.controladorAcesso.permissaoAdministrador}">
-									<li><h:commandLink action="#{usuarioBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.usuarios.manterusuarios']}" /> </li>
-									<li><h:commandLink action="#{permissaoBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.usuarios.manterpermissoes']}" /> </li>
-									<li><h:commandLink action="#{fluxoEstoqueBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.estoque.manterfluxoestoque']}" /> </li>
-									<li><h:commandLink action="#{formaPagamentoBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.pagamento.formapagamento']}" /> </li>
-									<li><h:commandLink action="#{cargaCatalogoBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.produto.catalogo']}" /> </li>
-									<li><h:commandLink action="#{categoriaBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.produto.categoria']}" /> </li>
+									<li>
+										<h:commandLink action="#{usuarioBean.iniciarTela()}">
+											<i class="icon-eye-open"></i>
+											#{msgs['menu.lbl.admin.usuarios.manterusuarios']}
+										</h:commandLink>
+									</li>
+									<li>
+										<h:commandLink action="#{permissaoBean.iniciarTela()}">
+											<i class="icon-pencil"></i>
+											#{msgs['menu.lbl.admin.usuarios.manterpermissoes']}
+										</h:commandLink> 
+									</li>
+									<li>
+										<h:commandLink action="#{fluxoEstoqueBean.iniciarTela()}">
+											<i class="icon-pencil"></i>
+											#{msgs['menu.lbl.admin.estoque.manterfluxoestoque']}
+										</h:commandLink> 
+									</li>
+									<li>
+										<h:commandLink action="#{formaPagamentoBean.iniciarTela()}">
+											<i class="icon-pencil"></i>
+											#{msgs['menu.lbl.admin.pagamento.formapagamento']}
+										</h:commandLink>
+									</li>
+<!-- 									<li><h:commandLink action="#{cargaCatalogoBean.iniciarTela()}" value="#{msgs['menu.lbl.admin.produto.catalogo']}" /> </li> -->
+									<li>
+										<h:commandLink action="#{categoriaBean.iniciarTela()}">
+											<i class="icon-pencil"></i>
+											#{msgs['menu.lbl.admin.produto.categoria']}
+										</h:commandLink> 
+									</li>
 								</ui:fragment>
 							</ul>
 	                    </div>

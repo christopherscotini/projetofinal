@@ -6,90 +6,210 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="cssImports">
-		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+		<link type="text/css" rel="stylesheet"
+			href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
 	</ui:define>
-	
+
 	<ui:define name="jsImports">
-		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/cadastro/valid-form-cliente.js"></script>
+		<script type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/javascript/cadastro/valid-form-cliente.js"></script>
 	</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:breadCrumb>  
-		    <p:menuitem value="TelaInicial" action="#{loginBean.telaIndex()}" ajax="false" immediate="true"/>  
-		    <p:menuitem value="Consultar Clientes" ajax="false" action="#{clienteBean.voltarInclusao()}"/>  
-		    <p:menuitem value="Cadastro do Cliente" />  
-		</p:breadCrumb>  
+		<ul class="breadcrumb">
+			<li class="active"><h:commandLink
+					action="#{loginBean.telaIndex()}"
+					value="#{msgs['generico.breadcumb.telainicial']}" /> <span
+				class="divider">/</span></li>
+			<li class="active"><h:commandLink action="#"
+					value="#{msgs['manterusuario.breadcumb.administrador']}" /> <span
+				class="divider">/</span></li>
+			<li class="active"><h:commandLink
+					action="#{usuarioBean.navegarVoltarTelaDetalhe()}"
+					value="#{msgs['manterusuario.breadcumb.administrador.manterusuario']}" />
+				<span class="divider">/</span></li>
+			<li>#{msgs['manterusuario.breadcumb.administrador.manterusuario.detusuario']}</li>
+		</ul>
 	</ui:define>
-	<ui:param name="titulo" value="Altera��o da assinatura" />
 
 	<ui:define name="body_content">
-		<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
-			<h:panelGroup id="tabela-dados-cliente" >
-				<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="INFORMA��ES PESSOAIS" />
-				<hr class="lin"/>
-				<h:panelGrid cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;">
-					<p:outputLabel value="Nome:" for="txtNome" styleClass="HtmlOutputLabelResposta" />
-					<p:outputLabel id="txtNome" value="#{usuarioBean.vo.nome}" size="50" styleClass="input-5left HtmlOutputTextResposta" />
-					<p:outputLabel for="cboSexo" value="Sexo:" styleClass="HtmlOutputLabelResposta"/>
-					<p:outputLabel id="cboSexo" value="#{usuarioBean.vo.sexo}" style="margin-left:5px;" styleClass="HtmlOutputTextResposta" />
-					<p:outputLabel value="Data de Nascimento:" for="calendarDtNasc" styleClass="HtmlOutputLabelResposta"/>
-					<p:outputLabel id="calendarDtNasc" value="#{usuarioBean.vo.dataNascimentoFormatado}" styleClass="HtmlOutputTextResposta" style="margin-left:5px;" />
-					
-					<p:outputLabel value="CPF:" for="txtCPF" styleClass="HtmlOutputLabelResposta"/>
-					<p:outputLabel id="txtCPF" value="#{usuarioBean.vo.cpfString}" size="15" alt="cpf" styleClass="input-5left HtmlOutputTextResposta" />
-					<p:outputLabel value="Email:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
-					<p:outputLabel id="txtEmail" value="#{usuarioBean.vo.email}" size="45" styleClass="input-5left HtmlOutputTextResposta" />
-					<h:panelGroup></h:panelGroup>
-					<h:panelGroup></h:panelGroup>
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#"
+					data-original-title=""> <i class="icon-table"></i>
+					#{msgs['detusuarios.lbl.legend.informacoespessoais']}
+				</a>
+			</div>
+			<div id="si" class="widget-body collapse in">
+				<div class="widget-inner">
+					<h:panelGrid cellpadding="0" cellspacing="0" columns="1"
+						styleClass="CorpoPagina" border="0">
+						<h:panelGroup id="tabela-dados-cliente">
+							<h:panelGrid cellpadding="0" cellspacing="1" columns="6"
+								style="margin-top:5px;margin-bottom:25px;">
+								<h:outputLabel value="#{msgs['detusuarios.lbl.nome']}"
+									for="txtNome" styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="txtNome" value="#{usuarioBean.vo.nome}"
+									size="50" styleClass="input-5left HtmlOutputTextResposta" />
+								<h:outputLabel for="cboSexo"
+									value="#{msgs['detusuarios.lbl.sexo']}"
+									styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="cboSexo" value="#{usuarioBean.vo.sexo}"
+									style="margin-left:5px;" styleClass="HtmlOutputTextResposta" />
+								<h:outputLabel value="#{msgs['detusuarios.lbl.datanascimento']}"
+									for="calendarDtNasc" styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="calendarDtNasc"
+									value="#{usuarioBean.vo.dataNascimentoFormatado}"
+									styleClass="HtmlOutputTextResposta" style="margin-left:5px;" />
 
-					<p:outputLabel value="Telefone:" for="txtTelefone" styleClass="HtmlOutputLabelResposta"/>
-					<p:outputLabel id="txtTelefone" value="#{usuarioBean.vo.numTelefoneString}" size="15" styleClass="input-5left HtmlOutputTextResposta" alt="phone"/>
-					<p:outputLabel value="Celular:" for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
-					<p:outputLabel id="txtTelefoneCel" value="#{usuarioBean.vo.numCelularString}" size="15" styleClass="input-5left HtmlOutputTextResposta" alt="cell9"  />
-					<h:panelGroup></h:panelGroup> 
-					<h:panelGroup></h:panelGroup>
+								<h:outputLabel value="#{msgs['detusuarios.lbl.cpf']}"
+									for="txtCPF" styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="txtCPF" value="#{usuarioBean.vo.cpfString}"
+									size="15" alt="cpf"
+									styleClass="input-5left HtmlOutputTextResposta" />
+								<h:outputLabel value="#{msgs['detusuarios.lbl.email']}"
+									for="txtEmail" styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="txtEmail" value="#{usuarioBean.vo.email}"
+									size="45" styleClass="input-5left HtmlOutputTextResposta" />
+								<h:panelGroup></h:panelGroup>
+								<h:panelGroup></h:panelGroup>
 
-					<p:outputLabel value="CEP:" for="cep" styleClass="HtmlOutputLabelResposta" />
-					<p:outputLabel id="cep" value="#{usuarioBean.vo.endereco.cep}" size="10" styleClass="input-5left HtmlOutputTextResposta" alt="cep" />
-					<p:outputLabel value="Endere�o:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
-					<p:outputLabel id="txtAddress" value="#{usuarioBean.vo.endereco.logradouro}" size="50" styleClass="input-5left HtmlOutputTextResposta" />
-					<p:outputLabel value="Estado:" for="txtState" styleClass="HtmlOutputLabelResposta"/>
-					<p:outputLabel id="txtState" value="#{usuarioBean.vo.endereco.estado}" size="5" styleClass="HtmlOutputTextResposta" style="margin-left:5px;" />
+								<h:outputLabel value="#{msgs['detusuarios.lbl.telefone']}"
+									for="txtTelefone" styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="txtTelefone"
+									value="#{usuarioBean.vo.numTelefoneString}" size="15"
+									styleClass="input-5left HtmlOutputTextResposta" alt="phone" />
+								<h:outputLabel value="#{msgs['detusuarios.lbl.celular']}"
+									for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="txtTelefoneCel"
+									value="#{usuarioBean.vo.numCelularString}" size="15"
+									styleClass="input-5left HtmlOutputTextResposta" alt="cell9" />
+								<h:panelGroup></h:panelGroup>
+								<h:panelGroup></h:panelGroup>
 
-					<p:outputLabel value="N�:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
-					<p:outputLabel id="txtNum" value="#{usuarioBean.vo.endereco.numero}" size="5" maxlength="7" onkeypress="return onlyNum(event)" styleClass="input-5left HtmlOutputTextResposta" />
-					<p:outputLabel value="Cidade:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
-					<p:outputLabel id="txtCity" value="#{usuarioBean.vo.endereco.cidade}" size="30" styleClass="input-5left HtmlOutputTextResposta" />
-		
-					<p:outputLabel value="Bairro:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
-					<p:outputLabel id="txtBairro" value="#{usuarioBean.vo.endereco.bairro}" size="20" styleClass="input-5left HtmlOutputTextResposta" />
-					<p:outputLabel value="Complemento:" for="txtComplemento" styleClass="HtmlOutputLabelResposta"/>
-					<p:outputLabel id="txtComplemento" value="#{usuarioBean.vo.endereco.complemento}" size="50" styleClass="input-5left HtmlOutputTextResposta"/>
-					
-				
-				</h:panelGrid>
-			</h:panelGroup>
+								<h:outputLabel value="#{msgs['detusuarios.lbl.cep']}" for="cep"
+									styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="cep" value="#{usuarioBean.vo.endereco.cep}"
+									size="10" styleClass="input-5left HtmlOutputTextResposta"
+									alt="cep" />
+								<h:outputLabel value="#{msgs['detusuarios.lbl.endereco']}"
+									for="txtAddress" styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="txtAddress"
+									value="#{usuarioBean.vo.endereco.logradouro}" size="50"
+									styleClass="input-5left HtmlOutputTextResposta" />
+								<h:outputLabel value="#{msgs['detusuarios.lbl.estado']}"
+									for="txtState" styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="txtState"
+									value="#{usuarioBean.vo.endereco.estado}" size="5"
+									styleClass="HtmlOutputTextResposta" style="margin-left:5px;" />
+
+								<h:outputLabel value="#{msgs['detusuarios.lbl.num']}"
+									for="txtNum" styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="txtNum"
+									value="#{usuarioBean.vo.endereco.numero}" size="5"
+									maxlength="7" onkeypress="return onlyNum(event)"
+									styleClass="input-5left HtmlOutputTextResposta" />
+								<h:outputLabel value="#{msgs['detusuarios.lbl.cidade']}"
+									for="txtCity" styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="txtCity"
+									value="#{usuarioBean.vo.endereco.cidade}" size="30"
+									styleClass="input-5left HtmlOutputTextResposta" />
+
+								<h:outputLabel value="#{msgs['detusuarios.lbl.bairro']}"
+									for="txtBairro" styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="txtBairro"
+									value="#{usuarioBean.vo.endereco.bairro}" size="20"
+									styleClass="input-5left HtmlOutputTextResposta" />
+								<h:outputLabel value="#{msgs['detusuarios.lbl.complemento']}"
+									for="txtComplemento" styleClass="HtmlOutputLabelResposta" />
+								<h:outputLabel id="txtComplemento"
+									value="#{usuarioBean.vo.endereco.complemento}" size="50"
+									styleClass="input-5left HtmlOutputTextResposta" />
+							</h:panelGrid>
+						</h:panelGroup>
 
 
-			<h:panelGroup>
-				<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="LOGIN" />
-				<hr class="lin"/>		
-				<h:panelGrid id="infosUsuario" columns="2" style="margin-bottom:10px">
-					<p:outputLabel value="Usuario:" for="txtUsuario" styleClass="HtmlOutputLabelResposta" />
-					<p:outputLabel id="txtUsuario" value="#{usuarioBean.vo.usuario.username}" size="50" 
-							styleClass="input-5left HtmlOutputTextResposta" />
-	
-				</h:panelGrid>
-			</h:panelGroup>		
-		
-			<hr class="lin"/>
-		
-			<h:panelGroup>
-				<div class="buttonFooter">
-					<p:commandButton id="btnVoltar" value="Voltar" ajax="false" action="#{usuarioBean.navegarVoltarTelaDetalhe()}" style="float:left" immediate="true" />
+					</h:panelGrid>
 				</div>
-			</h:panelGroup>
-		</h:panelGrid>
+			</div>
+		</div>
+
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#"
+					data-original-title=""> <i class="icon-table"></i>
+					#{msgs['detusuarios.lbl.legend.login']}
+				</a>
+			</div>
+			<div id="si" class="widget-body collapse in">
+				<div class="widget-inner">
+					<h:panelGrid id="infosUsuario" columns="2"
+						style="margin-bottom:10px">
+						<h:outputLabel value="#{msgs['detusuarios.lbl.usuario']}"
+							for="txtUsuario" styleClass="HtmlOutputLabelResposta" />
+						<h:outputLabel id="txtUsuario"
+							value="#{usuarioBean.vo.usuario.username}" size="50"
+							styleClass="input-5left HtmlOutputTextResposta" />
+					</h:panelGrid>
+				</div>
+			</div>
+		</div>
+
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#"
+					data-original-title=""> <i class="icon-table"></i>
+					#{msgs['formularionovosusuarios.lbl.legend.configuracaoparametros']}
+				</a>
+			</div>
+			<div id="formdiv" class="widget-body collapse in">
+				<div class="widget-inner">
+					<h:panelGrid id="infosParametro" columns="2"
+						style="margin-bottom:10px">
+						<h:outputLabel
+							value="#{msgs['detusuarios.lbl.valormetafaturamento']}"
+							for="txtValorMetaFaturamento"
+							styleClass="HtmlOutputLabelResposta" />
+						<h:panelGrid columns="2">
+							<h:outputLabel value="R$" for="txtLucroTotalPedido"
+								styleClass="input-5left HtmlOutputTextResposta" />
+							<h:outputLabel
+								value="#{usuarioBean.parametros.valorMetaFaturamento}"
+								id="txtValorMetaFaturamento"
+								styleClass="input-5left HtmlOutputTextResposta">
+								<f:converter converterId="decimalConverter" />
+							</h:outputLabel>
+						</h:panelGrid>
+
+						<h:outputLabel
+							value="#{msgs['detusuarios.lbl.valorlucrodesejado']}"
+							for="txtValorLucroDesejado" styleClass="HtmlOutputLabelResposta" />
+						<h:panelGrid columns="2">
+							<h:outputLabel value="R$" for="txtLucroTotalPedido"
+								styleClass="input-5left HtmlOutputTextResposta" />
+							<h:outputLabel
+								value="#{usuarioBean.parametros.valorLucroDesejado}"
+								id="txtValorLucroDesejado"
+								styleClass="input-5left HtmlOutputTextResposta">
+								<f:converter converterId="decimalConverter" />
+							</h:outputLabel>
+						</h:panelGrid>
+					</h:panelGrid>
+				</div>
+			</div>
+		</div>
+
+		<hr class="lin" />
+
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs['btn_voltar']}"
+					ajax="false" action="#{usuarioBean.navegarVoltarTelaDetalhe()}"
+					styleClass="btn btn-zen-5 btn-toolbar" style="float:left"
+					immediate="true" />
+			</div>
+		</h:panelGroup>
+
 	</ui:define>
 </ui:composition>
 

@@ -1,26 +1,24 @@
 package br.com.mkoffice.dto.dashboard;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
-
-import br.com.mkoffice.utils.MkmtsUtil;
 
 public class BalancoDTO {
 
 	
 	private BigDecimal valorBalanco;
-	private Calendar data;
+	private String mes;
 	
 	
 	public BalancoDTO() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public BalancoDTO(BigDecimal valorBalanco, Calendar data) {
+	
+	public BalancoDTO(BigDecimal valorBalanco, String mes) {
 		super();
 		this.valorBalanco = valorBalanco;
-		this.data = data;
+		this.mes = mes;
 	}
 
 
@@ -31,33 +29,10 @@ public class BalancoDTO {
 		this.valorBalanco = valorBalanco;
 	}
 	public String getMes() {
-		return MkmtsUtil.converterDataString(data.getTime(), "yyyy-MM");
+		return mes;
 	}
-	
-	public Calendar getData(){
-		return data;
-	}
-
-
-	public void setData(Calendar data) {
-		this.data = data;
-	}
-
-	public void setData(String data) {
-		Calendar c = null;
-		try{
-			c = Calendar.getInstance();
-			c.set(Calendar.DAY_OF_MONTH, 1);
-			c.set(Calendar.MONTH, Integer.parseInt(data.split("-")[1]));
-			c.set(Calendar.YEAR, Integer.parseInt(data.split("-")[0]));
-		}catch(ArrayIndexOutOfBoundsException a){
-			c = Calendar.getInstance();
-			c.set(Calendar.DAY_OF_MONTH, 1);
-			c.set(Calendar.MONTH, Integer.parseInt(data.split("/")[1]));
-			c.set(Calendar.YEAR, Integer.parseInt(data.split("/")[0]));
-		}
-		
-		this.data = c;
+	public void setMes(String mes) {
+		this.mes = mes;
 	}
 
 }
