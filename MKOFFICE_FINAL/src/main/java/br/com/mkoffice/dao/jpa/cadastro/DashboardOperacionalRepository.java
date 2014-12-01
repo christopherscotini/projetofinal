@@ -155,7 +155,19 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 //			[3] GASTO_MENSAL - BIGDECIMAL
 //			[4] BALANCO - BIGDECIMAL
 			BalancoDTO dto = new BalancoDTO();
-			if(faturamentosEntities.get(i)[0] == null){dto.setMes((String) faturamentosEntities.get(i)[2]);}else{dto.setMes((String) faturamentosEntities.get(i)[0]);}
+			if(faturamentosEntities.get(i)[0] == null){
+				Calendar a = Calendar.getInstance();
+				a.set(Calendar.YEAR, Integer.parseInt(faturamentosEntities.get(i)[2].toString().split("/")[0]));
+				a.set(Calendar.MONTH, Integer.parseInt(faturamentosEntities.get(i)[2].toString().split("/")[1]) -1);
+				a.set(Calendar.DAY_OF_MONTH, 1);
+				dto.setData(a);
+			}else{
+				Calendar a = Calendar.getInstance();
+				a.set(Calendar.YEAR, Integer.parseInt(faturamentosEntities.get(i)[0].toString().split("/")[0]));
+				a.set(Calendar.MONTH, Integer.parseInt(faturamentosEntities.get(i)[0].toString().split("/")[1]) -1);
+				a.set(Calendar.DAY_OF_MONTH, 1);
+				dto.setData(a);
+			}
 			dto.setValorBalanco((BigDecimal) faturamentosEntities.get(i)[4]);
 			retorno.add(dto);
 		}

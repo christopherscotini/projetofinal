@@ -1,6 +1,10 @@
 package br.com.mkoffice.business.bo.impl;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -32,11 +36,73 @@ public class DashboardOperacionalBOImpl implements DashboardOperacionalBO {
 		dto.setValorLucroMesAnterior(dashboardOperacionalRepository.selectValorLucroMesAnterior(idUsuario));
 		dto.setValorLucroMesAtual(dashboardOperacionalRepository.selectValorLucroMesAtual(idUsuario));
 		dto.calcularPercentualDiferencaLucroMesAtualMesAnterior();
-		dto.setBalanco(new BalancoDTO(parcelaRepository.getSaldoUsuario(idUsuario), MkmtsUtil.extrairMesDataNome(new Date(), true)));
-		dto.setHistoricoBalanco(dashboardOperacionalRepository.selectHistoricoBalanco(idUsuario));
+		dto.setBalanco(new BalancoDTO(parcelaRepository.getSaldoUsuario(idUsuario), Calendar.getInstance()));
+		List<BalancoDTO>historicoBalanco = dashboardOperacionalRepository.selectHistoricoBalanco(idUsuario);
+		montarhistoricoBalanco(dto, historicoBalanco);		
+		
 		
 		return dto;
 	}
 	
+	
+	private void montarhistoricoBalanco(DashboardOperacionalDTO dto, List<BalancoDTO> historicoBalanco){
+		List<BalancoDTO> aux = new ArrayList<BalancoDTO>();
+		
+		try{
+			if (historicoBalanco.size() < 11) {
+				for (int i = historicoBalanco.size()-1; i <= 11 ; i--) {
+					if(aux.size() <= 12){
+					int diffy = historicoBalanco.get(i).getData().get(Calendar.YEAR) - historicoBalanco.get(i-1).getData().get(Calendar.YEAR);
+						if(diffy == 0){
+							int diffm = historicoBalanco.get(i).getData().get(Calendar.MONTH) - historicoBalanco.get(i-1).getData().get(Calendar.MONTH);
+							if(diffm == 1){
+								aux.add(new BalancoDTO(historicoBalanco.get(i).getValorBalanco(), historicoBalanco.get(i).getData()));
+							}else{
+								aux.add(new BalancoDTO(historicoBalanco.get(i).getValorBalanco(), historicoBalanco.get(i).getData()));
+								for (int j = 1; j < diffm; j++) {
+									if(aux.size() <= 12){
+										Calendar c1 = Calendar.getInstance();
+										c1.set(Calendar.YEAR, historicoBalanco.get(i).getData().get(Calendar.YEAR));
+										c1.set(Calendar.MONTH, historicoBalanco.get(i).getData().get(Calendar.MONTH)-j);
+										c1.set(Calendar.DAY_OF_MONTH, historicoBalanco.get(i).getData().get(Calendar.DAY_OF_MONTH));
+										aux.add(new BalancoDTO(BigDecimal.ZERO, c1));
+									}
+								}	
+							}
+						}	
+					}
+				}
+				
+				
+				
+			}
+			
+		}catch(IndexOutOfBoundsException e){
+			if(historicoBalanco.isEmpty()){
+				aux.add(new BalancoDTO(BigDecimal.ZERO, Calendar.getInstance()));
+			}else{
+				aux.add(new BalancoDTO(historicoBalanco.get(0).getValorBalanco(), historicoBalanco.get(0).getData()));
+			}
+			if(aux.size() <12){
+				for (int i = 0; i < 12; i++) {
+					if(aux.size() <12){
+						Calendar c1 = Calendar.getInstance();
+						c1.set(Calendar.YEAR, aux.get(aux.size()-1).getData().get(Calendar.YEAR));
+						c1.set(Calendar.MONTH, aux.get(aux.size()-1).getData().get(Calendar.MONTH)-1);
+						c1.set(Calendar.DAY_OF_MONTH, aux.get(aux.size()-1).getData().get(Calendar.DAY_OF_MONTH));
+						aux.add(new BalancoDTO(BigDecimal.ZERO, c1));
+					}
+				}
+			}
+		}
+		
+		historicoBalanco.removeAll(historicoBalanco);
+		
+		for (int i = aux.size()-1; i >= 0; i--) {
+			historicoBalanco.add(aux.get(i));
+		}
+		
+		dto.setHistoricoBalanco(historicoBalanco);
+	}
 	
 }

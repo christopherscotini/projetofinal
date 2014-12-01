@@ -115,7 +115,7 @@ public class PromocaoClientePorVolumeCompraBean extends AbstractModelBean{
         return model;
     }
 	
-//	=============================== M�TODOS GET E SET =============================== 
+//	=============================== METODOS GET E SET =============================== 
 	
 
 

@@ -32,6 +32,7 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 	private ParametrosDashboardEntity parametros;
 	
 	public DashboardOperacionalBean() {
+		
 	}
 	
 	@Override
@@ -77,6 +78,7 @@ public class DashboardOperacionalBean extends AbstractModelBean{
         graficoLucroDesejado.setIntervalOuterRadius(90);
 		
 	}
+	
 	private void montarGraficoFaturamento(){
 		final Double d3 = parametros.getValorMetaFaturamento().doubleValue();
 		final Double d2 = d3*2;
