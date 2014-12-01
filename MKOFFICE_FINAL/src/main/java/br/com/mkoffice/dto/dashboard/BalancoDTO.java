@@ -1,13 +1,16 @@
 package br.com.mkoffice.dto.dashboard;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
+
+import br.com.mkoffice.utils.MkmtsUtil;
 
 public class BalancoDTO {
 
 	
 	private BigDecimal valorBalanco;
-	private String mes;
+	private Calendar data;
 	
 	
 	public BalancoDTO() {
@@ -15,10 +18,10 @@ public class BalancoDTO {
 	}
 	
 	
-	public BalancoDTO(BigDecimal valorBalanco, String mes) {
+	public BalancoDTO(BigDecimal valorBalanco, Calendar data) {
 		super();
 		this.valorBalanco = valorBalanco;
-		this.mes = mes;
+		this.data = data;
 	}
 
 
@@ -29,10 +32,17 @@ public class BalancoDTO {
 		this.valorBalanco = valorBalanco;
 	}
 	public String getMes() {
-		return mes;
+		return MkmtsUtil.converterDataString(data.getTime(), "yyyy-MM");
 	}
-	public void setMes(String mes) {
-		this.mes = mes;
+
+
+	public Calendar getData() {
+		return data;
+	}
+
+
+	public void setData(Calendar data) {
+		this.data = data;
 	}
 
 }
