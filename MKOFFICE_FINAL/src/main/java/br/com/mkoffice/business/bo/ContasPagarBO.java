@@ -10,6 +10,6 @@ import br.com.mkoffice.model.admin.SituacaoEntity;
 
 public interface ContasPagarBO extends ServiceModel<ParcelasEntity> {
 
-	public List<ParcelasEntity> filtrar(DataFilter dataFiltro, Long situacaoPagamento);
+	public List<ParcelasEntity> filtrar(DataFilter dataFiltro, Long situacaoPagamento, Long idUsuario);
 	
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.mkoffice.dto.DataFilter;
+import br.com.mkoffice.dto.reports.caixa.ReportLucroVendasDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportRetencaoClientesDTO;
@@ -26,4 +27,6 @@ public interface ReportBO {
 	List<EstoqueEntity> getReportMovimentacaoEstoque(DataFilter dataFiltro, Long fluxoEstoqueFiltro, Long idUsuario);
 
 	ReportPedidoConsolidadoDTO getReportPedidoConsolidado(DataFilter dataFiltro, Long idUsuario);
+
+	ReportLucroVendasDTO getReportLucroDetalhado(DataFilter filtroData, Long idUsuario);
 }

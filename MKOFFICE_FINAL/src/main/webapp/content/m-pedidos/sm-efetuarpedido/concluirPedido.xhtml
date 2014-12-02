@@ -156,10 +156,10 @@
 					
 		<h:panelGroup>
 			<div class="buttonFooter">
-				<p:commandButton id="btnVoltar" value="Voltar" ajax="false" styleClass="botao-voltar btn btn-zen-5 btn-toolbar"
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" styleClass="botao-voltar btn btn-zen-5 btn-toolbar"
 					action="#{efetuarPedidoBean.navegarVoltarRevisarPedido()}" immediate="true" />
 				<p:commandButton id="btnConcluirPedido" 
-								 value="Concluir Pedido" 
+								 value="#{msgs['concluirpedido.lbl.btn_conclurpedido']}" 
 								 ajax="false" styleClass="btn btn-zen-2 btn-toolbar"
 								 onstart="statusDialog.show();" oncomplete="statusDialog.hide();loadMasksJQuery();"
 								 action="#{efetuarPedidoBean.executePedido()}"

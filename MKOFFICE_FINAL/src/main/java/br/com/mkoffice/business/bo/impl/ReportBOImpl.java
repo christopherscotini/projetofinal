@@ -14,6 +14,7 @@ import br.com.mkoffice.dao.jpa.cadastro.PedidoRepository;
 import br.com.mkoffice.dao.jpa.cadastro.ReportClienteRepository;
 import br.com.mkoffice.dao.jpa.cadastro.ReportEstoqueRepository;
 import br.com.mkoffice.dto.DataFilter;
+import br.com.mkoffice.dto.reports.caixa.ReportLucroVendasDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDetalhadoPorClienteDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportRetencaoClientesDTO;
@@ -87,5 +88,23 @@ public class ReportBOImpl implements ReportBO{
 		
 		return pedidoRepository.gerarRelatorioPedidoConsolidado(dataFiltro, idUsuario);
 	}
+
+	@Override
+	public ReportLucroVendasDTO getReportLucroDetalhado(DataFilter filtroData, Long idUsuario) {
+		ReportLucroVendasDTO dto = new ReportLucroVendasDTO();
+		dto.setGastos(parcelaRepository.filterByDateSituacaoPagoContasPagar(filtroData, idUsuario));
+		dto.setFaturamento(parcelaRepository.filterByDateSituacaoPagoContasReceber(filtroData, idUsuario));
+		dto.setValorLucroPeriodo(BigDecimal.ZERO);
+		for (int i = 0; i < dto.getFaturamento().size(); i++) {
+			dto.setValorLucroPeriodo(dto.getValorLucroPeriodo().add(dto.getFaturamento().get(i).getValorPago()));
+		}
+		for (int i = 0; i < dto.getGastos().size(); i++) {
+			dto.setValorLucroPeriodo(dto.getValorLucroPeriodo().subtract(dto.getGastos().get(i).getValorPago()));
+		}
+		
+		return dto;
+	}
+	
+	
 	
 }

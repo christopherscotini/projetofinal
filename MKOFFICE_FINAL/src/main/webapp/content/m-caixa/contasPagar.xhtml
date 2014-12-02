@@ -91,22 +91,22 @@
 							value="#{contasPagarBean.parcelas}" 
 							paginator="true"
 							paginatorPosition="bottom" 
-							emptyMessage="">
+							emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}.">
 
-						<p:column headerText="#{msgs['generico.tabelacoluna.codigopedido']}" width="10%" sortBy="#{result.codPedido.codPedido}">
-							<h:outputText value="#{result.codPedido.codPedido}" style="text-align: left;" />
+						<p:column headerText="#{msgs['generico.tabelacoluna.codigopedido']}" width="10%" style="text-align: center;" sortBy="#{result.codPedido.codPedido}">
+							<h:outputText value="#{result.codPedido.codPedido}" style="text-align: center;" />
 						</p:column>
 						<p:column headerText="#{msgs['generico.tabelacoluna.parcela']}" width="10%" style="text-align: center;" sortBy="#{result.descricao}">
-							<h:outputText value="Parcela #{result.descricao}" style="text-align: center;" />
+							<h:outputText value="#{msgs['contasreceber.lbl.parcela']} #{result.descricao}" style="text-align: center;" />
 						</p:column>
 						<p:column headerText="#{msgs['generico.tabelacoluna.datavencimento']}" width="10%" style="text-align: center;" sortBy="#{result.dtVencimento}">
 							<h:outputText value="#{result.dtVencimento}" style="text-align: center;" >
 								<f:convertDateTime pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
-						<p:column headerText="#{msgs['generico.tabelacoluna.valorparcela']}" width="15%"  sortBy="#{result.valorParcela}">
-							<h:outputText value="R$ "  />
-							<h:outputText value="#{result.valorParcela}"  >
+						<p:column headerText="#{msgs['generico.tabelacoluna.valorparcela']}" width="15%" style="text-align: center;" sortBy="#{result.valorParcela}">
+							<h:outputText value="R$ "  style="text-align: center;" />
+							<h:outputText value="#{result.valorParcela}"  style="text-align: center;">
 								<f:converter converterId="decimalConverter" />
 							</h:outputText>
 						</p:column>
@@ -115,9 +115,9 @@
 								<f:convertDateTime pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
-						<p:column headerText="#{msgs['generico.tabelacoluna.valorpago']}" width="15%" sortBy="#{result.valorPago}">
-							<h:outputText value="R$ " />
-							<h:outputText value="#{result.valorPago}" >
+						<p:column headerText="#{msgs['generico.tabelacoluna.valorpago']}" width="15%" style="text-align: center;" sortBy="#{result.valorPago}">
+							<h:outputText value="R$ " style="text-align: center;"/>
+							<h:outputText value="#{result.valorPago}" style="text-align: center;">
 								<f:converter converterId="decimalConverter" />
 							</h:outputText>
 						</p:column>

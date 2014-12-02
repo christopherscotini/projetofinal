@@ -101,6 +101,7 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 		BigDecimal valorMin = BigDecimal.ZERO;
 		BigDecimal valorMax = BigDecimal.ZERO;
 		ChartSeries balanco = new ChartSeries();
+		balanco.setLabel("Balanço");
 		for (int i = 0; i < dashboardOperacional.getHistoricoBalanco().size(); i++) {
 			balanco.set(dashboardOperacional.getHistoricoBalanco().get(i).getMes(), dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco());
 			if(dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco().compareTo(valorMax) > 0){

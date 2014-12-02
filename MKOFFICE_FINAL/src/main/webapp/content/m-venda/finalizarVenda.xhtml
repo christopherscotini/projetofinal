@@ -75,9 +75,9 @@
 						<h:outputLabel value="#{msgs['dadosvenda.lbl.celular']}:" for="txtTelefoneCel" style="margin-left:20px;" styleClass="HtmlOutputLabelResposta" />
 						<h:outputLabel id="txtTelefoneCel" value="#{efetuarVendaBean.clienteVo.numCelularString}" styleClass="input-5left HtmlOutputTextResposta" />
 					
-						<h:outputLabel value="Data da Primeira Venda:" for="calendarDtFirstSale" styleClass="HtmlOutputLabelResposta" rendered="#{not empty efetuarVendaBean.clienteVo.dataPrimeiraVenda}"/>
+						<h:outputLabel value="#{msgs['dadosvenda.lbl.dataprimeiravenda']}:" for="calendarDtFirstSale" styleClass="HtmlOutputLabelResposta" rendered="#{not empty efetuarVendaBean.clienteVo.dataPrimeiraVenda}"/>
 						<h:outputLabel id="calendarDtFirstSale" value="#{efetuarVendaBean.clienteVo.dataPrimeiraVendaFormatado}" styleClass="input-5left HtmlOutputTextResposta" rendered="#{not empty efetuarVendaBean.clienteVo.dataPrimeiraVenda}"/>
-						<h:outputLabel value="Data da Ultima Venda:" for="calendarDtFirstSale" styleClass="HtmlOutputLabelResposta" rendered="#{not empty efetuarVendaBean.clienteVo.dataUltimaVenda}" />
+						<h:outputLabel value="#{msgs['dadosvenda.lbl.dataultimavenda']}:" for="calendarDtFirstSale" styleClass="HtmlOutputLabelResposta" rendered="#{not empty efetuarVendaBean.clienteVo.dataUltimaVenda}" />
 						<h:outputLabel id="calendarDtLastSale" value="#{efetuarVendaBean.clienteVo.dataUltimaVendaFormatado}" styleClass="input-5left HtmlOutputTextResposta" rendered="#{not empty efetuarVendaBean.clienteVo.dataUltimaVenda}"/>
 						<h:panelGroup></h:panelGroup>
 						<h:panelGroup></h:panelGroup>
@@ -87,7 +87,7 @@
 						
 					<h:panelGrid cellpadding="0" cellspacing="1" columns="2" border="0" styleClass="" style="margin-bottom:25px;" >
 						<p:selectBooleanCheckbox value="#{efetuarVendaBean.venda.acompanhamento222}" style="float:right;"/>
-						<h:outputLabel value="Deseja fazer o acompanhamento 2 + 2 + 2 ?" style="margin-left:5px;"/>
+						<h:outputLabel value="#{msgs['finalizarvenda.lbl.acompanhamento222']}" style="margin-left:5px;"/>
 					</h:panelGrid>
 				</div>
 			</div>
@@ -140,7 +140,7 @@
 						rows="10"
 						styleClass="dataTable"
 						paginator="true" paginatorPosition="bottom"
-						emptyMessage="Dados n�o encontrados">
+						emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}">
 
 						<f:facet name="header">  
 				            #{msgs['dadosvenda.lbl.produtosinclusoscarrinho']}
@@ -166,7 +166,7 @@
 							<h:outputText value="#{result.qtdeProdutoCarrinho}" style="text-align: center;" />
 						</p:column>
 
-						<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: right;" width="10%" >
+						<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: center;" width="10%" >
 							<h:outputText value="R$" style="text-align: right;" />
 							<h:outputText value="#{result.valorTotalProdutoCarrinho}" style="text-align: right;">
 								<f:converter converterId="decimalConverter" />

@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+	</ui:define>
+	
+	<ui:define name="jsImports">
+	
+	</ui:define>
+
+	<ui:define name="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['reportlucrodetalhado.breadcumb.relatorio']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['reportlucrodetalhado.breadcumb.relatorio.caixa']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['reportlucrodetalhado.breadcumb.relatorio.caixa.lucrodetalhado']}</li>
+		</ul>
+	</ui:define>
+	
+	
+	<ui:define name="body_content">
+		<div class="row-fluid">
+			<div class="widget span12">
+				<div class="widget-heading">
+					<a class="accordion-toggle in" data-toggle="collapse" href="#divFiltro">
+						<i class="icon-th"></i> #{msgs['reportlucrodetalhado.lbl.pesquisa']}
+						<i class="icon-chevron-down pull-right"></i>
+					</a>
+				</div>
+				<div id="divFiltro" class="widget-body collapse in">
+					<div class="widget-inner">
+						<h:panelGrid columns="2" id="gridFiltro" >
+							<h:panelGroup>
+								<h:outputLabel value="#{msgs['reportlucrodetalhado.lbl.datainicio']}:" />
+								<p:calendar id="calendarDataInicial" value="#{reportLucroVendasBean.dataFiltro.dataInicio}" pattern="dd/MM/yyyy" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputLabel value="#{msgs['reportlucrodetalhado.lbl.datafim']}:" />
+								<p:calendar id="calendarDataFinal" value="#{reportLucroVendasBean.dataFiltro.dataFinal}" pattern="dd/MM/yyyy" />
+							</h:panelGroup>
+						</h:panelGrid>
+						<h:panelGroup>
+							<div class="buttonFilter">
+								<p:commandButton id="btnLimpar" 
+									value="#{msgs.btn_limpar}" 
+									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+									actionListener="#{reportLucroVendasBean.limparCamposFiltro()}" 
+									ajax="true" update="gridFiltro" />
+								<p:commandButton id="btnPesquisar" 
+									value="#{msgs.btn_pesquisar}" 
+									action="#{reportLucroVendasBean.pesquisarFiltro()}" 
+									style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar"
+									ajax="true" update="tableListFaturamento tableListGastos valorLucro messagesGlobal" oncomplete="loadMasksMoneyJQuery();"/>
+							</div>
+						</h:panelGroup>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="widget span6">
+				<div class="widget-heading">
+					<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
+					<i class="icon-table"></i> #{msgs['reportlucrodetalhado.titulotabela.faturamento']}
+					<i class="icon-chevron-down pull-right"></i>
+					</a>
+				</div>
+				<div id="si" class="widget-body collapse in">
+					<div class="widget-inner">
+						<p:dataTable id="tableListFaturamento" 
+								style="margin-top:10px;"
+								var="result" rows="10" rowKey="#{result}" 
+								value="#{reportLucroVendasBean.report.faturamento}" 
+								emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}." >
+							
+							<p:column headerText="#{msgs['generico.tabelacoluna.datapagamento']}" width="35%"	sortBy="#{result.dtPagamento}">
+								<h:outputText value="#{result.dtPagamento}" style="text-align: left;" >
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.cliente']}" width="35%"	sortBy="#{result.codVenda.cliente.dadosPessoa.nome}">
+								<h:outputText value="#{result.codVenda.cliente.dadosPessoa.nome}" style="text-align: left;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.valorpago']}" style="text-align: center;" width="10%" sortBy="#{result.valorPago}">
+								<h:outputText value="R$" style="text-align: left;" />
+								<h:outputText value="#{result.valorPago}" style="text-align: center;" >
+									<f:converter converterId="decimalConverter" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+			<div class="widget span6">
+				<div class="widget-heading">
+					<a class="accordion-toggle in" data-toggle="collapse" href="#si2" data-original-title="">
+					<i class="icon-table"></i> #{msgs['reportlucrodetalhado.titulotabela.gastos']}
+					<i class="icon-chevron-down pull-right"></i>
+					</a>
+				</div>
+				<div id="si2" class="widget-body collapse in">
+					<div class="widget-inner">
+						<p:dataTable id="tableListGastos" 
+								style="margin-top:10px;"
+								var="result" rows="10" rowKey="#{result}" 
+								value="#{reportLucroVendasBean.report.gastos}" 
+								emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}." >
+							
+							<p:column headerText="#{msgs['generico.tabelacoluna.datapagamento']}" width="35%"	sortBy="#{result.dtPagamento}">
+								<h:outputText value="#{result.dtPagamento}" style="text-align: left;" >
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.codigopedido']}" width="35%"	sortBy="#{result.codPedido.codPedido}">
+								<h:outputText value="#{result.codPedido.codPedido}" style="text-align: left;" />
+							</p:column>
+							<p:column headerText="#{msgs['generico.tabelacoluna.valorpago']}" style="text-align: center;" width="10%" sortBy="#{result.valorPago}">
+								<h:outputText value="R$" style="text-align: left;" />
+								<h:outputText value="#{result.valorPago}" style="text-align: center;" >
+									<f:converter converterId="decimalConverter" />
+								</h:outputText>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="row-fluid">
+			<div class="widget span6">
+				<div class="widget-heading">
+					<a class="accordion-toggle in" data-toggle="collapse" href="#si3" data-original-title="">
+					<i class="icon-table"></i> #{msgs['reportlucrodetalhado.lbl.valorlucro']}
+					<i class="icon-chevron-down pull-right"></i>
+					</a>
+				</div>
+				<div id="si3" class="widget-body collapse in">
+					<div class="widget-inner">
+						<h:outputText value="R$ " style="text-align: left;" />
+						<h:outputText id="valorLucro" value="#{reportLucroVendasBean.report.valorLucroPeriodo}" style="margin-left:input-5left" >
+							<f:converter converterId="decimalConverter" />
+						</h:outputText>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<hr class="lin" />
+				
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
+					style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
+					action="#{loginBean.telaIndex()}" ajax="false" />
+<!-- 						<p:commandButton rendered="true" id="btnAvancar" value="Movimentar produtos em estoque" -->
+<!-- 							action="#{estoqueBean.selecionarProdutosParaEstoque()}" ajax="false" /> -->
+			</div>
+			<div style="height: 10px;width: 10px;"></div>
+		</h:panelGroup>
+		
+		
+	</ui:define>
+</ui:composition>

@@ -28,17 +28,17 @@ public class ContasReceberBOImpl implements ContasReceberBO{
 
 	
 	@Override
-	public List<ParcelasEntity> filtrar(DataFilter dataFiltro, Long situacaoPagamento) {
+	public List<ParcelasEntity> filtrar(DataFilter dataFiltro, Long situacaoPagamento, Long idUsuario) {
 		if(situacaoPagamento.equals(1L)){
-			return dao.filterByDateSituacaoPagoContasReceber(dataFiltro);
+			return dao.filterByDateSituacaoPagoContasReceber(dataFiltro, idUsuario);
 		}else{
 			if(situacaoPagamento.equals(2L)){
-				return dao.filterByDateSituacaoPendenteContasReceber(dataFiltro);
+				return dao.filterByDateSituacaoPendenteContasReceber(dataFiltro, idUsuario);
 			}else{
 				if(situacaoPagamento.equals(99L)){
 					List<ParcelasEntity>entities = new ArrayList<ParcelasEntity>();
-					entities.addAll(dao.filterByDateSituacaoPagoContasReceber(dataFiltro));
-					entities.addAll(dao.filterByDateSituacaoPendenteContasReceber(dataFiltro));
+					entities.addAll(dao.filterByDateSituacaoPagoContasReceber(dataFiltro, idUsuario));
+					entities.addAll(dao.filterByDateSituacaoPendenteContasReceber(dataFiltro, idUsuario));
 					return entities;
 				}
 			}

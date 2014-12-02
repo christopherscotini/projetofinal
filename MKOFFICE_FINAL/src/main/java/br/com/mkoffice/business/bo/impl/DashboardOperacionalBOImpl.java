@@ -72,9 +72,6 @@ public class DashboardOperacionalBOImpl implements DashboardOperacionalBO {
 						}	
 					}
 				}
-				
-				
-				
 			}
 			
 		}catch(IndexOutOfBoundsException e){

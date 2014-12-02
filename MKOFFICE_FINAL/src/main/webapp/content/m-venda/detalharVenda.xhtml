@@ -108,7 +108,7 @@
 			<div id="si" class="widget-body collapse in">
 				<div class="widget-inner">	
 					<h:panelGrid columns="2" cellpadding="0" cellspacing="0" style="margin-top:5px;">
-						<h:outputLabel value="Forma de Pagamento:" for="txtFormaPagamento" styleClass="HtmlOutputLabelResposta" />
+						<h:outputLabel value="#{msgs['detalharvenda.lbl.formapagamento']}:" for="txtFormaPagamento" styleClass="HtmlOutputLabelResposta" />
 						<h:outputLabel id="txtFormaPagamento" value="#{historicoVendaBean.vendaVo.formaDePagamento.descFormaPgto}" styleClass="input-5left HtmlOutputTextResposta" />
 					</h:panelGrid>
 					
@@ -116,16 +116,16 @@
 							value="#{historicoVendaBean.vendaVo.parcelas}" var="p"
 							rowKey="#{p}" rows="10"
 							styleClass="dataTable"
-							emptyMessage="N�o h� parcelas" >
+							emptyMessage="#{msgs['detalharvenda.lbl.naohaparcelas']}" >
 		
 							<f:facet name="header">  
-					            Situa��o das parcelas
+					            #{msgs['detalharvenda.titulotabela.situacaoparcelas']}
 					        </f:facet>
 					        
 							<p:column headerText="#{msgs['generico.tabelacoluna.situacao']}">
 					        	<h:outputText value="#{p.descricao} - #{p.codSituacaoParcela.descSituacao}" />
 					        </p:column>
-							<p:column  style="text-align: center;" headerText="VALOR DA PARCELA" >
+							<p:column  style="text-align: center;" headerText="#{msgs['detalharvenda.tabelacoluna.valorparcela']}" >
 					        	<h:outputText value="R$"
 									style="text-align: center;" />
 					        	<h:outputText value="#{p.valorParcela}"
@@ -170,14 +170,14 @@
 								rowKey="#{result}" rows="10"
 								styleClass="dataTable"
 								paginator="true" paginatorPosition="bottom"
-								emptyMessage="N�o h� produtos no pedido">
+								emptyMessage="#{msgs['detalharvenda.lbl.naohaprodutosnopedido']}">
 				
 								<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" style="text-align: center;"
 										width="10%" sortBy="#{result.produto.codProduto}">
 										<h:outputText value="#{result.produto.codProduto}"
 											style="text-align: center;" />
 								</p:column>
-								<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="60%" sortBy="#{result.produto.descProduto}">
+								<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="50%" sortBy="#{result.produto.descProduto}">
 									<h:outputText value="#{result.produto.descProduto}"
 										style="text-align: left;" />
 								</p:column>
@@ -191,21 +191,21 @@
 								<p:column headerText="#{msgs['generico.tabelacoluna.quantidade']}" style="text-align: center;" width="10%" sortBy="#{result.qtdeProdutoCarrinho}" >
 									<h:outputText value="#{result.qtdeProdutoCarrinho}" style="text-align: center;" />
 								</p:column>
-								<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: right;" width="10%" >
+								<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: center;" width="10%" >
 									<h:outputText value="R$" style="text-align: right;" />
 									<h:outputText value="#{result.valorTotalProdutoCarrinho}" style="text-align: right;" >
 										<f:converter converterId="decimalConverter" />
 									</h:outputText>
 								</p:column>
 					</p:dataTable>
-					<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
-						style="	margin-top:5px;">
-						<h:outputLabel value="#{msgs['detalharvenda.lbl.totalprodutoscomprados']}:" />
-						<h:outputLabel value="#{historicoVendaBean.numeroTotalProdutosVendidos}" styleClass="input-5left HtmlOutputTextResposta" />
-					</h:panelGrid>
 				</div>
 			</div>
 		</div>
+		<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="2"
+			style="	margin-top:5px;">
+			<h:outputLabel value="#{msgs['detalharvenda.lbl.totalprodutoscomprados']}:" />
+			<h:outputLabel value="#{historicoVendaBean.numeroTotalProdutosVendidos}" styleClass="input-5left HtmlOutputTextResposta" />
+		</h:panelGrid>
 				
 		
 		<hr class="lin"/>

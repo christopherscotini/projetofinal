@@ -8,6 +8,6 @@ import br.com.mkoffice.model.ParcelasEntity;
 
 public interface ContasReceberBO extends ServiceModel<ParcelasEntity> {
 
-	public List<ParcelasEntity> filtrar(DataFilter dataFiltro, Long situacaoPagamento);
+	public List<ParcelasEntity> filtrar(DataFilter dataFiltro, Long situacaoPagamento, Long idUsuario);
 	
 }

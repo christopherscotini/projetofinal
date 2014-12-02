@@ -42,7 +42,7 @@ public class ContasPagarBean extends AbstractModelBean{
 	public String pesquisarFiltro() {
 		
 		try{
-			parcelas = contasPagarBO.filtrar(dataFiltro, situacaoPagamentoFiltro);
+			parcelas = contasPagarBO.filtrar(dataFiltro, situacaoPagamentoFiltro, loginBean.getUsuario().getId());
 		}catch(NoDataFoundException ndf){
 			parcelas = null;
 			FacesUtils.addErrorMessage(ndf.getMessage());

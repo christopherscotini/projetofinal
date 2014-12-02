@@ -29,19 +29,19 @@ public class ContasPagarBOImpl implements ContasPagarBO{
 
 	
 	@Override
-	public List<ParcelasEntity> filtrar(DataFilter dataFiltro, Long situacaoPagamento) {
+	public List<ParcelasEntity> filtrar(DataFilter dataFiltro, Long situacaoPagamento, Long idUsuario) {
 		situacaoPagamento = MkmtsUtil.verificaLongNulo(situacaoPagamento == null ? 0 : Long.valueOf(situacaoPagamento));
 		
 		if(situacaoPagamento.equals(1L)){
-			return dao.filterByDateSituacaoPagoContasPagar(dataFiltro);
+			return dao.filterByDateSituacaoPagoContasPagar(dataFiltro, idUsuario);
 		}else{
 			if(situacaoPagamento.equals(2L)){
-				return dao.filterByDateSituacaoPendenteContasPagar(dataFiltro);
+				return dao.filterByDateSituacaoPendenteContasPagar(dataFiltro, idUsuario);
 			}else{
 				if(situacaoPagamento.equals(99L)){
 					List<ParcelasEntity>entities = new ArrayList<ParcelasEntity>();
-					entities.addAll(dao.filterByDateSituacaoPagoContasPagar(dataFiltro));
-					entities.addAll(dao.filterByDateSituacaoPendenteContasPagar(dataFiltro));
+					entities.addAll(dao.filterByDateSituacaoPagoContasPagar(dataFiltro, idUsuario));
+					entities.addAll(dao.filterByDateSituacaoPendenteContasPagar(dataFiltro, idUsuario));
 					return entities;
 				}
 			}

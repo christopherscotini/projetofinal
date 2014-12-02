@@ -57,7 +57,7 @@
 							</div>
 						</div>
 						
-						<p:chart type="line" model="#{dashboardOperacionalBean.graficoBalanco}" style="height:300px;"/>
+						<p:chart type="line" model="#{dashboardOperacionalBean.graficoBalanco}" style="height:300px;"  />
 						
 					</div>
 					
@@ -83,7 +83,7 @@
 									</div>
 									<div class="badge badge-#{dashboardOperacionalBean.dashboardOperacional.percentualDiferencaFaturamentoMesAtualMesAnteriorPositivo?'success':'important'}" title="em relacao ao mes anterior" style="margin-left: 5px;">
 										#{dashboardOperacionalBean.dashboardOperacional.percentualDiferencaFaturamentoMesAtualMesAnterior}%
-										<i class="ace-icon fa fa-arrow-up"></i>
+										<i class="ace-icon fa fa-arrow-#{dashboardOperacionalBean.dashboardOperacional.percentualDiferencaFaturamentoMesAtualMesAnteriorPositivo?'up':'down'}"></i>
 									</div>
 								</div>
 							</div>
@@ -97,15 +97,16 @@
 									</div>
 									<div class="infobox-data">
 										<span class="infobox-data-number"> 
-										<h:outputLabel value="#{dashboardOperacionalBean.dashboardOperacional.valorLucroMesAtual}" style="font-size: 22px;" >
-											<f:converter converterId="decimalConverter" />
-										</h:outputLabel>
+											<h:outputLabel value="#{dashboardOperacionalBean.dashboardOperacional.valorLucroMesAtual}" style="font-size: 22px;" >
+												<f:converter converterId="decimalConverter" />
+												<p:ajax event="click" oncomplete="document.getElementById('formGlobal:linkFakeLucroReport').click();"/>
+											</h:outputLabel>
 										</span>
 										<div class="infobox-content"> em reais (R$)</div>
 									</div>
 									<div class="badge badge-#{dashboardOperacionalBean.dashboardOperacional.percentualDiferencaLucroMesAtualMesAnteriorPositivo?'success':'important'}" title="em relacao ao mes anterior" style="margin-left: 5px;">
 										#{dashboardOperacionalBean.dashboardOperacional.percentualDiferencaLucroMesAtualMesAnterior}%
-										<i class="ace-icon fa fa-arrow-up"></i>
+										<i class="ace-icon fa fa-arrow-#{dashboardOperacionalBean.dashboardOperacional.percentualDiferencaLucroMesAtualMesAnteriorPositivo?'up':'down'}"></i>
 									</div>
 								</div>
 							</div>
@@ -169,7 +170,7 @@
 			</div>
 		</div>
 	
-	
+	<h:commandButton action="#{reportLucroVendasBean.iniciarTela()}" id="linkFakeLucroReport" value="" style="display:none"/>
 	</ui:define>
 	
 </ui:composition>

@@ -36,7 +36,7 @@ public class ContasReceberBean extends AbstractModelBean{
 
 	@Override
 	public String pesquisarFiltro() {
-		parcelas = contasReceberBO.filtrar(dataFiltro, situacaoPagamentoFiltro);
+		parcelas = contasReceberBO.filtrar(dataFiltro, situacaoPagamentoFiltro, loginBean.getUsuario().getId());
 		return null;
 	}
 
