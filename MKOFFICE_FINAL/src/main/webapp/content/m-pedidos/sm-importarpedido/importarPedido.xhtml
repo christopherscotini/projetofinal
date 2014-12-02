@@ -45,7 +45,7 @@
 							<p:fileUpload id="upload" style="width:100%; text-align: center;"
 								fileUploadListener="#{importarPedidoBean.handleFileUpload}"
 								mode="advanced"
-								invalidFileMessage="Formato invalido, importe somente arquivos .htm ou .html"
+								invalidFileMessage="#{msgs['importarpedido.msg.formatoarquivo']}"
 								dragDropSupport="true" update="@form"
 								onstart="PF('statusDialog').show();"
 								oncomplete="PF('statusDialog').hide();loadMasksJQuery();"

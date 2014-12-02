@@ -36,17 +36,17 @@
 			<div id="formdiv" class="widget-body collapse in">
 				<div class="widget-inner">	
 					<h:panelGrid id="formgrid" cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;">
-						<p:outputLabel value="#{msgs['inccliente.lbl.nome']}:" for="txtNome" styleClass="HtmlOutputLabelResposta" />
+						<h:outputLabel value="#{msgs['inccliente.lbl.nome']}:" for="txtNome" styleClass="HtmlOutputLabelResposta" />
 						<h:inputText id="txtNome" value="#{clienteBean.vo.nome}" size="50" styleClass="input-5left input-xlarge"  />
-						<p:outputLabel for="cboSexo" value="#{msgs['inccliente.lbl.sexo']}:" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel for="cboSexo" value="#{msgs['inccliente.lbl.sexo']}:" styleClass="HtmlOutputLabelResposta"/>
 						<h:selectOneMenu id="cboSexo" value="#{clienteBean.vo.sexo}" style="margin-left:5px;" >
 							<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}"/>
 							<f:selectItems value="#{clienteBean.comboSexualidade}" var="_gender" itemLabel="#{_gender.label}" itemValue="#{_gender.label}" />
 						</h:selectOneMenu>
-						<p:outputLabel value="#{msgs['inccliente.lbl.datanascimento']}:" for="calendarDtNasc" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['inccliente.lbl.datanascimento']}:" for="calendarDtNasc" styleClass="HtmlOutputLabelResposta"/>
 						<p:calendar id="calendarDtNasc" value="#{clienteBean.vo.dataNascimento}" size="10" pattern="dd/MM/yyyy" alt="date" style="margin-left:5px;" />
 						
-						<p:outputLabel value="#{msgs['inccliente.lbl.cep']}:" for="cep" styleClass="HtmlOutputLabelResposta" />
+						<h:outputLabel value="#{msgs['inccliente.lbl.cep']}:" for="cep" styleClass="HtmlOutputLabelResposta" />
 						<h:panelGroup>
 							<h:inputText id="cep" value="#{clienteBean.vo.endereco.cep}" size="10" styleClass="cep input-5left" alt="cep" />
 							<p:commandLink  value="#{msgs['inccliente.lbl.preencher']}" style="margin-left:5px;" ajax="false" partialSubmit="true" process="cep" actionListener="#{clienteBean.buscarEnderecoViaWebService()}"/>
@@ -56,32 +56,32 @@
 						<h:panelGroup></h:panelGroup>
 						<h:panelGroup></h:panelGroup>
 		
-						<p:outputLabel value="#{msgs['inccliente.lbl.endereco']}:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['inccliente.lbl.endereco']}:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
 						<h:inputText id="txtAddress" value="#{clienteBean.vo.endereco.logradouro}" size="50" styleClass="input-5left input-xlarge" />
-						<p:outputLabel value="#{msgs['inccliente.lbl.numerocasa']}:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
+						<h:outputLabel value="#{msgs['inccliente.lbl.numerocasa']}:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
 						<h:inputText id="txtNum" value="#{clienteBean.vo.endereco.numero}" size="5" maxlength="7" onkeypress="return onlyNum(event)" styleClass="input-5left" />
-						<p:outputLabel value="#{msgs['inccliente.lbl.bairro']}:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['inccliente.lbl.bairro']}:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
 						<h:inputText id="txtBairro" value="#{clienteBean.vo.endereco.bairro}" size="20" styleClass="input-5left" />
 			
-						<p:outputLabel value="#{msgs['inccliente.lbl.complemento']}:" for="txtComplemento" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['inccliente.lbl.complemento']}:" for="txtComplemento" styleClass="HtmlOutputLabelResposta"/>
 						<h:inputText id="txtComplemento" value="#{clienteBean.vo.endereco.complemento}" size="50" styleClass="input-5leftcinput-xlarge"/>
-						<p:outputLabel value="#{msgs['inccliente.lbl.cidade']}:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['inccliente.lbl.cidade']}:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
 						<h:inputText id="txtCity" value="#{clienteBean.vo.endereco.cidade}" size="30" styleClass="input-5left" />
-						<p:outputLabel value="#{msgs['inccliente.lbl.estado']}:" for="cboState" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['inccliente.lbl.estado']}:" for="cboState" styleClass="HtmlOutputLabelResposta"/>
 						<h:selectOneMenu id="cboState" value="#{clienteBean.vo.endereco.estado}" style="margin-left:5px;" >
 							<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}"/>
 							<f:selectItems value="#{clienteBean.comboUf}" var="_gender" itemLabel="#{_gender.label}" itemValue="#{_gender.label}" />
 						</h:selectOneMenu>
 						
-						<p:outputLabel value="#{msgs['inccliente.lbl.email']}:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['inccliente.lbl.email']}:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
 						<h:inputText id="txtEmail" value="#{clienteBean.vo.email}" size="45" styleClass="input-5left input-xlarge" >
 						</h:inputText>
-						<p:outputLabel value="#{msgs['inccliente.lbl.telefone']}:" for="txtTelefone" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['inccliente.lbl.telefone']}:" for="txtTelefone" styleClass="HtmlOutputLabelResposta"/>
 						<h:inputText id="txtTelefone" value="#{clienteBean.vo.numTelefoneString}" size="15" styleClass="phone input-5left"/>
-						<p:outputLabel value="#{msgs['inccliente.lbl.celular']}:" for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
+						<h:outputLabel value="#{msgs['inccliente.lbl.celular']}:" for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
 						<h:inputText id="txtTelefoneCel" value="#{clienteBean.vo.numCelularString}" size="15" styleClass="cell9 input-5left"  />
 		
-						<p:outputLabel value="#{msgs['inccliente.lbl.datainicioacompanhamento']}:" for="calendarIniAcompanhamento" styleClass="HtmlOutputLabelResposta" />
+						<h:outputLabel value="#{msgs['inccliente.lbl.datainicioacompanhamento']}:" for="calendarIniAcompanhamento" styleClass="HtmlOutputLabelResposta" />
 						<p:calendar id="calendarIniAcompanhamento" value="#{clienteBean.vo.dataInicioAcompanhamento}" size="15" 
 						styleClass="" style="margin-left:5px;" alt="date" pattern="dd/MM/yyyy" />
 				</h:panelGrid>

@@ -45,7 +45,7 @@
 							value="#{clienteBean.listaClientes}" 
 							paginator="true"
 							paginatorPosition="bottom" 
-							emptyMessage="">
+							emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}.">
 	
 						<p:ajax event="rowSelect"
 							update=":formGlobal:btnAlterar :formGlobal:btnDetalhar :formGlobal:btnLimpar" />

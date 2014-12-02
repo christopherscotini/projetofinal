@@ -28,28 +28,46 @@
 	</ui:define>
 
 	<ui:define name="body_content">
-			<p:fieldset legend="BUSCA" toggleable="true" collapsed="true">
-				<h:panelGroup id="tabela-filtro-categoria" >
-					<h:panelGrid cellpadding="1" cellspacing="0" columns="4" border="0">
-						<h:outputLabel value="#{msgs['mantercategorias.lbl.desccategoria']}:" for="txtCat" styleClass="HtmlOutputLabelResposta" />
-						<p:inputText id="txtCat" value="#{categoriaBean.descCategoriaFiltro}" size="30" maxlength="45" styleClass="input-5left"/>
-						
-						<h:outputLabel value="#{msgs['mantercategorias.lbl.secao']}:" for="txtSecao" styleClass="HtmlOutputLabelResposta" />
-						<p:selectOneMenu id="txtSecao" value="#{categoriaBean.codSecaoFiltro}" style="margin-left:5px;width:120px;" styleClass="input-5left" >
-							<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}" itemValue="0"/>
-							<f:selectItem itemLabel="#{msgs['mantercategorias.lbl.secao1']}" itemValue="1"/>
-							<f:selectItem itemLabel="#{msgs['mantercategorias.lbl.secao2']}" itemValue="2"/>
-						</p:selectOneMenu>
-					</h:panelGrid>
-				</h:panelGroup>
-				
-				<h:panelGroup >
-					<div class="buttonFilter">
-						<p:commandButton value="#{msgs.btn_limpar}" action="#{categoriaBean.limparCamposFiltro()}" ajax="true" style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar" update="tabela-filtro-categoria" />
-						<p:commandButton value="#{msgs.btn_pesquisar}" action="#{categoriaBean.pesquisarFiltro()}" ajax="false" style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar" />
+			<div class="row-fluid">
+				<div class="widget span12">
+					<div class="widget-heading">
+						<a class="accordion-toggle in" data-toggle="collapse" href="#divFiltro">
+							<i class="icon-th"></i> #{msgs['promocaoclienteporvolumecompra.lbl.pesquisa']}
+							<i class="icon-chevron-down pull-right"></i>
+						</a>
 					</div>
-				</h:panelGroup>
-			</p:fieldset>
+					<div id="divFiltro" class="widget-body collapse in">
+						<div class="widget-inner">
+							<h:panelGrid id="tabela-filtro-categoria" cellpadding="1" cellspacing="0" columns="4" border="0">
+								<h:outputLabel value="#{msgs['mantercategorias.lbl.desccategoria']}:" for="txtCat" styleClass="HtmlOutputLabelResposta" />
+								<p:inputText id="txtCat" value="#{categoriaBean.descCategoriaFiltro}" size="30" maxlength="45" styleClass="input-5left"/>
+								
+								<h:outputLabel value="#{msgs['mantercategorias.lbl.secao']}:" for="txtSecao" styleClass="HtmlOutputLabelResposta" />
+								<p:selectOneMenu id="txtSecao" value="#{categoriaBean.codSecaoFiltro}" style="margin-left:5px;width:120px;" styleClass="input-5left" >
+									<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}" itemValue="0"/>
+									<f:selectItem itemLabel="#{msgs['mantercategorias.lbl.secao1']}" itemValue="1"/>
+									<f:selectItem itemLabel="#{msgs['mantercategorias.lbl.secao2']}" itemValue="2"/>
+								</p:selectOneMenu>
+							</h:panelGrid>
+						<h:panelGroup>	
+							<div class="buttonFilter">												
+								<p:commandButton value="#{msgs.btn_limpar}" 
+												 action="#{categoriaBean.limparCamposFiltro()}" 
+												 ajax="true" 
+												 style="margin-left:5px;" 
+												 styleClass="btn btn-zen-2 btn-toolbar" 
+												 update="tabela-filtro-categoria" />
+								<p:commandButton value="#{msgs.btn_pesquisar}" 
+												 action="#{categoriaBean.pesquisarFiltro()}" 
+												 ajax="false" 
+												 style="margin-left:5px;" 
+												 styleClass="btn btn-zen-2 btn-toolbar" />
+							</div>		
+						</h:panelGroup>	
+					</div>
+				</div>
+			</div>
+		</div>
 			
 			<hr class="lin" />
 			

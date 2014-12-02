@@ -55,7 +55,7 @@
 						styleClass="dataTable"
 						filteredValue="#{efetuarVendaBean.filteredProdutcsSale}"
 						paginator="true" paginatorPosition="bottom"
-						emptyMessage="Não há produtos em estoque">
+						emptyMessage="#{msgs['selecionarclientevenda.lbl.naohaprodutosestoque']}">
 	
 						<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" style="text-align: center;" width="10%" 
 								filterBy="#{result.codCatalogo.codProduto}" filterMatchMode="contains"
@@ -63,7 +63,7 @@
 								<h:outputText value="#{result.codCatalogo.codProduto}"
 									style="text-align: center;" />
 							</p:column>
-							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="30%" style="max-width: 500px; min-width: 250px;"
+							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="25%" style="max-width: 500px; min-width: 250px;"
 								filterBy="#{result.codCatalogo.descProduto}" filterMatchMode="contains" filterStyle="width:350px;"
 								sortBy="#{result.codCatalogo.descProduto}">
 								<h:outputText value="#{result.codCatalogo.descProduto}"
@@ -90,18 +90,18 @@
 								<h:outputText value="#{result.qtdeMovimentadoProduto}  " />
 							</p:column>
 							
-							<p:column headerText="#{msgs['generico.tabelacoluna.qtdeestoque']}" style="text-align: center;" width="5%" 
+							<p:column headerText="#{msgs['generico.tabelacoluna.qtdeestoque']}" style="text-align: center;" width="10%" 
 								sortBy="#{result.qtdeEmEstoque}">
 								<h:outputText value="#{result.qtdeEmEstoque}  " />
 							</p:column>
 							
-							<p:column headerText="#{msgs['generico.tabelacoluna.carrinho']}" style="text-align: center;" width="5%" >
+							<p:column headerText="#{msgs['generico.tabelacoluna.carrinho']}" style="text-align: center;" width="6%" >
 								<p:commandLink actionListener="#{efetuarVendaBean.selectAddProdutoVenda(result)}" update=":formGlobal:infosCarrinho" oncomplete="PF('dialogCarrinho').show()">
 									<p:graphicImage value="/resources/images/cart-icons/icon-1.png" width="22px" height="20px"/>
 								</p:commandLink>
 							</p:column>
 							
-							<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: right;" width="8%" 
+							<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: center;" width="10%" 
 								sortBy="#{result.valorTotalMovimentadoProduto}">
 								<h:outputText value="R$" style="text-align: right;" />
 								<h:outputText value="#{result.valorTotalMovimentadoProduto}" style="text-align: right;" >
@@ -167,9 +167,9 @@
 					<f:selectItems value="#{efetuarVendaBean.produtoSelecionadoAddCarrinho.quantidadeDisponivelEstoque}" var="_qtde" itemLabel="#{_qtde.label}" itemValue="#{_qtde.value}" />
 				</h:selectOneMenu>
 				
-				
-
-				<h:panelGroup></h:panelGroup>
+				<p:commandButton id="btnCancelar" value="#{msgs.btn_cancelar}"
+						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar"
+						oncomplete="PF('dialogCarrinho').hide();" />
 				<p:commandButton
 					update=":formGlobal:tableCatalogo :formGlobal:btn-vender"
 					oncomplete="PF('dialogCarrinho').hide();"

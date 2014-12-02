@@ -76,13 +76,13 @@
 							sortBy="#{result.qtdeProdutoCarrinho}" >
 							<h:outputText value="#{result.qtdeProdutoCarrinho}  " />
 						</p:column>
-						<p:column headerText="ATUALIZAR CARRINHO" style="text-align: center;" width="8%" >
+						<p:column headerText="#{msgs['selecionarprodutopedido.tabelacoluna.atualizarcarrinho']}" style="text-align: center;" width="8%" >
 							<p:commandLink actionListener="#{efetuarPedidoBean.selectAddProdutoPedido(result)}" update=":formGlobal:infosCarrinho" oncomplete="PF('dialogCarrinho').show()">
 								<p:graphicImage value="/resources/images/cart-icons/icon-1.png" width="22px" height="20px"/>
 							</p:commandLink>
 						</p:column>
 						
-						<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: right;" width="10%"
+						<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: center;" width="10%"
 							sortBy="#{result.valorTotalProdutoCarrinho}" >
 							<h:outputText value="R$" style="text-align: right;" />
 							<h:outputText value="#{result.valorTotalProdutoCarrinho}" style="text-align: right;" >

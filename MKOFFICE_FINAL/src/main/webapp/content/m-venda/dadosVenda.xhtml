@@ -45,13 +45,13 @@
 				<div class="widget-inner">
 					<h:panelGrid cellpadding="0" cellspacing="0" columns="2" border="0" style="margin-top:10px;">
 						
-						<p:outputLabel value="#{msgs['dadosvenda.lbl.datavenda']}:" for="txtDataVenda" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['dadosvenda.lbl.datavenda']}:" for="txtDataVenda" styleClass="HtmlOutputLabelResposta"/>
 						<p:calendar id="txtDataVenda"	value="#{efetuarVendaBean.venda.dataVenda}" size="13"  pattern="dd/MM/yyyy" alt="date" required="true" requiredMessage="Data da venda obrigat�ria." />
 						
-						<p:outputLabel value="#{msgs['dadosvenda.lbl.totalpontos']}:" for="txtTotPontos" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['dadosvenda.lbl.totalpontos']}:" for="txtTotPontos" styleClass="HtmlOutputLabelResposta"/>
 						<h:outputLabel value="#{efetuarVendaBean.venda.qtdeTotalPontosVendidos} pts" id="txtTotPontos" styleClass="input-5left HtmlOutputTextResposta" />
 	
-						<p:outputLabel value="#{msgs['dadosvenda.lbl.valorparcialvenda']}:" for="txtValorVenda" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['dadosvenda.lbl.valorparcialvenda']}:" for="txtValorVenda" styleClass="HtmlOutputLabelResposta"/>
 						<h:panelGrid columns="2">
 							<h:outputLabel value="R$" for="txtValorVenda" styleClass="input-5left HtmlOutputTextResposta"/>
 							<h:outputLabel id="txtValorVenda" value="#{efetuarVendaBean.venda.valorVenda}" styleClass="input-5left HtmlOutputTextResposta">
@@ -59,7 +59,7 @@
 							</h:outputLabel>
 						</h:panelGrid>
 	
-						<p:outputLabel value="#{msgs['dadosvenda.lbl.descontode']}:" for="txtValorTotalDesc"
+						<h:outputLabel value="#{msgs['dadosvenda.lbl.descontode']}:" for="txtValorTotalDesc"
 							styleClass="HtmlOutputLabelResposta" />
 						<p:inputText value="#{efetuarVendaBean.venda.valorDescontoVenda}"
 							id="txtValorTotalDesc" size="13" maxlength="10" styleClass="input-5left currency">
@@ -67,7 +67,7 @@
 							<p:ajax event="blur" listener="#{efetuarVendaBean.onBlurValorDesconto()}" update="group-valor-final group-valor-lucro" />
 						</p:inputText>
 	
-						<p:outputLabel value="#{msgs['dadosvenda.lbl.valortotalcobrar']}:" for="txtValorTotalPedido" styleClass="HtmlOutputLabelResposta"/>
+						<h:outputLabel value="#{msgs['dadosvenda.lbl.valortotalcobrar']}:" for="txtValorTotalPedido" styleClass="HtmlOutputLabelResposta"/>
 						<h:panelGrid id="group-valor-final" columns="2">
 							<h:outputLabel value="R$" for="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta"/>
 							<h:outputLabel value="#{efetuarVendaBean.totalAPagar}" id="txtValorTotalPedido" styleClass="input-5left HtmlOutputTextResposta">
@@ -75,7 +75,7 @@
 							</h:outputLabel>
 						</h:panelGrid>
 	
-						<p:outputLabel value="#{msgs['dadosvenda.lbl.lucroestimado']}:" for="txtValorLucroEst"
+						<h:outputLabel value="#{msgs['dadosvenda.lbl.lucroestimado']}:" for="txtValorLucroEst"
 							styleClass="HtmlOutputLabelResposta" />
 						<h:panelGrid id="group-valor-lucro" columns="2">
 							<h:outputLabel value="R$" for="txtValorLucroEst" styleClass="input-5left HtmlOutputTextResposta"/>
@@ -109,7 +109,7 @@
 								<h:outputText value="#{result.codCatalogo.codProduto}"
 									style="text-align: center;" />
 							</p:column>
-							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="60%" sortBy="#{result.codCatalogo.descProduto}">
+							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="50%" sortBy="#{result.codCatalogo.descProduto}">
 								<h:outputText value="#{result.codCatalogo.descProduto}"
 									style="text-align: left;" />
 							</p:column>
@@ -123,7 +123,7 @@
 							<p:column headerText="#{msgs['generico.tabelacoluna.quantidade']}" style="text-align: center;" width="10%" sortBy="#{result.qtdeMovimentadoProduto}" >
 								<h:outputText value="#{result.qtdeMovimentadoProduto}" style="text-align: center;" />
 							</p:column>
-							<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: right;" width="10%" >
+							<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: center;" width="10%" >
 								<h:outputText value="R$" style="text-align: right;" />
 								<h:outputText value="#{result.valorTotalMovimentadoProduto}" style="text-align: right;" >
 									<f:converter converterId="decimalConverter" />
@@ -131,26 +131,26 @@
 							</p:column>
 					</p:dataTable>
 					
-					<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="4" style="margin-top:5px;">
-						<p:outputLabel value="#{msgs['dadosvenda.lbl.numeroprodutos']}:" />
-						<p:outputLabel value="#{efetuarVendaBean.lblNumeroProdutosPedido}"
-							styleClass="input-5left HtmlOutputTextResposta" />
-
-						<p:outputLabel value="#{msgs['dadosvenda.lbl.numeroitens']}:" style="margin-left:10px;" />
-						<p:outputLabel value="#{efetuarVendaBean.lblNumeroItensPedido}"
-							styleClass="input-5left HtmlOutputTextResposta" />
-							
-					</h:panelGrid>
 				</div>
 			</div>
 		</div>
 					
+		<h:panelGrid id="lblTotalReg" cellpadding="0" cellspacing="0" columns="4" style="margin-top:5px;">
+			<h:outputLabel value="#{msgs['dadosvenda.lbl.numeroprodutos']}:" />
+			<h:outputLabel value="#{efetuarVendaBean.lblNumeroProdutosPedido}"
+				styleClass="input-5left HtmlOutputTextResposta" />
+
+			<h:outputLabel value="#{msgs['dadosvenda.lbl.numeroitens']}:" style="margin-left:10px;" />
+			<h:outputLabel value="#{efetuarVendaBean.lblNumeroItensPedido}"
+				styleClass="input-5left HtmlOutputTextResposta" />
+				
+		</h:panelGrid>
 						
 		<hr class="lin"></hr>
 		
 		<h:panelGroup>
 			<div class="buttonFooter">
-				<p:commandButton id="btnVoltar" value="Voltar" ajax="false" style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" style="float:left;" styleClass="btn btn-zen-5 btn-toolbar"
 					action="#{efetuarVendaBean.voltarParaSelecionarProdutos()}" immediate="true"  />
 				<p:commandButton id="btn-avancar" 
 								 value="#{msgs.btn_avancar}" 

@@ -133,7 +133,7 @@
 								<h:outputText value="#{result.produto.descProduto}"
 									style="text-align: left;" />
 							</p:column>
-							<p:column headerText="#{msgs['generico.tabelacoluna.valorunitario']}" style="text-align: center;" width="10%" 
+							<p:column headerText="#{msgs['generico.tabelacoluna.valorunitario']}" style="text-align: center;" width="15%" 
 								sortBy="#{result.produto.preco}">
 								<h:outputText value="R$" style="text-align: right;" />
 								<h:outputText value="#{result.produto.preco}" style="text-align: right;" >
@@ -143,7 +143,7 @@
 							<p:column headerText="#{msgs['generico.tabelacoluna.quantidade']}" style="text-align: center;" width="10%" sortBy="#{result.qtdeProdutoCarrinho}" >
 								<h:outputText value="#{result.qtdeProdutoCarrinho}" style="text-align: center;" />
 							</p:column>
-							<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: right;" width="10%" >
+							<p:column headerText="#{msgs['generico.tabelacoluna.valortotal']}" style="text-align: center;" width="10%" >
 								<h:outputText value="R$" style="text-align: right;" />
 								<h:outputText value="#{result.valorTotalProdutoCarrinho}" style="text-align: right;" >
 									<f:converter converterId="decimalConverter" />
