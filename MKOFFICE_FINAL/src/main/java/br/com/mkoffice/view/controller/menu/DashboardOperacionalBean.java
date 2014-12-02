@@ -1,6 +1,7 @@
 package br.com.mkoffice.view.controller.menu;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,15 +121,15 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 		Axis yAxis = graficoBalanco.getAxis(AxisType.Y);
 		yAxis.setLabel(getMsgs("promocaoclienteporvolumecompra.lbl.titulografico.line.eixoY"));
 		valorMax = valorMax.add(valorMax.multiply(new BigDecimal("0.20")));
-		valorMin = valorMin.add(valorMin.multiply(new BigDecimal("0.20")));
+		valorMin = valorMin.add(valorMin.multiply(new BigDecimal("0.20")).setScale(2, RoundingMode.UP));
 		if(valorMin.compareTo(BigDecimal.ZERO) >= 0){
 			yAxis.setMin(BigDecimal.ZERO.setScale(2));
 		}else{
-			BigDecimal valorMinPos = valorMin.multiply(new BigDecimal("-1"));
+			BigDecimal valorMinPos = valorMin.multiply(new BigDecimal("-1")).setScale(2, RoundingMode.UP);
 			if(valorMinPos.compareTo(valorMax)<=0){
-				valorMin = valorMax.multiply(new BigDecimal("-1"));
+				valorMin = valorMax.multiply(new BigDecimal("-1")).setScale(2, RoundingMode.UP);
 			}else{
-				valorMax = valorMin.multiply(new BigDecimal("-1"));
+				valorMax = valorMin.multiply(new BigDecimal("-1")).setScale(2, RoundingMode.UP);
 			}
 			yAxis.setMin(valorMin.setScale(2));
 		}
