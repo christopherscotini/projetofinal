@@ -8,7 +8,6 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 import br.com.mkoffice.business.exception.NoDataFoundException;
 import br.com.mkoffice.dto.ClienteDTO;
@@ -97,7 +96,7 @@ public class ClienteBean extends AbstractModelBean implements Serializable{
 		vo.setEndereco(new Endereco());
 		cadastrar = true;
 		
-		return TELA_CADASTRAR;
+		return TELA_ALTERAR;
 	}
 
 	public String prepareEdit(){
