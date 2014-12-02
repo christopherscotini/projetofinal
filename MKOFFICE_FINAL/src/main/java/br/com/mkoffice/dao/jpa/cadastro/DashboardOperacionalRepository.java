@@ -172,10 +172,12 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 			retorno.add(dto);
 		}
 		
-		Calendar a = Calendar.getInstance();
-		int diffm = a.get(Calendar.MONTH) - retorno.get(retorno.size()-1).getData().get(Calendar.MONTH);
-		if(diffm > 0){
-			retorno.add(new BalancoDTO(BigDecimal.ZERO, a));
+		if(!retorno.isEmpty()){
+			Calendar a = Calendar.getInstance();
+			int diffm = a.get(Calendar.MONTH) - retorno.get(retorno.size()-1).getData().get(Calendar.MONTH);
+			if(diffm > 0){
+				retorno.add(new BalancoDTO(BigDecimal.ZERO, a));
+			}
 		}
 		
 		return retorno;
