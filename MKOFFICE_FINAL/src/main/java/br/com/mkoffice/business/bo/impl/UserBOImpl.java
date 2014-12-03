@@ -6,7 +6,10 @@ package br.com.mkoffice.business.bo.impl;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.el.ELResolver;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import br.com.mkoffice.business.bo.UserBO;
 import br.com.mkoffice.business.exception.RegistroJaCadastradoException;
@@ -17,10 +20,13 @@ import br.com.mkoffice.dao.jpa.cadastro.ParametrosDashboardRepository;
 import br.com.mkoffice.dao.jpa.cadastro.UserRepository;
 import br.com.mkoffice.model.ParametrosDashboardEntity;
 import br.com.mkoffice.model.admin.UserEntity;
+import br.com.mkoffice.security.LoginBean;
+import br.com.mkoffice.security.util.SessionContants;
 import br.com.mkoffice.utils.CpfCnpjUtils;
 import br.com.mkoffice.utils.CriptografiaUtil;
 import br.com.mkoffice.utils.MkmtsUtil;
 import br.com.mkoffice.utils.StringUtil;
+import br.com.mkoffice.view.controller.menu.DashboardOperacionalBean;
 
 /**
  * @author christopher.rozario
@@ -51,14 +57,20 @@ public class UserBOImpl implements UserBO{
 			throw new RegistroJaCadastradoException("Usuario com CPF "+CpfCnpjUtils.formatarCpfCnpjString(usuario.getCpf()));
 		}
 
+		if(dao.existsUserWithEmail(usuario)){
+			throw new RegistroJaCadastradoException("Usuario com e-mail "+usuario.getDadosPessoa().getEmail());
+		}
+		
 		if(dao.existsUserWithUsername(usuario)){
 			throw new RegistroJaCadastradoException("Usuario "+usuario.getUsername());
 		}
+		
 		if(usuario.getDadosPessoa().getSexo().equalsIgnoreCase("m")){
 			usuario.setUrlAvatar("resources/images/avatar/man_business_avatar.png");
 		}else{
 			usuario.setUrlAvatar("resources/images/avatar/woman_business_avatar.png");
 		}
+		
 		usuario.setUsername(usuario.getUsername().toLowerCase());
 		usuario.setPassword(CriptografiaUtil.criptografar(usuario.getPassword()));
 		return dao.insert(usuario);
@@ -67,6 +79,12 @@ public class UserBOImpl implements UserBO{
 	@Override
 	public ParametrosDashboardEntity atualizarParametros(ParametrosDashboardEntity parametros){
 		parametros = parametrosDashboardRepository.insert(parametros);
+		return parametros;
+	}
+	
+	@Override
+	public ParametrosDashboardEntity editarParametros(ParametrosDashboardEntity parametros){
+		parametros = parametrosDashboardRepository.update(parametros);
 		return parametros;
 	}
 	
@@ -88,7 +106,23 @@ public class UserBOImpl implements UserBO{
 		if(StringUtil.isNotBlank(usuario.getPassword()) && StringUtil.isNotBlank(usuario.getPasswordConfirm())){
 			usuario.setPassword(CriptografiaUtil.criptografar(usuario.getPassword()));
 		}
-		return dao.update(usuario);
+		if(usuario.getDadosPessoa().getSexo().equalsIgnoreCase("m")){
+			usuario.setUrlAvatar("resources/images/avatar/man_business_avatar.png");
+		}else{
+			usuario.setUrlAvatar("resources/images/avatar/woman_business_avatar.png");
+		}
+		
+		if(dao.existsUserWithEmail(usuario)){
+			throw new RegistroJaCadastradoException("Usuario com e-mail"+usuario.getDadosPessoa().getEmail());
+		}
+		
+		usuario = dao.update(usuario);
+		
+		FacesContext c = FacesContext.getCurrentInstance();  
+        ELResolver r = c.getApplication().getELResolver();  
+        LoginBean loginBean = (LoginBean) r.getValue(c.getELContext(), null, "loginBean");  
+        loginBean.setUsuario(usuario);
+		return usuario;
 
 	}
 	

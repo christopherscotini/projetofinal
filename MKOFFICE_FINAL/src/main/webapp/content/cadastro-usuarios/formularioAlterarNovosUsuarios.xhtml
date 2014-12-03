@@ -6,120 +6,213 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="cssImports">
-		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+		<link type="text/css" rel="stylesheet"
+			href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
 	</ui:define>
-	
+
 	<ui:define name="jsImports">
-		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/cadastro/valid-form-cliente.js"></script>
+		<script type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/javascript/cadastro/valid-form-cliente.js"></script>
 	</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:breadCrumb>  
-		    <p:menuitem value="TelaInicial" action="#{loginBean.telaIndex()}" ajax="false" immediate="true"/>  
-		    <p:menuitem value="Consultar Clientes" ajax="false" action="#{clienteBean.voltarInclusao()}"/>  
-		    <p:menuitem value="Cadastro do Cliente" />  
-		</p:breadCrumb>  
+		<ul class="breadcrumb">
+			<li class="active"><h:commandLink
+					action="#{loginBean.telaIndex()}"
+					value="#{msgs['generico.breadcumb.telainicial']}" /> <span
+				class="divider">/</span></li>
+			<li class="active"><h:commandLink action="#"
+					value="#{msgs['manterpermissao.breadcumb.administrador']}" /> <span
+				class="divider">/</span></li>
+			<li>#{msgs['menu.lbl.usuarios.alterarusuario']}</li>
+		</ul>
 	</ui:define>
-	<ui:param name="titulo" value="Altera��o da assinatura" />
 
 	<ui:define name="body_content">
-		<h:panelGrid cellpadding="0" cellspacing="0" columns="1" styleClass="CorpoPagina" border="0" >
-			<h:panelGroup id="tabela-dados-cliente" >
-				<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="INFORMA��ES PESSOAIS" />
-				<hr class="lin"/>
-				<h:panelGrid cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;">
-					<p:outputLabel value="Nome:" for="txtNome" styleClass="HtmlOutputLabelResposta" />
-					<p:inputText id="txtNome" value="#{usuarioBean.vo.nome}" size="50" styleClass="input-5left" />
-					<p:outputLabel for="cboSexo" value="Sexo:" styleClass="HtmlOutputLabelResposta"/>
-					<p:selectOneMenu id="cboSexo" value="#{usuarioBean.vo.sexo}" style="margin-left:5px;" >
-						<f:selectItem itemLabel=".:Selecione:."/>
-						<f:selectItems value="#{usuarioBean.comboSexualidade}" var="_gender" itemLabel="#{_gender.label}" itemValue="#{_gender.label}" />
-					</p:selectOneMenu>
-					<p:outputLabel value="Data de Nascimento:" for="calendarDtNasc" styleClass="HtmlOutputLabelResposta"/>
-					<p:calendar id="calendarDtNasc" value="#{usuarioBean.vo.dataNascimento}" size="10" pattern="dd/MM/yyyy" alt="date" style="margin-left:5px;" />
-					
-					<p:outputLabel value="CPF:" for="txtCPF" styleClass="HtmlOutputLabelResposta"/>
-					<p:inputText id="txtCPF" value="#{usuarioBean.vo.cpfString}" size="15" alt="cpf" styleClass="input-5left" />
-					<p:outputLabel value="Email:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
-					<p:inputText id="txtEmail" value="#{usuarioBean.vo.email}" size="45" styleClass="input-5left" />
-					<h:panelGroup></h:panelGroup>
-					<h:panelGroup></h:panelGroup>
-
-					<p:outputLabel value="Telefone:" for="txtTelefone" styleClass="HtmlOutputLabelResposta"/>
-					<p:inputText id="txtTelefone" value="#{usuarioBean.vo.numTelefoneString}" size="15" styleClass="input-5left" alt="phone"/>
-					<p:outputLabel value="Celular:" for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
-					<p:inputText id="txtTelefoneCel" value="#{usuarioBean.vo.numCelularString}" size="15" styleClass="input-5left" alt="cell9"  />
-					<h:panelGroup></h:panelGroup> 
-					<h:panelGroup></h:panelGroup>
-
-					<p:outputLabel value="CEP:" for="cep" styleClass="HtmlOutputLabelResposta" />
-					<h:panelGroup>
-						<p:inputText id="cep" value="#{usuarioBean.vo.endereco.cep}" size="10" styleClass="input-5left" alt="cep" />
-						<p:commandLink  value="Preencher" style="margin-left:5px;" ajax="false" actionListener="#{usuarioBean.buscarEnderecoViaWebService()}"/>
-					</h:panelGroup>										
-					<p:outputLabel value="Endere�o:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
-					<p:inputText id="txtAddress" value="#{usuarioBean.vo.endereco.logradouro}" size="50" styleClass="input-5left" />
-					<p:outputLabel value="Estado:" for="txtState" styleClass="HtmlOutputLabelResposta"/>
-					<p:selectOneMenu id="txtState" value="#{usuarioBean.vo.endereco.estado}" size="5" styleClass="" style="margin-left:5px;" >
-						<f:selectItems value="#{usuarioBean.comboUf}" var="_uf" itemLabel="#{_uf.label}" itemValue="#{_uf.label}"/>
-					</p:selectOneMenu>
-
-					<p:outputLabel value="N�:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
-					<p:inputText id="txtNum" value="#{usuarioBean.vo.endereco.numero}" size="5" maxlength="7" onkeypress="return onlyNum(event)" styleClass="input-5left" />
-					<p:outputLabel value="Cidade:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
-					<p:inputText id="txtCity" value="#{usuarioBean.vo.endereco.cidade}" size="30" styleClass="input-5left" />
-		
-					<p:outputLabel value="Bairro:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
-					<p:inputText id="txtBairro" value="#{usuarioBean.vo.endereco.bairro}" size="20" styleClass="input-5left" />
-					<p:outputLabel value="Complemento:" for="txtComplemento" styleClass="HtmlOutputLabelResposta"/>
-					<p:inputText id="txtComplemento" value="#{usuarioBean.vo.endereco.complemento}" size="50" styleClass="input-5left"/>
-					
-				
-				</h:panelGrid>
-			</h:panelGroup>
+		<p:dialog modal="true" widgetVar="statusDialog" draggable="false"
+			resizable="false" closable="false">
+			<p:graphicImage value="/resources/images/ajaxloadingbar.gif" />
+		</p:dialog>
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#"
+					data-original-title=""> <i class="icon-table"></i>
+					#{msgs['formularionovosusuarios.lbl.legend.informacoescliente']}
+				</a>
+			</div>
+			<div id="formdiv" class="widget-body collapse in">
+				<div class="widget-inner">
+					<h:panelGrid id="formgrid" cellpadding="0" cellspacing="1"
+						columns="6" style="margin-top:5px;margin-bottom:25px;">
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.nome']}:"
+							for="txtNome" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtNome" value="#{usuarioBean.vo.nome}" size="50"
+							styleClass="input-5left input-xlarge" />
+						<h:outputLabel for="cboSexo"
+							value="#{msgs['formularionovosusuarios.lbl.sexo']}:"
+							styleClass="HtmlOutputLabelResposta" />
+						<h:selectOneMenu id="cboSexo" value="#{usuarioBean.vo.sexo}"
+							style="margin-left:5px;">
+							<f:selectItems value="#{usuarioBean.comboSexualidade}"
+								var="_gender" itemLabel="#{_gender.label}"
+								itemValue="#{_gender.label}" />
+						</h:selectOneMenu>
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.datanascimento']}:"
+							for="calendarDtNasc" styleClass="HtmlOutputLabelResposta" />
+						<p:calendar id="calendarDtNasc"
+							value="#{usuarioBean.vo.dataNascimento}" styleClass="date"
+							size="10" pattern="dd/MM/yyyy" alt="date"
+							style="margin-left:5px;" />
 
 
-			<h:panelGroup>
-				<p:outputLabel styleClass="HtmlOutputTextLabelSubtitle" value="LOGIN" />
-				<hr class="lin"/>		
-				<h:panelGrid id="infosUsuario" columns="2" style="margin-bottom:10px">
-					<p:outputLabel value="Usuario:" for="txtUsuario" styleClass="HtmlOutputLabelResposta" />
-					<p:inputText id="txtUsuario" value="#{usuarioBean.vo.usuario.username}" size="50" 
+						<h:outputLabel value="#{msgs['formularionovosusuarios.lbl.cep']}:"
+							for="cep" styleClass="HtmlOutputLabelResposta" />
+						<h:panelGroup>
+							<h:inputText id="cep" value="#{usuarioBean.vo.endereco.cep}"
+								size="10" styleClass="cep input-5left" alt="cep" />
+							<p:commandLink
+								value="#{msgs['formularionovosusuarios.lbl.preencher']}"
+								style="margin-left:5px;" ajax="false" partialSubmit="true"
+								process="cep" onstart="PF('statusDialog').show();"
+								oncomplete="PF('statusDialog').hide();"
+								actionListener="#{usuarioBean.buscarEnderecoViaWebService()}" />
+						</h:panelGroup>
+						<h:outputLabel value="#{msgs['formularionovosusuarios.lbl.cpf']}:"
+							for="txtCPF" styleClass="HtmlOutputLabelResposta" />
+						<p:inputText id="txtCPF" value="#{usuarioBean.vo.cpfString}"
+							size="15" alt="cpf" styleClass="cpf input-5left" />
+						<h:panelGroup></h:panelGroup>
+						<h:panelGroup></h:panelGroup>
+
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.endereco']}:"
+							for="txtAddress" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtAddress"
+							value="#{usuarioBean.vo.endereco.logradouro}" size="50"
+							styleClass="input-5left input-xlarge" />
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.numerocasa']}:"
+							for="txtNum" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtNum" value="#{usuarioBean.vo.endereco.numero}"
+							size="5" maxlength="7" onkeypress="return onlyNum(event)"
 							styleClass="input-5left" />
-	
-					<p:outputLabel value="Senha:" for="txtPassword" styleClass="HtmlOutputLabelResposta" />
-					<p:password id="txtPassword" value="#{usuarioBean.password}" 
-								styleClass="input-5left" 
-								size="50" 
-								maxlength="20"
-								goodLabel="SENHA M�DIA" 
-								weakLabel="SENHA FRACA" 
-								strongLabel="SENHA FORTE"
-								feedback="true" />
-					
-					<p:outputLabel value="Confirmar Senha:" for="txtPasswordConf" styleClass="HtmlOutputLabelResposta" />
-					<p:password id="txtPasswordConf" value="#{usuarioBean.vo.usuario.passwordConfirm}" 
-								 styleClass="input-5left" 
-								 size="50"
-								 maxlength="20" 
-								 goodLabel="SENHA M�DIA" 
-								 weakLabel="SENHA FRACA" 
-								 strongLabel="SENHA FORTE"
-								 feedback="true" />
-<!-- 											 requiredMessage="O campo CONFIRMAR SENHA � necess�rio." > -->
-				</h:panelGrid>
-			</h:panelGroup>		
-		
-			<hr class="lin"/>
-		
-			<h:panelGroup>
-				<div class="buttonFooter">
-					<p:commandButton id="btnVoltar" value="Voltar" ajax="false" action="/login2.xhtml" style="float:left" immediate="true" />
-<!-- 					<p:commandButton id="btnLimpar" value="Limpar" ajax="false"  action="#{usuarioBean.limparCamposFiltro()}"  immediate="true" style="margin-left:5px;"/> -->
-					<p:commandButton id="btnSalvar" value="Salvar" ajax="false" action="#{usuarioBean.executeSave()}" style="margin-left:5px;"  />
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.bairro']}:"
+							for="txtBairro" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtBairro"
+							value="#{usuarioBean.vo.endereco.bairro}" size="20"
+							styleClass="input-5left" />
+
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.complemento']}:"
+							for="txtComplemento" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtComplemento"
+							value="#{usuarioBean.vo.endereco.complemento}" size="50"
+							styleClass="input-5left cinput-xlarge" />
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.cidade']}:"
+							for="txtCity" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtCity"
+							value="#{usuarioBean.vo.endereco.cidade}" size="30"
+							styleClass="input-5left" />
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.estado']}:"
+							for="cboState" styleClass="HtmlOutputLabelResposta" />
+						<h:selectOneMenu id="cboState"
+							value="#{usuarioBean.vo.endereco.estado}"
+							style="margin-left:5px;">
+							<f:selectItem itemLabel="#{msgs['generico.lbl_selecione']}" />
+							<f:selectItems value="#{usuarioBean.comboUf}" var="_gender"
+								itemLabel="#{_gender.label}" itemValue="#{_gender.label}" />
+						</h:selectOneMenu>
+
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.email']}:"
+							for="txtEmail" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtEmail" value="#{usuarioBean.vo.email}"
+							size="45" styleClass="input-5left input-xlarge">
+						</h:inputText>
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.telefone']}:"
+							for="txtTelefone" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtTelefone"
+							value="#{usuarioBean.vo.numTelefoneString}" size="15"
+							styleClass="phone input-5left" />
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.celular']}:"
+							for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtTelefoneCel"
+							value="#{usuarioBean.vo.numCelularString}" size="15"
+							styleClass="cell9 input-5left" />
+
+					</h:panelGrid>
 				</div>
-			</h:panelGroup>
-		</h:panelGrid>
+			</div>
+		</div>
+
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#"
+					data-original-title=""> <i class="icon-table"></i>
+					#{msgs['formularionovosusuarios.lbl.legend.informacoeslogin']}
+				</a>
+			</div>
+			<div id="formdiv" class="widget-body collapse in">
+				<div class="widget-inner">
+					<h:panelGrid id="infosUsuario" columns="2"
+						style="margin-bottom:10px">
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.usuario']}:"
+							for="txtUsuario" styleClass="HtmlOutputLabelResposta" />
+						<p:inputText id="txtUsuario"
+							value="#{usuarioBean.vo.usuario.username}" size="50"
+							styleClass="input-5left" />
+
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.senha']}:"
+							for="txtPassword" styleClass="HtmlOutputLabelResposta" />
+						<p:password id="txtPassword" value="#{usuarioBean.password}"
+							styleClass="input-5left" size="50" maxlength="20"
+							goodLabel="#{msgs['formularionovosusuarios.lbl.senhamedia']}"
+							weakLabel="#{msgs['formularionovosusuarios.lbl.senhafraca']}"
+							strongLabel="#{msgs['formularionovosusuarios.lbl.senhaforte']}"
+							feedback="true" />
+
+						<h:outputLabel
+							value="#{msgs['formularionovosusuarios.lbl.confirmarsenha']}:"
+							for="txtPasswordConf" styleClass="HtmlOutputLabelResposta" />
+						<p:password id="txtPasswordConf"
+							value="#{usuarioBean.vo.usuario.passwordConfirm}"
+							styleClass="input-5left" size="50" maxlength="20"
+							goodLabel="#{msgs['formularionovosusuarios.lbl.senhamedia']}"
+							weakLabel="#{msgs['formularionovosusuarios.lbl.senhafraca']}"
+							strongLabel="#{msgs['formularionovosusuarios.lbl.senhaforte']}"
+							feedback="true" />
+
+					</h:panelGrid>
+				</div>
+			</div>
+		</div>
+
+		<hr class="lin" />
+
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
+					ajax="false" action="/index" style="float:left"
+					styleClass="btn btn-zen-5 btn-toolbar" immediate="true" />
+				<p:commandButton id="btnLimpar" value="#{msgs.btn_limpar}"
+					action="#{usuarioBean.limparCamposUsuario()}"
+					styleClass="btn btn-zen-2 btn-toolbar" update="@form"
+					style="margin-left:5px;" />
+				<p:commandButton id="btnSalvar" value="#{msgs.btn_salvar}"
+					ajax="false" action="#{usuarioBean.executeSave()}"
+					styleClass="btn btn-zen-2 btn-toolbar" style="margin-left:5px;" />
+			</div>
+		</h:panelGroup>
+
 	</ui:define>
 </ui:composition>
 

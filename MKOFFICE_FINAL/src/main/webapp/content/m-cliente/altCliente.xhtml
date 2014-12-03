@@ -6,113 +6,175 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="cssImports">
-		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+		<link type="text/css" rel="stylesheet"
+			href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
 	</ui:define>
-	
+
 	<ui:define name="jsImports">
-		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/cadastro/valid-form-cliente.js"></script>
+		<script type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/javascript/cadastro/valid-form-cliente.js"></script>
 	</ui:define>
 
 	<ui:define name="breadcrumb">
 		<ul class="breadcrumb">
-			<li class="active">
-				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
-				<span class="divider">/</span>
-			</li>
-			<li class="active">
-				<h:commandLink action="#" value="#{msgs['altcliente.breadcumb.cliente']}" />
-				<span class="divider">/</span>
-			</li>
+			<li class="active"><h:commandLink
+					action="#{loginBean.telaIndex()}"
+					value="#{msgs['generico.breadcumb.telainicial']}" /> <span
+				class="divider">/</span></li>
+			<li class="active"><h:commandLink action="#"
+					value="#{msgs['altcliente.breadcumb.cliente']}" /> <span
+				class="divider">/</span></li>
 			<li>#{msgs['altcliente.breadcumb.cliente.alterarcliente']}</li>
-		</ul>  
+		</ul>
 	</ui:define>
-	
+
 	<ui:define name="body_content">
 		<div class="widget">
 			<div class="widget-heading">
-				<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
-				<i class="icon-table"></i> #{msgs['altcliente.lbl.legend.informacoescliente']}</a>
+				<a class="accordion-toggle in" data-toggle="collapse" href="#"
+					data-original-title=""> <i class="icon-table"></i>
+					#{msgs['altcliente.lbl.legend.informacoescliente']}
+				</a>
 			</div>
 			<div id="formdiv" class="widget-body collapse in">
-				<div class="widget-inner">	
-					<h:panelGrid id="formgrid" cellpadding="0" cellspacing="1" columns="6" style="margin-top:5px;margin-bottom:25px;">
-						<h:outputLabel value="#{msgs['altcliente.lbl.nome']}:" for="txtNome" styleClass="HtmlOutputLabelResposta" />
-						<h:inputText id="txtNome" value="#{clienteBean.vo.nome}" size="50" styleClass="input-5left input-xlarge"  />
-						<h:outputLabel for="cboSexo" value="#{msgs['altcliente.lbl.sexo']}:" styleClass="HtmlOutputLabelResposta"/>
-						<h:selectOneMenu id="cboSexo" value="#{clienteBean.vo.sexo}" style="margin-left:5px;" >
-							<f:selectItems value="#{clienteBean.comboSexualidade}" var="_gender" itemLabel="#{_gender.label}" itemValue="#{_gender.label}" />
+				<div class="widget-inner">
+					<h:panelGrid id="formgrid" cellpadding="0" cellspacing="1"
+						columns="6" style="margin-top:5px;margin-bottom:25px;">
+						<h:outputLabel value="#{msgs['altcliente.lbl.nome']}:"
+							for="txtNome" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtNome" value="#{clienteBean.vo.nome}" size="50"
+							styleClass="input-5left input-xlarge" />
+						<h:outputLabel for="cboSexo"
+							value="#{msgs['altcliente.lbl.sexo']}:"
+							styleClass="HtmlOutputLabelResposta" />
+						<h:selectOneMenu id="cboSexo" value="#{clienteBean.vo.sexo}"
+							style="margin-left:5px;">
+							<f:selectItems value="#{clienteBean.comboSexualidade}"
+								var="_gender" itemLabel="#{_gender.label}"
+								itemValue="#{_gender.label}" />
 						</h:selectOneMenu>
-						<h:outputLabel value="#{msgs['altcliente.lbl.datanascimento']}:" for="calendarDtNasc" styleClass="HtmlOutputLabelResposta"/>
-						<p:calendar id="calendarDtNasc" value="#{clienteBean.vo.dataNascimento}" size="10" pattern="dd/MM/yyyy" alt="date" style="margin-left:5px;" />
-						
-						<h:outputLabel value="#{msgs['altcliente.lbl.cep']}:" for="cep" styleClass="HtmlOutputLabelResposta" />
-						<h:panelGroup>
-							<h:inputText id="cep" value="#{clienteBean.vo.endereco.cep}" size="10" styleClass="cep input-5left" alt="cep" />
-							<p:commandLink  value="#{msgs['altcliente.lbl.preencher']}" style="margin-left:5px;" ajax="false" partialSubmit="true" process="cep" actionListener="#{clienteBean.buscarEnderecoViaWebService()}"/>
-						</h:panelGroup>										
-						<h:panelGroup></h:panelGroup> 
-						<h:panelGroup></h:panelGroup>
-						<h:panelGroup></h:panelGroup>
-						<h:panelGroup></h:panelGroup>
-		
-						<h:outputLabel value="#{msgs['altcliente.lbl.endereco']}:" for="txtAddress" styleClass="HtmlOutputLabelResposta"/>
-						<h:inputText id="txtAddress" value="#{clienteBean.vo.endereco.logradouro}" size="50" styleClass="input-5left input-xlarge" />
-						<h:outputLabel value="#{msgs['altcliente.lbl.numerocasa']}:" for="txtNum" styleClass="HtmlOutputLabelResposta"/> 
-						<h:inputText id="txtNum" value="#{clienteBean.vo.endereco.numero}" size="5" maxlength="7" onkeypress="return onlyNum(event)" styleClass="input-5left" />
-						<h:outputLabel value="#{msgs['altcliente.lbl.bairro']}:" for="txtBairro" styleClass="HtmlOutputLabelResposta"/>
-						<h:inputText id="txtBairro" value="#{clienteBean.vo.endereco.bairro}" size="20" styleClass="input-5left" />
-			
-						<h:outputLabel value="#{msgs['altcliente.lbl.complemento']}:" for="txtComplemento" styleClass="HtmlOutputLabelResposta"/>
-						<h:inputText id="txtComplemento" value="#{clienteBean.vo.endereco.complemento}" size="50" styleClass="input-5leftcinput-xlarge"/>
-						<h:outputLabel value="#{msgs['altcliente.lbl.cidade']}:" for="txtCity" styleClass="HtmlOutputLabelResposta"/>
-						<h:inputText id="txtCity" value="#{clienteBean.vo.endereco.cidade}" size="30" styleClass="input-5left" />
-						<h:outputLabel value="#{msgs['altcliente.lbl.estado']}:" for="cboState" styleClass="HtmlOutputLabelResposta"/>
-						<h:selectOneMenu id="cboState" value="#{clienteBean.vo.endereco.estado}" style="margin-left:5px;" >
-							<f:selectItems value="#{clienteBean.comboUf}" var="_gender" itemLabel="#{_gender.label}" itemValue="#{_gender.label}" />
-						</h:selectOneMenu>
-						
-						<h:outputLabel value="#{msgs['altcliente.lbl.email']}:" for="txtEmail" styleClass="HtmlOutputLabelResposta"/>
-						<h:inputText id="txtEmail" value="#{clienteBean.vo.email}" size="45" styleClass="input-5left input-xlarge" >
-						</h:inputText>
-						<h:outputLabel value="#{msgs['altcliente.lbl.telefone']}:" for="txtTelefone" styleClass="HtmlOutputLabelResposta"/>
-						<h:inputText id="txtTelefone" value="#{clienteBean.vo.numTelefoneString}" size="15" styleClass="phone input-5left"/>
-						<h:outputLabel value="#{msgs['altcliente.lbl.celular']}:" for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
-						<h:inputText id="txtTelefoneCel" value="#{clienteBean.vo.numCelularString}" size="15" styleClass="cell9 input-5left"  />
-		
-						<h:outputLabel value="#{msgs['altcliente.lbl.datainicioacompanhamento']}:" for="calendarIniAcompanhamento" styleClass="HtmlOutputLabelResposta" />
-						<p:calendar id="calendarIniAcompanhamento" value="#{clienteBean.vo.dataInicioAcompanhamento}" size="15" 
-						styleClass="" style="margin-left:5px;" alt="date" pattern="dd/MM/yyyy" />
-				</h:panelGrid>
-			</div>
-		</div>
-	</div>
-	
-	<div class="widget">
-		<div class="widget-heading">
-			<a class="accordion-toggle in" data-toggle="collapse" href="#si" data-original-title="">
-			<i class="icon-align-right"></i>
-				#{msgs['altcliente.lbl.legend.informacoesadicionais']}
-			<i class="icon-chevron-down pull-right"></i>
-			</a>
-		</div>
-		<div id="si" class="widget-body collapse in">
-			<div class="widget-inner">
-				<p:inputTextarea id="txtAdicionais" value="#{clienteBean.vo.infAdicional}" autoResize="true" style="margin-top:5px;width:99% !important;"/>
-			</div>
-		</div>
-	</div>
-	
-	<hr class="lin"/>
+						<h:outputLabel value="#{msgs['altcliente.lbl.datanascimento']}:"
+							for="calendarDtNasc" styleClass="HtmlOutputLabelResposta" />
+						<p:calendar id="calendarDtNasc"
+							value="#{clienteBean.vo.dataNascimento}" size="10"
+							pattern="dd/MM/yyyy" alt="date" style="margin-left:5px;" />
 
-	<h:panelGroup>
-		<div class="buttonFooter">
-			<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" action="#{clienteBean.voltarInclusao}" style="float:left" styleClass="btn btn-zen-5 btn-toolbar" immediate="true" />
-			<p:commandButton id="btnLimpar" value="#{msgs.btn_limpar}" ajax="true" update="formgrid" action="#{clienteBean.limparFormulario()}" styleClass="btn btn-zen-2 btn-toolbar" style="margin-left:5px;"/>
-			<p:commandButton id="btnSalvar" value="#{msgs.btn_salvar}" ajax="false" action="#{clienteBean.executeSave()}" style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar" />
+						<h:outputLabel value="#{msgs['altcliente.lbl.cep']}:" for="cep"
+							styleClass="HtmlOutputLabelResposta" />
+						<h:panelGroup>
+							<h:inputText id="cep" value="#{clienteBean.vo.endereco.cep}"
+								size="10" styleClass="cep input-5left" alt="cep" />
+							<p:commandLink value="#{msgs['altcliente.lbl.preencher']}"
+								style="margin-left:5px;" ajax="false" partialSubmit="true"
+								process="cep" onstart="PF('statusDialog').show();"
+								oncomplete="PF('statusDialog').hide();"
+								actionListener="#{clienteBean.buscarEnderecoViaWebService()}" />
+						</h:panelGroup>
+						<h:panelGroup></h:panelGroup>
+						<h:panelGroup></h:panelGroup>
+						<h:panelGroup></h:panelGroup>
+						<h:panelGroup></h:panelGroup>
+
+						<h:outputLabel value="#{msgs['altcliente.lbl.endereco']}:"
+							for="txtAddress" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtAddress"
+							value="#{clienteBean.vo.endereco.logradouro}" size="50"
+							styleClass="input-5left input-xlarge" />
+						<h:outputLabel value="#{msgs['altcliente.lbl.numerocasa']}:"
+							for="txtNum" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtNum" value="#{clienteBean.vo.endereco.numero}"
+							size="5" maxlength="7" onkeypress="return onlyNum(event)"
+							styleClass="input-5left" />
+						<h:outputLabel value="#{msgs['altcliente.lbl.bairro']}:"
+							for="txtBairro" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtBairro"
+							value="#{clienteBean.vo.endereco.bairro}" size="20"
+							styleClass="input-5left" />
+
+						<h:outputLabel value="#{msgs['altcliente.lbl.complemento']}:"
+							for="txtComplemento" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtComplemento"
+							value="#{clienteBean.vo.endereco.complemento}" size="50"
+							styleClass="input-5leftcinput-xlarge" />
+						<h:outputLabel value="#{msgs['altcliente.lbl.cidade']}:"
+							for="txtCity" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtCity"
+							value="#{clienteBean.vo.endereco.cidade}" size="30"
+							styleClass="input-5left" />
+						<h:outputLabel value="#{msgs['altcliente.lbl.estado']}:"
+							for="cboState" styleClass="HtmlOutputLabelResposta" />
+						<h:selectOneMenu id="cboState"
+							value="#{clienteBean.vo.endereco.estado}"
+							style="margin-left:5px;">
+							<f:selectItems value="#{clienteBean.comboUf}" var="_gender"
+								itemLabel="#{_gender.label}" itemValue="#{_gender.label}" />
+						</h:selectOneMenu>
+
+						<h:outputLabel value="#{msgs['altcliente.lbl.email']}:"
+							for="txtEmail" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtEmail" value="#{clienteBean.vo.email}"
+							size="45" styleClass="input-5left input-xlarge">
+						</h:inputText>
+						<h:outputLabel value="#{msgs['altcliente.lbl.telefone']}:"
+							for="txtTelefone" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtTelefone"
+							value="#{clienteBean.vo.numTelefoneString}" size="15"
+							styleClass="phone input-5left" />
+						<h:outputLabel value="#{msgs['altcliente.lbl.celular']}:"
+							for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtTelefoneCel"
+							value="#{clienteBean.vo.numCelularString}" size="15"
+							styleClass="cell9 input-5left" />
+
+						<h:outputLabel
+							value="#{msgs['altcliente.lbl.datainicioacompanhamento']}:"
+							for="calendarIniAcompanhamento"
+							styleClass="HtmlOutputLabelResposta" />
+						<p:calendar id="calendarIniAcompanhamento"
+							value="#{clienteBean.vo.dataInicioAcompanhamento}" size="15"
+							styleClass="" style="margin-left:5px;" alt="date"
+							pattern="dd/MM/yyyy" />
+					</h:panelGrid>
+				</div>
+			</div>
 		</div>
-	</h:panelGroup>
-	
-</ui:define>
+
+		<div class="widget">
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#si"
+					data-original-title=""> <i class="icon-align-right"></i>
+					#{msgs['altcliente.lbl.legend.informacoesadicionais']} <i
+					class="icon-chevron-down pull-right"></i>
+				</a>
+			</div>
+			<div id="si" class="widget-body collapse in">
+				<div class="widget-inner">
+					<p:inputTextarea id="txtAdicionais"
+						value="#{clienteBean.vo.infAdicional}" autoResize="true"
+						style="margin-top:5px;width:99% !important;" />
+				</div>
+			</div>
+		</div>
+
+		<hr class="lin" />
+
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}"
+					ajax="false" action="#{clienteBean.voltarInclusao}"
+					style="float:left" styleClass="btn btn-zen-5 btn-toolbar"
+					immediate="true" />
+				<p:commandButton id="btnLimpar" value="#{msgs.btn_limpar}"
+					ajax="true" update="formgrid"
+					action="#{clienteBean.limparFormulario()}"
+					styleClass="btn btn-zen-2 btn-toolbar" style="margin-left:5px;" />
+				<p:commandButton id="btnSalvar" value="#{msgs.btn_salvar}"
+					ajax="false" action="#{clienteBean.executeSave()}"
+					style="margin-left:5px;" styleClass="btn btn-zen-2 btn-toolbar" />
+			</div>
+		</h:panelGroup>
+
+	</ui:define>
 
 >>>>>>> branch 'master' of https://github.com/christopherscotini/projetofinal.git
 </ui:composition>
