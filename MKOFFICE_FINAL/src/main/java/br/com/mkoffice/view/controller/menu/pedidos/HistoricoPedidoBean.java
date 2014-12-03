@@ -90,6 +90,14 @@ public class HistoricoPedidoBean extends AbstractModelBean{
 		parcelaSelecionadaPagamento.setDtPagamento(new Date());
 	}
 	
+	public void btnCancelarModal(){
+		for (int i = 0; i < pedidoSelecionado.getParcelas().size(); i++) {
+			if (!pedidoSelecionado.getParcelas().get(i).isDesabilitaPagamentoParcela()) {
+				pedidoSelecionado.getParcelas().get(i).setDtPagamento(null);
+			}
+		}
+	}
+	
 	public void efetuarPagamentoParcela(){
 		parcelaBO.efetuarPagamento(parcelaSelecionadaPagamento);
 		pedidoSelecionado = pedidoBO.consultarPedidos(pedidoSelecionado.getCodPedido().toString(), null, null, getLoginBean().getUsuario().getId()).get(0);

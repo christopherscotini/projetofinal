@@ -78,7 +78,8 @@ public class FormaPagamentoBean extends AbstractModelBean implements Serializabl
 			FacesUtils.addErrorMessage(b.getMessage());
 		}
 	}
-
+	
+	
 	private void carregarListaFormaPagto(){
 		formaPagtos = formaPagamentoBO.listarTodos();
 	}

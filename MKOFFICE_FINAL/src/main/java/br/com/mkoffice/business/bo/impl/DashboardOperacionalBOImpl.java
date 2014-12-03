@@ -40,6 +40,9 @@ public class DashboardOperacionalBOImpl implements DashboardOperacionalBO {
 		List<BalancoDTO>historicoBalanco = dashboardOperacionalRepository.selectHistoricoBalanco(idUsuario);
 		List<BalancoDTO>historicoFaturamento = dashboardOperacionalRepository.selectHistoricoFaturamento(idUsuario);
 		List<BalancoDTO>historicoGasto = (dashboardOperacionalRepository).selectHistoricoGasto(idUsuario);
+//		dto.setReportEstoqueDashboard(dashboardOperacionalRepository.gerarDashboardReportEstoqueDashboard(idUsuario));
+		
+		
 		
 		for (int i = 0; i < historicoGasto.size(); i++) {
 			System.out.println("GASTO: "+historicoGasto.get(i).getMes());

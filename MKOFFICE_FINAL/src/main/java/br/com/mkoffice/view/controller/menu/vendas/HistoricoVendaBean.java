@@ -103,6 +103,14 @@ public class HistoricoVendaBean extends AbstractModelBean{
 		parcelaSelecionadaPagamento.setDtPagamento(new Date());
 	}
 	
+	public void btnCancelarModal(){
+		for (int i = 0; i < vendaSelecionada.getParcelas().size(); i++) {
+			if (!vendaSelecionada.getParcelas().get(i).isDesabilitaPagamentoParcela()) {
+				vendaSelecionada.getParcelas().get(i).setDtPagamento(null);
+			}
+		}
+	}
+	
 	public void efetuarPagamentoParcela(){
 		parcelaBO.efetuarPagamento(parcelaSelecionadaPagamento);
 		vendaSelecionada = vendaBO.filtrarVenda(vendaSelecionada.getCodVenda().toString(), null, null, getLoginBean().getUsuario().getId()).get(0);

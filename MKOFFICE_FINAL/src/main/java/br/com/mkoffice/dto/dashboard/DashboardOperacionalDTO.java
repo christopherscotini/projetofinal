@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+import br.com.mkoffice.dto.reports.estoque.ReportEstoqueDashboardDTO;
 import br.com.mkoffice.model.venda.VendaEntity;
 import br.com.mkoffice.utils.DecimalUtils;
 
@@ -23,7 +24,7 @@ public class DashboardOperacionalDTO {
 	private List<ClientePorMontanteCompradoDTO>rankingClientes;
 	private BigDecimal percentualDiferencaFaturamentoMesAtualMesAnterior;
 	private BigDecimal percentualDiferencaLucroMesAtualMesAnterior;
-	
+	private ReportEstoqueDashboardDTO reportEstoqueDashboard;
 	
 	public BigDecimal getValorFaturamentoMesAnterior() {
 		if(valorFaturamentoMesAnterior == null){
@@ -142,6 +143,12 @@ public class DashboardOperacionalDTO {
 	}
 	public void setHistoricoFaturamento(List<BalancoDTO> historicoFaturamento) {
 		this.historicoFaturamento = historicoFaturamento;
+	}
+	public ReportEstoqueDashboardDTO getReportEstoqueDashboard() {
+		return reportEstoqueDashboard;
+	}
+	public void setReportEstoqueDashboard(ReportEstoqueDashboardDTO reportEstoqueDashboard) {
+		this.reportEstoqueDashboard = reportEstoqueDashboard;
 	}
 
 }
