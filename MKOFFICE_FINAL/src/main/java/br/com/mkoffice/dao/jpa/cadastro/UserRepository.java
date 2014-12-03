@@ -44,23 +44,6 @@ public class UserRepository extends JpaGenericDao<UserEntity, Long> {
 		}
 	}
 	
-	public boolean existsUserWithEmail(UserEntity usuario) {
-		StringBuilder query = new StringBuilder();
-		query.append("FROM UserEntity u WHERE lower(u.dadosPessoa.email) = '"+usuario.getDadosPessoa().getEmail().toLowerCase()+"'");
-		if(usuario.getId() != null){
-			query.append(" AND u.id <> "+usuario.getId());
-		}
-		
-	try{
-		getEntityManager().createQuery(query.toString(), UserEntity.class).getSingleResult();
-		
-		return true;
-	}catch(NoResultException nre){
-		
-		return false;
-	}
-}
-	
 	
 	public boolean existsUserWithCpf(UserEntity usuario) {
 

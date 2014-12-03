@@ -10,7 +10,6 @@ import br.com.mkoffice.model.ParametrosDashboardEntity;
 import br.com.mkoffice.model.admin.UserEntity;
 import br.com.mkoffice.model.embeddable.Endereco;
 import br.com.mkoffice.model.embeddable.Pessoa;
-import br.com.mkoffice.utils.Adapter;
 import br.com.mkoffice.utils.StringUtil;
 import br.com.mkoffice.view.controller.menu.clientes.vo.ClienteVO;
 import br.com.mkoffice.view.utils.FacesUtils;
@@ -28,25 +27,15 @@ public class FormularioUsuarioBean extends AbstractModelBean{
 
 		
 		private final String TELA_CADASTRO = "/content/cadastro-usuarios/formularioNovosUsuarios.xhtml";
-		private final String TELA_ALTERAR = "/content/cadastro-usuarios/formularioAlterarNovosUsuarios.xhtml";
 		private ClienteVO vo = null;
 		private String password = null;
 		private ParametrosDashboardEntity parametros;
-		private boolean cadastrar;
-		private UserEntity user = null;
 		
 		@Override
 		public String iniciarTela() {
 			resetCadastro();
 			
 			return TELA_CADASTRO;
-		}
-		
-		public String prepareEdit(){
-			user = getLoginBean().getUsuario();
-			cadastrar = false;
-			
-			return TELA_ALTERAR;
 		}
 
 		@Override
@@ -162,14 +151,6 @@ public class FormularioUsuarioBean extends AbstractModelBean{
 
 		public void setParametros(ParametrosDashboardEntity parametros) {
 			this.parametros = parametros;
-		}
-
-		public UserEntity getUser() {
-			return user;
-		}
-
-		public void setUser(UserEntity user) {
-			this.user = user;
 		}
 
 }

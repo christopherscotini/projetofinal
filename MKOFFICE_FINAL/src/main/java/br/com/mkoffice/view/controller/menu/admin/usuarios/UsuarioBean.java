@@ -1,6 +1,5 @@
 package br.com.mkoffice.view.controller.menu.admin.usuarios;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -26,7 +25,6 @@ public class UsuarioBean extends AbstractModelBean{
 	private final String TELA_MANTER_USUARIOS = "/content/m-admin/usuario/manterUsuario.xhtml";
 	private final String TELA_ALTERAR_CADASTRO_USUARIO = "/content/cadastro-usuarios/formularioAlterarNovosUsuarios.xhtml";
 	private final String TELA_DETALHAR_CADASTRO_USUARIO = "/content/m-admin/usuario/detalharformularioUsuarios.xhtml";
-	private final String TELA_ALTERAR_PARAMETROS_USUARIO = "/content/cadastro-usuarios/formularioAlterarParametrosUsuarios.xhtml";
 	
 	private List<UserEntity> usuarios;
 	private List<PermissaoEntity> permissoes;
@@ -34,7 +32,6 @@ public class UsuarioBean extends AbstractModelBean{
 	private UserEntity usuario;
 	private UserEntity usuarioSelecionado;
 	private boolean cadastrar;
-	private boolean altParametros;
 	
 	private ParametrosDashboardEntity parametros;
 	
@@ -53,17 +50,7 @@ public class UsuarioBean extends AbstractModelBean{
 	@Override
 	public void limparCamposFiltro() {
 	}
-	
-	public void limparCamposParametros() {
-		parametros = new ParametrosDashboardEntity();
-	}
-	
-	public void limparCamposUsuario() {
-		vo = new ClienteVO();
-		vo.setEndereco(new Endereco());
-	}
 
-	
 	public void limparSelecaoTabela() {
 		setUsuarioSelecionado(null);
 	}
@@ -106,38 +93,32 @@ public class UsuarioBean extends AbstractModelBean{
 	}
 
 	public String navegarAlterarUsuario(){
-		vo = converterUserEntityToClienteCo(getLoginBean().getUsuario());
+		usuario = usuarioSelecionado;
 		cadastrar = false;
 		
 		return TELA_ALTERAR_CADASTRO_USUARIO;
 	}
-	
-	public String navegarAlterarParametrosUsuario(){
-		vo = converterUserEntityToClienteCo(getLoginBean().getUsuario());
-		parametros = userBO.buscarParametros(getLoginBean().getUsuario());	
-		altParametros = true;
-		return TELA_ALTERAR_PARAMETROS_USUARIO;
-	}
-	
+
 	public String executeSave(){
 		UserEntity usuarioCadastro = extrairUsuario(vo);
 
 		try{
-			if(!StringUtil.isNotBlank(password)){
-				FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.senhaobrigatorio"));
+			
+			if(!StringUtil.isNotBlank(password) && !StringUtil.isNotBlank(usuarioCadastro.getPassword())){
+				FacesUtils.addErrorMessage("Senha: Campo obrigat�rio!");
 				return "";
 			}else{
-				if(password.equals(vo.getUsuario().getPasswordConfirm())){
+				if(!password.equals("")){
+					if(password.equals(vo.getUsuario().getPasswordConfirm())){
+						usuarioCadastro.setPassword(password.trim());
+					}else{
+						FacesUtils.addErrorMessage("As senhas n�o conferem.");
+						return "";
+					}
 					usuarioCadastro.setPassword(password.trim());
 				}else{
-					FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.senhasnaoconferem"));
-					return "";
-				}if(parametros.getValorLucroDesejado() == null || parametros.getValorLucroDesejado().compareTo(BigDecimal.ZERO) <= 0){
-					FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.valorlimitegastosinvalido"));
-					return "";
-				}else{
-					if(parametros.getValorMetaFaturamento() == null || parametros.getValorMetaFaturamento().compareTo(BigDecimal.ZERO) <= 0){
-						FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.valorfaturamentoinvalido"));
+					if(!vo.getUsuario().getPasswordConfirm().equals("")){
+						FacesUtils.addErrorMessage("As senhas n�o conferem.");
 						return "";
 					}
 				}
@@ -145,18 +126,10 @@ public class UsuarioBean extends AbstractModelBean{
 			
 			if (cadastrar) {
 				userBO.adicionarEntidade(usuarioCadastro);
-				parametros.setUsuario(usuarioCadastro); 
-				userBO.atualizarParametros(parametros);
 				FacesUtils.addMessageInclusaoSucesso();
 			}else{
-				if(altParametros){
-					parametros.setUsuario(usuarioCadastro); 
-					userBO.editarParametros(parametros);
-					FacesUtils.addMessageAlteracaoSucesso();
-				}else{
-					userBO.editarEntidade(usuarioCadastro);
-					FacesUtils.addMessageAlteracaoSucesso();
-				}
+				userBO.editarEntidade(usuarioCadastro);
+				FacesUtils.addMessageAlteracaoSucesso();
 			}
 			pesquisarFiltro();
 
@@ -300,5 +273,4 @@ public class UsuarioBean extends AbstractModelBean{
 	public void setParametros(ParametrosDashboardEntity parametros) {
 		this.parametros = parametros;
 	}
-	
 }

@@ -14,6 +14,5 @@ public interface UserBO extends ServiceModel<UserEntity>{
 	public List<UserEntity> buscarEntidadePorFiltro(String username);
 	public ParametrosDashboardEntity atualizarParametros(ParametrosDashboardEntity parametros);
 	public ParametrosDashboardEntity buscarParametros(UserEntity usuario);
-	public ParametrosDashboardEntity editarParametros(ParametrosDashboardEntity parametros);
 	
 }

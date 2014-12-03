@@ -1,7 +1,6 @@
 package br.com.mkoffice.view.controller.menu;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,31 +104,67 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 		balanco.setLabel("Balanço");
 		for (int i = 0; i < dashboardOperacional.getHistoricoBalanco().size(); i++) {
 			balanco.set(dashboardOperacional.getHistoricoBalanco().get(i).getMes(), dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco());
-			if(dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco().compareTo(valorMax) > 0){
-	    		valorMax = dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco();
-	    	}
-			if(dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco().compareTo(valorMax) < 0){
-				valorMin = dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco();
+		}
+		graficoBalanco.addSeries(balanco);
+
+		ChartSeries faturamento = new ChartSeries();
+		faturamento.setLabel("Faturamento");
+		for (int i = 0; i < dashboardOperacional.getHistoricoFaturamento().size(); i++) {
+			faturamento.set(dashboardOperacional.getHistoricoFaturamento().get(i).getMes(), dashboardOperacional.getHistoricoFaturamento().get(i).getValorBalanco());
+		}
+		graficoBalanco.addSeries(faturamento);
+
+		ChartSeries gasto = new ChartSeries();
+		gasto.setLabel("Gasto");
+		for (int i = 0; i < dashboardOperacional.getHistoricoGasto().size(); i++) {
+			gasto.set(dashboardOperacional.getHistoricoGasto().get(i).getMes(), dashboardOperacional.getHistoricoGasto().get(i).getValorBalanco());
+		}
+		graficoBalanco.addSeries(gasto);
+		
+		
+		for (int j = 0; j < dashboardOperacional.getHistoricoBalanco().size(); j++) {
+			if(dashboardOperacional.getHistoricoBalanco().get(j).getValorBalanco().compareTo(valorMax) > 0){
+				valorMax = dashboardOperacional.getHistoricoBalanco().get(j).getValorBalanco();
+			}
+			if(dashboardOperacional.getHistoricoBalanco().get(j).getValorBalanco().compareTo(valorMin) < 0){
+				valorMin = dashboardOperacional.getHistoricoBalanco().get(j).getValorBalanco();
+			}
+		}
+
+		for (int j = 0; j < dashboardOperacional.getHistoricoFaturamento().size(); j++) {
+			if(dashboardOperacional.getHistoricoFaturamento().get(j).getValorBalanco().compareTo(valorMax) > 0){
+				valorMax = dashboardOperacional.getHistoricoFaturamento().get(j).getValorBalanco();
+			}
+			if(dashboardOperacional.getHistoricoFaturamento().get(j).getValorBalanco().compareTo(valorMin) < 0){
+				valorMin = dashboardOperacional.getHistoricoFaturamento().get(j).getValorBalanco();
+			}
+		}
+			
+		for (int j = 0; j < dashboardOperacional.getHistoricoGasto().size(); j++) {
+			if(dashboardOperacional.getHistoricoGasto().get(j).getValorBalanco().compareTo(valorMax) > 0){
+				valorMax = dashboardOperacional.getHistoricoGasto().get(j).getValorBalanco();
+			}
+			if(dashboardOperacional.getHistoricoGasto().get(j).getValorBalanco().compareTo(valorMin) < 0){
+				valorMin = dashboardOperacional.getHistoricoGasto().get(j).getValorBalanco();
 			}
 		}
 		
-		graficoBalanco.addSeries(balanco);
 		
 		graficoBalanco.setTitle("Timeline Balanço");
-		graficoBalanco.setLegendPosition("e");
+		graficoBalanco.setLegendPosition("n");
 		graficoBalanco.getAxes().put(AxisType.X, new CategoryAxis(getMsgs("promocaoclienteporvolumecompra.lbl.titulografico.line.eixoX")));
 		Axis yAxis = graficoBalanco.getAxis(AxisType.Y);
 		yAxis.setLabel(getMsgs("promocaoclienteporvolumecompra.lbl.titulografico.line.eixoY"));
 		valorMax = valorMax.add(valorMax.multiply(new BigDecimal("0.20")));
-		valorMin = valorMin.add(valorMin.multiply(new BigDecimal("0.20")).setScale(2, RoundingMode.UP));
+		valorMin = valorMin.add(valorMin.multiply(new BigDecimal("0.20")));
 		if(valorMin.compareTo(BigDecimal.ZERO) >= 0){
 			yAxis.setMin(BigDecimal.ZERO.setScale(2));
 		}else{
-			BigDecimal valorMinPos = valorMin.multiply(new BigDecimal("-1")).setScale(2, RoundingMode.UP);
+			BigDecimal valorMinPos = valorMin.multiply(new BigDecimal("-1"));
 			if(valorMinPos.compareTo(valorMax)<=0){
-				valorMin = valorMax.multiply(new BigDecimal("-1")).setScale(2, RoundingMode.UP);
+				valorMin = valorMax.multiply(new BigDecimal("-1"));
 			}else{
-				valorMax = valorMin.multiply(new BigDecimal("-1")).setScale(2, RoundingMode.UP);
+				valorMax = valorMin.multiply(new BigDecimal("-1"));
 			}
 			yAxis.setMin(valorMin.setScale(2));
 		}
@@ -155,7 +190,7 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 			valorMax = new BigDecimal("100");
 		}else{
 	        for (int i = 0; i < dashboardOperacional.getRankingClientes().size(); i++) {
-	        	clientes.set(dashboardOperacional.getRankingClientes().get(i).getCliente().getDadosPessoa().getNome().substring(0, 10), dashboardOperacional.getRankingClientes().get(i).getSomaValorCompra());
+	        	clientes.set(dashboardOperacional.getRankingClientes().get(i).getCliente().getDadosPessoa().getNome(), dashboardOperacional.getRankingClientes().get(i).getSomaValorCompra());
 	        	if(dashboardOperacional.getRankingClientes().get(i).getSomaValorCompra().compareTo(valorMax) > 0){
 	        		valorMax = dashboardOperacional.getRankingClientes().get(i).getSomaValorCompra();
 	        	}
@@ -163,7 +198,7 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 		}
 	 
         graficoRankingClientes.addSeries(clientes);
-		graficoRankingClientes.setTitle("Ranking das Clientes que mais compraram");
+		graficoRankingClientes.setTitle("Top 5 de vendas por cliente");
 		graficoRankingClientes.setLegendPosition("ne");
          
         Axis xAxis = graficoRankingClientes.getAxis(AxisType.X);
