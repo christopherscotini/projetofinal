@@ -247,8 +247,9 @@
 				<p:calendar id="calendarDataPagamento" value="#{historicoVendaBean.parcelaSelecionadaPagamento.dtPagamento}" size="15" 
 					styleClass="input-5left" alt="date" pattern="dd/MM/yyyy" />
 					
-				<p:commandButton id="btnCancelar" value="#{msgs['btn_cancelar']}"
-						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar" oncomplete="dialogPagamento.hide();" />
+				<p:commandButton id="btnCancelar" value="#{msgs['btn_cancelar']}" ajax="false" immediate="true"
+						actionListener="#{historicoVendaBean.btnCancelarModal()}"
+						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar" oncomplete="PF('dialogPagamento').hide();" />
 				<p:commandButton
 					update=":formGlobal:tableParcelas" 
 					onclick="return validaDataPagamento(document.forms[2])"

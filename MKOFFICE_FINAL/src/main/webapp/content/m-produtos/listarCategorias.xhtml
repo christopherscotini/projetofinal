@@ -170,7 +170,7 @@
 					<f:selectItem itemLabel="#{msgs['mantercategorias.lbl.secao2']}" itemValue="2"/>
 				</p:selectOneMenu>
 					
-				<p:commandButton id="btnCancelar" value="#{msgs.btn_cancelar}"
+				<p:commandButton id="btnCancelar" value="#{msgs.btn_cancelar}" ajax="false"
 						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar" oncomplete="PF('dialogCategoria').hide();" />
 				<p:commandButton
 					update=":formGlobal:tabela-listagem-categorias :formGlobal:lblTotalReg"

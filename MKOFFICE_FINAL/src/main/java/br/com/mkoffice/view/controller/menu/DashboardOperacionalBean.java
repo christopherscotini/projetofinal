@@ -155,7 +155,8 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 			valorMax = new BigDecimal("100");
 		}else{
 	        for (int i = 0; i < dashboardOperacional.getRankingClientes().size(); i++) {
-	        	clientes.set(dashboardOperacional.getRankingClientes().get(i).getCliente().getDadosPessoa().getNome().substring(0, 10), dashboardOperacional.getRankingClientes().get(i).getSomaValorCompra());
+	        	String[] nome = dashboardOperacional.getRankingClientes().get(i).getCliente().getDadosPessoa().getNome().split(" ");
+	        	clientes.set(nome[0]+" "+nome[nome.length-1] , dashboardOperacional.getRankingClientes().get(i).getSomaValorCompra());
 	        	if(dashboardOperacional.getRankingClientes().get(i).getSomaValorCompra().compareTo(valorMax) > 0){
 	        		valorMax = dashboardOperacional.getRankingClientes().get(i).getSomaValorCompra();
 	        	}
@@ -163,12 +164,13 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 		}
 	 
         graficoRankingClientes.addSeries(clientes);
-		graficoRankingClientes.setTitle("Ranking das Clientes que mais compraram");
+		graficoRankingClientes.setTitle("Top 5 das Clientes que mais Compraram no Mês");
 		graficoRankingClientes.setLegendPosition("ne");
          
         Axis xAxis = graficoRankingClientes.getAxis(AxisType.X);
         xAxis.setLabel("Clientes");
-         
+        xAxis.setTickAngle(-45); 
+        
         Axis yAxis = graficoRankingClientes.getAxis(AxisType.Y);
         yAxis.setLabel("(R$) Montante");
         yAxis.setMin(BigDecimal.ZERO);

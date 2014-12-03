@@ -14,6 +14,7 @@ import br.com.mkoffice.dto.dashboard.BalancoDTO;
 import br.com.mkoffice.dto.dashboard.ClientePorMontanteCompradoDTO;
 import br.com.mkoffice.dto.dashboard.DashboardOperacionalDTO;
 import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDTO;
+import br.com.mkoffice.dto.reports.estoque.ReportEstoqueDashboardDTO;
 import br.com.mkoffice.model.ClienteEntity;
 import br.com.mkoffice.model.ParcelasEntity;
 import br.com.mkoffice.model.venda.VendaEntity;
@@ -33,9 +34,14 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 
 
 	public List<ClientePorMontanteCompradoDTO> selectRankingVendaClientes(Long idUsuario, Integer rowNumber) {
+		DataFilter dataFiltro = new DataFilter(true);
 		StringBuilder query = new StringBuilder();
 		query.append("select sum(v.valorVenda), v.cliente FROM VendaEntity v").append(" ");
 		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
+		query.append("AND v.dataVenda BETWEEN '")
+		.append(MkmtsUtil.converterDataString(dataFiltro.getDataInicio(), _DATE_MASK)).append(" 00:00:00")
+		.append("' AND '")
+		.append(MkmtsUtil.converterDataString(dataFiltro.getDataFinal(), _DATE_MASK)).append(" 23:59:59").append("' ");
 		query.append("GROUP BY v.cliente").append(" ");
 		query.append("ORDER BY sum(v.valorVenda) DESC").append(" ");
 		
@@ -263,6 +269,16 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 		cA2.set(Calendar.DAY_OF_MONTH, cA1.get(Calendar.DAY_OF_MONTH)-1);
 		
 		return new DataFilter(cA1.getTime(), cA2.getTime());
+	}
+
+
+	public ReportEstoqueDashboardDTO gerarDashboardReportEstoqueDashboard(Long idUsuario) {
+		ReportEstoqueDashboardDTO dto = new ReportEstoqueDashboardDTO();
+		dto.setValorEstoqueAtacado(null);
+		
+		
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
