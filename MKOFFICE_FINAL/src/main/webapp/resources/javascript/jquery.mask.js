@@ -421,4 +421,7 @@ jQuery(function($){
 	   $(".cell9").mask("(99) 99999-9999");
 	   $(".phone").mask("(99) 9999-9999");
 	   $(".cep").mask("99999-999");
+	   $(".cpf").mask("999.999.999-99");
+	   
+	   $("#formGlobal:calendarDtNasc_input").mask("99/99/9999");
 	});

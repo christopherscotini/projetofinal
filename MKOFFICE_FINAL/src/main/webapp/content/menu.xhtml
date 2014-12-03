@@ -34,7 +34,7 @@
 	
 	        <section class="admin">
 	            <div class="info-menu">
-	                <img alt="" src="#{facesContext.externalContext.requestContextPath}/#{loginBean.usuario.urlAvatar}" class="img-polaroid">#{msgs['menu.lbl.mensagemboasvindas']}, #{loginBean.usuario.dadosPessoa.nome}</img>
+	            <ui:fragment id="labelUsuarioName"><img alt="" src="#{facesContext.externalContext.requestContextPath}/#{loginBean.usuario.urlAvatar}" class="img-polaroid">#{msgs['menu.lbl.mensagemboasvindas']}, #{loginBean.usuario.dadosPessoa.nome}</img></ui:fragment>
 	                <div class="btn-toolbar">
 	                    <div class="btn-group">
 	                    	<a class="btn" data-toggle="dropdown" href="#" data-original-title="">
@@ -42,14 +42,14 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="#" data-original-title="">
-									<i class="icon-pencil"></i>
-									Alterar Usuario
-									</a>
-									<a href="#" data-original-title="">
-									<i class="icon-cog"></i>
-									Configurar Parametros do Dashboard
-									</a>
+									<h:commandLink action="#{usuarioBean.navegarAlterarUsuario()}">
+										<i class="icon-pencil"></i>
+										#{msgs['menu.lbl.usuarios.alterarusuario']}
+									</h:commandLink>
+									<h:commandLink action="#{usuarioBean.navegarAlterarParametrosUsuario()}">
+										<i class="icon-cog"></i>
+										#{msgs['menu.lbl.usuarios.alterarparametrosusuario']}
+									</h:commandLink>
 								</li>
 								<ui:fragment rendered="#{loginBean.controladorAcesso.permissaoAdministrador}">
 									<li>
