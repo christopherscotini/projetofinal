@@ -32,14 +32,14 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 	}
 
 
-	public List<ClientePorMontanteCompradoDTO> selectTop10RankingVendaClientes(Long idUsuario) {
+	public List<ClientePorMontanteCompradoDTO> selectRankingVendaClientes(Long idUsuario, Integer rowNumber) {
 		StringBuilder query = new StringBuilder();
 		query.append("select sum(v.valorVenda), v.cliente FROM VendaEntity v").append(" ");
 		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
 		query.append("GROUP BY v.cliente").append(" ");
 		query.append("ORDER BY sum(v.valorVenda) DESC").append(" ");
 		
-		List<Object[]>ret = getEntityManager().createQuery(query.toString()).setMaxResults(10).setParameter("idUsuario", idUsuario).getResultList();
+		List<Object[]>ret = getEntityManager().createQuery(query.toString()).setMaxResults(rowNumber).setParameter("idUsuario", idUsuario).getResultList();
 		List<ClientePorMontanteCompradoDTO> returnzz = new ArrayList<ClientePorMontanteCompradoDTO>();
 
 		for (int i = 0; i < ret.size(); i++) {
@@ -59,6 +59,7 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 		query.append("select sum(p.valorPago) FROM VendaEntity v").append(" ");
 		query.append("JOIN v.parcelas p").append(" ");
 		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
+		query.append("AND p.dtPagamento IS NOT NULL").append(" ");
 		query.append("AND p.dtPagamento BETWEEN '")
 		.append(MkmtsUtil.converterDataString(dataFiltro.getDataInicio(), _DATE_MASK)).append(" 00:00:00")
 		.append("' AND '")
@@ -76,6 +77,7 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 		query.append("select sum(p.valorPago) FROM VendaEntity v").append(" ");
 		query.append("JOIN v.parcelas p").append(" ");
 		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
+		query.append("AND p.dtPagamento IS NOT NULL").append(" ");
 		query.append("AND p.dtPagamento BETWEEN '")
 		.append(MkmtsUtil.converterDataString(filtro.getDataInicio(), _DATE_MASK)).append(" 00:00:00")
 		.append("' AND '")
@@ -90,9 +92,11 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 		DataFilter filtro = montarFiltroDataMesAnterior();
 		
 		StringBuilder query = new StringBuilder();
-		query.append("select sum(v.valorVenda) FROM VendaEntity v").append(" ");
+		query.append("select sum(par.valorPago) FROM VendaEntity v").append(" ");
+		query.append("JOIN v.parcelas par").append(" ");
 		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
-		query.append("AND v.dataVenda BETWEEN '")
+		query.append("AND par.dtPagamento IS NOT NULL").append(" ");
+		query.append("AND par.dtPagamento BETWEEN '")
 		.append(MkmtsUtil.converterDataString(filtro.getDataInicio(), _DATE_MASK)).append(" 00:00:00")
 		.append("' AND '")
 		.append(MkmtsUtil.converterDataString(filtro.getDataFinal(), _DATE_MASK)).append(" 23:59:59").append("' ");
@@ -101,9 +105,11 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 
 		
 		StringBuilder querySomaGasto = new StringBuilder();
-		querySomaGasto.append("select sum(p.valorTotalPago) FROM PedidoEntity p").append(" ");
+		querySomaGasto.append("select sum(par.valorPago) FROM PedidoEntity p").append(" ");
+		querySomaGasto.append("JOIN p.parcelas par").append(" ");
 		querySomaGasto.append("WHERE p.usuario.id = :idUsuario").append(" ");
-		querySomaGasto.append("AND p.dtPedido BETWEEN '")
+		querySomaGasto.append("AND par.dtPagamento IS NOT NULL").append(" ");
+		querySomaGasto.append("AND par.dtPagamento BETWEEN '")
 		.append(MkmtsUtil.converterDataString(filtro.getDataInicio(), _DATE_MASK)).append(" 00:00:00")
 		.append("' AND '")
 		.append(MkmtsUtil.converterDataString(filtro.getDataFinal(), _DATE_MASK)).append(" 23:59:59").append("' ");
@@ -117,9 +123,11 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 		DataFilter filtro = new DataFilter(true);
 		
 		StringBuilder query = new StringBuilder();
-		query.append("select sum(v.valorVenda) FROM VendaEntity v").append(" ");
+		query.append("select sum(par.valorPago) FROM VendaEntity v").append(" ");
+		query.append("JOIN v.parcelas par").append(" ");
 		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
-		query.append("AND v.dataVenda BETWEEN '")
+		query.append("AND par.dtPagamento IS NOT NULL").append(" ");
+		query.append("AND par.dtPagamento BETWEEN '")
 		.append(MkmtsUtil.converterDataString(filtro.getDataInicio(), _DATE_MASK)).append(" 00:00:00")
 		.append("' AND '")
 		.append(MkmtsUtil.converterDataString(filtro.getDataFinal(), _DATE_MASK)).append(" 23:59:59").append("' ");
@@ -127,9 +135,11 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 		BigDecimal somaFat = (BigDecimal) getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario) .getSingleResult();
 		
 		StringBuilder querySomaGasto = new StringBuilder();
-		querySomaGasto.append("select sum(p.valorTotalPago) FROM PedidoEntity p").append(" ");
+		querySomaGasto.append("select sum(par.valorPago) FROM PedidoEntity p").append(" ");
+		querySomaGasto.append("JOIN p.parcelas par").append(" ");
 		querySomaGasto.append("WHERE p.usuario.id = :idUsuario").append(" ");
-		querySomaGasto.append("AND p.dtPedido BETWEEN '")
+		querySomaGasto.append("AND par.dtPagamento IS NOT NULL").append(" ");
+		querySomaGasto.append("AND par.dtPagamento BETWEEN '")
 		.append(MkmtsUtil.converterDataString(filtro.getDataInicio(), _DATE_MASK)).append(" 00:00:00")
 		.append("' AND '")
 		.append(MkmtsUtil.converterDataString(filtro.getDataFinal(), _DATE_MASK)).append(" 23:59:59").append("' ");
@@ -183,7 +193,62 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 		return retorno;
 	}
 	
-	
+	public List<BalancoDTO> selectHistoricoFaturamento(Long idUsuario) {
+		List<BalancoDTO> retorno = new ArrayList<BalancoDTO>();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("select sum(p.valorPago), DATE_FORMAT(p.dtPagamento,'%Y/%m')").append(" ");
+		query.append("FROM VendaEntity v").append(" ");
+		query.append("JOIN v.parcelas p").append(" ");
+		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
+		query.append("and p.codVenda IS NOT NULL").append(" ");
+		query.append("AND p.dtPagamento IS NOT NULL").append(" ");
+		query.append("GROUP BY DATE_FORMAT(p.dtPagamento,'%Y/%m')").append(" ");
+		
+		List<Object[]> faturamentosEntities = getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList();
+		
+		for (int i = 0; i < faturamentosEntities.size(); i++) {
+			BalancoDTO dto = new BalancoDTO();
+			Calendar a = Calendar.getInstance();
+			a.set(Calendar.YEAR, Integer.parseInt(faturamentosEntities.get(i)[1].toString().split("/")[0]));
+			a.set(Calendar.MONTH, Integer.parseInt(faturamentosEntities.get(i)[1].toString().split("/")[1]) -1);
+			a.set(Calendar.DAY_OF_MONTH, 1);
+			dto.setData(a);
+			dto.setValorBalanco((BigDecimal) faturamentosEntities.get(i)[0]);
+			retorno.add(dto);
+		}
+		
+		
+		return retorno;
+	}
+
+	public List<BalancoDTO> selectHistoricoGasto(Long idUsuario) {
+		List<BalancoDTO> retorno = new ArrayList<BalancoDTO>();
+
+		StringBuilder query = new StringBuilder();
+		query.append("select sum(p.valorPago), DATE_FORMAT(p.dtPagamento,'%Y/%m')").append(" ");
+		query.append("FROM PedidoEntity v").append(" ");
+		query.append("JOIN v.parcelas p").append(" ");
+		query.append("WHERE v.usuario.id = :idUsuario").append(" ");
+		query.append("and p.codPedido IS NOT NULL").append(" ");
+		query.append("AND p.dtPagamento IS NOT NULL").append(" ");
+		query.append("GROUP BY DATE_FORMAT(p.dtPagamento,'%Y/%m')").append(" ");
+		
+		List<Object[]> gastosEntities = getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList();
+		
+		for (int i = 0; i < gastosEntities.size(); i++) {
+			BalancoDTO dto = new BalancoDTO();
+			Calendar a = Calendar.getInstance();
+			a.set(Calendar.YEAR, Integer.parseInt(gastosEntities.get(i)[1].toString().split("/")[0]));
+			a.set(Calendar.MONTH, Integer.parseInt(gastosEntities.get(i)[1].toString().split("/")[1]) -1);
+			a.set(Calendar.DAY_OF_MONTH, 1);
+			dto.setData(a);
+			dto.setValorBalanco((BigDecimal) gastosEntities.get(i)[0]);
+			retorno.add(dto);
+		}
+		
+		return retorno;
+	}
 	
 	private DataFilter montarFiltroDataMesAnterior(){
 		Calendar mesAtual = Calendar.getInstance();
@@ -199,6 +264,7 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 		
 		return new DataFilter(cA1.getTime(), cA2.getTime());
 	}
+
 
 
 }

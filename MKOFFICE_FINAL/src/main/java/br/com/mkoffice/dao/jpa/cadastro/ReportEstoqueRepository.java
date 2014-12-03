@@ -18,7 +18,7 @@ public class ReportEstoqueRepository extends JpaGenericDao<ProdutoMovimentadoDTO
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT e.codCatalogo, sum(e.qtdeMovimentadoProduto) AS COMPRADOS FROM EstoqueEntity e").append(" ");
 		query.append("WHERE e.tipoFluxoEstoque.fluxoSaida = 0").append(" ");
-		query.append("AND e.usuario = :idUsuario").append(" ");
+		query.append("AND e.usuario.id = :idUsuario").append(" ");
 		if(!anoFiltro.equals(9999)){query.append("AND e.dtMovimentacao BETWEEN '"+anoFiltro+"-01-01 00:00:00' AND '"+anoFiltro+"-12-31 23:59:59'").append(" ");}
 		query.append("GROUP BY e.codCatalogo").append(" ");
 		query.append("ORDER BY count(*) desc, e.codCatalogo").append(" ");
@@ -32,7 +32,7 @@ public class ReportEstoqueRepository extends JpaGenericDao<ProdutoMovimentadoDTO
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT e.codCatalogo, sum(e.qtdeMovimentadoProduto) AS COMPRADOS FROM EstoqueEntity e").append(" ");
 		query.append("WHERE e.tipoFluxoEstoque.fluxoSaida = 1").append(" ");
-		query.append("AND e.usuario = :idUsuario").append(" ");
+		query.append("AND e.usuario.id = :idUsuario").append(" ");
 		if(!anoFiltro.equals(9999)){query.append("AND e.dtMovimentacao BETWEEN '"+anoFiltro+"-01-01 00:00:00' AND '"+anoFiltro+"-12-31 23:59:59'").append(" ");}
 		query.append("GROUP BY e.codCatalogo").append(" ");
 		query.append("ORDER BY count(*) desc, e.codCatalogo").append(" ");

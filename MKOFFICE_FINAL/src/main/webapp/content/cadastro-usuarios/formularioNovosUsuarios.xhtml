@@ -90,13 +90,13 @@
 							<div class="widget-inner">
 								<h:panelGrid id="formgrid" cellpadding="0" cellspacing="1"
 									columns="6" style="margin-top:5px;margin-bottom:25px;">
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.nome']}:"
 										for="txtNome" styleClass="HtmlOutputLabelResposta" />
 									<h:inputText id="txtNome"
 										value="#{formularioUsuarioBean.vo.nome}" size="50"
 										styleClass="input-5left input-xlarge" />
-									<p:outputLabel for="cboSexo"
+									<h:outputLabel for="cboSexo"
 										value="#{msgs['formularionovosusuarios.lbl.sexo']}:"
 										styleClass="HtmlOutputLabelResposta" />
 									<h:selectOneMenu id="cboSexo"
@@ -108,7 +108,7 @@
 											var="_gender" itemLabel="#{_gender.label}"
 											itemValue="#{_gender.label}" />
 									</h:selectOneMenu>
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.datanascimento']}:"
 										for="calendarDtNasc" styleClass="HtmlOutputLabelResposta" />
 									<p:calendar id="calendarDtNasc"
@@ -117,7 +117,7 @@
 										style="margin-left:5px;" />
 
 
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.cep']}:" for="cep"
 										styleClass="HtmlOutputLabelResposta" />
 									<h:panelGroup>
@@ -131,7 +131,7 @@
 											oncomplete="PF('statusDialog').hide();"
 											actionListener="#{formularioUsuarioBean.buscarEnderecoViaWebService()}" />
 									</h:panelGroup>
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.cpf']}:"
 										for="txtCPF" styleClass="HtmlOutputLabelResposta" />
 									<p:inputText id="txtCPF"
@@ -140,39 +140,39 @@
 									<h:panelGroup></h:panelGroup>
 									<h:panelGroup></h:panelGroup>
 
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.endereco']}:"
 										for="txtAddress" styleClass="HtmlOutputLabelResposta" />
 									<h:inputText id="txtAddress"
 										value="#{formularioUsuarioBean.vo.endereco.logradouro}"
 										size="50" styleClass="input-5left input-xlarge" />
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.numerocasa']}:"
 										for="txtNum" styleClass="HtmlOutputLabelResposta" />
 									<h:inputText id="txtNum"
 										value="#{formularioUsuarioBean.vo.endereco.numero}" size="5"
 										maxlength="7" onkeypress="return onlyNum(event)"
 										styleClass="input-5left" />
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.bairro']}:"
 										for="txtBairro" styleClass="HtmlOutputLabelResposta" />
 									<h:inputText id="txtBairro"
 										value="#{formularioUsuarioBean.vo.endereco.bairro}" size="20"
 										styleClass="input-5left" />
 
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.complemento']}:"
 										for="txtComplemento" styleClass="HtmlOutputLabelResposta" />
 									<h:inputText id="txtComplemento"
 										value="#{formularioUsuarioBean.vo.endereco.complemento}"
 										size="50" styleClass="input-5leftcinput-xlarge" />
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.cidade']}:"
 										for="txtCity" styleClass="HtmlOutputLabelResposta" />
 									<h:inputText id="txtCity"
 										value="#{formularioUsuarioBean.vo.endereco.cidade}" size="30"
 										styleClass="input-5left" />
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.estado']}:"
 										for="cboState" styleClass="HtmlOutputLabelResposta" />
 									<h:selectOneMenu id="cboState"
@@ -184,20 +184,20 @@
 											itemValue="#{_gender.label}" />
 									</h:selectOneMenu>
 
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.email']}:"
 										for="txtEmail" styleClass="HtmlOutputLabelResposta" />
 									<h:inputText id="txtEmail"
 										value="#{formularioUsuarioBean.vo.email}" size="45"
 										styleClass="input-5left input-xlarge">
 									</h:inputText>
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.telefone']}:"
 										for="txtTelefone" styleClass="HtmlOutputLabelResposta" />
 									<h:inputText id="txtTelefone"
 										value="#{formularioUsuarioBean.vo.numTelefoneString}"
 										size="15" styleClass="phone input-5left" />
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.celular']}:"
 										for="txtTelefoneCel" styleClass="HtmlOutputLabelResposta" />
 									<h:inputText id="txtTelefoneCel"
@@ -220,14 +220,14 @@
 							<div class="widget-inner">
 								<h:panelGrid id="infosUsuario" columns="2"
 									style="margin-bottom:10px">
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.usuario']}:"
 										for="txtUsuario" styleClass="HtmlOutputLabelResposta" />
 									<p:inputText id="txtUsuario"
 										value="#{formularioUsuarioBean.vo.usuario.username}" size="50"
 										styleClass="input-5left" />
 
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.senha']}:"
 										for="txtPassword" styleClass="HtmlOutputLabelResposta" />
 									<p:password id="txtPassword"
@@ -238,7 +238,7 @@
 										strongLabel="#{msgs['formularionovosusuarios.lbl.senhaforte']}"
 										feedback="true" />
 
-									<p:outputLabel
+									<h:outputLabel
 										value="#{msgs['formularionovosusuarios.lbl.confirmarsenha']}:"
 										for="txtPasswordConf" styleClass="HtmlOutputLabelResposta" />
 									<p:password id="txtPasswordConf"

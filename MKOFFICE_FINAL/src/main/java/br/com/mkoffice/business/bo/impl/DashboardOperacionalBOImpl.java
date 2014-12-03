@@ -29,7 +29,7 @@ public class DashboardOperacionalBOImpl implements DashboardOperacionalBO {
 	public DashboardOperacionalDTO gerarDashBoard(Long idUsuario) {
 		DashboardOperacionalDTO dto = new DashboardOperacionalDTO();
 		dto.setListaUltimasVendas(dashboardOperacionalRepository.selectTop5UltimasVendas(idUsuario));
-		dto.setRankingClientes(dashboardOperacionalRepository.selectTop10RankingVendaClientes(idUsuario));
+		dto.setRankingClientes(dashboardOperacionalRepository.selectRankingVendaClientes(idUsuario, 5));
 		dto.setValorFaturamentoMesAnterior(dashboardOperacionalRepository.selectValorFaturamentoMesAnterior(idUsuario));
 		dto.setValorFaturamentoMesAtual(dashboardOperacionalRepository.selectValorFaturamentoMesAtual(idUsuario));
 		dto.calcularPercentualDiferencaFaturamentoMesAtualMesAnterior();
@@ -38,14 +38,22 @@ public class DashboardOperacionalBOImpl implements DashboardOperacionalBO {
 		dto.calcularPercentualDiferencaLucroMesAtualMesAnterior();
 		dto.setBalanco(new BalancoDTO(parcelaRepository.getSaldoUsuario(idUsuario), Calendar.getInstance()));
 		List<BalancoDTO>historicoBalanco = dashboardOperacionalRepository.selectHistoricoBalanco(idUsuario);
-		montarhistoricoBalanco(dto, historicoBalanco);		
+		List<BalancoDTO>historicoFaturamento = dashboardOperacionalRepository.selectHistoricoFaturamento(idUsuario);
+		List<BalancoDTO>historicoGasto = (dashboardOperacionalRepository).selectHistoricoGasto(idUsuario);
 		
+		for (int i = 0; i < historicoGasto.size(); i++) {
+			System.out.println("GASTO: "+historicoGasto.get(i).getMes());
+		}
+		
+		dto.setHistoricoBalanco(montarhistoricoBalanco(historicoBalanco));		
+		dto.setHistoricoFaturamento(montarhistoricoBalanco(historicoFaturamento));		
+		dto.setHistoricoGasto(montarhistoricoBalanco(historicoGasto));		
 		
 		return dto;
 	}
 	
 	
-	private void montarhistoricoBalanco(DashboardOperacionalDTO dto, List<BalancoDTO> historicoBalanco){
+	private List<BalancoDTO> montarhistoricoBalanco(List<BalancoDTO> historicoBalanco){
 		List<BalancoDTO> aux = new ArrayList<BalancoDTO>();
 		
 		try{
@@ -56,6 +64,7 @@ public class DashboardOperacionalBOImpl implements DashboardOperacionalBO {
 						if(diffy == 0){
 							int diffm = historicoBalanco.get(i).getData().get(Calendar.MONTH) - historicoBalanco.get(i-1).getData().get(Calendar.MONTH);
 							if(diffm == 1){
+								System.out.println(historicoBalanco.get(i).getMes());
 								aux.add(new BalancoDTO(historicoBalanco.get(i).getValorBalanco(), historicoBalanco.get(i).getData()));
 							}else{
 								aux.add(new BalancoDTO(historicoBalanco.get(i).getValorBalanco(), historicoBalanco.get(i).getData()));
@@ -66,6 +75,7 @@ public class DashboardOperacionalBOImpl implements DashboardOperacionalBO {
 										c1.set(Calendar.MONTH, historicoBalanco.get(i).getData().get(Calendar.MONTH)-j);
 										c1.set(Calendar.DAY_OF_MONTH, historicoBalanco.get(i).getData().get(Calendar.DAY_OF_MONTH));
 										aux.add(new BalancoDTO(BigDecimal.ZERO, c1));
+										System.out.println(aux.get(i).getMes());
 									}
 								}	
 							}
@@ -99,7 +109,7 @@ public class DashboardOperacionalBOImpl implements DashboardOperacionalBO {
 			historicoBalanco.add(aux.get(i));
 		}
 		
-		dto.setHistoricoBalanco(historicoBalanco);
+		return historicoBalanco;
 	}
 	
 }

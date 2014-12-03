@@ -4,17 +4,16 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-import br.com.mkoffice.dto.dashboard.ClientePorMontanteCompradoDTO;
 import br.com.mkoffice.model.venda.VendaEntity;
 import br.com.mkoffice.utils.DecimalUtils;
-import br.com.mkoffice.view.converter.DecimalConverter;
-import br.com.mkoffice.view.converter.PercentConverter;
 
 public class DashboardOperacionalDTO {
 	
 	private final BigDecimal _100 = new BigDecimal("100.00");
 	private BigDecimal valorFaturamentoMesAnterior;
 	private BalancoDTO balanco;
+	private List<BalancoDTO>historicoGasto;
+	private List<BalancoDTO>historicoFaturamento;
 	private List<BalancoDTO>historicoBalanco;
 	private BigDecimal valorFaturamentoMesAtual;
 	private BigDecimal valorGasto;
@@ -132,7 +131,18 @@ public class DashboardOperacionalDTO {
 	public void setBalanco(BalancoDTO balanco) {
 		this.balanco = balanco;
 	}
-	
+	public List<BalancoDTO> getHistoricoGasto() {
+		return historicoGasto;
+	}
+	public void setHistoricoGasto(List<BalancoDTO> historicoGasto) {
+		this.historicoGasto = historicoGasto;
+	}
+	public List<BalancoDTO> getHistoricoFaturamento() {
+		return historicoFaturamento;
+	}
+	public void setHistoricoFaturamento(List<BalancoDTO> historicoFaturamento) {
+		this.historicoFaturamento = historicoFaturamento;
+	}
 
 }
 
