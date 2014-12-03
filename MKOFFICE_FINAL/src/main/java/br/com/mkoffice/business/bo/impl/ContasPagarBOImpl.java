@@ -13,6 +13,7 @@ import br.com.mkoffice.business.bo.ContasPagarBO;
 import br.com.mkoffice.business.exception.ValidationFormAbstractException;
 import br.com.mkoffice.dao.jpa.cadastro.ParcelaRepository;
 import br.com.mkoffice.dto.DataFilter;
+import br.com.mkoffice.dto.ParcelasDTO;
 import br.com.mkoffice.model.ParcelasEntity;
 import br.com.mkoffice.utils.MkmtsUtil;
 
@@ -29,7 +30,7 @@ public class ContasPagarBOImpl implements ContasPagarBO{
 
 	
 	@Override
-	public List<ParcelasEntity> filtrar(DataFilter dataFiltro, Long situacaoPagamento, Long idUsuario) {
+	public List<ParcelasDTO> filtrar(DataFilter dataFiltro, Long situacaoPagamento, Long idUsuario) {
 		situacaoPagamento = MkmtsUtil.verificaLongNulo(situacaoPagamento == null ? 0 : Long.valueOf(situacaoPagamento));
 		
 		if(situacaoPagamento.equals(1L)){
@@ -39,7 +40,7 @@ public class ContasPagarBOImpl implements ContasPagarBO{
 				return dao.filterByDateSituacaoPendenteContasPagar(dataFiltro, idUsuario);
 			}else{
 				if(situacaoPagamento.equals(99L)){
-					List<ParcelasEntity>entities = new ArrayList<ParcelasEntity>();
+					List<ParcelasDTO>entities = new ArrayList<ParcelasDTO>();
 					entities.addAll(dao.filterByDateSituacaoPagoContasPagar(dataFiltro, idUsuario));
 					entities.addAll(dao.filterByDateSituacaoPendenteContasPagar(dataFiltro, idUsuario));
 					return entities;

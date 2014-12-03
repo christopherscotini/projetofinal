@@ -17,6 +17,7 @@ import br.com.mkoffice.dto.reports.cliente.ReportPromocaoClientePorVolumeVendaDT
 import br.com.mkoffice.dto.reports.estoque.ReportEstoqueDashboardDTO;
 import br.com.mkoffice.model.ClienteEntity;
 import br.com.mkoffice.model.ParcelasEntity;
+import br.com.mkoffice.model.constants.PercentDescontoEnum;
 import br.com.mkoffice.model.venda.VendaEntity;
 import br.com.mkoffice.utils.MkmtsUtil;
 
@@ -274,11 +275,33 @@ public class DashboardOperacionalRepository extends JpaGenericDao<ParcelasEntity
 
 	public ReportEstoqueDashboardDTO gerarDashboardReportEstoqueDashboard(Long idUsuario) {
 		ReportEstoqueDashboardDTO dto = new ReportEstoqueDashboardDTO();
-		dto.setValorEstoqueAtacado(null);
+		StringBuilder query = new StringBuilder();
+		query.append("select e.NU_PERC_DESCONTO, sum(e.VL_VLR_TOTAL_MOVIMENTADO), c.*").append(" ");
+		query.append("from tb_estoque e").append(" ");
+		query.append("INNER JOIN tb_catalogo c on e.TB_CATALOGO_TB_ESTOQUE_FK = c.ID_CATALOGO").append(" ");
+		query.append("where e.FL_DISPONIVEL = 1").append(" ");
+		query.append("AND e.TB_USUARIO_FK = :idUsuario").append(" ");
+		query.append("group by e.TB_CATALOGO_TB_ESTOQUE_FK, e.NU_PERC_DESCONTO").append(" ");
+		
+		dto.setValorEstoqueRevenda(BigDecimal.ZERO);
+		dto.setValorEstoqueAtacado(BigDecimal.ZERO);
+		dto.setValorLucroRevenda(BigDecimal.ZERO);
+		
+		BigDecimal somaAtacado = BigDecimal.ZERO;
+		List<Object[]> listaEstoque = getEntityManager().createNativeQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList();
+		for (int i = 0; i < listaEstoque.size(); i++) {
+			BigDecimal vlrRevenda = ((BigDecimal) listaEstoque.get(i)[1]);
+			dto.setValorEstoqueRevenda(dto.getValorEstoqueRevenda().add(vlrRevenda));
+			Double perc = (Double.parseDouble(listaEstoque.get(i)[0].toString().substring(1))/100.00);
+			somaAtacado = somaAtacado.add(vlrRevenda.subtract(vlrRevenda.multiply(new BigDecimal(perc))));
+		}
+		
+		dto.setValorEstoqueAtacado(somaAtacado);
+		dto.setValorLucroRevenda(dto.getValorEstoqueRevenda().subtract(dto.getValorEstoqueAtacado()));
 		
 		
-		// TODO Auto-generated method stub
-		return null;
+		
+		return dto;
 	}
 
 

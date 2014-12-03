@@ -9,6 +9,7 @@ import javax.faces.bean.SessionScoped;
 
 import br.com.mkoffice.business.exception.NoDataFoundException;
 import br.com.mkoffice.dto.DataFilter;
+import br.com.mkoffice.dto.ParcelasDTO;
 import br.com.mkoffice.exceptions.BusinessException;
 import br.com.mkoffice.model.ParcelasEntity;
 import br.com.mkoffice.model.admin.SituacaoEntity;
@@ -23,7 +24,8 @@ public class ContasPagarBean extends AbstractModelBean{
 	
 	private Long situacaoPagamentoFiltro;
 	private DataFilter dataFiltro;
-	private List<ParcelasEntity>parcelas;
+	private List<ParcelasDTO>parcelas;
+	private ParcelasDTO parcelaSelecionadaPagamento;
 	
 	@Override
 	public String iniciarTela() {
@@ -43,6 +45,7 @@ public class ContasPagarBean extends AbstractModelBean{
 		
 		try{
 			parcelas = contasPagarBO.filtrar(dataFiltro, situacaoPagamentoFiltro, loginBean.getUsuario().getId());
+			isDesabilitaPagamentoParcela();
 		}catch(NoDataFoundException ndf){
 			parcelas = null;
 			FacesUtils.addErrorMessage(ndf.getMessage());
@@ -51,6 +54,50 @@ public class ContasPagarBean extends AbstractModelBean{
 		}
 		
 		return TELA_CONTAS_PAGAR;
+	}
+	
+	public void onclickBtnPagamentoParcela(ParcelasDTO p){
+		parcelaSelecionadaPagamento = p;
+		parcelaSelecionadaPagamento.setDtPagamento(new Date());
+	}
+	
+	public void btnCancelarModal(){
+		for (int i = 0; i < parcelas.size(); i++) {
+			if (!parcelas.get(i).isDesabilitaPagamentoParcela()) {
+				parcelas.get(i).setDtPagamento(null);
+			}
+		}
+	}
+	
+	public void efetuarPagamentoParcela(){
+		parcelaBO.efetuarPagamento(parcelaSelecionadaPagamento);
+		isDesabilitaPagamentoParcela();
+	}
+
+	private void isDesabilitaPagamentoParcela(){
+		for (int i = 0; i < parcelas.size(); i++) {
+			if(parcelas.get(i).isQuitado()){
+				parcelas.get(i).setDesabilitaPagamentoParcela(true);
+			}else{
+				if( i > 0){
+					if(parcelas.get(i-1).isQuitado()){
+						if(i == (parcelas.size()-1)){
+							parcelas.get(i).setDesabilitaPagamentoParcela(false);
+						}else{
+							if(!parcelas.get(i-1).isDesabilitaPagamentoParcela()){
+								parcelas.get(i).setDesabilitaPagamentoParcela(true);
+							}else{
+								parcelas.get(i).setDesabilitaPagamentoParcela(false);
+							}
+						}
+					}else{
+						parcelas.get(i).setDesabilitaPagamentoParcela(true);
+					}
+				}else{
+					parcelas.get(i).setDesabilitaPagamentoParcela(true);
+				}
+			}
+		}
 	}
 
 	public List<SituacaoEntity> getComboSituacaoPagamento() {
@@ -71,11 +118,11 @@ public class ContasPagarBean extends AbstractModelBean{
 		this.situacaoPagamentoFiltro = situacaoPagamentoFiltro;
 	}
 
-	public List<ParcelasEntity> getParcelas() {
+	public List<ParcelasDTO> getParcelas() {
 		return parcelas;
 	}
 
-	public void setParcelas(List<ParcelasEntity> parcelas) {
+	public void setParcelas(List<ParcelasDTO> parcelas) {
 		this.parcelas = parcelas;
 	}
 
@@ -85,6 +132,15 @@ public class ContasPagarBean extends AbstractModelBean{
 
 	public void setDataFiltro(DataFilter dataFiltro) {
 		this.dataFiltro = dataFiltro;
+	}
+
+	public ParcelasDTO getParcelaSelecionadaPagamento() {
+		return parcelaSelecionadaPagamento;
+	}
+
+	public void setParcelaSelecionadaPagamento(
+			ParcelasDTO parcelaSelecionadaPagamento) {
+		this.parcelaSelecionadaPagamento = parcelaSelecionadaPagamento;
 	}
 
 }

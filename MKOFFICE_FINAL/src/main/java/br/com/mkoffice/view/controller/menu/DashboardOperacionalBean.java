@@ -108,15 +108,15 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 			if(dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco().compareTo(valorMax) > 0){
 	    		valorMax = dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco();
 	    	}
-			if(dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco().compareTo(valorMax) < 0){
+			if(dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco().compareTo(valorMin) < 0){
 				valorMin = dashboardOperacional.getHistoricoBalanco().get(i).getValorBalanco();
 			}
 		}
 		
 		graficoBalanco.addSeries(balanco);
 		
-		graficoBalanco.setTitle("Timeline Balanço");
-		graficoBalanco.setLegendPosition("e");
+		graficoBalanco.setTitle("Timeline Balanço (Últimos 12 meses)");
+		graficoBalanco.setLegendPosition("s");
 		graficoBalanco.getAxes().put(AxisType.X, new CategoryAxis(getMsgs("promocaoclienteporvolumecompra.lbl.titulografico.line.eixoX")));
 		Axis yAxis = graficoBalanco.getAxis(AxisType.Y);
 		yAxis.setLabel(getMsgs("promocaoclienteporvolumecompra.lbl.titulografico.line.eixoY"));

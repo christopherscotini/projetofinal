@@ -144,12 +144,12 @@
 								</h:outputText>
 					        </p:column>
 							<p:column  style="text-align: center;" headerText="#{msgs['generico.tabelacoluna.status']}" width="500px">
-								<p:commandLink 
-									 disabled="#{p.desabilitaPagamentoParcela}"
-									 value="#{p.codSituacaoParcela.descSituacao}" 
-									 actionListener="#{historicoVendaBean.onclickBtnPagamentoParcela(p)}"
-									 update=":formDialog:infoPagamento"
-									 oncomplete="PF('dialogPagamento').show();loadMasksJQuery();" /> 
+							<p:commandLink 
+								 disabled="#{p.desabilitaPagamentoParcela}"
+								 value="#{p.codSituacaoParcela.descSituacao}" 
+								 actionListener="#{historicoVendaBean.onclickBtnPagamentoParcela(p)}"
+								 update=":formDialog:infoPagamento"
+								 oncomplete="PF('dialogPagamento').show();loadMasksJQuery();" /> 
 					        </p:column>
 					</p:dataTable>
 				</div>

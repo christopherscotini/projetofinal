@@ -4,6 +4,7 @@
 package br.com.mkoffice.business.bo.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -13,6 +14,7 @@ import br.com.mkoffice.business.bo.ContasReceberBO;
 import br.com.mkoffice.business.exception.ValidationFormAbstractException;
 import br.com.mkoffice.dao.jpa.cadastro.ParcelaRepository;
 import br.com.mkoffice.dto.DataFilter;
+import br.com.mkoffice.dto.ParcelasDTO;
 import br.com.mkoffice.model.ParcelasEntity;
 
 /**
@@ -28,7 +30,7 @@ public class ContasReceberBOImpl implements ContasReceberBO{
 
 	
 	@Override
-	public List<ParcelasEntity> filtrar(DataFilter dataFiltro, Long situacaoPagamento, Long idUsuario) {
+	public List<ParcelasDTO> filtrar(DataFilter dataFiltro, Long situacaoPagamento, Long idUsuario) {
 		if(situacaoPagamento.equals(1L)){
 			return dao.filterByDateSituacaoPagoContasReceber(dataFiltro, idUsuario);
 		}else{
@@ -36,7 +38,7 @@ public class ContasReceberBOImpl implements ContasReceberBO{
 				return dao.filterByDateSituacaoPendenteContasReceber(dataFiltro, idUsuario);
 			}else{
 				if(situacaoPagamento.equals(99L)){
-					List<ParcelasEntity>entities = new ArrayList<ParcelasEntity>();
+					List<ParcelasDTO>entities = new ArrayList<ParcelasDTO>();
 					entities.addAll(dao.filterByDateSituacaoPagoContasReceber(dataFiltro, idUsuario));
 					entities.addAll(dao.filterByDateSituacaoPendenteContasReceber(dataFiltro, idUsuario));
 					return entities;
@@ -45,7 +47,6 @@ public class ContasReceberBOImpl implements ContasReceberBO{
 		}
 		return null;
 	}
-	
 	
 	@Override
 	public List<ParcelasEntity> listarTodos() {

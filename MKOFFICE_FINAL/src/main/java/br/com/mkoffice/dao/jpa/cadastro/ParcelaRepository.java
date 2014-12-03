@@ -8,8 +8,10 @@ import java.util.List;
 
 import br.com.mkoffice.dao.jpa.JpaGenericDao;
 import br.com.mkoffice.dto.DataFilter;
+import br.com.mkoffice.dto.ParcelasDTO;
 import br.com.mkoffice.model.ParcelasEntity;
 import br.com.mkoffice.model.admin.UserEntity;
+import br.com.mkoffice.utils.Adapter;
 import br.com.mkoffice.utils.MkmtsUtil;
 
 /**
@@ -32,7 +34,7 @@ public class ParcelaRepository extends JpaGenericDao<ParcelasEntity, Long> {
 	
 	
 	/*** INICIO CONTAS A PAGAR ***/
-	public List<ParcelasEntity> filterByDateSituacaoPagoContasPagar(DataFilter dataFiltro, Long idUsuario) {
+	public List<ParcelasDTO> filterByDateSituacaoPagoContasPagar(DataFilter dataFiltro, Long idUsuario) {
 		
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT p FROM ParcelasEntity p").append(" ");
@@ -44,11 +46,10 @@ public class ParcelaRepository extends JpaGenericDao<ParcelasEntity, Long> {
 		}
 		query.append("AND p.codSituacaoParcela = 1").append(" ");
 		
-		return getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList();
-		
+		return Adapter.listEntityToListDto(getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList());
 	}
 	
-	public List<ParcelasEntity> filterByDateSituacaoPendenteContasPagar(DataFilter dataFiltro, Long idUsuario) {
+	public List<ParcelasDTO> filterByDateSituacaoPendenteContasPagar(DataFilter dataFiltro, Long idUsuario) {
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT p FROM ParcelasEntity p").append(" ");
 		query.append("where p.codPedido.codPedido IS NOT NULL").append(" ");
@@ -60,12 +61,12 @@ public class ParcelaRepository extends JpaGenericDao<ParcelasEntity, Long> {
 		
 		query.append("AND p.codSituacaoParcela = 2").append(" ");
 
-		return getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList();
+		return Adapter.listEntityToListDto(getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList());
 	}
 	/*** FIM CONTAS A PAGAR ***/
 
 	/*** INICIO CONTAS A RECEBER ***/
-	public List<ParcelasEntity> filterByDateSituacaoPagoContasReceber(DataFilter dataFiltro, Long idUsuario) {
+	public List<ParcelasDTO> filterByDateSituacaoPagoContasReceber(DataFilter dataFiltro, Long idUsuario) {
 		
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT p FROM ParcelasEntity p").append(" ");
@@ -77,11 +78,11 @@ public class ParcelaRepository extends JpaGenericDao<ParcelasEntity, Long> {
 		}
 		query.append("AND p.codSituacaoParcela = 1").append(" ");
 		
-		return getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList();
+		return Adapter.listEntityToListDto(getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList());
 		
 	}
 	
-	public List<ParcelasEntity> filterByDateSituacaoPendenteContasReceber(DataFilter dataFiltro, Long idUsuario) {
+	public List<ParcelasDTO> filterByDateSituacaoPendenteContasReceber(DataFilter dataFiltro, Long idUsuario) {
 		StringBuilder query = new StringBuilder();
 		query.append("SELECT p FROM ParcelasEntity p").append(" ");
 		query.append("where p.codVenda.codVenda IS NOT NULL").append(" ");
@@ -93,7 +94,7 @@ public class ParcelaRepository extends JpaGenericDao<ParcelasEntity, Long> {
 		
 		query.append("AND p.codSituacaoParcela = 2").append(" ");
 
-		return getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList();
+		return Adapter.listEntityToListDto(getEntityManager().createQuery(query.toString()).setParameter("idUsuario", idUsuario).getResultList());
 	}
 	/*** FIM CONTAS A RECEBER ***/
 	

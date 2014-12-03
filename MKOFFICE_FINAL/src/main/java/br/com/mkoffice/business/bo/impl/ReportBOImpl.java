@@ -22,6 +22,7 @@ import br.com.mkoffice.dto.reports.estoque.ReportProdutosMaisMenosVendidosDTO;
 import br.com.mkoffice.dto.reports.pedido.ReportPedidoConsolidadoDTO;
 import br.com.mkoffice.model.admin.UserEntity;
 import br.com.mkoffice.model.estoque.EstoqueEntity;
+import br.com.mkoffice.utils.Adapter;
 import br.com.mkoffice.utils.MkmtsUtil;
 
 @Stateless
@@ -92,8 +93,8 @@ public class ReportBOImpl implements ReportBO{
 	@Override
 	public ReportLucroVendasDTO getReportLucroDetalhado(DataFilter filtroData, Long idUsuario) {
 		ReportLucroVendasDTO dto = new ReportLucroVendasDTO();
-		dto.setGastos(parcelaRepository.filterByDateSituacaoPagoContasPagar(filtroData, idUsuario));
-		dto.setFaturamento(parcelaRepository.filterByDateSituacaoPagoContasReceber(filtroData, idUsuario));
+		dto.setGastos(Adapter.listDtoToListEntity(parcelaRepository.filterByDateSituacaoPagoContasPagar(filtroData, idUsuario)));
+		dto.setFaturamento(Adapter.listDtoToListEntity(parcelaRepository.filterByDateSituacaoPagoContasReceber(filtroData, idUsuario)));
 		dto.setValorLucroPeriodo(BigDecimal.ZERO);
 		for (int i = 0; i < dto.getFaturamento().size(); i++) {
 			dto.setValorLucroPeriodo(dto.getValorLucroPeriodo().add(dto.getFaturamento().get(i).getValorPago()));

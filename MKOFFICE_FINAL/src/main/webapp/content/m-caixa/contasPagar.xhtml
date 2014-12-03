@@ -121,6 +121,14 @@
 								<f:converter converterId="decimalConverter" />
 							</h:outputText>
 						</p:column>
+						<p:column  style="text-align: center;" headerText="#{msgs['generico.tabelacoluna.status']}" width="10%">
+							<p:commandLink 
+								 disabled="#{result.desabilitaPagamentoParcela}"
+								 value="#{result.codSituacaoParcela.descSituacao}" 
+								 actionListener="#{contasPagarBean.onclickBtnPagamentoParcela(result)}"
+								 update=":formDialog:infoPagamento"
+								 oncomplete="PF('dialogPagamento').show();loadMasksJQuery();" /> 
+				        </p:column>
 						
 					</p:dataTable>
 					
@@ -139,6 +147,48 @@
 			</div>
 		</h:panelGroup>
 		
+		
+	</ui:define>
+	
+	<ui:define name="dialog">
+	
+		<p:dialog header="#{msgs['detalharvenda.lbl.dialog.pagarparcela']}"
+			widgetVar="dialogPagamento" resizable="false" modal="true"
+			showEffect="slide" width="700px" height="180px;">
+			<h:panelGrid id="infoPagamento" columns="2"	style="margin-bottom:10px">
+
+				<h:outputLabel value="#{msgs['detalharvenda.lbl.descricaoparcela']}:" for="txtParcela" styleClass="HtmlOutputLabelResposta" />
+				<h:outputLabel id="txtParcela" value="#{contasPagarBean.parcelaSelecionadaPagamento.descricao} - #{contasPagarBean.parcelaSelecionadaPagamento.codSituacaoParcela.descSituacao}" 
+						styleClass="input-5left HtmlOutputTextResposta" />
+
+				<h:outputLabel value="#{msgs['detalharvenda.lbl.valorparcela']}:" styleClass="HtmlOutputLabelResposta" />
+				<h:panelGroup>
+					<h:outputLabel value="R$" styleClass="input-5left HtmlOutputTextResposta" />
+					<h:outputLabel value="#{contasPagarBean.parcelaSelecionadaPagamento.valorParcela}" styleClass="input-5left HtmlOutputTextResposta" >
+						<f:converter converterId="decimalConverter" />
+					</h:outputLabel>
+				</h:panelGroup>
+
+				<h:outputLabel value="#{msgs['detalharvenda.lbl.datavencimentoparcela']}:" styleClass="HtmlOutputLabelResposta" />
+				<h:outputLabel value="#{contasPagarBean.parcelaSelecionadaPagamento.dtVencimento}" styleClass="input-5left HtmlOutputTextResposta" >
+					<f:convertDateTime pattern="dd/MM/yyyy"/> 
+				</h:outputLabel>
+
+				<h:outputLabel value="#{msgs['detalharvenda.lbl.datapagamentoparcela']}:" styleClass="HtmlOutputLabelResposta" />
+				<p:calendar id="calendarDataPagamento" value="#{contasPagarBean.parcelaSelecionadaPagamento.dtPagamento}" size="15" 
+					styleClass="input-5left" alt="date" pattern="dd/MM/yyyy" />
+					
+				<p:commandButton id="btnCancelar" value="#{msgs['btn_cancelar']}" ajax="false" immediate="true"
+						actionListener="#{contasPagarBean.btnCancelarModal()}"
+						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar" oncomplete="PF('dialogPagamento').hide();" />
+				<p:commandButton
+					update=":formGlobal:tableParcelas" 
+					onclick="return validaDataPagamento(document.forms[2])"
+					oncomplete="PF('dialogPagamento').hide();" styleClass="btn btn-zen-2 btn-toolbar"
+					actionListener="#{contasPagarBean.efetuarPagamentoParcela()}"
+					value="#{msgs['detalharvenda.lbl.btn_efetuarpagamento']}" />
+			</h:panelGrid>
+		</p:dialog>
 		
 	</ui:define>
 	

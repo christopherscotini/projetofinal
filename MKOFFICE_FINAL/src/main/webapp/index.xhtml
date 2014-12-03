@@ -38,17 +38,12 @@
 							</div>
 							<div class="infobox-data">
 								<div class="infobox-content">#{msgs['dashboardoperacional.lbl.balanco']}</div>
-								<div class="infobox-content">$
-									#{dashboardOperacionalBean.dashboardOperacional.balanco.valorBalanco}
+								<div class="infobox-content">#{dashboardOperacionalBean.dashboardOperacional.balanco.valorBalancoString}
 								</div>
 							</div>
 						</div>
-						
 						<p:chart type="line" model="#{dashboardOperacionalBean.graficoBalanco}" style="height:300px;"  />
-						
 					</div>
-					
-					
 					
 					<hr class="lin"/>
 					
@@ -150,9 +145,35 @@
 			</div>
 			<div class="widget-body collapse in">
 				<div class="widget-inner">
-					
-					
-					
+					<div class="row-fluid">
+						<div class="span4" style="margin: 0 auto;">
+							<h:outputLabel value="#{msgs['dashboardoperacional.lbl.valorestoquedescontos']}" styleClass="HtmlOutputLabelResposta" style="float: none !important;text-align: center;"  />
+							<h:panelGrid columns="2" style="margin: 0 auto;">
+								<h:outputLabel value="R$" styleClass="HtmlOutputTextResposta" />
+								<h:outputLabel value="#{dashboardOperacionalBean.dashboardOperacional.reportEstoqueDashboard.valorEstoqueAtacado}" styleClass="HtmlOutputTextResposta">
+									<f:converter converterId="decimalConverter" />
+								</h:outputLabel>
+							</h:panelGrid>
+						</div>
+						<div class="span4">
+							<h:outputLabel value="#{msgs['dashboardoperacional.lbl.valorlucroestimado']}" styleClass="HtmlOutputLabelResposta" style="float: none !important;text-align: center;" />
+							<h:panelGrid columns="2" style="margin: 0 auto;">
+								<h:outputLabel value="R$" styleClass="HtmlOutputTextResposta" />
+								<h:outputLabel value="#{dashboardOperacionalBean.dashboardOperacional.reportEstoqueDashboard.valorLucroRevenda}" styleClass="HtmlOutputTextResposta">
+									<f:converter converterId="decimalConverter" />
+								</h:outputLabel>
+							</h:panelGrid>
+						</div>
+						<div class="span4">
+							<h:outputLabel value="#{msgs['dashboardoperacional.lbl.valorestoquebruto']}" styleClass="HtmlOutputLabelResposta" style="float: none !important;text-align: center;"  />
+							<h:panelGrid columns="2" style="margin: 0 auto;">
+								<h:outputLabel value="R$" styleClass="HtmlOutputTextResposta" />
+								<h:outputLabel value="#{dashboardOperacionalBean.dashboardOperacional.reportEstoqueDashboard.valorEstoqueRevenda}" styleClass="HtmlOutputTextResposta">
+									<f:converter converterId="decimalConverter" />
+								</h:outputLabel>
+							</h:panelGrid>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
+import br.com.mkoffice.utils.DecimalUtils;
 import br.com.mkoffice.utils.MkmtsUtil;
 
 public class BalancoDTO {
@@ -27,6 +28,9 @@ public class BalancoDTO {
 
 	public BigDecimal getValorBalanco() {
 		return valorBalanco;
+	}
+	public String getValorBalancoString() {
+		return "R$ "+DecimalUtils.format(valorBalanco);
 	}
 	public void setValorBalanco(BigDecimal valorBalanco) {
 		this.valorBalanco = valorBalanco;
