@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import br.com.mkoffice.model.ClienteEntity;
+import br.com.mkoffice.utils.MkmtsUtil;
 
 public class ReportPromocaoClientePorVolumeVendaDTO {
 
@@ -12,6 +13,7 @@ public class ReportPromocaoClientePorVolumeVendaDTO {
 	private Integer quantidadeVendas;
 	private BigDecimal valorTotalVendas;
 	private Date dataUltimaVenda;
+	private String numCelularString;
 	
 	public ClienteEntity getCliente() {
 		return cliente;
@@ -36,6 +38,15 @@ public class ReportPromocaoClientePorVolumeVendaDTO {
 	}
 	public void setDataUltimaVenda(Date dataUltimaVenda) {
 		this.dataUltimaVenda = dataUltimaVenda;
+	}
+	public String getNumCelularString() {
+		if(cliente.getDadosPessoa() != null){
+			if ((numCelularString == null || numCelularString.equals("")) && !(cliente.getDadosPessoa().getNumCelular() == null)) {
+				return MkmtsUtil.formatarNumTelefoneCelularString(cliente.getDadosPessoa()
+						.getNumCelular());
+			}
+		}
+		return numCelularString;
 	}
 	
 	

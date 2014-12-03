@@ -87,8 +87,8 @@
 								value="#{reportLucroVendasBean.report.faturamento}" 
 								emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}." >
 							
-							<p:column headerText="#{msgs['generico.tabelacoluna.datapagamento']}" width="35%"	sortBy="#{result.dtPagamento}">
-								<h:outputText value="#{result.dtPagamento}" style="text-align: left;" >
+							<p:column headerText="#{msgs['generico.tabelacoluna.datapagamento']}" width="35%" style="text-align: center;" sortBy="#{result.dtPagamento}">
+								<h:outputText value="#{result.dtPagamento}" style="text-align: center;" >
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</h:outputText>
 							</p:column>
@@ -120,13 +120,13 @@
 								value="#{reportLucroVendasBean.report.gastos}" 
 								emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}." >
 							
-							<p:column headerText="#{msgs['generico.tabelacoluna.datapagamento']}" width="35%"	sortBy="#{result.dtPagamento}">
-								<h:outputText value="#{result.dtPagamento}" style="text-align: left;" >
+							<p:column headerText="#{msgs['generico.tabelacoluna.datapagamento']}" width="35%" style="text-align: center;" sortBy="#{result.dtPagamento}">
+								<h:outputText value="#{result.dtPagamento}" style="text-align: center;" >
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</h:outputText>
 							</p:column>
-							<p:column headerText="#{msgs['generico.tabelacoluna.codigopedido']}" width="35%"	sortBy="#{result.codPedido.codPedido}">
-								<h:outputText value="#{result.codPedido.codPedido}" style="text-align: left;" />
+							<p:column headerText="#{msgs['generico.tabelacoluna.codigopedido']}" width="35%" style="text-align: center;" sortBy="#{result.codPedido.codPedido}">
+								<h:outputText value="#{result.codPedido.codPedido}" style="text-align: center;" />
 							</p:column>
 							<p:column headerText="#{msgs['generico.tabelacoluna.valorpago']}" style="text-align: center;" width="10%" sortBy="#{result.valorPago}">
 								<h:outputText value="R$" style="text-align: left;" />

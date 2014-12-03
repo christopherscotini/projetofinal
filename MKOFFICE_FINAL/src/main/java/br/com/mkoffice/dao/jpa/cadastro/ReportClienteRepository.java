@@ -35,7 +35,7 @@ public class ReportClienteRepository extends JpaGenericDao<ReportPromocaoCliente
 			dto.setCliente((ClienteEntity) list.get(i)[0]);
 			dto.setQuantidadeVendas(dto.getCliente().getListaVendas().size());
 			dto.setValorTotalVendas(new BigDecimal(list.get(i)[1].toString()));
-			dto.setDataUltimaVenda(null);
+			dto.setDataUltimaVenda((Date) list.get(i)[2]);
 			ret.add(dto);
 		}
 		

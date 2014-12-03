@@ -71,7 +71,7 @@ public class PromocaoClientePorVolumeCompraBean extends AbstractModelBean{
         
         graficoPieMontanteAnualPorCliente.setTitle(getMsgs("promocaoclienteporvolumecompra.lbl.titulografico.pie"));
         graficoPieMontanteAnualPorCliente.setLegendPosition("e");
-        graficoPieMontanteAnualPorCliente.setFill(false);
+        graficoPieMontanteAnualPorCliente.setFill(true);
         graficoPieMontanteAnualPorCliente.setShowDataLabels(true);
         graficoPieMontanteAnualPorCliente.setDiameter(100);
         

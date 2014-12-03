@@ -84,8 +84,8 @@
 								value="#{reportProdutosMaisMenosVendidosBean.report.produtosMaisVendidos}" 
 								emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}." >
 							
-							<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" width="35%"	sortBy="#{result.produto.codProduto}">
-								<h:outputText value="#{result.produto.codProduto}" style="text-align: left;" />
+							<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" width="35%" style="text-align: center;"	sortBy="#{result.produto.codProduto}">
+								<h:outputText value="#{result.produto.codProduto}" style="text-align: center;" />
 							</p:column>
 							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="35%"	sortBy="#{result.produto.descProduto}">
 								<h:outputText value="#{result.produto.descProduto}" style="text-align: left;" />
@@ -112,8 +112,8 @@
 								value="#{reportProdutosMaisMenosVendidosBean.report.produtosMenosVendidos}" 
 								emptyMessage="#{msgs['generico.mensagem.dadosnaoencontrados']}." >
 							
-							<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" width="35%"	sortBy="#{result.produto.codProduto}">
-								<h:outputText value="#{result.produto.codProduto}" style="text-align: left;" />
+							<p:column headerText="#{msgs['generico.tabelacoluna.codigoproutomk']}" width="35%" style="text-align: center;"	sortBy="#{result.produto.codProduto}">
+								<h:outputText value="#{result.produto.codProduto}" style="text-align: center;" />
 							</p:column>
 							<p:column headerText="#{msgs['generico.tabelacoluna.produto']}" width="35%"	sortBy="#{result.produto.descProduto}">
 								<h:outputText value="#{result.produto.descProduto}" style="text-align: left;" />
