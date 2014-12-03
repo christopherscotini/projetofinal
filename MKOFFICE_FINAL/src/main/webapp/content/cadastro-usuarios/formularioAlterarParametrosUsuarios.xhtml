@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition template="/template/template_main.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="cssImports">
+		<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/cadastro/clientes.css" />
+	</ui:define>
+	
+	<ui:define name="jsImports">
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/javascript/cadastro/valid-form-cliente.js"></script>
+	</ui:define>
+	
+	<ui:define name="breadcrumb">
+		<ul class="breadcrumb">
+			<li class="active">
+				<h:commandLink action="#{loginBean.telaIndex()}" value="#{msgs['generico.breadcumb.telainicial']}" />
+				<span class="divider">/</span>
+			</li>
+			<li class="active">
+				<h:commandLink action="#" value="#{msgs['manterpermissao.breadcumb.administrador']}" />
+				<span class="divider">/</span>
+			</li>
+			<li>#{msgs['menu.lbl.usuarios.alterarparametrosusuario']}</li>
+		</ul>
+	</ui:define>
+
+	<ui:define name="body_content">
+		<div class="widget" >
+			<div class="widget-heading">
+				<a class="accordion-toggle in" data-toggle="collapse" href="#" data-original-title="">
+				<i class="icon-table"></i> #{msgs['formularionovosusuarios.lbl.legend.configuracaoparametros']}</a>
+			</div>
+			<div id="formdiv" class="widget-body collapse in">
+				<div class="widget-inner">	
+					<h:panelGrid id="infosParametro" columns="2" style="margin-bottom:10px">
+						<h:outputLabel value="#{msgs['formularionovosusuarios.lbl.valormetafaturamento']}:" for="txtValorMetaFaturamento" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtValorMetaFaturamento" value="#{usuarioBean.parametros.valorMetaFaturamento}" styleClass="input-5left currency" ><f:converter converterId="decimalConverter" /></h:inputText>
+	
+						<h:outputLabel value="#{msgs['formularionovosusuarios.lbl.valorlucrodesejado']}:" for="txtValorLucroDesejado" styleClass="HtmlOutputLabelResposta" />
+						<h:inputText id="txtValorLucroDesejado" value="#{usuarioBean.parametros.valorLucroDesejado}" styleClass="input-5left currency" ><f:converter converterId="decimalConverter" /></h:inputText>
+					</h:panelGrid>
+				</div>
+			</div>
+		</div>
+		
+		<hr class="lin"/>
+
+		<h:panelGroup>
+			<div class="buttonFooter">
+				<p:commandButton id="btnVoltar" value="#{msgs.btn_voltar}" ajax="false" action="/index" style="float:left" styleClass="btn btn-zen-5 btn-toolbar" immediate="true" />
+				<p:commandButton id="btnLimpar" value="#{msgs.btn_limpar}" action="#{usuarioBean.limparCamposParametros()}" styleClass="btn btn-zen-2 btn-toolbar" style="margin-left:5px;" update="@form"/>
+				<p:commandButton id="btnSalvar" value="#{msgs.btn_salvar}" ajax="false" action="#{usuarioBean.executeSave()}" styleClass="btn btn-zen-2 btn-toolbar" style="margin-left:5px;"  />
+			</div>
+		</h:panelGroup>
+				
+	</ui:define>
+</ui:composition>
+
+
