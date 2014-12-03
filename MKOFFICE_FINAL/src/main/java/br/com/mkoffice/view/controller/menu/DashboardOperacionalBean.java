@@ -71,7 +71,7 @@ public class DashboardOperacionalBean extends AbstractModelBean{
         List<Number> intervals = new ArrayList<Number>(){{add(d3);add(d2);add(d1);}};
 
         graficoLucroDesejado = new MeterGaugeChartModel(dashboardOperacional.getValorLucroMesAtual(), intervals);
-        graficoLucroDesejado.setTitle("Lucro");
+        graficoLucroDesejado.setTitle(getMsgs("dashboardoperacional.lbl.graficolucrodesejado"));
         graficoLucroDesejado.setSeriesColors("cc6666,E7E658,66cc66");
         graficoLucroDesejado.setGaugeLabel("");
         graficoLucroDesejado.setGaugeLabelPosition("bottom");
@@ -88,7 +88,7 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 		List<Number> intervals = new ArrayList<Number>(){{add(d3);add(d2);add(d1);}};
 		
 		graficoFaturamento = new MeterGaugeChartModel(dashboardOperacional.getValorFaturamentoMesAtual(), intervals);
-		graficoFaturamento.setTitle("Faturamento");
+		graficoFaturamento.setTitle(getMsgs("dashboardoperacional.lbl.graficofaturamento"));
 		graficoFaturamento.setSeriesColors("cc6666,E7E658,66cc66");
 		graficoFaturamento.setGaugeLabel("");
 		graficoFaturamento.setGaugeLabelPosition("bottom");
@@ -115,7 +115,7 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 		
 		graficoBalanco.addSeries(balanco);
 		
-		graficoBalanco.setTitle("Timeline Balanço (Últimos 12 meses)");
+		graficoBalanco.setTitle(getMsgs("dashboardoperacional.lbl.graficobalanco"));
 		graficoBalanco.setLegendPosition("s");
 		graficoBalanco.getAxes().put(AxisType.X, new CategoryAxis(getMsgs("promocaoclienteporvolumecompra.lbl.titulografico.line.eixoX")));
 		Axis yAxis = graficoBalanco.getAxis(AxisType.Y);
@@ -147,7 +147,7 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 		graficoRankingClientes = new BarChartModel();
 		
 		ChartSeries clientes = new ChartSeries();
-		clientes.setLabel("Clientes");
+		clientes.setLabel(getMsgs("dashboardoperacional.lbl.graficorankingclientes"));
 		
 		BigDecimal valorMax = BigDecimal.ZERO;
 		if(dashboardOperacional.getRankingClientes().size() <= 0){
@@ -164,11 +164,11 @@ public class DashboardOperacionalBean extends AbstractModelBean{
 		}
 	 
         graficoRankingClientes.addSeries(clientes);
-		graficoRankingClientes.setTitle("Top 5 das Clientes que mais Compraram no Mês");
+		graficoRankingClientes.setTitle(getMsgs("dashboardoperacional.lbl.title.graficorankingclientes"));
 		graficoRankingClientes.setLegendPosition("ne");
          
         Axis xAxis = graficoRankingClientes.getAxis(AxisType.X);
-        xAxis.setLabel("Clientes");
+        xAxis.setLabel(getMsgs("dashboardoperacional.lbl.graficorankingclientes"));
         xAxis.setTickAngle(-45); 
         
         Axis yAxis = graficoRankingClientes.getAxis(AxisType.Y);

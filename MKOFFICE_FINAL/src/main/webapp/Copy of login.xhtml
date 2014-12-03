@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/login.css" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/login-style.css" />
+	<link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/resources/css/font-awesome.css" />
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/jquery-1.3.2.js"></script>
+	<link rel="shortcut icon" type="image/jpg" href="#{request.contextPath}/resources/images/logo.jpg" />
+	<title>MK Office</title>
+</h:head>
+
+<h:body>
+	<f:loadBundle basename="br.com.mkoffice.view.bundle.Messages" var="msgs" />
+	<div id="login" class='container'>
+        <div class='row'>
+            <div class='span5 offset4'>
+                <a href="javascript:"><h3 class='brand'>MK <span>OFFICE</span></h3></a>
+                <h:form styleClass="form-horizontal form well" id="loginform">
+                    <fieldset>
+                        <legend>ENTRAR NO SISTEMA</legend>
+
+                        <div class="control-group">
+                            <label class="control-label" for="input01">Usuário</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on">@</span>
+                                    <h:inputText value="#{loginBean.usuario.username}" id="input01" styleClass="input-large" placeholder="Usuário" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="input01">Senha</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class='icon-lock'></i></span>
+                                    <h:inputSecret value="#{loginBean.usuario.password}" styleClass="input-large" placeholder="Senha"  id="pwd1" name="pwd" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="input01"></label>
+                            <div class="controls">
+                            <h:commandLink action="#{loginBean.doLogin()}" styleClass="btn btn-success pull-right" rel="tooltip" title="first tooltip"><i class='icon-unlock'></i> Entrar</h:commandLink>
+                            <h:commandLink action="#{formularioUsuarioBean.iniciarTela()}" immediate="true" styleClass='btn info pull-left switcher'>Cadastre-se</h:commandLink>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </h:form>
+            </div>
+       </div>
+   </div>	
+
+
+</h:body>
+
+
+
+</html>
