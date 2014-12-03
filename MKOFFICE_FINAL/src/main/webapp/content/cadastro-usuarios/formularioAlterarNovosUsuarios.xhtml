@@ -62,9 +62,8 @@
 							value="#{msgs['formularionovosusuarios.lbl.datanascimento']}:"
 							for="calendarDtNasc" styleClass="HtmlOutputLabelResposta" />
 						<p:calendar id="calendarDtNasc"
-							value="#{usuarioBean.vo.dataNascimento}" styleClass="date"
-							size="10" pattern="dd/MM/yyyy" alt="date"
-							style="margin-left:5px;" />
+							value="#{usuarioBean.vo.dataNascimento}" size="10"
+							pattern="dd/MM/yyyy" alt="date" style="margin-left:5px;" />
 
 
 						<h:outputLabel value="#{msgs['formularionovosusuarios.lbl.cep']}:"
@@ -74,8 +73,8 @@
 								size="10" styleClass="cep input-5left" alt="cep" />
 							<p:commandLink
 								value="#{msgs['formularionovosusuarios.lbl.preencher']}"
-								style="margin-left:5px;" ajax="false" partialSubmit="true"
-								process="cep" onstart="PF('statusDialog').show();"
+								style="margin-left:5px;" ajax="true" update="@form"
+								onstart="PF('statusDialog').show();"
 								oncomplete="PF('statusDialog').hide();"
 								actionListener="#{usuarioBean.buscarEnderecoViaWebService()}" />
 						</h:panelGroup>

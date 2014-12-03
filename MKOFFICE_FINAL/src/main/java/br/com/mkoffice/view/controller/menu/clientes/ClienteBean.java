@@ -96,7 +96,7 @@ public class ClienteBean extends AbstractModelBean implements Serializable{
 		vo.setEndereco(new Endereco());
 		cadastrar = true;
 		
-		return TELA_ALTERAR;
+		return TELA_CADASTRAR;
 	}
 
 	public String prepareEdit(){

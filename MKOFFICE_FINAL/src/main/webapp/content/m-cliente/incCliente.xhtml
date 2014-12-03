@@ -66,10 +66,11 @@
 						<h:panelGroup>
 							<h:inputText id="cep" value="#{clienteBean.vo.endereco.cep}"
 								size="10" styleClass="cep input-5left" alt="cep" />
-							<p:commandLink value="#{msgs['inccliente.lbl.preencher']}"
-								style="margin-left:5px;" ajax="false" partialSubmit="true"
-								process="cep" onstart="PF('statusDialog').show();"
+							<p:commandLink value="#{msgs['altcliente.lbl.preencher']}"
+								style="margin-left:5px;" ajax="true" 
+								onstart="PF('statusDialog').show();"
 								oncomplete="PF('statusDialog').hide();"
+								update="@form"
 								actionListener="#{clienteBean.buscarEnderecoViaWebService()}" />
 						</h:panelGroup>
 						<h:panelGroup></h:panelGroup>
@@ -97,7 +98,7 @@
 							for="txtComplemento" styleClass="HtmlOutputLabelResposta" />
 						<h:inputText id="txtComplemento"
 							value="#{clienteBean.vo.endereco.complemento}" size="50"
-							styleClass="input-5leftcinput-xlarge" />
+							styleClass="input-5left cinput-xlarge" />
 						<h:outputLabel value="#{msgs['inccliente.lbl.cidade']}:"
 							for="txtCity" styleClass="HtmlOutputLabelResposta" />
 						<h:inputText id="txtCity"
@@ -168,7 +169,7 @@
 					style="float:left" styleClass="btn btn-zen-5 btn-toolbar"
 					immediate="true" />
 				<p:commandButton id="btnLimpar" value="#{msgs.btn_limpar}"
-					ajax="true" update="formgrid"
+					ajax="true" update="formgrid txtAdicionais"
 					action="#{clienteBean.limparFormulario()}"
 					styleClass="btn btn-zen-2 btn-toolbar" style="margin-left:5px;" />
 				<p:commandButton id="btnSalvar" value="#{msgs.btn_salvar}"

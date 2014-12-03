@@ -219,7 +219,7 @@
 		</div>
 	</ui:define>
 	
-	<ui:define name="dialog">
+	<ui:define name="dialog2">
 	
 		<p:dialog header="#{msgs['detalharvenda.lbl.dialog.pagarparcela']}"
 			widgetVar="dialogPagamento" resizable="false" modal="true"
@@ -248,7 +248,7 @@
 					styleClass="input-5left" alt="date" pattern="dd/MM/yyyy" />
 					
 				<p:commandButton id="btnCancelar" value="#{msgs['btn_cancelar']}"
-						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar" oncomplete="dialogPagamento.hide();" />
+						style="float:right;" styleClass="btn btn-zen-5 btn-toolbar" oncomplete="PF('dialogPagamento').hide();" />
 				<p:commandButton
 					update=":formGlobal:tableParcelas" 
 					onclick="return validaDataPagamento(document.forms[2])"

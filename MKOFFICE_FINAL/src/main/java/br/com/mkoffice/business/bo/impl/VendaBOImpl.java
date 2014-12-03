@@ -20,6 +20,7 @@ import br.com.mkoffice.dao.jpa.cadastro.FluxoEstoqueRepository;
 import br.com.mkoffice.dao.jpa.cadastro.ParcelaRepository;
 import br.com.mkoffice.dao.jpa.cadastro.TipoAgendaRepository;
 import br.com.mkoffice.dao.jpa.cadastro.VendaRepository;
+import br.com.mkoffice.dto.DataFilter;
 import br.com.mkoffice.dto.EstoqueDTO;
 import br.com.mkoffice.dto.VendaDTO;
 import br.com.mkoffice.model.admin.FluxoEstoqueEntity;
@@ -61,7 +62,7 @@ public class VendaBOImpl implements VendaBO {
 
 	@Override
 	public List<VendaDTO> listarVendas(Long idUsuario) {
-		return filtrarVenda(null, null, null, null, idUsuario);
+		return filtrarVenda(null, null, null, idUsuario);
 	}
 
 	@Override
@@ -108,13 +109,11 @@ public class VendaBOImpl implements VendaBO {
 	
 	@Override
 	public List<VendaDTO> filtrarVenda(String codVendaFiltro,
-			String nomeClienteFiltro, Date dataInicioFiltro,
-			Date dataFinalFiltro, Long idUsuario) {
+			String nomeClienteFiltro, DataFilter dataFiltro, Long idUsuario) {
 
 		List<VendaDTO> retorno = dao.salesFilter(MkmtsUtil.verificaStringNulaInteger(codVendaFiltro)
 				, MkmtsUtil.verificaStringNula(nomeClienteFiltro)
-				, dataInicioFiltro
-				, dataFinalFiltro
+				, dataFiltro
 				, idUsuario);
 		
 		return retorno;

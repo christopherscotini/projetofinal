@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.mkoffice.dao.jpa.JpaGenericDao;
+import br.com.mkoffice.dto.DataFilter;
 import br.com.mkoffice.dto.VendaDTO;
 import br.com.mkoffice.model.venda.VendaEntity;
 import br.com.mkoffice.utils.Adapter;
@@ -24,8 +25,7 @@ public class VendaRepository extends JpaGenericDao<VendaEntity, Long> {
 	private StringBuilder builder;
 	
 	public List<VendaDTO> salesFilter(Integer codVendaFiltro,
-			String nomeClienteFiltro, Date dataInicioFiltro,
-			Date dataFinalFiltro, Long idUsuario) {
+			String nomeClienteFiltro, DataFilter dataFiltro, Long idUsuario) {
 
 		builder = new StringBuilder();
 		builder.append(SELECT);
@@ -38,8 +38,8 @@ public class VendaRepository extends JpaGenericDao<VendaEntity, Long> {
 			builder.append("AND v.cliente.dadosPessoa.nome LIKE '"+nomeClienteFiltro+"%'");
 			builder.append(_ESPACE);
 		}
-		if(null != dataInicioFiltro){
-			builder.append("AND v.dataVenda BETWEEN '"+MkmtsUtil.converterDataString(dataInicioFiltro, "dd/MM/yyyy")+" 00:00:00' AND '"+MkmtsUtil.converterDataString(dataFinalFiltro, "yyyy-MM-dd")+" 23:59:59'");
+		if(null != dataFiltro){
+			builder.append("AND v.dataVenda BETWEEN '"+MkmtsUtil.converterDataString(dataFiltro.getDataInicio(), "yyyy-MM-dd")+" 00:00:00' AND '"+MkmtsUtil.converterDataString(dataFiltro.getDataFinal(), "yyyy-MM-dd")+" 23:59:59'");
 			builder.append(_ESPACE);
 		}
 		builder.append(ORDER_BY);

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import br.com.mkoffice.dto.DataFilter;
 import br.com.mkoffice.dto.ParcelasDTO;
 import br.com.mkoffice.dto.VendaDTO;
 import br.com.mkoffice.utils.Adapter;
@@ -36,8 +37,8 @@ public class HistoricoVendaBean extends AbstractModelBean{
 	private BigDecimal totalVendidoLbl;
 	private String codVendaFiltro;
 	private String nomeClienteFiltro;
-	private Date dataInicioFiltro;
-	private Date dataFinalFiltro;
+	private DataFilter dataFiltro;
+	
 	
 	private ClienteVO clienteVo;
 	private VendaVO vendaVo;
@@ -61,14 +62,13 @@ public class HistoricoVendaBean extends AbstractModelBean{
 	public void limparCamposFiltro() {
 		codVendaFiltro = null;
 		nomeClienteFiltro = null;
-		dataInicioFiltro = null;
-		dataFinalFiltro = null; 
+		dataFiltro = new DataFilter(true);
 		filteredValue = null;
 	}
 
 	@Override
 	public String pesquisarFiltro() {
-		listaVendasEfetuadas = vendaBO.filtrarVenda(codVendaFiltro, nomeClienteFiltro, dataInicioFiltro, dataFinalFiltro, getLoginBean().getUsuario().getId());
+		listaVendasEfetuadas = vendaBO.filtrarVenda(codVendaFiltro, nomeClienteFiltro, dataFiltro, getLoginBean().getUsuario().getId());
 		vendaSelecionada = null;
 		
 		return TELA_LISTAR_HISTORICO_VENDAS;
@@ -105,13 +105,13 @@ public class HistoricoVendaBean extends AbstractModelBean{
 	
 	public void efetuarPagamentoParcela(){
 		parcelaBO.efetuarPagamento(parcelaSelecionadaPagamento);
-		vendaSelecionada = vendaBO.filtrarVenda(vendaSelecionada.getCodVenda().toString(), null, null, null, getLoginBean().getUsuario().getId()).get(0);
+		vendaSelecionada = vendaBO.filtrarVenda(vendaSelecionada.getCodVenda().toString(), null, null, getLoginBean().getUsuario().getId()).get(0);
 		vendaVo = Adapter.dtoToVo(vendaSelecionada);
 		isDesabilitaPagamentoParcela();
 	}
 	
 
-//	=============================== MÉTODOS PRIVATES =============================== 
+//	=============================== Mï¿½TODOS PRIVATES =============================== 
 	private void isDesabilitaPagamentoParcela(){
 		for (int i = 0; i < vendaSelecionada.getParcelas().size(); i++) {
 			if(vendaSelecionada.getParcelas().get(i).isQuitado()){
@@ -181,22 +181,6 @@ public class HistoricoVendaBean extends AbstractModelBean{
 		this.codVendaFiltro = codVendaFiltro;
 	}
 
-	public Date getDataInicioFiltro() {
-		return dataInicioFiltro;
-	}
-
-	public void setDataInicioFiltro(Date dataInicioFiltro) {
-		this.dataInicioFiltro = dataInicioFiltro;
-	}
-
-	public Date getDataFinalFiltro() {
-		return dataFinalFiltro;
-	}
-
-	public void setDataFinalFiltro(Date dataFinalFiltro) {
-		this.dataFinalFiltro = dataFinalFiltro;
-	}
-
 	public String getNomeClienteFiltro() {
 		return nomeClienteFiltro;
 	}
@@ -261,6 +245,14 @@ public class HistoricoVendaBean extends AbstractModelBean{
 
 	public void setFilteredValue(List<VendaDTO> filteredValue) {
 		this.filteredValue = filteredValue;
+	}
+
+	public DataFilter getDataFiltro() {
+		return dataFiltro;
+	}
+
+	public void setDataFiltro(DataFilter dataFiltro) {
+		this.dataFiltro = dataFiltro;
 	}
 
 	

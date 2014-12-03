@@ -8,6 +8,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.faces.context.FacesContext;
 
 /**
  * @author ffranco
@@ -667,6 +670,19 @@ public final class MkmtsUtil {
 			}
 		}
     }
+    
+    
+	public static String getMsgs(String messageId) {    
+        FacesContext facesContext = FacesContext.getCurrentInstance();    
+        String msg = "";    
+        Locale locale = facesContext.getViewRoot().getLocale();    
+        ResourceBundle bundle = ResourceBundle.getBundle("br.com.mkoffice.view.bundle.Messages", locale);    
+        try {    
+            msg = bundle.getString(messageId);    
+        } catch (Exception e) {    
+        }    
+        return msg;    
+    }  
     
 }
 

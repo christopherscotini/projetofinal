@@ -126,7 +126,8 @@
 											styleClass="cep input-5left" alt="cep" />
 										<p:commandLink
 											value="#{msgs['formularionovosusuarios.lbl.preencher']}"
-											style="margin-left:5px;" ajax="false" partialSubmit="true"
+											style="margin-left:5px;" ajax="true" 
+											update="@form"
 											onstart="PF('statusDialog').show();"
 											oncomplete="PF('statusDialog').hide();"
 											actionListener="#{formularioUsuarioBean.buscarEnderecoViaWebService()}" />

@@ -65,9 +65,10 @@
 							<h:inputText id="cep" value="#{clienteBean.vo.endereco.cep}"
 								size="10" styleClass="cep input-5left" alt="cep" />
 							<p:commandLink value="#{msgs['altcliente.lbl.preencher']}"
-								style="margin-left:5px;" ajax="false" partialSubmit="true"
-								process="cep" onstart="PF('statusDialog').show();"
+								style="margin-left:5px;" ajax="true" 
+								onstart="PF('statusDialog').show();"
 								oncomplete="PF('statusDialog').hide();"
+								update="@form"
 								actionListener="#{clienteBean.buscarEnderecoViaWebService()}" />
 						</h:panelGroup>
 						<h:panelGroup></h:panelGroup>
@@ -95,7 +96,7 @@
 							for="txtComplemento" styleClass="HtmlOutputLabelResposta" />
 						<h:inputText id="txtComplemento"
 							value="#{clienteBean.vo.endereco.complemento}" size="50"
-							styleClass="input-5leftcinput-xlarge" />
+							styleClass="input-5left cinput-xlarge" />
 						<h:outputLabel value="#{msgs['altcliente.lbl.cidade']}:"
 							for="txtCity" styleClass="HtmlOutputLabelResposta" />
 						<h:inputText id="txtCity"

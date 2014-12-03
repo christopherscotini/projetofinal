@@ -21,13 +21,13 @@ import br.com.mkoffice.ws.CEP;
 
 @ManagedBean
 @SessionScoped
-public class UsuarioBean extends AbstractModelBean{
+public class UsuarioBean extends AbstractModelBean {
 
 	private final String TELA_MANTER_USUARIOS = "/content/m-admin/usuario/manterUsuario.xhtml";
 	private final String TELA_ALTERAR_CADASTRO_USUARIO = "/content/cadastro-usuarios/formularioAlterarNovosUsuarios.xhtml";
 	private final String TELA_DETALHAR_CADASTRO_USUARIO = "/content/m-admin/usuario/detalharformularioUsuarios.xhtml";
 	private final String TELA_ALTERAR_PARAMETROS_USUARIO = "/content/cadastro-usuarios/formularioAlterarParametrosUsuarios.xhtml";
-	
+
 	private List<UserEntity> usuarios;
 	private List<PermissaoEntity> permissoes;
 	private List<UserEntity> filteredUsuarios;
@@ -35,9 +35,9 @@ public class UsuarioBean extends AbstractModelBean{
 	private UserEntity usuarioSelecionado;
 	private boolean cadastrar;
 	private boolean altParametros;
-	
+
 	private ParametrosDashboardEntity parametros;
-	
+
 	private ClienteVO vo = null;
 	private String password = null;
 
@@ -46,144 +46,137 @@ public class UsuarioBean extends AbstractModelBean{
 		limparCamposFiltro();
 		limparSelecaoTabela();
 		carregarListaUsuarios();
-		
+
 		return TELA_MANTER_USUARIOS;
 	}
 
 	@Override
 	public void limparCamposFiltro() {
 	}
-	
+
 	public void limparCamposParametros() {
 		parametros = new ParametrosDashboardEntity();
 	}
-	
+
 	public void limparCamposUsuario() {
 		vo = new ClienteVO();
 		vo.setEndereco(new Endereco());
 	}
 
-	
 	public void limparSelecaoTabela() {
 		setUsuarioSelecionado(null);
 	}
 
 	@Override
 	public String pesquisarFiltro() {
-		
+
 		return "";
 	}
 
-	public void buscarEnderecoViaWebService(){
+	public void buscarEnderecoViaWebService() {
 		BuscaCEP busca = new BuscaCEP();
-		try{
+		try {
 			CEP cepRetorno = busca.obtemPorNumeroCEP(vo.getEndereco().getCep());
 			vo.getEndereco().setBairro(cepRetorno.getBairro());
 			vo.getEndereco().setCidade(cepRetorno.getLocalidade());
 			vo.getEndereco().setLogradouro(cepRetorno.getLogradouro());
 			vo.getEndereco().setEstado(cepRetorno.getUf());
-		}catch(RuntimeException r){
+		} catch (RuntimeException r) {
 			FacesUtils.addErrorMessage(r.getMessage());
 		}
 	}
-	
-	public void navegarIncluirUsuario(){
+
+	public void navegarIncluirUsuario() {
 		cadastrar = true;
+		altParametros = false;
 	}
 
-	public String navegarDetalharUsuario(){
-		
+	public String navegarDetalharUsuario() {
+
 		vo = converterUserEntityToClienteCo(usuarioSelecionado);
-		
-		parametros = userBO.buscarParametros(usuarioSelecionado);	
-		
+
+		parametros = userBO.buscarParametros(usuarioSelecionado);
+
 		return TELA_DETALHAR_CADASTRO_USUARIO;
 	}
-	
-	public String navegarVoltarTelaDetalhe(){
-		
+
+	public String navegarVoltarTelaDetalhe() {
+
 		return TELA_MANTER_USUARIOS;
 	}
 
-	public String navegarAlterarUsuario(){
+	public String navegarAlterarUsuario() {
 		vo = converterUserEntityToClienteCo(getLoginBean().getUsuario());
 		cadastrar = false;
-		
+		altParametros = false;
 		return TELA_ALTERAR_CADASTRO_USUARIO;
 	}
-	
-	public String navegarAlterarParametrosUsuario(){
+
+	public String navegarAlterarParametrosUsuario() {
 		vo = converterUserEntityToClienteCo(getLoginBean().getUsuario());
-		parametros = userBO.buscarParametros(getLoginBean().getUsuario());	
+		parametros = userBO.buscarParametros(getLoginBean().getUsuario());
 		altParametros = true;
 		return TELA_ALTERAR_PARAMETROS_USUARIO;
 	}
-	
-	public String executeSave(){
+
+	public String executeSave() {
 		UserEntity usuarioCadastro = extrairUsuario(vo);
 
-		try{
-			if(!StringUtil.isNotBlank(password)){
-				FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.senhaobrigatorio"));
-				return "";
-			}else{
-				if(password.equals(vo.getUsuario().getPasswordConfirm())){
-					usuarioCadastro.setPassword(password.trim());
-				}else{
-					FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.senhasnaoconferem"));
+		try {
+			if (altParametros) {
+				parametros.setUsuario(usuarioCadastro);
+				userBO.editarParametros(parametros);
+				FacesUtils.addMessageAlteracaoSucesso();
+			} else {
+				if (!StringUtil.isNotBlank(password)) {
+					FacesUtils
+							.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.senhaobrigatorio"));
 					return "";
-				}if(parametros.getValorLucroDesejado() == null || parametros.getValorLucroDesejado().compareTo(BigDecimal.ZERO) <= 0){
-					FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.valorlimitegastosinvalido"));
-					return "";
-				}else{
-					if(parametros.getValorMetaFaturamento() == null || parametros.getValorMetaFaturamento().compareTo(BigDecimal.ZERO) <= 0){
-						FacesUtils.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.valorfaturamentoinvalido"));
+				} else {
+					if (password.equals(vo.getUsuario().getPasswordConfirm())) {
+						usuarioCadastro.setPassword(password.trim());
+					} else {
+						FacesUtils
+								.addErrorMessage(getMsgs("formularionovosusuarios.lbl.bean.senhasnaoconferem"));
 						return "";
 					}
 				}
-			}
-			
-			if (cadastrar) {
-				userBO.adicionarEntidade(usuarioCadastro);
-				parametros.setUsuario(usuarioCadastro); 
-				userBO.atualizarParametros(parametros);
-				FacesUtils.addMessageInclusaoSucesso();
-			}else{
-				if(altParametros){
-					parametros.setUsuario(usuarioCadastro); 
-					userBO.editarParametros(parametros);
-					FacesUtils.addMessageAlteracaoSucesso();
-				}else{
+
+				if (cadastrar) {
+					userBO.adicionarEntidade(usuarioCadastro);
+					parametros.setUsuario(usuarioCadastro);
+					userBO.atualizarParametros(parametros);
+					FacesUtils.addMessageInclusaoSucesso();
+				} else {
 					userBO.editarEntidade(usuarioCadastro);
 					FacesUtils.addMessageAlteracaoSucesso();
 				}
+				pesquisarFiltro();
 			}
-			pesquisarFiltro();
-
-		}catch(BusinessException b){
+		} catch (BusinessException b) {
 			FacesUtils.addErrorMessage(b.getMessage());
 			return "";
 		}
-		
+
 		return "/index.xhtml";
 	}
-	
-	
-	public String iniciarTelaAlterarCadastro(){
+
+	public String iniciarTelaAlterarCadastro() {
 		resetCadastro();
 		vo = converterUserEntityToClienteCo(getLoginBean().getUsuario());
 		cadastrar = false;
 		password = "";
-		
+
 		return TELA_ALTERAR_CADASTRO_USUARIO;
 	}
-	
-//	=============================== M�TODOS PRIVATES =============================== 
-	
-	private void carregarListaUsuarios(){
+
+	// =============================== M�TODOS PRIVATES
+	// ===============================
+
+	private void carregarListaUsuarios() {
 		usuarios = userBO.buscarEntidadePorFiltro(null);
 	}
-	
+
 	private UserEntity extrairUsuario(ClienteVO vo) {
 		UserEntity entity = new UserEntity();
 		Pessoa p = new Pessoa();
@@ -204,31 +197,34 @@ public class UsuarioBean extends AbstractModelBean{
 
 		return entity;
 	}
-	
-	private void resetCadastro(){
+
+	private void resetCadastro() {
 		vo = new ClienteVO();
 		vo.setUsuario(new UserEntity());
 		vo.setEndereco(new Endereco());
 		setPassword("");
 	}
-	
+
 	private ClienteVO converterUserEntityToClienteCo(UserEntity userEntity) {
 		ClienteVO voClienteVO = new ClienteVO();
-		voClienteVO.setDataNascimento(userEntity.getDadosPessoa().getDataNascimento());
+		voClienteVO.setDataNascimento(userEntity.getDadosPessoa()
+				.getDataNascimento());
 		voClienteVO.setEmail(userEntity.getDadosPessoa().getEmail());
 		voClienteVO.setEndereco(userEntity.getDadosPessoa().getEndereco());
 		voClienteVO.setNome(userEntity.getDadosPessoa().getNome());
 		voClienteVO.setNumCelular(userEntity.getDadosPessoa().getNumCelular());
-		voClienteVO.setNumTelefone(userEntity.getDadosPessoa().getNumTelefone());
+		voClienteVO
+				.setNumTelefone(userEntity.getDadosPessoa().getNumTelefone());
 		voClienteVO.setSexo(userEntity.getDadosPessoa().getSexo());
 		voClienteVO.setCpf(userEntity.getCpf());
 		voClienteVO.setUsuario(userEntity);
-		
+
 		return voClienteVO;
 	}
-	
-//	=============================== M�TODOS GET E SET =============================== 
-	
+
+	// =============================== M�TODOS GET E SET
+	// ===============================
+
 	public UserEntity getUsuario() {
 		return usuario;
 	}
@@ -296,9 +292,9 @@ public class UsuarioBean extends AbstractModelBean{
 	public ParametrosDashboardEntity getParametros() {
 		return parametros;
 	}
-	
+
 	public void setParametros(ParametrosDashboardEntity parametros) {
 		this.parametros = parametros;
 	}
-	
+
 }

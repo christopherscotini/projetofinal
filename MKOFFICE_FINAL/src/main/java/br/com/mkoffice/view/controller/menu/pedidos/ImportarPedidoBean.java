@@ -174,7 +174,7 @@ public class ImportarPedidoBean extends AbstractModelBean implements
 			if(validarFormDadosPedido()){
 				pedidoBO.existePedido(pedidoDTO);
 			}else{
-				FacesUtils.addErrorMessage("Insira o n�mero do pedido");
+				FacesUtils.addErrorMessage(MkmtsUtil.getMsgs("generico.lbl.valimportarpedido"));
 				return "";
 			}
 		} catch (BusinessException b) {
