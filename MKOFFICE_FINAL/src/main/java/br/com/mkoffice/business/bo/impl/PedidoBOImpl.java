@@ -12,6 +12,7 @@ import br.com.mkoffice.dao.jpa.cadastro.EstoqueRepository;
 import br.com.mkoffice.dao.jpa.cadastro.FluxoEstoqueRepository;
 import br.com.mkoffice.dao.jpa.cadastro.ParcelaRepository;
 import br.com.mkoffice.dao.jpa.cadastro.PedidoRepository;
+import br.com.mkoffice.dto.DataFilter;
 import br.com.mkoffice.dto.PedidoDTO;
 import br.com.mkoffice.model.admin.FluxoEstoqueEntity;
 import br.com.mkoffice.model.constants.PercentDescontoEnum;
@@ -107,10 +108,9 @@ public class PedidoBOImpl implements PedidoBO {
 	}
 	
 	@Override
-	public List<PedidoDTO> consultarPedidos(String codPedido, Date dtInicio,
-			Date dtFim, Long idUsuario) {
+	public List<PedidoDTO> consultarPedidos(String codPedido, DataFilter dtFiltro, Long idUsuario) {
 		
-		return dao.findByFilter(MkmtsUtil.verificaStringNulaLong(codPedido), dtInicio, dtFim, idUsuario);
+		return dao.findByFilter(MkmtsUtil.verificaStringNulaLong(codPedido), dtFiltro, idUsuario);
 	}
 	
 	@Override

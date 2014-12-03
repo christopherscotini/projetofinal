@@ -43,13 +43,13 @@
 								value="#{msgs['listarhistoricovenda.lbl.datainicial']}:"
 								styleClass="HtmlOutputLabelResposta" />
 							<p:calendar id="calendarDataInicial"
-								value="#{historicoVendaBean.dataInicioFiltro}" alt="date"
+								value="#{historicoVendaBean.dataFiltro.dataInicio}" alt="date"
 								pattern="dd/MM/yyyy" size="10" />
 							<h:outputLabel
 								value="#{msgs['listarhistoricovenda.lbl.datafinal']}:"
 								styleClass="HtmlOutputLabelResposta" style="margin-left:8px;" />
 							<p:calendar id="calendarDataFinal"
-								value="#{historicoVendaBean.dataFinalFiltro}" alt="date"
+								value="#{historicoVendaBean.dataFiltro.dataFinal}" alt="date"
 								size="10" pattern="dd/MM/yyyy" />
 						</h:panelGrid>
 

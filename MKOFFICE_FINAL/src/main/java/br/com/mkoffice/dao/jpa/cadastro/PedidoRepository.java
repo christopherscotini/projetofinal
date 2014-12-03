@@ -79,8 +79,7 @@ public class PedidoRepository extends JpaGenericDao<PedidoEntity, Long> {
 	}
 	
 	
-	public List<PedidoDTO> findByFilter(Long codPedido, Date dtInicio,
-			Date dtFim, Long idUsuario) {
+	public List<PedidoDTO> findByFilter(Long codPedido, DataFilter dtFiltro, Long idUsuario) {
 		
 		StringBuilder builder = new StringBuilder();
 		builder.append("SELECT p FROM PedidoEntity p WHERE p.usuario.id = "+idUsuario);
@@ -90,8 +89,8 @@ public class PedidoRepository extends JpaGenericDao<PedidoEntity, Long> {
 			builder.append("AND p.codPedido = "+codPedido);
 		}
 
-		if(null != dtInicio){
-			builder.append("AND p.dtPedido BETWEEN '"+MkmtsUtil.converterDataString(dtInicio, "yyyy-MM-dd")+" 00:00:00' AND '"+MkmtsUtil.converterDataString(dtFim, "yyyy-MM-dd")+" 23:59:59'");
+		if(null != dtFiltro){
+			builder.append("AND p.dtPedido BETWEEN '"+MkmtsUtil.converterDataString(dtFiltro.getDataInicio(), "yyyy-MM-dd")+" 00:00:00' AND '"+MkmtsUtil.converterDataString(dtFiltro.getDataFinal(), "yyyy-MM-dd")+" 23:59:59'");
 			builder.append(_ESPACE);
 		}
 		builder.append("ORDER BY p.codPedido, p.dtPedido ASC");

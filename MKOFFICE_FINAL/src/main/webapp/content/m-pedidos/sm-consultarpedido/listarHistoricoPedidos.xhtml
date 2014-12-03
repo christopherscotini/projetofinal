@@ -39,9 +39,9 @@
 					<div class="widget-inner">
 						<h:panelGrid id="tabela-filtro-pedidos" columns="4" border="0">
 							<h:outputLabel value="#{msgs['listarhistoricopedido.lbl.datainicial']}:" styleClass="HtmlOutputLabelResposta"/>
-							<p:calendar id="calendarDataInicial" value="#{historicoPedidoBean.dataInicioFiltro}" alt="date" pattern="dd/MM/yyyy" size="10"/>
+							<p:calendar id="calendarDataInicial" value="#{historicoPedidoBean.dtFiltro.dataInicio}" alt="date" pattern="dd/MM/yyyy" size="10"/>
 							<h:outputLabel value="#{msgs['listarhistoricopedido.lbl.datafinal']}:" styleClass="HtmlOutputLabelResposta"/>
-							<p:calendar id="calendarDataFinal" value="#{historicoPedidoBean.dataFinalFiltro}" alt="date" size="10" pattern="dd/MM/yyyy" />
+							<p:calendar id="calendarDataFinal" value="#{historicoPedidoBean.dtFiltro.dataFinal}" alt="date" size="10" pattern="dd/MM/yyyy" />
 							<h:outputLabel value="#{msgs['listarhistoricopedido.lbl.codigopedido']}:" styleClass="HtmlOutputLabelResposta" />
 							<p:inputText id="txtCodPedido" value="#{historicoPedidoBean.codPedidoFiltro}" size="10" maxlength="8" onkeypress="return onlyNum(event)" />
 						</h:panelGrid>

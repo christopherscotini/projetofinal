@@ -52,7 +52,8 @@ public class HistoricoVendaBean extends AbstractModelBean{
 	@Override
 	public String iniciarTela() {
 		limparCamposFiltro();
-		carregarListaDeVendas();
+//		carregarListaDeVendas();
+		pesquisarFiltro();
 		vendaSelecionada = null;
 
 		return TELA_LISTAR_HISTORICO_VENDAS;
